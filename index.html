@@ -52,40 +52,54 @@
 .pow-header .section-title{font-size:2.5rem;color:var(--tp);position:relative;display:inline-block;padding-bottom:.5rem}
 .pow-header .section-title::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--ta)}
 .pow-header .section-subtitle{font-size:1.1rem;color:var(--ts);margin-top:1rem;line-height:1.8}
-.pow-carousel{position:relative;padding:2rem 0 4rem}
-.swiper{width:100%;padding:0 50px!important}
-.swiper-slide{opacity:0.4;transform:scale(0.85);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);height:auto}
-.swiper-slide-active{opacity:1!important;transform:scale(1)!important}
-@media (min-width:769px){.swiper-slide:not(.swiper-slide-active){filter:blur(2px)}}
-.pow-card{background:var(--bs);border-radius:25px;padding:2.5rem;box-shadow:0 4px 16px rgba(0,0,0,.1);transition:all .3s;height:100%;display:flex;flex-direction:column;border:1px solid rgba(139,58,58,0.1)}
+.pow-carousel{position:relative;padding:2rem 0 4rem;max-width:1600px;margin:0 auto}
+.swiper{width:100%;padding:0 60px!important;overflow:visible!important}
+.swiper-wrapper{align-items:center}
+.swiper-slide{opacity:0.3;transform:scale(0.75);transition:all 0.6s cubic-bezier(0.34,1.56,0.64,1)}
+.swiper-slide-next,.swiper-slide-prev{opacity:0.5;transform:scale(0.85)}
+.swiper-slide-active{opacity:1!important;transform:scale(1) translateY(-10px)!important;z-index:10}
+@keyframes bounceIn{0%{transform:scale(0.85) translateY(0)}50%{transform:scale(1.03) translateY(-15px)}100%{transform:scale(1) translateY(-10px)}}
+@media (min-width:769px){.swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev){filter:blur(2px)}}
+.pow-card{background:var(--bs);border-radius:30px;padding:2.5rem 3rem;box-shadow:0 8px 24px rgba(0,0,0,.12);transition:all .4s;height:auto;display:flex;flex-direction:column;border:1px solid rgba(139,58,58,0.1);position:relative}
 [data-theme=dark] .pow-card{background:rgba(47,47,47,0.95);border:1px solid rgba(241,233,219,0.1)}
-.pow-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.2);transform:translateY(-5px)}
+.swiper-slide-active .pow-card{animation:bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1)}
+.pow-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.25)}
 .pow-card-top{text-align:center;margin-bottom:2rem}
-.pow-logo{width:80px;height:80px;border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;background:var(--nc);border:2px solid var(--ta);font-size:2rem}
+.pow-logo{width:120px;height:120px;border-radius:50%;margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;background:var(--nc);border:4px solid var(--ta);overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1)}
+.pow-logo img{width:100%;height:100%;object-fit:cover}
 [data-theme=dark] .pow-logo{background:rgba(26,26,26,0.8)}
-.pow-project-name{font-size:1.8rem;color:var(--tp);font-weight:600;margin-bottom:.5rem}
-.pow-project-role{font-size:1rem;color:var(--ts);font-weight:400}
-.pow-badges{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-bottom:2rem}
-.pow-badge{padding:.5rem 1rem;border-radius:20px;font-size:.85rem;background:transparent;border:1.5px solid var(--ta);color:var(--ta);font-weight:500;transition:all .3s}
+.pow-project-name{font-size:1.9rem;color:var(--tp);font-weight:600;margin-bottom:.5rem}
+.pow-project-role{font-size:1.05rem;color:var(--ts);font-weight:400}
+.pow-badges{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-bottom:2rem}
+.pow-badge{padding:.55rem 1.1rem;border-radius:20px;font-size:.88rem;background:transparent;border:1.5px solid var(--ta);color:var(--ta);font-weight:500;transition:all .3s}
 .pow-badge:hover{background:var(--ta);color:var(--nc)}
 .pow-impact{margin-bottom:2rem}
 .pow-impact ul{list-style:none;padding:0;margin:0}
-.pow-impact li{padding:.5rem 0 .5rem 1.5rem;position:relative;color:var(--tp);line-height:1.6;font-size:.95rem}
+.pow-impact li{padding:.55rem 0 .55rem 1.5rem;position:relative;color:var(--tp);line-height:1.6;font-size:.98rem}
 .pow-impact li:before{content:"•";position:absolute;left:0;color:var(--ta);font-weight:bold;font-size:1.2rem}
-.pow-testimonial{background:linear-gradient(135deg,rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.05) 100%);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:15px;padding:1.5rem;margin-bottom:2rem;border:1px solid rgba(139,58,58,0.2);border-left:3px solid var(--ta);box-shadow:0 4px 16px rgba(0,0,0,0.1)}
-[data-theme=dark] .pow-testimonial{background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.02) 100%);border:1px solid rgba(241,233,219,0.1);box-shadow:0 4px 16px rgba(0,0,0,0.2)}
-.pow-testimonial-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
-.pow-testimonial-avatar{width:40px;height:40px;border-radius:50%;background:var(--ta);display:flex;align-items:center;justify-content:center;color:var(--nc);font-weight:600;font-size:1.1rem}
-.pow-testimonial-name{font-size:.9rem;color:var(--ta);font-weight:600}
-.pow-testimonial-text{font-size:.9rem;color:var(--ts);line-height:1.6;font-style:italic}
-.pow-cta{text-align:center;margin-top:auto}
-.pow-cta-button{display:inline-block;padding:.9rem 2.5rem;background:var(--ta);color:var(--nc);text-decoration:none;border-radius:10px;font-weight:500;transition:all .3s;border:2px solid var(--ta)}
+.pow-testimonial{background:rgba(255,255,255,0.05);padding:0.8rem 1rem;margin-bottom:1.5rem;border-radius:8px;transition:all .3s;position:relative;cursor:pointer;border:none}
+[data-theme=dark] .pow-testimonial{background:rgba(255,255,255,0.02)}
+.pow-testimonial:hover{background:rgba(139,58,58,0.08)}
+[data-theme=dark] .pow-testimonial:hover{background:rgba(193,95,60,0.1)}
+.pow-testimonial:hover::after{content:attr(data-company);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--pc);color:var(--nc);padding:0.5rem 1rem;border-radius:6px;font-size:0.75rem;white-space:nowrap;margin-bottom:0.5rem;opacity:1;animation:fadeInUp 0.3s ease;z-index:100}
+@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(5px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.pow-testimonial-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem}
+.pow-testimonial-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--ta)}
+.pow-testimonial-avatar img{width:100%;height:100%;object-fit:cover}
+.pow-testimonial-name{font-size:0.8rem;color:var(--ta);font-weight:600;line-height:1.2}
+.pow-testimonial-text{font-size:0.8rem;color:var(--ts);line-height:1.4;font-style:italic;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
+.pow-card.pecunity .pow-testimonial{max-width:100%}
+.pow-card.biga .pow-testimonial{max-width:95%}
+.pow-card.perspective .pow-testimonial,.pow-card.cbl .pow-testimonial{max-width:85%}
+.pow-cta{text-align:center;margin-top:auto;padding-top:1rem}
+.pow-cta-button{display:inline-block;padding:.95rem 2.8rem;background:var(--ta);color:var(--nc);text-decoration:none;border-radius:12px;font-weight:500;font-size:1rem;transition:all .3s;border:2px solid var(--ta)}
 .pow-cta-button:hover{background:transparent;color:var(--ta);transform:translateY(-3px)}
 .swiper-pagination{position:relative!important;margin-top:3rem}
-.swiper-pagination-bullet{background:var(--ta)!important;width:10px;height:10px;opacity:0.3}
-.swiper-pagination-bullet-active{opacity:1!important;width:30px;border-radius:5px}
-@media (max-width:968px){.swiper{padding:0 20px!important}.pow-card{padding:2rem}.pow-project-name{font-size:1.5rem}.pow-logo{width:70px;height:70px;font-size:1.8rem}}
-@media (max-width:640px){.pow-header .section-title{font-size:2rem}.swiper{padding:0!important}.pow-card{padding:1.5rem}.pow-project-name{font-size:1.3rem}.pow-badges{gap:.5rem}.pow-badge{padding:.4rem .8rem;font-size:.8rem}}
+.swiper-pagination-bullet{background:var(--ta)!important;width:12px;height:12px;opacity:0.3}
+.swiper-pagination-bullet-active{opacity:1!important;width:35px;border-radius:6px}
+@media (max-width:1200px){.pow-card{padding:2.2rem 2.5rem}.pow-logo{width:110px;height:110px}}
+@media (max-width:968px){.swiper{padding:0 40px!important}.pow-card{padding:2rem 2.2rem}.pow-project-name{font-size:1.7rem}.pow-logo{width:100px;height:100px}}
+@media (max-width:640px){.pow-header .section-title{font-size:2rem}.swiper{padding:0 20px!important}.pow-card{padding:1.8rem 2rem}.pow-project-name{font-size:1.5rem}.pow-badges{gap:.5rem}.pow-badge{padding:.5rem .9rem;font-size:.85rem}.pow-logo{width:90px;height:90px}}
 
 .collaboration-section{padding:6rem 0;background:linear-gradient(135deg,var(--pc) 0%,var(--at) 100%)}.collaboration-content{max-width:800px;margin:0 auto}.collaboration-header{text-align:center;margin-bottom:3rem}.collaboration-header .section-label{color:var(--ao)}.collaboration-header .section-title{color:var(--nc)}.collaboration-description{font-size:1.1rem;color:rgba(241,233,219,.9);line-height:1.8}.collaboration-form{background:rgba(255,255,255,.1);padding:2.5rem;border-radius:20px;backdrop-filter:blur(10px)}.form-group{margin-bottom:1.5rem}.form-group label{display:block;color:var(--nc);margin-bottom:.5rem;font-size:1rem}.form-group input,.form-group textarea{width:100%;padding:.8rem;border:2px solid rgba(241,233,219,.3);background:rgba(255,255,255,.05);color:var(--nc);border-radius:8px;font-size:1rem;transition:all .3s}.form-group input:focus,.form-group textarea:focus{outline:0;border-color:var(--ao);background:rgba(255,255,255,.1)}.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(241,233,219,.5)}.submit-button{width:100%;padding:1rem;background:var(--ao);color:var(--nc);border:none;border-radius:10px;font-size:1.1rem;font-weight:500;cursor:pointer;transition:all .3s;position:relative}.submit-button:hover:not(:disabled){background:#A84F30;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15)}.submit-button:disabled{opacity:0.7;cursor:not-allowed}
 .success-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;visibility:hidden;transition:all 0.3s ease}.success-modal.show{opacity:1;visibility:visible}.success-modal-content{background:linear-gradient(135deg,#0D3B46 0%,#1a5f6f 100%);padding:3rem;border-radius:25px;text-align:center;max-width:500px;width:90%;position:relative;transform:scale(0.8);transition:transform 0.3s ease;box-shadow:0 20px 60px rgba(0,0,0,0.3)}.success-modal.show .success-modal-content{transform:scale(1)}.success-icon-wrapper{width:100px;height:100px;margin:0 auto 2rem;background:linear-gradient(135deg,#4CAF50,#45a049);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;animation:successPop 0.6s ease forwards}.success-icon-wrapper::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(76,175,80,0.2);animation:ripple 1.5s ease-out infinite}@keyframes successPop{0%{transform:scale(0) rotate(-180deg)}50%{transform:scale(1.1) rotate(10deg)}100%{transform:scale(1) rotate(0deg)}}@keyframes ripple{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}.success-icon-wrapper i{font-size:3rem;color:#fff}.success-modal h3{font-size:2rem;color:var(--nc);margin-bottom:1rem;font-weight:600}.success-modal p{font-size:1.1rem;color:rgba(241,233,219,0.9);line-height:1.6;margin-bottom:2rem}.success-modal-footer{display:flex;gap:1rem;justify-content:center}.modal-btn{padding:0.8rem 2rem;border-radius:10px;font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.3s;border:none}.modal-btn-primary{background:var(--ao);color:var(--nc)}.modal-btn-primary:hover{background:#A84F30;transform:translateY(-2px)}.modal-btn-secondary{background:rgba(255,255,255,0.1);color:var(--nc);border:2px solid rgba(241,233,219,0.3)}.modal-btn-secondary:hover{background:rgba(255,255,255,0.2);border-color:var(--ao)}
@@ -135,7 +149,7 @@ This is <span class="name-highlight">Japheth</span>
 <div class="social-links">
 <a href="https://twitter.com/JaphOnChain" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
 <a href="https://t.me/jappro" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-<a href="mailto:camzyxworld@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+<a href="/cdn-cgi/l/email-protection#dab9bbb7a0a3a2adb5a8b6be9abdb7bbb3b6f4b9b5b7" aria-label="Email"><i class="fas fa-envelope"></i></a>
 <a href="https://ng.linkedin.com/in/uche-japheth-05311232a" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
 </div>
 </div>
@@ -431,10 +445,10 @@ Skills & Services
 <!-- Slide 1: Pecunity -->
 
 <div class="swiper-slide">
-<div class="pow-card">
+<div class="pow-card pecunity">
 <div class="pow-card-top">
 <div class="pow-logo">
-  <img src="docs/projects/IMG_9398.jpeg" alt="Project">
+<img src="docs/projects/IMG_9398.jpeg" alt="Pecunity Logo">
 </div>
 <h3 class="pow-project-name">Pecunity</h3>
 <p class="pow-project-role">Community Manager → Zealy Manager</p>
@@ -456,9 +470,11 @@ Skills & Services
 </ul>
 </div>
 
-<div class="pow-testimonial">
+<div class="pow-testimonial" data-company="Pecunity">
 <div class="pow-testimonial-header">
-<img src="docs/projects/IMG_9399.jpeg" class="pow-testimonial-avatar" alt="Name">
+<div class="pow-testimonial-avatar">
+<img src="docs/projects/IMG_9399.jpeg" alt="Lars">
+</div>
 <div class="pow-testimonial-name">Lars – Co-Founder</div>
 </div>
 <p class="pow-testimonial-text">"Japheth played a key role in supporting community engagement and structured growth..."</p>
@@ -473,10 +489,10 @@ Skills & Services
 <!-- Slide 2: Biga Arcade -->
 
 <div class="swiper-slide">
-<div class="pow-card">
+<div class="pow-card biga">
 <div class="pow-card-top">
 <div class="pow-logo">
-  <img src="docs/projects/IMG_9402.png" alt="Project">
+<img src="docs/projects/IMG_9402.png" alt="Biga Arcade Logo">
 </div>
 <h3 class="pow-project-name">Biga Arcade</h3>
 <p class="pow-project-role">Streamer & Biga Master</p>
@@ -490,18 +506,20 @@ Skills & Services
 
 <div class="pow-impact">
 <ul>
-<li>Game nights hosting</li>
-<li>Game streaming</li>
-<li>Community support</li>
+<li>Hosted weekly community gaming events</li>
+<li>Streamed gameplay sessions with engagement</li>
+<li>Provided active community support</li>
 </ul>
 </div>
 
-<div class="pow-testimonial">
+<div class="pow-testimonial" data-company="Biga Arcade">
 <div class="pow-testimonial-header">
-<img src="docs/projects/IMG_9403.png" class="pow-testimonial-avatar" alt="Name">
-<div class="pow-testimonial-name">Mr Konsole – Admin </div>
+<div class="pow-testimonial-avatar">
+<img src="docs/projects/IMG_9403.png" alt="Mr Konsole">
 </div>
-<p class="pow-testimonial-text">"Japheth played a key role in supporting community engagement and structured growth..."</p>
+<div class="pow-testimonial-name">Mr Konsole – Admin</div>
+</div>
+<p class="pow-testimonial-text">"Japheth brought energy and consistency to our community events..."</p>
 </div>
 
 <div class="pow-cta">
@@ -513,10 +531,10 @@ Skills & Services
 <!-- Slide 3: Perspective AI -->
 
 <div class="swiper-slide">
-<div class="pow-card">
+<div class="pow-card perspective">
 <div class="pow-card-top">
 <div class="pow-logo">
-  <img src="docs/projects/IMG_9401.jpeg" alt="Project">
+<img src="docs/projects/IMG_9401.jpeg" alt="Perspective AI Logo">
 </div>
 <h3 class="pow-project-name">Perspective AI</h3>
 <p class="pow-project-role">Ambassador</p>
@@ -530,18 +548,20 @@ Skills & Services
 
 <div class="pow-impact">
 <ul>
-<li>Ambassador tasks</li>
-<li>User engagement</li>
-<li>Education threads</li>
+<li>Completed ambassador program tasks</li>
+<li>Engaged users with educational content</li>
+<li>Supported community growth initiatives</li>
 </ul>
 </div>
 
-<div class="pow-testimonial">
+<div class="pow-testimonial" data-company="Perspective AI">
 <div class="pow-testimonial-header">
-<img src="docs/projects/IMG_9401.jpeg" class="pow-testimonial-avatar" alt="Perspective Ai team">
-<div class="pow-testimonial-name">Perspective Team – Self Reflection</div>
+<div class="pow-testimonial-avatar">
+<img src="docs/projects/IMG_9401.jpeg" alt="Perspective Team">
 </div>
-<p class="pow-testimonial-text">"Japheth played a key role in supporting community engagement and structured growth..."</p>
+<div class="pow-testimonial-name">Perspective – Team</div>
+</div>
+<p class="pow-testimonial-text">"Great ambassador work with consistent engagement..."</p>
 </div>
 
 <div class="pow-cta">
@@ -553,10 +573,10 @@ Skills & Services
 <!-- Slide 4: Cyber Boxing League -->
 
 <div class="swiper-slide">
-<div class="pow-card">
+<div class="pow-card cbl">
 <div class="pow-card-top">
 <div class="pow-logo">
-  <img src="docs/projects/IMG_9400.jpeg" alt="CBL">
+<img src="docs/projects/IMG_9400.jpeg" alt="Cyber Boxing League Logo">
 </div>
 <h3 class="pow-project-name">Cyber Boxing League</h3>
 <p class="pow-project-role">Community Supporter</p>
@@ -570,14 +590,17 @@ Skills & Services
 <div class="pow-impact">
 <ul>
 <li>Early Web3 community exposure</li>
-<li>Moderation support</li>
+<li>Provided moderation support</li>
+<li>Contributed to community discussions</li>
 </ul>
 </div>
 
-<div class="pow-testimonial">
+<div class="pow-testimonial" data-company="Cyber Boxing League">
 <div class="pow-testimonial-header">
-<img src="docs/projects/IMG_9400.jpeg" class="pow-testimonial-avatar" alt="CBL">
-<div class="pow-testimonial-name">CBL – Team </div>
+<div class="pow-testimonial-avatar">
+<img src="docs/projects/IMG_9400.jpeg" alt="CBL Team">
+</div>
+<div class="pow-testimonial-name">CBL – Team</div>
 </div>
 <p class="pow-testimonial-text">"Early foundation in Web3 community dynamics..."</p>
 </div>
@@ -668,10 +691,10 @@ Skills & Services
 <p>@jappro</p>
 </a>
 
-<a href="mailto:camzyxworld@gmail.com" class="contact-card">
+<a href="/cdn-cgi/l/email-protection#7615171b0c0f0e0119041a1236111b171f1a5815191b" class="contact-card">
 <i class="fas fa-envelope"></i>
 <h3>Email</h3>
-<p>camzyxworld@gmail.com</p>
+<p><span class="__cf_email__" data-cfemail="4a292b273033323d2538262e0a2d272b232664292527">[email&#160;protected]</span></p>
 </a>
 
 <a href="tel:+2349153661595" class="contact-card">
@@ -706,7 +729,7 @@ Skills & Services
 
 <!-- Swiper JS -->
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
 const themeToggle=document.querySelector('.theme-toggle'),body=document.body,currentTheme=localStorage.getItem('theme')||'light';body.setAttribute('data-theme',currentTheme),updateThemeIcon(currentTheme),themeToggle.addEventListener('click',()=>{let e=body.getAttribute('data-theme');'light'===e?(body.setAttribute('data-theme','dark'),localStorage.setItem('theme','dark'),updateThemeIcon('dark')):(body.setAttribute('data-theme','light'),localStorage.setItem('theme','light'),updateThemeIcon('light'))});function updateThemeIcon(e){const t=themeToggle.querySelector('i');'dark'===e?(t.classList.remove('fa-moon'),t.classList.add('fa-sun')):(t.classList.remove('fa-sun'),t.classList.add('fa-moon'))}const mobileMenuToggle=document.querySelector('.mobile-menu-toggle'),navMenu=document.querySelector('.nav-menu');mobileMenuToggle.addEventListener('click',()=>{navMenu.classList.toggle('active'),mobileMenuToggle.classList.toggle('active')});const navLinks=document.querySelectorAll('.nav-link');navLinks.forEach(e=>{e.addEventListener('click',()=>{navMenu.classList.remove('active'),mobileMenuToggle.classList.remove('active')})}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener('click',function(e){const t=this.getAttribute('href');if('#'===t||''===t)return;e.preventDefault();const a=document.querySelector(t);if(a){const e=document.querySelector('.navbar').offsetHeight,t=a.offsetTop-e;window.scrollTo({top:t,behavior:'smooth'})}})});const sections=document.querySelectorAll('section[id]');window.addEventListener('scroll',()=>{const e=window.pageYOffset;sections.forEach(t=>{const a=t.offsetHeight,c=t.offsetTop-100,n=t.getAttribute('id'),o=document.querySelector(`.nav-link[href="#${n}"]`);e>c&&e<=c+a&&(navLinks.forEach(e=>e.classList.remove('active')),o&&o.classList.add('active'))})});
@@ -806,11 +829,13 @@ const powSwiper = new Swiper('.powSwiper', {
   effect: 'slide',
   grabCursor: true,
   centeredSlides: true,
-  slidesPerView: 'auto',
+  slidesPerView: 1.5,
   spaceBetween: 30,
   loop: true,
+  loopedSlides: 4,
+  watchSlidesProgress: true,
   autoplay: {
-    delay: 4500,
+    delay: 3000,
     disableOnInteraction: false,
     pauseOnMouseEnter: true,
   },
@@ -822,17 +847,22 @@ const powSwiper = new Swiper('.powSwiper', {
   breakpoints: {
     320: {
       slidesPerView: 1,
+      spaceBetween: 15,
+      centeredSlides: true,
+    },
+    640: {
+      slidesPerView: 1.2,
       spaceBetween: 20,
       centeredSlides: true,
     },
     768: {
-      slidesPerView: 1.5,
-      spaceBetween: 30,
+      slidesPerView: 1.3,
+      spaceBetween: 25,
       centeredSlides: true,
     },
     1024: {
-      slidesPerView: 2.2,
-      spaceBetween: 40,
+      slidesPerView: 1.5,
+      spaceBetween: 30,
       centeredSlides: true,
     },
   },
