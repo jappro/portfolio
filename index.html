@@ -113,33 +113,14 @@
 .pow-swiper-shell {
   position: relative;
   z-index: 1;
-  /* Escape container padding on both sides */
-  width: 100vw;
-  left: 50%;
-  transform: translateX(-50%);
-  /* Edge fade — only on desktop */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
+  width: 100%; /* Change from 100vw */
+  overflow: hidden; /* This keeps the loop "clean" at the edges */
+  padding: 40px 0;
 }
 
-/* ---- Swiper instance ---- */
 .pow-swiper {
   width: 100% !important;
-  /* Vertical padding gives space for the scale(1) active card to breathe */
-  padding: 2rem 0 1rem !important;
-  overflow: visible !important;
+  overflow: visible !important; /* Allows side cards to be visible while centered */
 }
 
 /* ---- Slide defaults (side state) ---- */
