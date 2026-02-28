@@ -15,49 +15,7 @@
   gtag('config', 'G-RMZERCVZ87');
 </script>
 <link rel="canonical" href="https://jappro.github.io/portfolio/">
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const powSwiper = new Swiper(".pow-swiper", {
-    slidesPerView: "auto",          // CRITICAL
-    centeredSlides: true,           // center active slide
-    loop: true,                     // infinite loop
-    speed: 900,
-    spaceBetween: 40,
-
-    loopAdditionalSlides: 5,        // must be >= number of real slides
-    loopedSlides: 5,
-
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
-
-    grabCursor: true,
-
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-
-    breakpoints: {
-      0: {
-        spaceBetween: 20
-      },
-      768: {
-        spaceBetween: 30
-      },
-      1024: {
-        spaceBetween: 40
-      }
-    }
-  });
-
-});
-</script>
-  
 <style>
 :root{--pr:#8B3A3A;--pc:#1a1a1a;--ao:#C15F3C;--at:#0D3B46;--nc:#F1E9DB;--bg:var(--nc);--bs:#FFF;--tp:var(--pc);--ts:#3a3a3a;--ta:var(--pr)}[data-theme=dark]{--bg:#1a1a1a;--bs:var(--pc);--tp:var(--nc);--ts:#C0C0C0;--ta:var(--ao)}*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Georgia,serif;background:var(--bg);color:var(--tp);line-height:1.6;transition:all .3s}.container{max-width:1200px;margin:0 auto;padding:0 2rem}
 .navbar{position:fixed;top:0;left:0;width:100%;background:linear-gradient(90deg,var(--pr),var(--ao));padding:1rem 0;z-index:1000;box-shadow:0 4px 16px rgba(0,0,0,.15)}.nav-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}.logo{font-size:1.5rem;font-weight:600;color:var(--nc);text-decoration:none}.nav-menu{display:flex;list-style:none;align-items:center;gap:2rem}.nav-link{color:var(--nc);text-decoration:none;font-size:1rem;position:relative;transition:all .3s}.nav-link:hover,.nav-link.active{color:#FFF}.nav-link.active::after{content:'';position:absolute;bottom:-5px;left:0;width:100%;height:2px;background:var(--nc)}.contact-btn{background:var(--at);padding:.5rem 1.5rem;border-radius:8px;color:var(--nc)!important}.contact-btn:hover{background:#0A2D35;transform:translateY(-2px)}.theme-toggle{background:transparent;border:2px solid var(--nc);color:var(--nc);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}.theme-toggle:hover{background:rgba(241,233,219,.1);transform:rotate(20deg)}.mobile-menu-toggle{display:none;flex-direction:column;gap:5px;background:transparent;border:none;cursor:pointer}.mobile-menu-toggle span{width:25px;height:3px;background:var(--nc);transition:all .3s}
@@ -1279,73 +1237,29 @@ document.querySelectorAll('.service-toggle').forEach(toggle => {
    PROOF OF WORK SWIPER — CENTERED + INFINITE LOOP FIX
    ======================================================== */
 const powSwiper = new Swiper('.pow-swiper', {
-
-  /* Core layout */
-  slidesPerView:  3,
-  spaceBetween:   28,
+  slidesPerView: 'auto', // This tells Swiper to respect your 340px CSS width
   centeredSlides: true,
-  grabCursor:     true,
+  loop: true,
+  grabCursor: true,
+  speed: 800,
+  
+  // The "Seamless Loop" Secret: 
+  // This must be at least the number of slides you have (4).
+  loopedSlides: 4, 
 
-  /* TRUE infinite loop:
-     loopAdditionalSlides must be >= slidesPerView (3)
-     so Swiper has enough cloned slides to loop seamlessly */
-  loop:                 true,
-  loopAdditionalSlides: 4,
-
-  /* Transition speed */
-  speed: 700,
-
-  /* Autoplay — continuous, no gap on user interaction */
   autoplay: {
-    delay:                3000,
+    delay: 3000,
     disableOnInteraction: false,
-    pauseOnMouseEnter:    true,
-    waitForTransition:    false,
   },
 
-  /* Pagination wired to external div */
   pagination: {
-    el:        '.pow-swiper-pagination',
+    el: '.pow-swiper-pagination',
     clickable: true,
   },
 
-  /* Clicking a side card navigates to it */
   slideToClickedSlide: true,
-
-  /* Responsive breakpoints */
-  breakpoints: {
-    0: {
-      slidesPerView:  1,
-      spaceBetween:   16,
-      centeredSlides: true,
-    },
-    768: {
-      slidesPerView:  1.5,
-      spaceBetween:   22,
-      centeredSlides: true,
-    },
-    1024: {
-      slidesPerView:  3,
-      spaceBetween:   28,
-      centeredSlides: true,
-    },
-  },
-
-  on: {
-    /* Force a layout recalculation on init so centering is correct */
-    init() {
-      const sw = this;
-      // Small delay lets the DOM finish painting before Swiper measures widths
-      requestAnimationFrame(() => {
-        sw.update();
-        sw.slideToLoop(sw.realIndex, 0, false);
-      });
-    },
-    resize() {
-      this.update();
-    },
-  },
 });
+
 </script>
 
 </body>
