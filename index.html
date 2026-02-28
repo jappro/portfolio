@@ -28,454 +28,182 @@
 .experience-section{padding:8rem 0 6rem;background:linear-gradient(135deg,#f5e6d3 0%,#e8d4bb 50%,#f5e6d3 100%);position:relative;overflow:hidden}.experience-section::before{content:'';position:absolute;top:0;left:0;right:0;height:150px;background:linear-gradient(to bottom,var(--nc),transparent);pointer-events:none}.experience-section::after{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;background:radial-gradient(circle,rgba(193,95,60,0.15) 0%,transparent 70%);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0}[data-theme=dark] .experience-section{background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%)}[data-theme=dark] .experience-section::after{background:radial-gradient(circle,rgba(193,95,60,0.2) 0%,transparent 70%)}.experience-intro{max-width:900px;margin:0 auto 3rem;text-align:center;position:relative;z-index:1}.experience-intro p{font-size:1.05rem;line-height:1.8;color:var(--tp)}.experience-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;margin-top:3rem;position:relative;z-index:1}.column-title{font-size:1.8rem;color:var(--ta);margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:3px solid var(--ao)}.column-intro{font-size:1rem;color:var(--ts);margin-bottom:2rem;line-height:1.6}.experience-list{display:flex;flex-direction:column;gap:1.5rem}.experience-item{background:linear-gradient(135deg,rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.7) 100%);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);padding:2rem;border-radius:30px;border:2px solid rgba(255,255,255,0.5);border-top:2px solid rgba(255,255,255,0.8);border-left:2px solid rgba(255,255,255,0.8);box-shadow:0 8px 32px rgba(31,38,135,0.15),inset 0 0 0 1px rgba(255,255,255,0.3);transition:all .4s;position:relative;overflow:hidden;animation:bubble 6s ease-in-out infinite}.experience-item::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.8) 0%,transparent 70%);opacity:0;transition:opacity .4s;pointer-events:none}.experience-item::after{content:'';position:absolute;bottom:-10px;right:-10px;width:100px;height:100px;background:radial-gradient(circle,rgba(193,95,60,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}.experience-item:hover{transform:translateY(-10px);box-shadow:0 15px 45px rgba(31,38,135,0.25),inset 0 0 0 2px rgba(255,255,255,0.5);border-top-color:rgba(255,255,255,1);border-left-color:rgba(255,255,255,1);animation:none}.experience-item:hover::before{opacity:0.3}@keyframes bubble{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.01)}100%{transform:translateY(0) scale(1)}}.experience-header{position:relative;z-index:1}.experience-header h4{font-size:1.4rem;color:var(--ta);margin-bottom:.5rem;font-weight:600;text-shadow:0 2px 4px rgba(255,255,255,0.5)}.formerly{font-size:.95rem;color:var(--ts);font-weight:400;opacity:0.8}.role{font-size:1rem;color:var(--ts);margin-top:.8rem;display:block}.status,.category{display:inline-block;padding:.5rem 1.2rem;border-radius:25px;font-size:.85rem;margin-top:1rem;font-weight:500;position:relative;z-index:1;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.status.current{background:linear-gradient(135deg,rgba(13,59,70,0.9),rgba(13,59,70,1));color:var(--nc);border:1px solid rgba(255,255,255,0.3)}.category{background:linear-gradient(135deg,rgba(193,95,60,0.9),rgba(193,95,60,1));color:var(--nc);border:1px solid rgba(255,255,255,0.3)}[data-theme=dark] .experience-item{background:linear-gradient(135deg,rgba(26,26,26,0.9) 0%,rgba(26,26,26,0.7) 100%);border:2px solid rgba(241,233,219,0.2);border-top:2px solid rgba(241,233,219,0.3);border-left:2px solid rgba(241,233,219,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 0 0 1px rgba(241,233,219,0.1)}[data-theme=dark] .experience-item::after{background:radial-gradient(circle,rgba(193,95,60,0.25) 0%,transparent 70%)}[data-theme=dark] .experience-header h4{text-shadow:0 2px 4px rgba(0,0,0,0.5)}.experience-note{font-size:.95rem;font-style:italic;color:var(--ts);margin-top:1.5rem;padding:1rem;background:rgba(193,95,60,.1);border-radius:8px}.project-cards{display:flex;flex-direction:column;gap:2.5rem;margin-top:2rem}.project-card{position:relative;border-radius:35px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.25);transition:all .4s;padding:8px}.project-card:hover{transform:translateY(-12px);box-shadow:0 20px 60px rgba(0,0,0,0.35)}.project-card-outer{position:relative;border-radius:28px;overflow:hidden;padding:2.5rem 2rem 0 2rem;min-height:200px}.project-card-content{position:relative;z-index:3;display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:4rem}.project-icon{font-size:2.5rem;min-width:50px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.2))}.project-text h4{font-size:1.6rem;margin-bottom:.5rem;font-weight:600}.project-role{font-size:1rem;display:block;margin-bottom:1.2rem;opacity:0.85}.project-link{font-size:1rem;font-weight:500;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:0.5rem}.project-link:hover{transform:translateX(5px)}.project-wave{position:absolute;bottom:0;left:0;width:100%;height:100px;z-index:1}.project-wave svg{width:100%;height:100%;display:block}.project-card.pecunity{background:#6daae8}.project-card.pecunity .project-card-outer{background:#f5e6d3}.project-card.pecunity .project-text h4{color:#5a3a3a}.project-card.pecunity .project-role{color:#6a4a4a}.project-card.pecunity .project-link{color:#8B3A3A}.project-card.pecunity .project-link:hover{color:#C15F3C}.project-card.perspective{background:#3a3a3a}.project-card.perspective .project-card-outer{background:#faf3e8}.project-card.perspective .project-text h4{color:#5a3a3a}.project-card.perspective .project-role{color:#6a4a4a}.project-card.perspective .project-link{color:#8B3A3A}.project-card.perspective .project-link:hover{color:#C15F3C}[data-theme=dark] .project-card.pecunity{background:#4a8ac8}[data-theme=dark] .project-card.pecunity .project-card-outer{background:#2a2520}[data-theme=dark] .project-card.pecunity .project-text h4{color:#f5e6d3}[data-theme=dark] .project-card.pecunity .project-role{color:#C0C0C0}[data-theme=dark] .project-card.pecunity .project-link{color:#C15F3C}[data-theme=dark] .project-card.perspective{background:#2a2a2a}[data-theme=dark] .project-card.perspective .project-card-outer{background:#3a3530}[data-theme=dark] .project-card.perspective .project-text h4{color:#f5e6d3}[data-theme=dark] .project-card.perspective .project-role{color:#C0C0C0}[data-theme=dark] .project-card.perspective .project-link{color:#C15F3C}
 
 /* ============================================================
-   PROOF OF WORK — FIXED & CENTERED
+   PROOF OF WORK — PURE CSS SCROLL SNAP CAROUSEL
+   No Swiper. Zero dependencies. Arrow buttons + scroll-snap.
    ============================================================ */
-
-/*
-  ROOT FIX NOTES:
-  1. Section must NOT have overflow:hidden — it clips the swiper
-  2. Swiper must be width:100vw, positioned with negative margin to escape .container
-  3. Cards use a FIXED height with internal flex — no content can push height
-  4. Loop needs loopAdditionalSlides >= slide count to be truly seamless
-  5. centeredSlides:true requires the swiper to be truly full-width
-*/
 
 .pow-section {
   padding: 8rem 0 5rem;
   background: var(--bg);
-  position: relative;
-  /* NO overflow:hidden — that was clipping the swiper */
-  overflow: visible;
 }
 
-/* Atmospheric glow */
-.pow-section::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1000px;
-  height: 600px;
-  background: radial-gradient(ellipse at center, rgba(193,95,60,0.07) 0%, transparent 68%);
-  pointer-events: none;
-  z-index: 0;
+/* Header */
+.pow-header { text-align: center; margin-bottom: 2.5rem; }
+.pow-label {
+  display: inline-block; color: var(--ao);
+  font-size: .82rem; text-transform: uppercase;
+  letter-spacing: 3px; margin-bottom: .6rem;
 }
-[data-theme=dark] .pow-section::before {
-  background: radial-gradient(ellipse at center, rgba(193,95,60,0.13) 0%, transparent 68%);
+.pow-title {
+  font-size: 2.5rem; color: var(--tp);
+  position: relative; display: inline-block; padding-bottom: .6rem;
+}
+.pow-title::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 55px; height: 3px; background: var(--ta); border-radius: 2px;
+}
+.pow-sub { font-size: 1rem; color: var(--ts); margin-top: 1rem; line-height: 1.7; }
+
+/* Arrow + track row */
+.pow-carousel-wrap {
+  position: relative; display: flex;
+  align-items: center; gap: 1rem;
 }
 
-/* ---- Header ---- */
-.pow-header {
-  text-align: center;
-  margin-bottom: 3.5rem;
-  position: relative;
-  z-index: 1;
+/* Arrow buttons */
+.pow-arrow {
+  flex-shrink: 0; width: 44px; height: 44px;
+  border-radius: 50%; border: 2px solid var(--ta);
+  background: var(--bs); color: var(--ta);
+  font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .25s, color .25s, transform .2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
-.pow-header .pow-label {
-  display: inline-block;
-  color: var(--ao);
-  font-size: .82rem;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: .75rem;
-}
-.pow-header .pow-title {
-  font-size: 2.5rem;
-  color: var(--tp);
-  position: relative;
-  display: inline-block;
-  padding-bottom: .65rem;
-  margin-bottom: 0;
-}
-.pow-header .pow-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 55px;
-  height: 3px;
-  background: var(--ta);
-  border-radius: 2px;
-}
-.pow-header .pow-sub {
-  font-size: 1rem;
-  color: var(--ts);
-  margin-top: 1.1rem;
-  line-height: 1.7;
-}
+.pow-arrow:hover { background: var(--ta); color: var(--nc); transform: scale(1.08); }
+.pow-arrow:disabled { opacity: .3; cursor: default; transform: none; }
+[data-theme=dark] .pow-arrow { background: #2a2a2a; }
 
-/* ---- Swiper shell ----
-   KEY FIX: Shell is 100vw, left-offset to escape the container padding.
-   This guarantees the swiper is truly full-width so centeredSlides works.
-*/
-.pow-swiper-shell {
-  position: relative;
-  z-index: 1;
-  width: 100%; /* Change from 100vw */
-  overflow: hidden; /* This keeps the loop "clean" at the edges */
-  padding: 40px 0;
+/* Scroll track */
+.pow-track {
+  display: flex; gap: 1.25rem;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding: 1rem 0 1.2rem;
+  flex: 1; min-width: 0;
 }
+.pow-track::-webkit-scrollbar { display: none; }
 
-.pow-swiper {
-  width: 100% !important;
-  overflow: visible !important; /* Allows side cards to be visible while centered */
-}
-
-/* ---- Slide defaults (side state) ---- */
-.pow-swiper .swiper-slide {
-  /* Fixed width — Swiper needs explicit px width when using centeredSlides */
-  width: 340px !important;
-  /* CRITICAL: height is set on the card, not the slide wrapper.
-     Slide wrapper must be auto so it matches card height. */
-  height: auto !important;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  flex-shrink: 0;
-  /* Default: side/dim state */
-  transform: scale(0.82);
-  opacity: 0.55;
-  filter: brightness(0.68);
-  transition:
-    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity   0.42s ease,
-    filter    0.42s ease;
-  will-change: transform, opacity, filter;
-}
-
-/* Active center */
-.pow-swiper .swiper-slide-active {
-  transform: scale(1)        !important;
-  opacity:   1               !important;
-  filter:    brightness(1)   !important;
-  z-index:   10;
-}
-
-/* Side prev/next */
-.pow-swiper .swiper-slide-prev,
-.pow-swiper .swiper-slide-next {
-  transform: scale(0.82)       !important;
-  opacity:   0.55              !important;
-  filter:    brightness(0.68)  !important;
-  z-index:   2;
-}
-
-/* Bounce when active */
-.pow-swiper .swiper-slide-active .pow-card {
-  animation: powBounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-@keyframes powBounce {
-  0%   { transform: scale(0.94); }
-  55%  { transform: scale(1.03); }
-  100% { transform: scale(1); }
-}
-
-/* ---- Card shell ----
-   FIXED HEIGHT on the card itself (not the slide wrapper).
-   All content sections use flex to fill available space.
-   This prevents any overlap or height mismatch between cards.
-*/
+/* Cards — 2.5 visible on desktop */
 .pow-card {
-  width: 100%;
-  /* Fixed card height — tall enough for all content without overlap */
-  height: 620px;
+  flex-shrink: 0;
+  /* 2.5 cards: subtract 1.5 gaps from track width, divide by 2.5 */
+  width: calc((100% - 1.5 * 1.25rem) / 2.5);
+  scroll-snap-align: start;
   background: var(--bs);
-  border-radius: 26px;
-  border: 1.5px solid rgba(139,58,58,0.10);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* clips content, no scrollbar needed */
-  transition: border-color 0.35s ease, box-shadow 0.35s ease;
-}
-
-/* Active card warm glow */
-.pow-swiper .swiper-slide-active .pow-card {
-  border-color: rgba(193,95,60,0.42);
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.08),
-    0 0 0 1px rgba(193,95,60,0.13),
-    inset 0 0 28px rgba(193,95,60,0.025);
-}
-
-[data-theme=dark] .pow-card {
-  background: #232323;
-  border-color: rgba(241,233,219,0.07);
-}
-[data-theme=dark] .pow-swiper .swiper-slide-active .pow-card {
-  border-color: rgba(193,95,60,0.48);
-  box-shadow:
-    0 12px 36px rgba(0,0,0,0.35),
-    0 0 0 1px rgba(193,95,60,0.18),
-    inset 0 0 40px rgba(193,95,60,0.055);
-}
-
-/* ---- Card inner ---- */
-.pow-card-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 1.8rem 1.75rem 1.6rem;
-  /* Each child section gets its proportional space */
-}
-
-/* ---- Logo ---- */
-.pow-logo-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.9rem;
-  flex-shrink: 0;
-}
-.pow-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2.5px solid var(--ta);
+  border-radius: 20px;
+  border: 1.5px solid rgba(139,58,58,.10);
+  box-shadow: 0 6px 24px rgba(0,0,0,.07);
+  display: flex; flex-direction: column;
   overflow: hidden;
+  transition: box-shadow .3s, border-color .3s;
+}
+.pow-card:hover {
+  box-shadow: 0 10px 32px rgba(0,0,0,.11);
+  border-color: rgba(193,95,60,.3);
+}
+[data-theme=dark] .pow-card { background: #242424; border-color: rgba(241,233,219,.07); }
+[data-theme=dark] .pow-card:hover { border-color: rgba(193,95,60,.35); }
+
+/* Card inner */
+.pow-card-inner {
+  display: flex; flex-direction: column;
+  padding: 1.5rem 1.4rem; height: 100%;
+}
+
+/* Logo */
+.pow-logo-wrap { display: flex; justify-content: center; margin-bottom: .85rem; }
+.pow-logo {
+  width: 68px; height: 68px; border-radius: 50%;
+  border: 2px solid var(--ta); overflow: hidden;
   background: var(--nc);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.7rem;
 }
-.pow-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-[data-theme=dark] .pow-logo { background: #181818; }
+.pow-logo img { width:100%; height:100%; object-fit:cover; display:block; }
+[data-theme=dark] .pow-logo { background: #1c1c1c; }
 
-/* ---- Name & Role ---- */
-.pow-name {
-  text-align: center;
-  margin-bottom: 0.85rem;
-  flex-shrink: 0;
-}
-.pow-name h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--tp);
-  line-height: 1.2;
-  margin-bottom: .28rem;
-}
-.pow-name .pow-role {
-  font-size: .85rem;
-  color: var(--ta);
-  font-weight: 500;
-  font-style: italic;
-  line-height: 1.3;
-}
+/* Name & role */
+.pow-name { text-align: center; margin-bottom: .7rem; }
+.pow-name h3 { font-size: 1.25rem; font-weight: 600; color: var(--tp); line-height: 1.2; margin-bottom: .22rem; }
+.pow-role { font-size: .8rem; color: var(--ta); font-style: italic; font-weight: 500; }
 
-/* ---- Badges ---- */
+/* Badges */
 .pow-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .35rem;
-  justify-content: center;
-  margin-bottom: 0.85rem;
-  flex-shrink: 0;
+  display: flex; flex-wrap: wrap; gap: .3rem;
+  justify-content: center; margin-bottom: .8rem;
 }
 .pow-badge {
-  padding: .28rem .72rem;
-  border-radius: 18px;
-  font-size: .73rem;
-  border: 1.5px solid var(--ta);
-  color: var(--ta);
-  background: transparent;
-  font-family: Georgia, serif;
-  line-height: 1.4;
-  white-space: nowrap;
+  padding: .22rem .6rem; border-radius: 14px; font-size: .69rem;
+  border: 1.5px solid var(--ta); color: var(--ta);
+  background: transparent; font-family: Georgia, serif; white-space: nowrap;
 }
 
-/* ---- Divider ---- */
-.pow-divider {
-  height: 1px;
-  background: rgba(139,58,58,0.10);
-  margin-bottom: 0.85rem;
-  flex-shrink: 0;
-}
-[data-theme=dark] .pow-divider { background: rgba(241,233,219,0.08); }
+/* Divider */
+.pow-divider { height: 1px; background: rgba(139,58,58,.10); margin-bottom: .8rem; }
+[data-theme=dark] .pow-divider { background: rgba(241,233,219,.08); }
 
-/* ---- Impact Bullets ----
-   flex:1 so it fills available space and pushes testimonial + button down
-*/
-.pow-impact {
-  flex: 1;
-  margin-bottom: 0.85rem;
-  min-height: 0;
-  overflow: hidden;
-}
-.pow-impact ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: .38rem;
-}
-.pow-impact li {
-  display: flex;
-  align-items: flex-start;
-  gap: .5rem;
-  font-size: .86rem;
-  color: var(--tp);
-  line-height: 1.45;
-}
-.pow-impact li::before {
-  content: "•";
-  color: var(--ta);
-  font-size: 1rem;
-  line-height: 1.35;
-  flex-shrink: 0;
-}
+/* Bullets */
+.pow-impact { margin-bottom: .8rem; flex: 1; }
+.pow-impact ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.32rem; }
+.pow-impact li { display:flex; align-items:flex-start; gap:.42rem; font-size:.82rem; color:var(--tp); line-height:1.45; }
+.pow-impact li::before { content:"•"; color:var(--ta); font-size:.9rem; line-height:1.4; flex-shrink:0; }
 
-/* ---- Testimonial ---- */
+/* Testimonial */
 .pow-testimonial {
-  display: flex;
-  align-items: flex-start;
-  gap: .75rem;
-  background: rgba(139,58,58,0.04);
-  border-radius: 12px;
-  padding: .75rem .9rem;
-  margin-bottom: 0.9rem;
-  flex-shrink: 0;
+  display: flex; align-items: flex-start; gap: .65rem;
+  background: rgba(139,58,58,.04); border-radius: 10px;
+  padding: .65rem .8rem; margin-bottom: .8rem;
 }
-[data-theme=dark] .pow-testimonial { background: rgba(193,95,60,0.07); }
-
+[data-theme=dark] .pow-testimonial { background: rgba(193,95,60,.07); }
 .pow-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid var(--ta);
-  overflow: hidden;
-  flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--ta); overflow: hidden; flex-shrink: 0;
   background: var(--nc);
+  display: flex; align-items: center; justify-content: center; font-size: .9rem;
 }
-.pow-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-[data-theme=dark] .pow-avatar { background: #181818; }
+.pow-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+[data-theme=dark] .pow-avatar { background: #1c1c1c; }
+.pow-testimonial-body { flex:1; min-width:0; }
+.pow-testimonial-name { font-size: .7rem; color: var(--ta); font-weight: 600; margin-bottom: .18rem; }
+.pow-testimonial-quote { font-size: .74rem; color: var(--ts); line-height: 1.46; font-style: italic; }
 
-.pow-testimonial-body {
-  flex: 1;
-  min-width: 0;
-}
-.pow-testimonial-name {
-  font-size: .74rem;
-  color: var(--ta);
-  font-weight: 600;
-  margin-bottom: .25rem;
-}
-.pow-testimonial-quote {
-  font-size: .78rem;
-  color: var(--ts);
-  line-height: 1.48;
-  font-style: italic;
-  /* Hard clamp: prevents ANY overflow into CTA area */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ---- CTA Button ---- */
-.pow-cta {
-  flex-shrink: 0;
-}
+/* CTA */
+.pow-cta { margin-top: auto; padding-top: .5rem; }
 .pow-cta-btn {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: .8rem 1rem;
-  background: var(--ta);
-  color: var(--nc);
-  text-decoration: none;
-  border-radius: 10px;
-  font-size: .92rem;
-  font-weight: 500;
-  font-family: Georgia, serif;
-  letter-spacing: .25px;
-  transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+  display: block; width: 100%; text-align: center;
+  padding: .72rem 1rem; background: var(--ta); color: var(--nc);
+  text-decoration: none; border-radius: 9px;
+  font-size: .86rem; font-weight: 500; font-family: Georgia, serif;
   border: 2px solid var(--ta);
+  transition: background .25s, color .25s, transform .2s;
 }
-.pow-cta-btn:hover {
-  background: transparent;
-  color: var(--ta);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 18px rgba(139,58,58,0.18);
-}
+.pow-cta-btn:hover { background: transparent; color: var(--ta); transform: translateY(-2px); }
 
-/* ---- Pagination ---- */
-.pow-pagination-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-  position: relative;
-  z-index: 2;
+/* Dots */
+.pow-dots { display: flex; justify-content: center; gap: .4rem; margin-top: 1.2rem; }
+.pow-dot {
+  width: 8px; height: 8px; border-radius: 4px;
+  background: var(--ta); opacity: .25;
+  border: none; cursor: pointer; padding: 0;
+  transition: opacity .3s, width .3s;
 }
-.pow-pagination-wrap .swiper-pagination-bullet {
-  background: var(--ta) !important;
-  width: 8px   !important;
-  height: 8px  !important;
-  opacity: 0.28 !important;
-  margin: 0 5px !important;
-  transition: all 0.35s ease !important;
-  border-radius: 4px !important;
-}
-.pow-pagination-wrap .swiper-pagination-bullet-active {
-  opacity: 1   !important;
-  width: 26px  !important;
-}
+.pow-dot.active { opacity: 1; width: 24px; }
 
-/* ---- Responsive ---- */
-
-/* Tablet: 1.5 cards, no scale dimming */
-@media (max-width: 768px) {
-  .pow-swiper-shell {
-    /* Remove edge mask on small screens */
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .pow-swiper .swiper-slide {
-    width: 300px !important;
-    transform: scale(1)       !important;
-    opacity:   1              !important;
-    filter:    brightness(1)  !important;
-  }
-  .pow-card { height: 600px; }
-  .pow-swiper .swiper-slide-active .pow-card { animation: none; }
-  /* Reset active glow on tablet */
-  .pow-swiper .swiper-slide-active .pow-card,
-  .pow-swiper .swiper-slide-prev .pow-card,
-  .pow-swiper .swiper-slide-next .pow-card {
-    border-color: rgba(139,58,58,0.10);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  }
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .pow-card { width: calc((100% - 1.25rem) / 1.6); }
 }
-
-/* Mobile: 1 card, full width */
-@media (max-width: 480px) {
-  .pow-swiper-shell {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .pow-swiper .swiper-slide {
-    width: 85vw  !important;
-    transform: scale(1)      !important;
-    opacity:   1             !important;
-    filter:    brightness(1) !important;
-  }
-  .pow-card {
-    height: auto;
-    min-height: 580px;
-  }
-  .pow-card-inner { padding: 1.5rem 1.35rem 1.4rem; }
-  .pow-logo { width: 70px; height: 70px; }
-  .pow-name h3 { font-size: 1.3rem; }
+@media (max-width: 560px) {
+  .pow-carousel-wrap { gap: .45rem; }
+  .pow-arrow { width: 36px; height: 36px; font-size: .9rem; }
+  .pow-card { width: calc(100% - 2px); min-width: 272px; }
+  .pow-card-inner { padding: 1.3rem 1.2rem; }
+  .pow-logo { width: 60px; height: 60px; font-size: 1.5rem; }
+  .pow-name h3 { font-size: 1.1rem; }
 }
 
 /* ============================================================
@@ -765,214 +493,243 @@
 </section>
 
 <!-- ============================================================
-     PROOF OF WORK — REBUILT FROM SCRATCH
+     PROOF OF WORK — PURE CSS SCROLL SNAP
      ============================================================ -->
 
 <section id="proof-of-work" class="pow-section">
-
-  <!-- Centred header inside container -->
-
   <div class="container">
-    <div class="pow-header">
-      <span class="pow-label">Strategic Contributions</span>
-      <h2 class="pow-title">Proof of Work</h2>
-      <p class="pow-sub">Real contributions across Web3 ecosystems — on-chain, in communities, and in growth.</p>
-    </div>
-  </div>
 
-  <!-- Carousel bleeds full-width so side cards can peek in from edges -->
+<div class="pow-header">
+  <span class="pow-label">Strategic Contributions</span>
+  <h2 class="pow-title">Proof of Work</h2>
+  <p class="pow-sub">Real contributions across Web3 ecosystems — on-chain, in communities, and in growth.</p>
+</div>
 
-  <div class="pow-swiper-shell">
-    <div class="swiper pow-swiper">
-      <div class="swiper-wrapper">
+<!-- Arrow left + scrollable track + Arrow right -->
+<div class="pow-carousel-wrap">
+  <button class="pow-arrow" id="powPrev" aria-label="Previous">&#8592;</button>
 
-    <!-- ── SLIDE 1: Pecunity ── -->
-    <div class="swiper-slide">
-      <div class="pow-card">
-        <div class="pow-card-inner">
-          <div class="pow-logo-wrap">
-            <div class="pow-logo">
-              <img src="docs/projects/IMG_9398.jpeg" alt="Pecunity Logo">
-            </div>
+  <div class="pow-track" id="powTrack">
+
+    <!-- Card 1: Pecunity -->
+    <div class="pow-card">
+      <div class="pow-card-inner">
+        <div class="pow-logo-wrap">
+          <div class="pow-logo">
+            <img src="docs/projects/IMG_9398.jpeg" alt="Pecunity Logo">
           </div>
-          <div class="pow-name">
-            <h3>Pecunity</h3>
-            <span class="pow-role">Community Manager → Zealy Manager</span>
+        </div>
+        <div class="pow-name">
+          <h3>Pecunity</h3>
+          <span class="pow-role">Community Manager → Zealy Manager</span>
+        </div>
+        <div class="pow-badges">
+          <span class="pow-badge">🌱 Early Contributor</span>
+          <span class="pow-badge">💰 Presale Support</span>
+          <span class="pow-badge">📊 Campaign Strategy</span>
+          <span class="pow-badge">👥 Moderation</span>
+        </div>
+        <div class="pow-divider"></div>
+        <div class="pow-impact">
+          <ul>
+            <li>Supported presale visibility phase</li>
+            <li>Designed Zealy growth task structure</li>
+            <li>Maintained onboarding flow</li>
+            <li>Contributed to engagement consistency</li>
+          </ul>
+        </div>
+        <div class="pow-testimonial">
+          <div class="pow-avatar">
+            <img src="docs/projects/IMG_9399.jpeg" alt="Lars">
           </div>
-          <div class="pow-badges">
-            <span class="pow-badge">🌱 Early Contributor</span>
-            <span class="pow-badge">💰 Presale Support</span>
-            <span class="pow-badge">📊 Campaign Strategy</span>
-            <span class="pow-badge">👥 Moderation</span>
+          <div class="pow-testimonial-body">
+            <div class="pow-testimonial-name">Lars – Co-Founder</div>
+            <p class="pow-testimonial-quote">"@Japheth did a great job I highly recommend him for his passionate and modest community work"</p>
           </div>
-          <div class="pow-divider"></div>
-          <div class="pow-impact">
-            <ul>
-              <li>Supported presale visibility phase</li>
-              <li>Designed Zealy growth task structure</li>
-              <li>Maintained onboarding flow</li>
-              <li>Contributed to engagement consistency</li>
-            </ul>
-          </div>
-          <div class="pow-testimonial">
-            <div class="pow-avatar">
-              <img src="docs/projects/IMG_9399.jpeg" alt="Lars">
-            </div>
-            <div class="pow-testimonial-body">
-              <div class="pow-testimonial-name">Lars – Co-Founder</div>
-              <p class="pow-testimonial-quote">"@Japheth did a great job I highly recommend him for his passionate and modest community work"</p>
-            </div>
-          </div>
-          <div class="pow-cta">
-            <a href="/proof/pecunity.html" class="pow-cta-btn">View Case Study →</a>
-          </div>
+        </div>
+        <div class="pow-cta">
+          <a href="/proof/pecunity.html" class="pow-cta-btn">View Case Study →</a>
         </div>
       </div>
     </div>
 
-    <!-- ── SLIDE 2: Biga Arcade ── -->
-    <div class="swiper-slide">
-      <div class="pow-card">
-        <div class="pow-card-inner">
-          <div class="pow-logo-wrap">
-            <div class="pow-logo">
-              <img src="docs/projects/IMG_9402.png" alt="Biga Arcade Logo">
-            </div>
+    <!-- Card 2: Biga Arcade -->
+    <div class="pow-card">
+      <div class="pow-card-inner">
+        <div class="pow-logo-wrap">
+          <div class="pow-logo">
+            <img src="docs/projects/IMG_9402.png" alt="Biga Arcade Logo">
           </div>
-          <div class="pow-name">
-            <h3>Biga Arcade</h3>
-            <span class="pow-role">Community Supporter & Biga Master</span>
+        </div>
+        <div class="pow-name">
+          <h3>Biga Arcade</h3>
+          <span class="pow-role">Community Supporter & Biga Master</span>
+        </div>
+        <div class="pow-badges">
+          <span class="pow-badge">🎥 Event Hosting</span>
+          <span class="pow-badge">🎮 Game Streaming</span>
+          <span class="pow-badge">📣 X Promotion</span>
+          <span class="pow-badge">💬 Community Engagement</span>
+        </div>
+        <div class="pow-divider"></div>
+        <div class="pow-impact">
+          <ul>
+            <li>Game streaming across live sessions</li>
+            <li>X promotion and content consistency</li>
+            <li>Community engagement and retention</li>
+            <li>Hosted weekly community gaming events</li>
+          </ul>
+        </div>
+        <div class="pow-testimonial">
+          <div class="pow-avatar">
+            <img src="docs/projects/IMG_9403.png" alt="Mr Konsole">
           </div>
-          <div class="pow-badges">
-            <span class="pow-badge">🎥 Event Hosting</span>
-            <span class="pow-badge">🎮 Game Streaming</span>
-            <span class="pow-badge">📣 X Promotion</span>
-            <span class="pow-badge">💬 Community Engagement</span>
+          <div class="pow-testimonial-body">
+            <div class="pow-testimonial-name">Mr Konsole – Admin</div>
+            <p class="pow-testimonial-quote">"Japheth brought energy and consistency to our community events and streams."</p>
           </div>
-          <div class="pow-divider"></div>
-          <div class="pow-impact">
-            <ul>
-              <li>Game streaming across live sessions</li>
-              <li>X promotion and content consistency</li>
-              <li>Community engagement and retention</li>
-              <li>Hosted weekly community gaming events</li>
-            </ul>
-          </div>
-          <div class="pow-testimonial">
-            <div class="pow-avatar">
-              <img src="docs/projects/IMG_9403.png" alt="Mr Konsole">
-            </div>
-            <div class="pow-testimonial-body">
-              <div class="pow-testimonial-name">Mr Konsole – Admin</div>
-              <p class="pow-testimonial-quote">"Japheth brought energy and consistency to our community events and streams."</p>
-            </div>
-          </div>
-          <div class="pow-cta">
-            <a href="/proof/biga.html" class="pow-cta-btn">View Case Study →</a>
-          </div>
+        </div>
+        <div class="pow-cta">
+          <a href="/proof/biga.html" class="pow-cta-btn">View Case Study →</a>
         </div>
       </div>
     </div>
 
-    <!-- ── SLIDE 3: Perspective AI ── -->
-    <div class="swiper-slide">
-      <div class="pow-card">
-        <div class="pow-card-inner">
-          <div class="pow-logo-wrap">
-            <div class="pow-logo">
-              <img src="docs/projects/IMG_9401.jpeg" alt="Perspective AI Logo">
-            </div>
+    <!-- Card 3: Perspective AI -->
+    <div class="pow-card">
+      <div class="pow-card-inner">
+        <div class="pow-logo-wrap">
+          <div class="pow-logo">
+            <img src="docs/projects/IMG_9401.jpeg" alt="Perspective AI Logo">
           </div>
-          <div class="pow-name">
-            <h3>Perspective AI</h3>
-            <span class="pow-role">Ambassador</span>
+        </div>
+        <div class="pow-name">
+          <h3>Perspective AI</h3>
+          <span class="pow-role">Ambassador</span>
+        </div>
+        <div class="pow-badges">
+          <span class="pow-badge">📢 Awareness Campaigns</span>
+          <span class="pow-badge">🔍 Research</span>
+          <span class="pow-badge">🌐 Brand Visibility</span>
+          <span class="pow-badge">🤝 X Engagement</span>
+        </div>
+        <div class="pow-divider"></div>
+        <div class="pow-impact">
+          <ul>
+            <li>Led awareness campaigns for the project</li>
+            <li>Drove organic brand visibility on X</li>
+            <li>Sustained X engagement loops</li>
+            <li>Supported ecosystem growth initiatives</li>
+          </ul>
+        </div>
+        <div class="pow-testimonial">
+          <div class="pow-avatar">
+            <img src="docs/projects/IMG_9401.jpeg" alt="Perspective Team">
           </div>
-          <div class="pow-badges">
-            <span class="pow-badge">📢 Awareness Campaigns</span>
-            <span class="pow-badge">🔍 Research</span>
-            <span class="pow-badge">🌐 Brand Visibility</span>
-            <span class="pow-badge">🤝 X Engagement</span>
+          <div class="pow-testimonial-body">
+            <div class="pow-testimonial-name">Perspective – Team</div>
+            <p class="pow-testimonial-quote">"Great ambassador work with consistent engagement and genuine community support."</p>
           </div>
-          <div class="pow-divider"></div>
-          <div class="pow-impact">
-            <ul>
-              <li>Led awareness campaigns for the project</li>
-              <li>Drove organic brand visibility on X</li>
-              <li>Sustained X engagement loops</li>
-              <li>Supported ecosystem growth initiatives</li>
-            </ul>
-          </div>
-          <div class="pow-testimonial">
-            <div class="pow-avatar">
-              <img src="docs/projects/IMG_9401.jpeg" alt="Perspective Team">
-            </div>
-            <div class="pow-testimonial-body">
-              <div class="pow-testimonial-name">Perspective – Team</div>
-              <p class="pow-testimonial-quote">"Great ambassador work with consistent engagement and genuine community support."</p>
-            </div>
-          </div>
-          <div class="pow-cta">
-            <a href="/proof/perspective.html" class="pow-cta-btn">View Case Study →</a>
-          </div>
+        </div>
+        <div class="pow-cta">
+          <a href="/proof/perspective.html" class="pow-cta-btn">View Case Study →</a>
         </div>
       </div>
     </div>
 
-    <!-- ── SLIDE 4: Cyber Boxing League ── -->
-    <div class="swiper-slide">
-      <div class="pow-card">
-        <div class="pow-card-inner">
-          <div class="pow-logo-wrap">
-            <div class="pow-logo">
-              <img src="docs/projects/IMG_9400.jpeg" alt="Cyber Boxing League Logo">
-            </div>
+    <!-- Card 4: Cyber Boxing League -->
+    <div class="pow-card">
+      <div class="pow-card-inner">
+        <div class="pow-logo-wrap">
+          <div class="pow-logo">
+            <img src="docs/projects/IMG_9400.jpeg" alt="Cyber Boxing League Logo">
           </div>
-          <div class="pow-name">
-            <h3>Cyber Boxing League</h3>
-            <span class="pow-role">Community Supporter</span>
+        </div>
+        <div class="pow-name">
+          <h3>Cyber Boxing League</h3>
+          <span class="pow-role">Community Supporter</span>
+        </div>
+        <div class="pow-badges">
+          <span class="pow-badge">👥 Early Community</span>
+          <span class="pow-badge">🛡️ Moderation</span>
+          <span class="pow-badge">🌱 Grassroots Engagement</span>
+          <span class="pow-badge">💬 Participation</span>
+        </div>
+        <div class="pow-divider"></div>
+        <div class="pow-impact">
+          <ul>
+            <li>Early Web3 community exposure</li>
+            <li>Provided moderation support</li>
+            <li>Contributed to community discussions</li>
+            <li>Grassroots engagement and participation</li>
+          </ul>
+        </div>
+        <div class="pow-testimonial">
+          <div class="pow-avatar">
+            <img src="docs/projects/IMG_9400.jpeg" alt="CBL Team">
           </div>
-          <div class="pow-badges">
-            <span class="pow-badge">👥 Early Community</span>
-            <span class="pow-badge">🛡️ Moderation</span>
-            <span class="pow-badge">🌱 Grassroots Engagement</span>
-            <span class="pow-badge">💬 Participation</span>
+          <div class="pow-testimonial-body">
+            <div class="pow-testimonial-name">CBL – Team</div>
+            <p class="pow-testimonial-quote">"Early foundation in Web3 community dynamics — reliable and engaged throughout."</p>
           </div>
-          <div class="pow-divider"></div>
-          <div class="pow-impact">
-            <ul>
-              <li>Early Web3 community exposure</li>
-              <li>Provided moderation support</li>
-              <li>Contributed to community discussions</li>
-              <li>Grassroots engagement and participation</li>
-            </ul>
-          </div>
-          <div class="pow-testimonial">
-            <div class="pow-avatar">
-              <img src="docs/projects/IMG_9400.jpeg" alt="CBL Team">
-            </div>
-            <div class="pow-testimonial-body">
-              <div class="pow-testimonial-name">CBL – Team</div>
-              <p class="pow-testimonial-quote">"Early foundation in Web3 community dynamics — reliable and engaged throughout."</p>
-            </div>
-          </div>
-          <div class="pow-cta">
-            <a href="/proof/cbl.html" class="pow-cta-btn">View Case Study →</a>
-          </div>
+        </div>
+        <div class="pow-cta">
+          <a href="/proof/cbl.html" class="pow-cta-btn">View Case Study →</a>
         </div>
       </div>
     </div>
 
-  </div><!-- /swiper-wrapper -->
-</div><!-- /swiper -->
+    <!-- Card 5: Vexor Network -->
+    <div class="pow-card">
+      <div class="pow-card-inner">
+        <div class="pow-logo-wrap">
+          <div class="pow-logo">
+            <img src="docs/projects/IMG_9420.jpeg" alt="Vexor Network Logo">
+          </div>
+        </div>
+        <div class="pow-name">
+          <h3>Vexor Network</h3>
+          <span class="pow-role">Ambassador & Community Support</span>
+        </div>
+        <div class="pow-badges">
+          <span class="pow-badge">🎖️ Ambassador</span>
+          <span class="pow-badge">🎮 Game Nights</span>
+          <span class="pow-badge">🤝 Community Support</span>
+          <span class="pow-badge">🏆 Campaign Participant</span>
+        </div>
+        <div class="pow-divider"></div>
+        <div class="pow-impact">
+          <ul>
+            <li>Represented Vexor as community ambassador</li>
+            <li>Helped organise and host game nights</li>
+            <li>Actively participated in campaigns & events</li>
+            <li>Provided consistent community support</li>
+          </ul>
+        </div>
+        <div class="pow-testimonial">
+          <div class="pow-avatar">
+            <img src="docs/projects/IMG_9419.jpeg" alt="Saad">
+          </div>
+          <div class="pow-testimonial-body">
+            <div class="pow-testimonial-name">Saad – Admin</div>
+            <p class="pow-testimonial-quote">"Japheth was one of our most dependable ambassadors — always present, always contributing."</p>
+          </div>
+        </div>
+        <div class="pow-cta">
+          <a href="/proof/vexor.html" class="pow-cta-btn">View Case Study →</a>
+        </div>
+      </div>
+    </div>
 
-  </div><!-- /pow-swiper-shell -->
+  </div><!-- /pow-track -->
 
-  <!-- Pagination dots — outside shell so always visible & centred -->
+  <button class="pow-arrow" id="powNext" aria-label="Next">&#8594;</button>
+</div><!-- /pow-carousel-wrap -->
 
-  <div class="pow-pagination-wrap">
-    <div class="pow-swiper-pagination"></div>
-  </div>
+<!-- Dot indicators -->
+<div class="pow-dots" id="powDots"></div>
 
+  </div><!-- /container -->
 </section>
 <!-- ============================================================
      END PROOF OF WORK
@@ -1215,32 +972,69 @@ document.querySelectorAll('.service-toggle').forEach(toggle => {
 });
 
 /* ========================================================
-   PROOF OF WORK SWIPER — CENTERED + INFINITE LOOP FIX
+   PROOF OF WORK — PURE JS ARROW + DOT CONTROLLER
+   No Swiper. Works with CSS scroll-snap on the track.
    ======================================================== */
-const powSwiper = new Swiper('.pow-swiper', {
-  slidesPerView: 'auto', // This tells Swiper to respect your 340px CSS width
-  centeredSlides: true,
-  loop: true,
-  grabCursor: true,
-  speed: 800,
-  
-  // The "Seamless Loop" Secret: 
-  // This must be at least the number of slides you have (4).
-  loopedSlides: 4, 
+(function() {
+  const track   = document.getElementById('powTrack');
+  const prevBtn = document.getElementById('powPrev');
+  const nextBtn = document.getElementById('powNext');
+  const dotsWrap = document.getElementById('powDots');
 
-  autoplay: {
-    delay: 3000,
-    disableOnInteraction: false,
-  },
+  if (!track) return;
 
-  pagination: {
-    el: '.pow-swiper-pagination',
-    clickable: true,
-  },
+  const cards = Array.from(track.querySelectorAll('.pow-card'));
+  const total = cards.length;
 
-  slideToClickedSlide: true,
-});
+  // Build dots
+  cards.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'pow-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to card ' + (i + 1));
+    d.addEventListener('click', () => scrollToCard(i));
+    dotsWrap.appendChild(d);
+  });
 
+  const dots = Array.from(dotsWrap.querySelectorAll('.pow-dot'));
+
+  function getCardWidth() {
+    return cards[0] ? cards[0].offsetWidth : 0;
+  }
+
+  function getGap() {
+    // Read computed gap from the track
+    const style = getComputedStyle(track);
+    return parseFloat(style.gap) || parseFloat(style.columnGap) || 20;
+  }
+
+  function currentIndex() {
+    const gap = getGap();
+    const cardW = getCardWidth();
+    if (!cardW) return 0;
+    return Math.round(track.scrollLeft / (cardW + gap));
+  }
+
+  function scrollToCard(idx) {
+    idx = Math.max(0, Math.min(total - 1, idx));
+    const gap = getGap();
+    const cardW = getCardWidth();
+    track.scrollTo({ left: idx * (cardW + gap), behavior: 'smooth' });
+  }
+
+  prevBtn.addEventListener('click', () => scrollToCard(currentIndex() - 1));
+  nextBtn.addEventListener('click', () => scrollToCard(currentIndex() + 1));
+
+  function updateState() {
+    const idx = currentIndex();
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx >= total - 1;
+  }
+
+  track.addEventListener('scroll', updateState, { passive: true });
+  window.addEventListener('resize', updateState);
+  updateState();
+})();
 </script>
 
 </body>
