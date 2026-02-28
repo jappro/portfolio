@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pecunity — Case Study | Japheth's Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F1E9DB;--accent:#0D3B46;--text:#1a1a1a;--muted:#666;--border:#ddd5c4;--card:#fff;--max:1100px;--r:14px;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 2rem}
+
+/* Top bar */
+.topbar{padding:1.2rem 0;border-bottom:1px solid var(–border);position:sticky;top:0;background:var(–bg);z-index:100}
+.topbar-inner{max-width:var(–max);margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between}
+.back-btn{display:inline-flex;align-items:center;gap:.45rem;background:var(–accent);color:#F1E9DB;text-decoration:none;padding:.52rem 1.2rem;border-radius:10px;font-size:.86rem;font-weight:500;transition:background .2s,transform .15s}
+.back-btn:hover{background:#0a2d37;transform:translateX(-2px)}
+.back-arrow{font-size:1rem}
+.page-tag{font-size:.78rem;color:var(–muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* Header */
+.page-header{padding:5rem 0 3rem}
+.project-chip{display:inline-block;background:var(–accent);color:#F1E9DB;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.32rem .85rem;border-radius:6px;margin-bottom:1.3rem}
+.page-header h1{font-family:var(–serif);font-size:clamp(2.8rem,6vw,4.2rem);line-height:1.08;color:var(–text);margin-bottom:.65rem;font-weight:400}
+.page-header .sub{font-size:1.1rem;color:var(–muted);max-width:560px;margin-bottom:2.2rem}
+
+/* Meta strip */
+.meta-strip{display:flex;flex-wrap:wrap;gap:0;background:var(–card);border-radius:var(–r);border:1px solid var(–border);box-shadow:0 2px 14px rgba(0,0,0,.05);overflow:hidden}
+.meta-item{flex:1;min-width:160px;padding:1.2rem 1.5rem;border-right:1px solid var(–border)}
+.meta-item:last-child{border-right:none}
+.meta-label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(–accent);margin-bottom:.28rem}
+.meta-val{font-size:.93rem;color:var(–text);font-weight:500;line-height:1.4}
+
+/* Divider */
+.hdivider{height:1px;background:var(–border);margin:2.5rem 0 0}
+
+/* Sections */
+.section{padding:3.5rem 0;border-bottom:1px solid var(–border)}
+.section:last-of-type{border-bottom:none}
+
+.section-grid{display:grid;grid-template-columns:240px 1fr;gap:4rem;align-items:start}
+.section-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(–accent);margin-bottom:.5rem;display:block}
+.section-title{font-family:var(–serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:400;color:var(–text);line-height:1.2}
+
+/* Body text */
+.body-text p{font-size:1rem;color:#2d2d2d;line-height:1.82;margin-bottom:1rem}
+.body-text p:last-child{margin-bottom:0}
+
+/* Bullet list */
+.dot-list{list-style:none;display:flex;flex-direction:column;gap:.8rem}
+.dot-list li{display:flex;align-items:flex-start;gap:.8rem;font-size:1rem;color:#2d2d2d;line-height:1.6}
+.dot-list li::before{content:’’;width:7px;height:7px;border-radius:50%;background:var(–accent);flex-shrink:0;margin-top:.52rem}
+
+/* Result cards */
+.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.9rem;margin-bottom:2.5rem}
+.result-card{background:var(–card);border:1px solid var(–border);border-radius:var(–r);padding:1.3rem 1.4rem;box-shadow:0 1px 8px rgba(0,0,0,.04)}
+.result-card .dot{width:8px;height:8px;background:var(–accent);border-radius:50%;margin-bottom:.65rem}
+.result-card p{font-size:.9rem;color:var(–text);line-height:1.55;font-weight:500}
+
+/* Testimonial */
+.testimonial{background:var(–accent);color:#F1E9DB;border-radius:var(–r);padding:2.4rem 2.5rem;margin-top:2.5rem}
+.testimonial blockquote{font-family:var(–serif);font-size:1.3rem;line-height:1.62;margin-bottom:1rem;font-weight:400}
+.testimonial cite{font-size:.85rem;opacity:.72;font-style:normal;font-weight:500}
+
+/* Visual proof */
+.proof-head{display:flex;align-items:center;gap:1rem;margin:2.8rem 0 1.2rem}
+.proof-head h3{font-family:var(–serif);font-size:1.25rem;font-weight:400;color:var(–text);white-space:nowrap}
+.proof-head::after{content:’’;flex:1;height:1px;background:var(–border)}
+
+.proof-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.proof-card{background:var(–card);border-radius:var(–r);border:1px solid var(–border);box-shadow:0 2px 10px rgba(0,0,0,.05);overflow:hidden}
+.proof-card img{width:100%;height:auto;display:block}
+.proof-ph{aspect-ratio:16/10;background:#f0ebe2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;padding:1rem}
+.proof-ph svg{width:26px;height:26px;opacity:.28}
+.proof-ph span{font-size:.74rem;color:var(–muted);text-align:center}
+.proof-label{padding:.65rem 1rem;font-size:.76rem;font-weight:600;color:var(–accent);letter-spacing:.04em;border-top:1px solid var(–border);background:var(–card)}
+
+/* Footer */
+footer{padding:2rem 0;border-top:1px solid var(–border);margin-top:3rem}
+.foot-inner{max-width:var(–max);margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.foot-copy{font-size:.8rem;color:var(–muted)}
+.foot-link{font-size:.82rem;color:var(–accent);text-decoration:none;font-weight:500}
+.foot-link:hover{text-decoration:underline}
+
+/* Mobile */
+@media(max-width:760px){
+.section-grid{grid-template-columns:1fr;gap:1.2rem}
+.meta-strip{flex-direction:column}
+.meta-item{border-right:none;border-bottom:1px solid var(–border)}
+.meta-item:last-child{border-bottom:none}
+.proof-grid{grid-template-columns:1fr}
+.page-header{padding:3rem 0 2rem}
+.result-grid{grid-template-columns:1fr}
+}
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="back-btn"><span class="back-arrow">&#8592;</span> Back to Portfolio</a>
+    <span class="page-tag">Case Study</span>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <span class="project-chip">DeFi &middot; Community Growth</span>
+    <h1>Pecunity</h1>
+    <p class="sub">Community Growth &amp; Campaign Execution Case Study</p>
+    <div class="meta-strip">
+      <div class="meta-item">
+        <span class="meta-label">Joined</span>
+        <span class="meta-val">Q2 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-val">9 Months</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-val">Community Manager &middot; Campaign Lead &middot; Growth Strategist</span>
+      </div>
+    </div>
+    <div class="hdivider"></div>
+  </div>
+</header>
+
+<main>
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <div class="wrap">
+      <div class="section-grid">
+        <div>
+          <span class="section-eyebrow">01</span>
+          <h2 class="section-title">Overview</h2>
+        </div>
+        <div class="body-text">
+          <p>Pecunity is a decentralized finance protocol focused on automated, cross-chain passive income strategies. I joined during its early stage when it was still operating as OctoDeFi and contributed through its rebranding and growth phase.</p>
+          <p>My work spanned community management, campaign coordination, and growth strategy — helping the project establish a credible, engaged community at a critical stage of development.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenge -->
+
+  <section class="section" id="challenge">
+    <div class="wrap">
+      <div class="section-grid">
+        <div>
+          <span class="section-eyebrow">02</span>
+          <h2 class="section-title">Challenge</h2>
+        </div>
+        <div>
+          <ul class="dot-list">
+            <li>Low Discord engagement and inactive member base</li>
+            <li>Limited campaign participation across platforms</li>
+            <li>Weak X (Twitter) visibility during key launch windows</li>
+            <li>Operational gaps in campaign coordination</li>
+            <li>Early-stage structural challenges during rebranding</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Action -->
+
+  <section class="section" id="action">
+    <div class="wrap">
+      <div class="section-grid">
+        <div>
+          <span class="section-eyebrow">03</span>
+          <h2 class="section-title">Action</h2>
+        </div>
+        <div>
+          <ul class="dot-list">
+            <li>Onboarded DeFi-focused community members with targeted outreach</li>
+            <li>Amplified Zealy campaign participation through structured task design</li>
+            <li>Improved Discord activity flow and moderation consistency</li>
+            <li>Coordinated campaign execution across multiple platforms</li>
+            <li>Supported the OctoDeFi &rarr; Pecunity rebranding transition</li>
+            <li>Increased visibility through structured X engagement strategies</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+
+  <section class="section" id="results">
+    <div class="wrap">
+      <div class="section-grid">
+        <div>
+          <span class="section-eyebrow">04</span>
+          <h2 class="section-title">Results</h2>
+        </div>
+        <div>
+          <div class="result-grid">
+            <div class="result-card"><div class="dot"></div><p>Increased campaign participation rate across Zealy and social channels</p></div>
+            <div class="result-card"><div class="dot"></div><p>Higher Discord activity and improved member retention</p></div>
+            <div class="result-card"><div class="dot"></div><p>Improved X visibility during campaign windows</p></div>
+            <div class="result-card"><div class="dot"></div><p>Direct founder acknowledgment and public testimonial received</p></div>
+          </div>
+
+      <div class="testimonial">
+        <blockquote>"@Japheth did a great job. I highly recommend him for his passionate and modest community work."</blockquote>
+        <cite>Lars &mdash; Co-Founder, Pecunity</cite>
+      </div>
+
+      <div class="proof-head"><h3>Visual Proof</h3></div>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#0D3B46" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Replace with screenshot</span></div>
+          <div class="proof-label">Founder Recognition Screenshot</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#0D3B46" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Replace with screenshot</span></div>
+          <div class="proof-label">Task Completion Acknowledgment</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#0D3B46" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Replace with screenshot</span></div>
+          <div class="proof-label">Testimonial Screenshot</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#0D3B46" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Replace with screenshot</span></div>
+          <div class="proof-label">PinkSale Campaign Tweet</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#0D3B46" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Replace with screenshot</span></div>
+          <div class="proof-label">Campaign Thread Link Preview</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span class="foot-copy">&copy; 2025 Japheth A. &mdash; Web3 Community Strategist</span>
+    <a href="index.html" class="foot-link">&#8592; Back to Portfolio</a>
+  </div>
+</footer>
+</body>
+</html>
