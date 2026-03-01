@@ -20,13 +20,12 @@ font-family: Georgia, serif;
 background-color: #F1E9DB;
 color: #1a1a1a;
 line-height: 1.75;
-font-size: 16px;
 -webkit-font-smoothing: antialiased;
 }
 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
 
-/* ── Topbar ── */
+/* Topbar */
 .topbar {
 padding: 1rem 0;
 background-color: #F1E9DB;
@@ -39,284 +38,170 @@ display: flex; align-items: center; justify-content: space-between;
 }
 .back-btn {
 display: inline-flex; align-items: center; gap: 0.5rem;
-background-color: #0D3B46;
-color: #F1E9DB;
-text-decoration: none;
-padding: 0.55rem 1.25rem;
-border-radius: 8px;
-font-family: Georgia, serif;
-font-size: 0.9rem; font-weight: normal;
-transition: background-color 0.2s ease;
+background-color: #0D3B46; color: #F1E9DB;
+text-decoration: none; padding: 0.55rem 1.25rem;
+border-radius: 8px; font-family: Georgia, serif;
+font-size: 0.9rem; transition: background-color 0.2s;
 }
 .back-btn:hover { background-color: #0a2d37; }
 .page-tag {
-font-family: Georgia, serif;
-font-size: 0.72rem; color: #3a3a3a;
-letter-spacing: 0.18em; text-transform: uppercase;
+font-family: Georgia, serif; font-size: 0.72rem;
+color: #3a3a3a; letter-spacing: 0.18em; text-transform: uppercase;
 }
 
-/* ── Page header ── */
-.page-header {
-padding: 4.5rem 0 3rem;
-border-bottom: 1px solid rgba(139,58,58,0.15);
-}
+/* Page header */
+.page-header { padding: 4.5rem 0 3rem; border-bottom: 1px solid rgba(139,58,58,0.15); }
 .chip {
-display: inline-block;
-border: 1.5px solid #8B3A3A;
-color: #8B3A3A;
-font-family: Georgia, serif;
-font-size: 0.72rem;
+display: inline-block; border: 1.5px solid #8B3A3A; color: #8B3A3A;
+font-family: Georgia, serif; font-size: 0.72rem;
 letter-spacing: 0.14em; text-transform: uppercase;
-padding: 0.3rem 0.9rem; border-radius: 100px;
-margin-bottom: 1.4rem;
+padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.4rem;
 }
 .page-header h1 {
-font-family: Georgia, serif;
-font-size: clamp(2.6rem, 7vw, 4.2rem);
-font-weight: bold;
-line-height: 1.08;
-color: #1a1a1a;
-margin-bottom: 0.7rem;
+font-family: Georgia, serif; font-weight: bold;
+font-size: clamp(2.6rem, 7vw, 4.2rem); line-height: 1.08;
+color: #1a1a1a; margin-bottom: 0.7rem;
 }
 .page-header .subtitle {
-font-family: Georgia, serif;
-font-size: 1.1rem;
-color: #3a3a3a;
-max-width: 540px;
-margin-bottom: 2.2rem;
-line-height: 1.65;
+font-family: Georgia, serif; font-size: 1.1rem;
+color: #3a3a3a; max-width: 540px; margin-bottom: 2.2rem; line-height: 1.65;
 }
 
-/* ── Meta strip ── */
+/* Meta strip */
 .meta-strip {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-border: 1.5px solid rgba(139,58,58,0.2);
-border-radius: 12px;
-overflow: hidden;
-background-color: #FFFFFF;
+display: grid; grid-template-columns: repeat(3, 1fr);
+border: 1.5px solid rgba(139,58,58,0.2); border-radius: 12px;
+overflow: hidden; background-color: #FFFFFF;
 }
-.meta-item {
-padding: 1.3rem 1.6rem;
-border-right: 1px solid rgba(139,58,58,0.12);
-}
+.meta-item { padding: 1.3rem 1.6rem; border-right: 1px solid rgba(139,58,58,0.12); }
 .meta-item:last-child { border-right: none; }
 .meta-label {
-display: block;
-font-family: Georgia, serif;
-font-size: 0.68rem;
+display: block; font-family: Georgia, serif; font-size: 0.68rem;
 text-transform: uppercase; letter-spacing: 0.14em;
-color: #C15F3C;
-margin-bottom: 0.4rem;
+color: #C15F3C; margin-bottom: 0.4rem;
 }
-.meta-val {
-font-family: Georgia, serif;
-font-size: 0.97rem; color: #1a1a1a; line-height: 1.45;
-}
+.meta-val { font-family: Georgia, serif; font-size: 0.97rem; color: #1a1a1a; line-height: 1.45; }
 
-/* ── Section rows ── */
+/* Sections */
 .section {
-display: grid;
-grid-template-columns: 200px 1fr;
-gap: 4.5rem;
-padding: 4rem 0;
-border-bottom: 1px solid rgba(139,58,58,0.12);
-align-items: start;
+display: grid; grid-template-columns: 210px 1fr;
+gap: 4.5rem; padding: 4rem 0;
+border-bottom: 1px solid rgba(139,58,58,0.12); align-items: start;
 }
 .section:last-of-type { border-bottom: none; }
 .section-label { position: sticky; top: 74px; }
-
 .section-num {
-display: block;
-font-family: Georgia, serif;
-font-size: 0.72rem;
+display: block; font-family: Georgia, serif; font-size: 0.72rem;
 letter-spacing: 0.18em; text-transform: uppercase;
-color: #C15F3C;
-margin-bottom: 0.55rem;
+color: #C15F3C; margin-bottom: 0.55rem;
 }
-.section-title {
-font-family: Georgia, serif;
-font-size: 1.75rem;
-color: #1a1a1a; line-height: 1.2;
-}
+.section-title { font-family: Georgia, serif; font-size: 1.75rem; color: #1a1a1a; line-height: 1.2; }
 
-/* ── Body content ── */
-.content p {
-font-family: Georgia, serif;
-font-size: 1.05rem; color: #3a3a3a;
-line-height: 1.85; margin-bottom: 1.15rem;
-}
-.content p:last-child { margin-bottom: 0; }
+/* Body text */
+.body-text p { font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.85; margin-bottom: 1.1rem; }
+.body-text p:last-child { margin-bottom: 0; }
 
-/* ── Bullet list ── */
+/* Bullets */
 .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
 .bullet-list li {
 display: flex; align-items: flex-start; gap: 0.9rem;
-font-family: Georgia, serif;
-font-size: 1.05rem; color: #3a3a3a; line-height: 1.7;
+font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.65;
 }
 .bullet-list li::before {
-content: ‘’;
-width: 7px; height: 7px; border-radius: 50%;
-background-color: #8B3A3A;
-flex-shrink: 0; margin-top: 0.58rem;
+content: ‘’; width: 7px; height: 7px; border-radius: 50%;
+background-color: #8B3A3A; flex-shrink: 0; margin-top: 0.57rem;
 }
 
-/* ── Result cards ── */
+/* Result cards */
 .result-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 gap: 1rem; margin-bottom: 2.5rem;
 }
 .result-card {
-background-color: #fff;
-border: 1px solid rgba(139,58,58,0.15);
-border-radius: 12px;
-padding: 1.4rem 1.5rem;
-box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+background-color: #fff; border: 1px solid rgba(139,58,58,0.15);
+border-radius: 12px; padding: 1.4rem 1.5rem;
 }
-.result-card.featured {
-background-color: #0D3B46;
-border-color: #0D3B46;
-}
+.result-card.featured { background-color: #0D3B46; border-color: #0D3B46; }
 .result-card.featured .r-dot { background-color: #F1E9DB; }
 .result-card.featured p { color: #F1E9DB; }
-.r-dot {
-width: 8px; height: 8px; border-radius: 50%;
-background-color: #8B3A3A; margin-bottom: 0.8rem;
-}
-.result-card p {
-font-family: Georgia, serif;
-font-size: 0.95rem;
-color: #1a1a1a; line-height: 1.6;
-}
+.r-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #8B3A3A; margin-bottom: 0.8rem; }
+.result-card p { font-family: Georgia, serif; font-size: 0.95rem; color: #1a1a1a; line-height: 1.6; }
 
-/* ── Testimonial ── */
+/* Testimonial */
 .testimonial {
-background-color: #0D3B46;
-color: #F1E9DB;
-border-radius: 12px;
-padding: 2.5rem 2.75rem;
-margin-top: 2.5rem;
+background-color: #0D3B46; color: #F1E9DB;
+border-radius: 12px; padding: 2.5rem 2.75rem; margin-top: 2.5rem;
 }
 .testimonial blockquote {
-font-family: Georgia, serif;
-font-size: 1.18rem;
-line-height: 1.78;
-margin-bottom: 1.2rem;
-color: #F1E9DB;
+font-family: Georgia, serif; font-size: 1.18rem;
+line-height: 1.78; margin-bottom: 1.2rem; color: #F1E9DB;
 }
 .testimonial blockquote::before { content: ‘\201C’; }
 .testimonial blockquote::after  { content: ‘\201D’; }
-.testimonial cite {
-font-family: Georgia, serif;
-font-size: 0.88rem; font-style: italic;
-color: rgba(241,233,219,0.65);
-}
+.testimonial cite { font-family: Georgia, serif; font-size: 0.88rem; font-style: italic; color: rgba(241,233,219,0.65); }
 
-/* ── Visual Proof ── */
+/* Visual proof heading */
 .proof-section-head {
-display: flex; align-items: center; gap: 1rem;
-margin: 3rem 0 1.4rem;
+display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem;
 }
 .proof-section-head h3 {
-font-family: Georgia, serif;
-font-size: 1.15rem;
-color: #1a1a1a; white-space: nowrap;
+font-family: Georgia, serif; font-size: 1.15rem; color: #1a1a1a; white-space: nowrap;
 }
-.proof-section-head::after {
-content: ‘’; flex: 1; height: 1px;
-background-color: rgba(139,58,58,0.15);
+.proof-section-head::after { content: ‘’; flex: 1; height: 1px; background-color: rgba(139,58,58,0.15); }
+
+/* Proof grid */
+.proof-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 1.25rem;
 }
-.proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+/* Proof card — NO overflow:hidden so images never get clipped */
 .proof-card {
 background-color: #FFFFFF;
 border-radius: 12px;
 border: 1px solid rgba(139,58,58,0.15);
-overflow: hidden;
-box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
+
+/* Image fills card width, height is fully automatic (natural size) */
 .proof-card img {
+display: block;
 width: 100%;
 height: auto;
-display: block;
-/* Natural image size — no forced cropping */
+border-radius: 12px 12px 0 0;
 }
-.proof-ph {
-aspect-ratio: 16 / 10;
-background-color: #F1E9DB;
-display: flex; flex-direction: column;
-align-items: center; justify-content: center;
-gap: 0.5rem; padding: 1rem;
+
+.proof-card-lbl {
+padding: 0.75rem 1rem 0.8rem;
+font-family: Georgia, serif; font-size: 0.82rem;
+color: #8B3A3A; letter-spacing: 0.04em;
+border-top: 1px solid rgba(139,58,58,0.1);
 }
-.proof-ph svg { width: 24px; height: 24px; opacity: 0.25; }
-.proof-ph span {
-font-family: Georgia, serif;
-font-size: 0.8rem; color: #3a3a3a; text-align: center;
-}
-/* Link button below tweet/thread cards */
+
+/* View on X link */
 .proof-link-btn {
 display: inline-flex; align-items: center; gap: 0.4rem;
-margin: 0 1rem 0.75rem;
+margin: 0 1rem 0.85rem;
 padding: 0.45rem 1rem;
-background-color: #0D3B46;
-color: #F1E9DB;
-text-decoration: none;
-border-radius: 6px;
-font-family: Georgia, serif;
-font-size: 0.78rem;
+background-color: #0D3B46; color: #F1E9DB;
+text-decoration: none; border-radius: 6px;
+font-family: Georgia, serif; font-size: 0.8rem;
 transition: background-color 0.2s;
 }
 .proof-link-btn:hover { background-color: #0a2d37; }
-.proof-card-lbl {
-padding: 0.7rem 1rem;
-font-family: Georgia, serif;
-font-size: 0.8rem; color: #8B3A3A;
-letter-spacing: 0.04em;
-border-top: 1px solid rgba(139,58,58,0.12);
-background-color: #FFFFFF;
-}
 
-/* ── Rank badge ── */
-.rank-badge {
-display: inline-flex; align-items: center; gap: 0.9rem;
-border: 2px solid #8B3A3A; border-radius: 10px;
-padding: 0.9rem 1.5rem; margin-bottom: 1.5rem;
-background-color: #fff;
-}
-.rank-num {
-font-family: Georgia, serif;
-font-size: 2.4rem; color: #8B3A3A; line-height: 1;
-}
-.rank-text {
-font-family: Georgia, serif;
-font-size: 0.85rem; color: #8B3A3A; line-height: 1.4;
-}
-
-/* ── Footer ── */
-footer {
-padding: 2rem 0;
-border-top: 1px solid rgba(139,58,58,0.15);
-margin-top: 4rem;
-background-color: #F1E9DB;
-}
+/* Footer */
+footer { padding: 2rem 0; border-top: 1px solid rgba(139,58,58,0.15); margin-top: 4rem; background-color: #F1E9DB; }
 .foot-inner {
 max-width: 1080px; margin: 0 auto; padding: 0 2.5rem;
-display: flex; justify-content: space-between;
-align-items: center; flex-wrap: wrap; gap: 1rem;
+display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
 }
-.foot-copy {
-font-family: Georgia, serif;
-font-size: 0.85rem; color: #3a3a3a;
-}
-.foot-link {
-font-family: Georgia, serif;
-font-size: 0.85rem; color: #0D3B46;
-text-decoration: none;
-}
+.foot-copy { font-family: Georgia, serif; font-size: 0.82rem; color: #3a3a3a; }
+.foot-link { font-family: Georgia, serif; font-size: 0.82rem; color: #0D3B46; text-decoration: none; }
 .foot-link:hover { text-decoration: underline; }
 
-/* ── Responsive ── */
+/* Responsive */
 @media (max-width: 800px) {
 .wrap { padding: 0 1.25rem; }
 .topbar-inner { padding: 0 1.25rem; }
@@ -348,40 +233,153 @@ text-decoration: none;
     <span class="chip">DeFi &middot; Community Growth</span>
     <h1>Pecunity</h1>
     <p class="subtitle">Community Growth &amp; Campaign Execution Case Study</p>
-    <div class="meta-strip"><div class="meta-item"><span class="meta-label">Joined</span><span class="meta-val">Q2 2025</span></div><div class="meta-item"><span class="meta-label">Duration</span><span class="meta-val">9 Months</span></div><div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">Community Manager &middot; Campaign Lead &middot; Growth Strategist</span></div></div>
+    <div class="meta-strip">
+      <div class="meta-item">
+        <span class="meta-label">Joined</span>
+        <span class="meta-val">Q2 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-val">9 Months</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-val">Community Manager &middot; Campaign Lead &middot; Growth Strategist</span>
+      </div>
+    </div>
   </div>
 </header>
 
-<main><div class="wrap">
-    <div class="section">
-      <div class="section-label">
-        <span class="section-num">01</span>
-        <h2 class="section-title">Overview</h2>
+<main>
+  <div class="wrap">
+
+<!-- 01 Overview -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Overview</h2>
+  </div>
+  <div class="body-text">
+    <p>Pecunity is a decentralized finance protocol focused on automated, cross-chain passive income strategies. I joined during its early stage when it was still operating as OctoDeFi and contributed through its rebranding and growth phase.</p>
+    <p>My work spanned community management, campaign coordination, and growth strategy &mdash; helping the project establish a credible, engaged community at a critical stage of development.</p>
+  </div>
+</div>
+
+<!-- 02 Challenge -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Challenge</h2>
+  </div>
+  <div>
+    <ul class="bullet-list">
+      <li>Low Discord engagement and an inactive member base with little daily activity</li>
+      <li>Limited campaign participation across Zealy and social platforms</li>
+      <li>Weak X (Twitter) visibility during key presale and launch windows</li>
+      <li>Operational gaps in campaign coordination and task management</li>
+      <li>Early-stage structural challenges compounded by a full rebranding transition</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 03 Action -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Action</h2>
+  </div>
+  <div>
+    <ul class="bullet-list">
+      <li>Onboarded DeFi-focused community members through targeted outreach and onboarding flows</li>
+      <li>Amplified Zealy campaign participation by designing structured, rewarding task frameworks</li>
+      <li>Improved Discord activity and created a consistent moderation cadence</li>
+      <li>Coordinated campaign execution across Discord, X, and Zealy simultaneously</li>
+      <li>Supported the full OctoDeFi &rarr; Pecunity rebranding transition with community messaging</li>
+      <li>Drove X visibility through structured engagement strategies during campaign peaks</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 04 Results -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Results</h2>
+  </div>
+  <div>
+
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="r-dot"></div>
+        <p>Increased campaign participation rate across Zealy and social channels</p>
       </div>
-      <div><div class="content"><p>Pecunity is a decentralized finance protocol focused on automated, cross-chain passive income strategies. I joined during its early stage when it was still operating as OctoDeFi and contributed through its rebranding and growth phase.</p><p>My work spanned community management, campaign coordination, and growth strategy &mdash; helping the project establish a credible, engaged community at a critical stage of development.</p></div></div>
+      <div class="result-card">
+        <div class="r-dot"></div>
+        <p>Higher Discord activity and measurably improved member retention</p>
+      </div>
+      <div class="result-card">
+        <div class="r-dot"></div>
+        <p>Improved X visibility and reach during campaign windows</p>
+      </div>
+      <div class="result-card featured">
+        <div class="r-dot"></div>
+        <p>Direct founder acknowledgment and a public testimonial from Co-Founder Lars</p>
+      </div>
     </div>
-    <div class="section">
-      <div class="section-label">
-        <span class="section-num">02</span>
-        <h2 class="section-title">Challenge</h2>
-      </div>
-      <div><ul class="bullet-list"><li>Low Discord engagement and an inactive member base with little daily activity</li><li>Limited campaign participation across Zealy and social platforms</li><li>Weak X (Twitter) visibility during key presale and launch windows</li><li>Operational gaps in campaign coordination and task management</li><li>Early-stage structural challenges compounded by a full rebranding transition</li></ul></div>
+
+    <div class="testimonial">
+      <blockquote>@Japheth did a great job. I highly recommend him for his passionate and modest community work.</blockquote>
+      <cite>Lars &mdash; Co-Founder, Pecunity</cite>
     </div>
-    <div class="section">
-      <div class="section-label">
-        <span class="section-num">03</span>
-        <h2 class="section-title">Action</h2>
-      </div>
-      <div><ul class="bullet-list"><li>Onboarded DeFi-focused community members through targeted outreach and onboarding flows</li><li>Amplified Zealy campaign participation by designing structured, rewarding task frameworks</li><li>Improved Discord activity and created a consistent moderation cadence</li><li>Coordinated campaign execution across Discord, X, and Zealy simultaneously</li><li>Supported the full OctoDeFi &rarr; Pecunity rebranding transition with community messaging</li><li>Drove X visibility through structured engagement strategies during campaign peaks</li></ul></div>
+
+    <!-- Visual Proof -->
+    <div class="proof-section-head">
+      <h3>Visual Proof</h3>
     </div>
-    <div class="section">
-      <div class="section-label">
-        <span class="section-num">04</span>
-        <h2 class="section-title">Results</h2>
+
+    <div class="proof-grid">
+
+      <!-- 1. Founder Recognition -->
+      <div class="proof-card">
+        <img src="docs/projects/proofs/IMG_9423.jpeg" alt="Founder Recognition Screenshot">
+        <div class="proof-card-lbl">Founder Recognition Screenshot</div>
       </div>
-      <div><div class="result-grid"><div class="result-card"><div class="r-dot"></div><p>Increased campaign participation rate across Zealy and social channels</p></div><div class="result-card"><div class="r-dot"></div><p>Higher Discord activity and measurably improved member retention</p></div><div class="result-card"><div class="r-dot"></div><p>Improved X visibility and reach during campaign windows</p></div><div class="result-card featured"><div class="r-dot"></div><p>Direct founder acknowledgment and a public testimonial from Co-Founder Lars</p></div></div><div class="testimonial"><blockquote>@Japheth did a great job. I highly recommend him for his passionate and modest community work.</blockquote><cite>Lars &mdash; Co-Founder, Pecunity</cite></div><div class="proof-section-head"><h3>Visual Proof</h3></div>
-        <!-- DEBUG: images served from docs/projects/proofs/ relative to site root --><div class="proof-grid"><div class="proof-card"><img src="docs/assets/IMG_8526.png" loading="lazy" onerror="this.style.outline='3px solid red';this.alt='NOT FOUND: docs/assets/IMG_8526.png'" alt="Founder Recognition — Lars Co-Founder Pecunity"><div class="proof-card-lbl">Founder Recognition Screenshot</div></div><div class="proof-card"><img src="docs/projects/proofs/IMG_9439.jpeg" loading="lazy" onerror="this.style.outline='3px solid red';this.alt='NOT FOUND: docs/projects/proofs/IMG_9439.jpeg'" alt="Task Completion Acknowledgment"><div class="proof-card-lbl">Task Completion Acknowledgment</div></div><div class="proof-card"><img src="docs/projects/proofs/IMG_9397.jpeg" loading="lazy" onerror="this.style.outline='3px solid red';this.alt='NOT FOUND: docs/projects/proofs/IMG_9397.jpeg'" alt="Testimonial Screenshot"><div class="proof-card-lbl">Testimonial Screenshot</div></div><div class="proof-card"><img src="docs/projects/proofs/IMG_9437.jpeg" loading="lazy" onerror="this.style.outline='3px solid red';this.alt='NOT FOUND: docs/projects/proofs/IMG_9437.jpeg'" alt="PinkSale Campaign Tweet"><div class="proof-card-lbl">PinkSale Campaign Tweet</div><a href="https://x.com/japhonchain/status/1983495449530007623?s=46" target="_blank" rel="noopener" class="proof-link-btn">&#8599; View on X</a></div><div class="proof-card"><img src="docs/projects/proofs/IMG_9438.jpeg" loading="lazy" onerror="this.style.outline='3px solid red';this.alt='NOT FOUND: docs/projects/proofs/IMG_9438.jpeg'" alt="Campaign Thread Link Preview"><div class="proof-card-lbl">Campaign Thread Link Preview</div><a href="https://x.com/japhonchain/status/2024562834688889181?s=46" target="_blank" rel="noopener" class="proof-link-btn">&#8599; View on X</a></div></div></div>
-    </div></div></main>
+
+      <!-- 2. Task Completion -->
+      <div class="proof-card">
+        <img src="docs/projects/proofs/IMG_9439.jpeg" alt="Task Completion Acknowledgment">
+        <div class="proof-card-lbl">Task Completion Acknowledgment</div>
+      </div>
+
+      <!-- 3. Testimonial -->
+      <div class="proof-card">
+        <img src="docs/projects/proofs/IMG_9397.jpeg" alt="Testimonial Screenshot">
+        <div class="proof-card-lbl">Testimonial Screenshot</div>
+      </div>
+
+      <!-- 4. PinkSale Tweet -->
+      <div class="proof-card">
+        <img src="docs/projects/proofs/IMG_9437.jpeg" alt="PinkSale Campaign Tweet">
+        <div class="proof-card-lbl">PinkSale Campaign Tweet</div>
+        <a href="https://x.com/japhonchain/status/1983495449530007623?s=46"
+           target="_blank" rel="noopener" class="proof-link-btn">&#8599; View on X</a>
+      </div>
+
+      <!-- 5. Campaign Thread -->
+      <div class="proof-card">
+        <img src="docs/projects/proofs/IMG_9438.jpeg" alt="Campaign Thread Link Preview">
+        <div class="proof-card-lbl">Campaign Thread Link Preview</div>
+        <a href="https://x.com/japhonchain/status/2024562834688889181?s=46"
+           target="_blank" rel="noopener" class="proof-link-btn">&#8599; View on X</a>
+      </div>
+
+    </div><!-- /proof-grid -->
+
+  </div>
+</div>
+
+  </div><!-- /wrap -->
+</main>
 
 <footer>
   <div class="foot-inner">
@@ -389,5 +387,6 @@ text-decoration: none;
     <a href="index.html" class="foot-link">&#8592; Back to Portfolio</a>
   </div>
 </footer>
+
 </body>
 </html>
