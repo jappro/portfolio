@@ -9,216 +9,76 @@
 <link rel="icon" href="docs/copy_FB3F98BD-C4DD-4668-997D-0697BBDAA09C.png">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-background-color: #F1E9DB;
-color-scheme: light;
-scroll-behavior: smooth;
-}
-
-body {
-font-family: Georgia, serif;
-background-color: #F1E9DB;
-color: #1a1a1a;
-line-height: 1.75;
--webkit-font-smoothing: antialiased;
-}
-
+html { background-color: #F1E9DB; color-scheme: light; scroll-behavior: smooth; }
+body { font-family: Georgia, serif; background-color: #F1E9DB; color: #1a1a1a; line-height: 1.75; -webkit-font-smoothing: antialiased; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
-
-/* Topbar */
-.topbar {
-padding: 1rem 0;
-background-color: #F1E9DB;
-border-bottom: 1px solid rgba(139,58,58,0.15);
-position: sticky; top: 0; z-index: 100;
-}
-.topbar-inner {
-max-width: 1080px; margin: 0 auto; padding: 0 2.5rem;
-display: flex; align-items: center; justify-content: space-between;
-}
-.back-btn {
-display: inline-flex; align-items: center; gap: 0.5rem;
-background-color: #0D3B46; color: #F1E9DB;
-text-decoration: none; padding: 0.55rem 1.25rem;
-border-radius: 8px; font-family: Georgia, serif;
-font-size: 0.9rem; transition: background-color 0.2s;
-}
+.topbar { padding: 1rem 0; background-color: #F1E9DB; border-bottom: 1px solid rgba(139,58,58,0.15); position: sticky; top: 0; z-index: 100; }
+.topbar-inner { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; }
+.back-btn { display: inline-flex; align-items: center; gap: 0.5rem; background-color: #0D3B46; color: #F1E9DB; text-decoration: none; padding: 0.55rem 1.25rem; border-radius: 8px; font-family: Georgia, serif; font-size: 0.9rem; transition: background-color 0.2s; }
 .back-btn:hover { background-color: #0a2d37; }
-.page-tag {
-font-family: Georgia, serif; font-size: 0.72rem;
-color: #3a3a3a; letter-spacing: 0.18em; text-transform: uppercase;
-}
-
-/* Page header */
+.page-tag { font-family: Georgia, serif; font-size: 0.72rem; color: #3a3a3a; letter-spacing: 0.18em; text-transform: uppercase; }
 .page-header { padding: 4.5rem 0 3rem; border-bottom: 1px solid rgba(139,58,58,0.15); }
-.chip {
-display: inline-block; border: 1.5px solid #8B3A3A; color: #8B3A3A;
-font-family: Georgia, serif; font-size: 0.72rem;
-letter-spacing: 0.14em; text-transform: uppercase;
-padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.4rem;
-}
-.page-header h1 {
-font-family: Georgia, serif; font-weight: bold;
-font-size: clamp(2.6rem, 7vw, 4.2rem); line-height: 1.08;
-color: #1a1a1a; margin-bottom: 0.7rem;
-}
-.page-header .subtitle {
-font-family: Georgia, serif; font-size: 1.1rem;
-color: #3a3a3a; max-width: 540px; margin-bottom: 2.2rem; line-height: 1.65;
-}
-
-/* Meta strip */
-.meta-strip {
-display: grid; grid-template-columns: repeat(3, 1fr);
-border: 1.5px solid rgba(139,58,58,0.2); border-radius: 12px;
-overflow: hidden; background-color: #FFFFFF;
-}
+.chip { display: inline-block; border: 1.5px solid #8B3A3A; color: #8B3A3A; font-family: Georgia, serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.4rem; }
+.page-header h1 { font-family: Georgia, serif; font-weight: bold; font-size: clamp(2.6rem, 7vw, 4.2rem); line-height: 1.08; color: #1a1a1a; margin-bottom: 0.7rem; }
+.page-header .subtitle { font-family: Georgia, serif; font-size: 1.1rem; color: #3a3a3a; max-width: 540px; margin-bottom: 2.2rem; line-height: 1.65; }
+.meta-strip { display: grid; grid-template-columns: repeat(3, 1fr); border: 1.5px solid rgba(139,58,58,0.2); border-radius: 12px; overflow: hidden; background-color: #FFFFFF; }
 .meta-item { padding: 1.3rem 1.6rem; border-right: 1px solid rgba(139,58,58,0.12); }
 .meta-item:last-child { border-right: none; }
-.meta-label {
-display: block; font-family: Georgia, serif; font-size: 0.68rem;
-text-transform: uppercase; letter-spacing: 0.14em;
-color: #C15F3C; margin-bottom: 0.4rem;
-}
+.meta-label { display: block; font-family: Georgia, serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: #C15F3C; margin-bottom: 0.4rem; }
 .meta-val { font-family: Georgia, serif; font-size: 0.97rem; color: #1a1a1a; line-height: 1.45; }
-
-/* Sections */
-.section {
-display: grid; grid-template-columns: 210px 1fr;
-gap: 4.5rem; padding: 4rem 0;
-border-bottom: 1px solid rgba(139,58,58,0.12); align-items: start;
-}
+.section { display: grid; grid-template-columns: 210px 1fr; gap: 4.5rem; padding: 4rem 0; border-bottom: 1px solid rgba(139,58,58,0.12); align-items: start; }
 .section:last-of-type { border-bottom: none; }
 .section-label { position: sticky; top: 74px; }
-.section-num {
-display: block; font-family: Georgia, serif; font-size: 0.72rem;
-letter-spacing: 0.18em; text-transform: uppercase;
-color: #C15F3C; margin-bottom: 0.55rem;
-}
+.section-num { display: block; font-family: Georgia, serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: #C15F3C; margin-bottom: 0.55rem; }
 .section-title { font-family: Georgia, serif; font-size: 1.75rem; color: #1a1a1a; line-height: 1.2; }
-
-/* Body text */
 .body-text p { font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.85; margin-bottom: 1.1rem; }
 .body-text p:last-child { margin-bottom: 0; }
-
-/* Bullets */
 .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-.bullet-list li {
-display: flex; align-items: flex-start; gap: 0.9rem;
-font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.65;
-}
-.bullet-list li::before {
-content: ‘’; width: 7px; height: 7px; border-radius: 50%;
-background-color: #8B3A3A; flex-shrink: 0; margin-top: 0.57rem;
-}
-
-/* Result cards */
-.result-grid {
-display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-gap: 1rem; margin-bottom: 2.5rem;
-}
-.result-card {
-background-color: #fff; border: 1px solid rgba(139,58,58,0.15);
-border-radius: 12px; padding: 1.4rem 1.5rem;
-}
+.bullet-list li { display: flex; align-items: flex-start; gap: 0.9rem; font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.65; }
+.bullet-list li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background-color: #8B3A3A; flex-shrink: 0; margin-top: 0.57rem; }
+.metric-group { margin-top: 2rem; padding: 1.5rem 1.75rem; background-color: #fff; border: 1px solid rgba(139,58,58,0.15); border-radius: 12px; }
+.metric-group-title { font-family: Georgia, serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: #C15F3C; margin-bottom: 1rem; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.metric-card { background-color: #F1E9DB; border-radius: 10px; padding: 1rem 1.2rem; }
+.metric-num { font-family: Georgia, serif; font-size: 1.6rem; font-weight: bold; color: #8B3A3A; line-height: 1.1; margin-bottom: 0.3rem; }
+.metric-desc { font-family: Georgia, serif; font-size: 0.8rem; color: #3a3a3a; line-height: 1.5; }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+.result-card { background-color: #fff; border: 1px solid rgba(139,58,58,0.15); border-radius: 12px; padding: 1.4rem 1.5rem; }
 .result-card.featured { background-color: #0D3B46; border-color: #0D3B46; }
 .result-card.featured .r-dot { background-color: #F1E9DB; }
 .result-card.featured p { color: #F1E9DB; }
 .r-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #8B3A3A; margin-bottom: 0.8rem; }
 .result-card p { font-family: Georgia, serif; font-size: 0.95rem; color: #1a1a1a; line-height: 1.6; }
-
-/* Testimonial */
-.testimonial {
-background-color: #0D3B46; color: #F1E9DB;
-border-radius: 12px; padding: 2.5rem 2.75rem; margin-top: 2.5rem;
-}
-.testimonial blockquote {
-font-family: Georgia, serif; font-size: 1.18rem;
-line-height: 1.78; margin-bottom: 1.2rem; color: #F1E9DB;
-}
-.testimonial blockquote::before { content: ‘\201C’; }
-.testimonial blockquote::after  { content: ‘\201D’; }
+.testimonial { background-color: #0D3B46; color: #F1E9DB; border-radius: 12px; padding: 2.5rem 2.75rem; margin-top: 2.5rem; }
+.testimonial blockquote { font-family: Georgia, serif; font-size: 1.18rem; line-height: 1.78; margin-bottom: 1.2rem; color: #F1E9DB; }
+.testimonial blockquote::before { content: '\201C'; }
+.testimonial blockquote::after  { content: '\201D'; }
 .testimonial cite { font-family: Georgia, serif; font-size: 0.88rem; font-style: italic; color: rgba(241,233,219,0.65); }
-
-/* Visual proof heading */
-.proof-section-head {
-display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem;
-}
-.proof-section-head h3 {
-font-family: Georgia, serif; font-size: 1.15rem; color: #1a1a1a; white-space: nowrap;
-}
-.proof-section-head::after { content: ‘’; flex: 1; height: 1px; background-color: rgba(139,58,58,0.15); }
-
-/* Proof grid */
-.proof-grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 1.25rem;
-}
-
-/* Proof card — NO overflow:hidden so images never get clipped */
-.proof-card {
-background-color: #FFFFFF;
-border-radius: 12px;
-border: 1px solid rgba(139,58,58,0.15);
-box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-
-/* Image fills card width, height is fully automatic (natural size) */
-.proof-card img {
-display: block;
-width: 100%;
-height: auto;
-border-radius: 12px 12px 0 0;
-}
-
-.proof-card-lbl {
-padding: 0.75rem 1rem 0.8rem;
-font-family: Georgia, serif; font-size: 0.82rem;
-color: #8B3A3A; letter-spacing: 0.04em;
-border-top: 1px solid rgba(139,58,58,0.1);
-}
-
-/* View on X link */
-.proof-link-btn {
-display: inline-flex; align-items: center; gap: 0.4rem;
-margin: 0 1rem 0.85rem;
-padding: 0.45rem 1rem;
-background-color: #0D3B46; color: #F1E9DB;
-text-decoration: none; border-radius: 6px;
-font-family: Georgia, serif; font-size: 0.8rem;
-transition: background-color 0.2s;
-}
+.proof-section-head { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem; }
+.proof-section-head h3 { font-family: Georgia, serif; font-size: 1.15rem; color: #1a1a1a; white-space: nowrap; }
+.proof-section-head::after { content: ''; flex: 1; height: 1px; background-color: rgba(139,58,58,0.15); }
+.proof-link-btn { display: inline-block; background: #0D3B46; color: #F1E9DB; padding: .45rem 1rem; border-radius: 6px; font-family: Georgia, serif; font-size: .85rem; text-decoration: none; margin-top: .25rem; }
 .proof-link-btn:hover { background-color: #0a2d37; }
-
-/* Footer */
 footer { padding: 2rem 0; border-top: 1px solid rgba(139,58,58,0.15); margin-top: 4rem; background-color: #F1E9DB; }
-.foot-inner {
-max-width: 1080px; margin: 0 auto; padding: 0 2.5rem;
-display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-}
+.foot-inner { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 .foot-copy { font-family: Georgia, serif; font-size: 0.82rem; color: #3a3a3a; }
 .foot-link { font-family: Georgia, serif; font-size: 0.82rem; color: #0D3B46; text-decoration: none; }
 .foot-link:hover { text-decoration: underline; }
-
-/* Responsive */
 @media (max-width: 800px) {
-.wrap { padding: 0 1.25rem; }
-.topbar-inner { padding: 0 1.25rem; }
-.foot-inner { padding: 0 1.25rem; }
-.section { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 0; }
-.section-label { position: static; }
-.meta-strip { grid-template-columns: 1fr; }
-.meta-item { border-right: none; border-bottom: 1px solid rgba(139,58,58,0.12); }
-.meta-item:last-child { border-bottom: none; }
-.proof-grid { grid-template-columns: 1fr; }
-.page-header { padding: 2.5rem 0 2rem; }
-.result-grid { grid-template-columns: 1fr; }
-.testimonial { padding: 1.8rem 1.6rem; }
+  .wrap { padding: 0 1.25rem; }
+  .topbar-inner { padding: 0 1.25rem; }
+  .foot-inner { padding: 0 1.25rem; }
+  .section { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 0; }
+  .section-label { position: static; }
+  .meta-strip { grid-template-columns: 1fr; }
+  .meta-item { border-right: none; border-bottom: 1px solid rgba(139,58,58,0.12); }
+  .meta-item:last-child { border-bottom: none; }
+  .page-header { padding: 2.5rem 0 2rem; }
+  .result-grid { grid-template-columns: 1fr; }
+  .testimonial { padding: 1.8rem 1.6rem; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
-
 </head>
 <body>
 
@@ -262,7 +122,7 @@ display: flex; justify-content: space-between; align-items: center; flex-wrap: w
   </div>
   <div class="body-text">
     <p>Pecunity is a decentralized finance protocol focused on automated, cross-chain passive income strategies. I joined during its early stage when it was still operating as OctoDeFi and contributed through its rebranding and growth phase.</p>
-    <p>My work spanned community management, campaign coordination, and growth strategy; helping the project establish a credible, engaged community at a critical stage of development.</p>
+    <p>My work spanned community management, campaign coordination, and growth strategy — helping the project establish a credible, engaged community at a critical stage of development.</p>
   </div>
 </div>
 
@@ -278,7 +138,7 @@ display: flex; justify-content: space-between; align-items: center; flex-wrap: w
       <li>Limited campaign participation across Zealy and social platforms</li>
       <li>Weak X (Twitter) visibility during key presale and launch windows</li>
       <li>Operational gaps in campaign coordination and task management</li>
-      <li>Early-stage structural challenges compounded by a full rebranding transition</li>
+      <li>Early-stage structural challenges compounded by a full rebranding transition from OctoDeFi to Pecunity</li>
     </ul>
   </div>
 </div>
@@ -291,13 +151,36 @@ display: flex; justify-content: space-between; align-items: center; flex-wrap: w
   </div>
   <div>
     <ul class="bullet-list">
-      <li>Onboarded DeFi-focused community members through targeted outreach and onboarding flows</li>
-      <li>Amplified Zealy campaign participation by designing structured, rewarding task frameworks</li>
-      <li>Improved Discord activity and created a consistent moderation cadence</li>
-      <li>Coordinated campaign execution across Discord, X, and Zealy simultaneously</li>
-      <li>Supported the full OctoDeFi &rarr; Pecunity rebranding transition with community messaging</li>
-      <li>Drove X visibility through structured engagement strategies during campaign peaks</li>
+      <li>Designed engagement loops that achieved 90% consistent participation across campaign activities</li>
+      <li>Built and executed onboarding flows that converted new users from initial curiosity into active community members</li>
+      <li>Coordinated campaign execution simultaneously across Discord, X, and Zealy — driving structured task participation and cross-platform visibility</li>
+      <li>Drove organic ecosystem awareness through structured conversations and consistent social promotion</li>
+      <li>Supported the full OctoDeFi &rarr; Pecunity rebranding transition with community messaging and continuity</li>
+      <li>Sustained engagement momentum throughout campaign cycles, keeping participation active during growth phases and presale windows</li>
     </ul>
+
+    <!-- Campaign Metrics -->
+    <div class="metric-group">
+      <p class="metric-group-title">Campaign Metrics</p>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-num">1.5k → 4k+</div>
+          <div class="metric-desc">X followers grown through structured engagement campaigns</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">500 → 3k+</div>
+          <div class="metric-desc">Telegram community members, with 500+ active before presale</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">+237%</div>
+          <div class="metric-desc">Zealy participation growth within 7 days of campaign launch</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">800 → 6k+</div>
+          <div class="metric-desc">Zealy participants scaled across the campaign period</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -312,19 +195,19 @@ display: flex; justify-content: space-between; align-items: center; flex-wrap: w
     <div class="result-grid">
       <div class="result-card">
         <div class="r-dot"></div>
-        <p>Increased campaign participation rate across Zealy and social channels</p>
+        <p>X following grew from 1.5k to 4k+ through consistent campaign-driven engagement</p>
       </div>
       <div class="result-card">
         <div class="r-dot"></div>
-        <p>Higher Discord activity and measurably improved member retention</p>
+        <p>Telegram community scaled from 500 to 3k+ members with 500+ active before presale</p>
       </div>
       <div class="result-card">
         <div class="r-dot"></div>
-        <p>Improved X visibility and reach during campaign windows</p>
+        <p>Zealy participation surged 237% in 7 days, growing from 800 to 6k+ participants</p>
       </div>
       <div class="result-card featured">
         <div class="r-dot"></div>
-        <p>Direct founder acknowledgment and a public testimonial from Co-Founder Lars</p>
+        <p>Direct founder acknowledgment and public testimonial from Co-Founder Lars</p>
       </div>
     </div>
 
@@ -333,8 +216,9 @@ display: flex; justify-content: space-between; align-items: center; flex-wrap: w
       <cite>Lars &mdash; Co-Founder, Pecunity</cite>
     </div>
 
-    <!-- Visual Proof — bare stacked images, zero wrappers -->
-    <div style="margin-top:2.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+    <!-- Visual Proof -->
+    <div class="proof-section-head"><h3>Visual Proof</h3></div>
+    <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
 
       <img src="docs/projects/proofs/IMG_9446.jpeg" loading="lazy" decoding="async" alt="Founder Recognition"
            style="display:block; max-width:100%; height:auto; border-radius:10px;">
@@ -348,14 +232,19 @@ display: flex; justify-content: space-between; align-items: center; flex-wrap: w
       <img src="docs/projects/proofs/IMG_9449.jpeg" loading="lazy" decoding="async" alt="PinkSale Tweet"
            style="display:block; max-width:100%; height:auto; border-radius:10px;">
       <a href="https://x.com/japhonchain/status/1983495449530007623?s=46"
-         target="_blank" rel="noopener"
-         style="display:inline-block; background:#0D3B46; color:#F1E9DB; padding:.45rem 1rem; border-radius:6px; font-family:Georgia,serif; font-size:.85rem; text-decoration:none;">&#8599; View PinkSale Tweet on X</a>
+         target="_blank" rel="noopener" class="proof-link-btn">&#8599; View PinkSale Tweet on X</a>
 
       <img src="docs/projects/proofs/IMG_9450.jpeg" loading="lazy" decoding="async" alt="Campaign Thread"
            style="display:block; max-width:100%; height:auto; border-radius:10px;">
       <a href="https://x.com/japhonchain/status/2024562834688889181?s=46"
-         target="_blank" rel="noopener"
-         style="display:inline-block; background:#0D3B46; color:#F1E9DB; padding:.45rem 1rem; border-radius:6px; font-family:Georgia,serif; font-size:.85rem; text-decoration:none;">&#8599; View Thread on X</a>
+         target="_blank" rel="noopener" class="proof-link-btn">&#8599; View Campaign Thread on X</a>
+
+      <!-- Event growth proof — plug in image path below when ready -->
+      <img src="docs/projects/proofs/ADD_IMAGE_PATH_HERE.jpeg" loading="lazy" decoding="async" alt="Event Growth Proof"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+
+      <a href="https://discord.com/channels/1104136246806204436/1395518482074046595/1436254160075882618"
+         target="_blank" rel="noopener" class="proof-link-btn">&#8599; View Discord Announcement</a>
 
     </div>
 
