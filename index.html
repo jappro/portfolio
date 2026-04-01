@@ -161,31 +161,47 @@
 .pow-logo img { width:100%; height:100%; object-fit:cover; display:block; }
 [data-theme=dark] .pow-logo { background: #1c1c1c; }
 
-/* ── Project badge — icon + label together, top-right corner ── */
-.pow-card-inner { position: relative; }
+/* --- Project badge - icon + label together, top-right corner --- */
+.pow-card-inner { 
+    position: relative; 
+    overflow: hidden; /* Keeps the badge from spilling out if needed */
+}
+
 .proj-badge-wrap {
-  position: absolute;
-  top: -.3rem; right: .73rem;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .23rem;
+    position: absolute;
+    /* Adjust these to move it closer/further from the corner */
+    top: 0.5rem; 
+    right: 0.5rem; 
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    /* This aligns both items to the right edge of the container */
+    align-items: flex-end; 
+    gap: 0.2rem;
 }
+
 .proj-badge-icon {
-  width: 38px; height: 38px;
-  border-radius: 46%;
-  display: flex; align-items: right; justify-content: right;
-  box-shadow: 0 3px 10px rgba(0,0,0,.25);
+    width: 38px; 
+    height: 38px;
+    border-radius: 50%; /* Clean circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,.15);
 }
-.proj-badge-icon svg { width: 42px; height: 42px; }
+
 .proj-badge-label {
-  display: inline-block;
-  padding: .25rem .8rem;
-  border-radius: 100px;
-  font-family: Georgia, serif; font-size: .68rem; font-weight: 700;
-  letter-spacing: .02em; white-space: nowrap;
-  box-shadow: 0 1px 6px rgba(0,0,0,.12);
+    display: inline-block;
+    padding: .2rem .6rem;
+    border-radius: 100px;
+    font-family: Georgia, serif;
+    font-size: .62rem; /* Slightly smaller to look "tag-like" */
+    font-weight: 700;
+    letter-spacing: .02em;
+    white-space: nowrap;
+    box-shadow: 0 1px 6px rgba(0,0,0,.12);
+    /* Moves the label slightly to the left so it hugs the icon better */
+    margin-right: 2px; 
 }
 /* Green */
 .proj-badge--green .proj-badge-icon  { background: #2e7d32; }
