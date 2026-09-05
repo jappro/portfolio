@@ -1835,7 +1835,11 @@
 
   .exp-title{
     margin:0 0 10px;
-    color:var(--text-hi);
+    background:linear-gradient(90deg, var(--teal), #4ADE80);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
     font-size:28px;
     font-weight:800;
     letter-spacing:-0.01em;
@@ -1941,13 +1945,13 @@
   .exp-more-btn{
     all:unset;
     cursor:pointer;
-    color:var(--text-lo);
+    color:var(--teal);
     font-size:14.5px;
     font-weight:600;
     -webkit-tap-highlight-color:transparent;
   }
   .exp-more-btn:hover,
-  .exp-more-btn:focus-visible{ color:var(--text-hi); }
+  .exp-more-btn:focus-visible{ text-decoration:underline; }
 
   .exp-cta-row{
     display:flex;
@@ -1975,6 +1979,40 @@
     background:rgba(255,255,255,0.07);
   }
   .exp-cta svg{ width:14px; height:14px; flex-shrink:0; }
+
+  /* ---- "View all 7+ experience" toggle ---- */
+  .exp-toggle-btn{
+    all:unset;
+    box-sizing:border-box;
+    display:block;
+    width:fit-content;
+    margin:24px auto;
+    padding:16px 32px;
+    text-align:center;
+    background:linear-gradient(180deg, #a48cff 0%, var(--purple) 55%, #6b46e0 100%);
+    color:#141414;
+    font-size:15.5px;
+    font-weight:800;
+    letter-spacing:0.01em;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.18);
+    cursor:pointer;
+    box-shadow:
+      0 12px 28px rgba(124,92,255,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      inset 0 -3px 6px rgba(0,0,0,0.22);
+    -webkit-tap-highlight-color:transparent;
+    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .exp-toggle-btn:hover,
+  .exp-toggle-btn:focus-visible{ filter:brightness(1.08); }
+  .exp-toggle-btn:active{
+    transform:translateY(1px);
+    box-shadow:
+      0 6px 16px rgba(124,92,255,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -2px 4px rgba(0,0,0,0.22);
+  }
 
   /* ---- multi-role entry: company header + mini vertical timeline of roles ---- */
   .exp-timeline{
@@ -2114,6 +2152,70 @@
         { type: "website", label: "Website", url: "https://pecunity.io" },
         { type: "x", label: "X", url: "https://x.com/pecunity_app?s=11" }
       ]
+    },
+    {
+      type: "single",
+      logo: "src/perspective-logo.jpg",
+      logoInitial: "P",
+      role: "Ambassador",
+      company: "Perspective AI",
+      employment: "Contract",
+      period: "May 2025 \u2013 Aug 2025",
+      location: "Spain \u00b7 Remote",
+      descShort: "Contributed to ecosystem awareness through content creation, community advocacy, and research.",
+      descFull: "Contributed to ecosystem awareness through content creation, community advocacy, and research. Supported brand visibility by creating educational and promotional content on X while participating in ambassador-led engagement initiatives.",
+      ctas: [
+        { type: "website", label: "Website", url: "https://perspectivelabs.org/" },
+        { type: "x", label: "X", url: "https://x.com/perspective_ai_?s=11" }
+      ]
+    },
+    {
+      type: "single",
+      logo: "src/biga-logo.jpg",
+      logoInitial: "B",
+      role: "Biga Master \u00b7 Community Support",
+      company: "BIGA ARCADE",
+      employment: "Contract",
+      period: "Sep 2024 \u2013 Dec 2024",
+      location: "Australia \u00b7 Remote",
+      descShort: "Served as a Biga Master, supporting community engagement across Discord and X while helping organize and promote ecosystem activities.",
+      descFull: "Served as a Biga Master, supporting community engagement across Discord and X while helping organize and promote ecosystem activities.\n\nCo-facilitated weekly game nights, contributed to increased player participation, streamed gameplay sessions on YouTube, and promoted community events to strengthen ecosystem visibility and long-term engagement.",
+      ctas: [
+        { type: "website", label: "Website", url: "https://bigarcade.org/register" },
+        { type: "x", label: "X", url: "https://x.com/bigaarcade?s=11" }
+      ]
+    },
+    {
+      type: "single",
+      logo: "src/vexor-logo.jpg",
+      logoInitial: "V",
+      role: "Ambassador & Community Support",
+      company: "Vexor",
+      employment: "Contract",
+      period: "Sep 2024 \u2013 Dec 2024",
+      location: "Remote",
+      descShort: "Selected as a paid Ambassador to support community growth and engagement within a Web3 gaming ecosystem.",
+      descFull: "Selected as a paid Ambassador to support community growth and engagement within a Web3 gaming ecosystem.\n\nProvided daily community support, organized game nights, encouraged participation in ecosystem campaigns, and consistently ranked among the top-performing ambassadors through reliable contributions and community advocacy.",
+      ctas: [
+        { type: "website", label: "Website", url: "https://vexor.gg/" },
+        { type: "x", label: "X", url: "https://x.com/vexor_gg?s=11" }
+      ]
+    },
+    {
+      type: "single",
+      logo: "src/cyber-logo.jpg",
+      logoInitial: "C",
+      role: "Junior Community Moderator (Volunteer)",
+      company: "Cyber Boxing League (CBL)",
+      employment: "Internship",
+      period: "May 2024 \u2013 Sep 2024",
+      location: "Aruba \u00b7 Remote",
+      descShort: "Began my Web3 community management journey by supporting members, onboarding newcomers, and helping maintain a welcoming Discord environment after being trusted by the community to assist with moderation.",
+      descFull: "Began my Web3 community management journey by supporting members, onboarding newcomers, and helping maintain a welcoming Discord environment after being trusted by the community to assist with moderation.\n\nThis experience introduced me to Discord moderation, community communication, and the foundations of community operations.",
+      ctas: [
+        { type: "website", label: "Website", url: "https://www.cyberboxingleague.com/" },
+        { type: "x", label: "X", url: "https://x.com/cyberboxleague?s=11" }
+      ]
     }
   ];
 
@@ -2177,10 +2279,36 @@
     '</div>';
   }
 
-  EXP_DATA.forEach(function(exp){
+  var VISIBLE_COUNT = 3;
+  var moreWrap = document.createElement('div');
+  moreWrap.className = 'exp-more-list';
+  moreWrap.hidden = true;
+
+  EXP_DATA.forEach(function(exp, i){
     var html = exp.type === 'multi' ? renderMulti(exp) : renderSingle(exp);
-    listEl.insertAdjacentHTML('beforeend', html);
+    if (i < VISIBLE_COUNT){
+      listEl.insertAdjacentHTML('beforeend', html);
+    } else {
+      moreWrap.insertAdjacentHTML('beforeend', html);
+    }
   });
+
+  var toggleBtn = null;
+  if (EXP_DATA.length > VISIBLE_COUNT){
+    toggleBtn = document.createElement('button');
+    toggleBtn.type = 'button';
+    toggleBtn.className = 'exp-toggle-btn';
+    toggleBtn.textContent = 'View all ' + EXP_DATA.length + '+ experience';
+    listEl.appendChild(toggleBtn);
+    listEl.appendChild(moreWrap);
+
+    var expExpanded = false;
+    toggleBtn.addEventListener('click', function(){
+      expExpanded = !expExpanded;
+      moreWrap.hidden = !expExpanded;
+      toggleBtn.textContent = expExpanded ? 'Show less' : ('View all ' + EXP_DATA.length + '+ experience');
+    });
+  }
 
   // expand/collapse — delegated so it scales to however many entries get added later
   listEl.addEventListener('click', function(e){
@@ -2210,12 +2338,15 @@
   // devices, this handles touch/scroll
   var expCards = listEl.querySelectorAll('.exp-card');
   var expScrollTicking = false;
+  var expPointerActive = false; // true while a mouse/finger is actively resting on a card — scroll tracking backs off so it doesn't fight the direct interaction
   function updateExpHover(){
     expScrollTicking = false;
+    if (expPointerActive) return;
     var refLine = window.innerHeight * 0.35;
     var closest = null;
     var closestDist = Infinity;
     expCards.forEach(function(card){
+      if (card.offsetParent === null) return; // hidden behind the "View all" toggle — not eligible
       var rect = card.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight) return;
       var dist = Math.abs(rect.top - refLine);
@@ -2231,6 +2362,25 @@
       expScrollTicking = true;
     }
   }, { passive: true });
+
+  // Direct hover: mouse resting on a card, or a finger held down on one,
+  // both drive the same highlight the scroll-tracking uses. Pointer
+  // Events unify mouse/touch/pen — pointerenter fires the moment a
+  // finger touches down (touch has no hover state otherwise), and
+  // pointerleave fires on lift or drag-away, so "hold a finger on it"
+  // and "hover with a mouse" both just work through one handler.
+  expCards.forEach(function(card){
+    card.addEventListener('pointerenter', function(){
+      expPointerActive = true;
+      expCards.forEach(function(c){ c.classList.remove('exp-card--hover'); });
+      card.classList.add('exp-card--hover');
+    });
+    card.addEventListener('pointerleave', function(){
+      expPointerActive = false;
+      card.classList.remove('exp-card--hover');
+      updateExpHover(); // hand control back to whichever card scroll position says should be highlighted
+    });
+  });
 })();
 </script>
 
