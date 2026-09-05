@@ -1975,13 +1975,73 @@
     background:rgba(255,255,255,0.07);
   }
   .exp-cta svg{ width:14px; height:14px; flex-shrink:0; }
+
+  /* ---- multi-role entry: company header + mini vertical timeline of roles ---- */
+  .exp-timeline{
+    margin-left:var(--exp-logo-offset);
+    margin-bottom:16px;
+    display:flex;
+    flex-direction:column;
+  }
+  .exp-timeline-item{
+    position:relative;
+    padding-left:22px;
+    padding-bottom:22px;
+  }
+  .exp-timeline-item:last-child{ padding-bottom:0; }
+  .exp-timeline-item::before{
+    /* the round dot marking each role */
+    content:'';
+    position:absolute;
+    left:0;
+    top:6px;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--text-lo);
+  }
+  .exp-timeline-item:not(:last-child)::after{
+    /* connecting line between dots */
+    content:'';
+    position:absolute;
+    left:3.5px;
+    top:17px;
+    bottom:0;
+    width:1.2px;
+    background:rgba(255,255,255,0.14);
+  }
+  .exp-timeline-role{
+    margin:0 0 3px;
+    color:var(--text-hi);
+    font-size:16px;
+    font-weight:700;
+    line-height:1.3;
+  }
+  .exp-timeline-period{
+    margin:0;
+    color:var(--text-lo);
+    font-size:13px;
+  }
+  .exp-timeline-location{
+    margin:0 0 10px;
+    color:var(--text-lo);
+    font-size:13px;
+  }
+  /* descriptions nested inside the timeline are already indented by
+     the timeline's own left margin, so cancel the single-entry
+     offset instead of stacking both */
+  .exp-timeline .exp-desc{
+    margin-left:0;
+    margin-bottom:0;
+  }
 </style>
 
 <script>
 (function(){
   var EXP_ICONS = {
     website: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    x: '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.3l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20z"/></svg>'
+    x: '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.3l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1 4.98 2.12 4.98 3.5zM.5 8h4v13h-4V8zm7 0h3.83v1.78h.05c.53-1 1.85-2.05 3.8-2.05 4.07 0 4.82 2.68 4.82 6.16V21h-4v-6.28c0-1.5-.03-3.42-2.08-3.42-2.09 0-2.41 1.63-2.41 3.31V21h-4V8z"/></svg>'
   };
 
   var EXP_DATA = [
@@ -1992,7 +2052,7 @@
       role: "Social Media Manager & Community Lead",
       company: "Kiooverse",
       employment: "Part-time",
-      period: "Mar 2026 \u2013 Present \u00b7 7 mos",
+      period: "Mar 2026 \u2013 Present",
       location: "France \u00b7 Remote",
       descShort: "Support Kiooverse\u2019s community and social media operations by managing engagement initiatives,",
       descFull: "Support Kiooverse\u2019s community and social media operations by managing engagement initiatives, publishing ecosystem updates, and strengthening relationships with community members across gaming channels.\n\nCollaborate with the team on marketing campaigns, community events, and content planning while helping maintain an active and welcoming environment for players.",
@@ -2000,17 +2060,81 @@
         { type: "website", label: "Website", url: "https://kiooverse.xyz" },
         { type: "x", label: "X", url: "https://x.com/kiooverse?s=11" }
       ]
+    },
+    {
+      type: "multi",
+      logo: "src/racine-logo.jpg",
+      logoInitial: "R",
+      company: "Racine Technologies Limited",
+      employment: "Part-time",
+      roles: [
+        {
+          role: "Social Media Manager",
+          period: "Aug 2026 \u2013 Present",
+          location: "Lagos \u00b7 Remote",
+          descShort: "Lead Racine Technologies Limited\u2019s social media strategy and digital positioning across LinkedIn,",
+          descFull: "Lead Racine Technologies Limited\u2019s social media strategy and digital positioning across LinkedIn, Instagram, Facebook, and YouTube.\n\n\u2022 Develop platform-specific content aligned with the company\u2019s engineering, technology, procurement, and infrastructure positioning.\n\u2022 Build structured content systems that connect brand positioning, content, and audience engagement.\n\u2022 Manage the company\u2019s social presence and maintain a consistent voice across platforms.\n\u2022 Develop automated workflows for X and TikTok to improve content distribution and consistency.\n\u2022 Monitor audience response and content performance to refine messaging and identify growth opportunities."
+        },
+        {
+          role: "Executive Assistant (Procurement & Junior Data Analyst)",
+          period: "Sep 2025 \u2013 Present",
+          location: "Lagos \u00b7 On-site",
+          descShort: "As an Executive Assistant, I support procurement operations while contributing to data analysis",
+          descFull: "As an Executive Assistant, I support procurement operations while contributing to data analysis and administrative workflows. My responsibilities include organizing procurement records, maintaining operational documentation, preparing reports, and using Excel to improve data accuracy and support decision-making.\n\nWorking in a fast-paced business environment has strengthened my organizational skills, attention to detail, and ability to improve internal processes."
+        }
+      ],
+      ctas: [
+        { type: "website", label: "Website", url: "https://racinetechnologies.com" },
+        { type: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/company/racine-technologies-limited/" }
+      ]
+    },
+    {
+      type: "multi",
+      logo: "src/pecunity-logo.jpg",
+      logoInitial: "P",
+      company: "Pecunity",
+      employment: "Part-time",
+      roles: [
+        {
+          role: "Community Manager & Social Media Manager",
+          period: "Feb 2026 \u2013 Present",
+          location: "Germany \u00b7 Remote",
+          descShort: "Rejoined the Pecunity team after being invited back to lead community operations and social media",
+          descFull: "Rejoined the Pecunity team after being invited back to lead community operations and social media efforts.\n\nFocused on strengthening community engagement, coordinating communications, and maintaining the project\u2019s online presence while collaborating with the core team on ecosystem growth initiatives.\n\n\u2022 Managed daily community operations across Discord and Telegram.\n\u2022 Planned and published social media content on X.\n\u2022 Coordinated announcements and ecosystem updates.\n\u2022 Developed engagement initiatives to improve community participation.\n\u2022 Worked directly with the leadership team on communication strategy.\n\u2022 Monitored community sentiment and reported feedback to the team."
+        },
+        {
+          role: "Community Moderator & Campaign Manager",
+          period: "Jun 2025 \u2013 Dec 2025",
+          location: "Germany \u00b7 Remote",
+          descShort: "Started as a Community Moderator supporting members across Discord and Telegram before expanding",
+          descFull: "Started as a Community Moderator supporting members across Discord and Telegram, then expanded into campaign management during the project\u2019s growth phase \u2014 contributing through the transition from OctoDeFi to Pecunity, from presale through the PEC token launch.\n\n\u2022 Moderated Discord and Telegram communities while maintaining a welcoming environment.\n\u2022 Answered community questions and escalated technical issues when necessary.\n\u2022 Planned and coordinated community campaigns and engagement initiatives.\n\u2022 Assisted with ecosystem announcements and launch communications.\n\u2022 Supported the project\u2019s rebranding from OctoDeFi to Pecunity."
+        }
+      ],
+      ctas: [
+        { type: "website", label: "Website", url: "https://pecunity.io" },
+        { type: "x", label: "X", url: "https://x.com/pecunity_app?s=11" }
+      ]
     }
   ];
 
   var listEl = document.getElementById('expList');
 
-  function renderSingle(exp){
-    var ctasHtml = exp.ctas.map(function(cta){
+  function renderCtas(ctas){
+    return ctas.map(function(cta){
       return '<a class="exp-cta" href="' + cta.url + '" target="_blank" rel="noopener">' +
         (EXP_ICONS[cta.type] || '') + '<span>' + cta.label + '</span></a>';
     }).join('');
+  }
 
+  function renderDesc(exp){
+    return '<p class="exp-desc" data-state="collapsed">' +
+        '<span class="exp-desc-short">' + exp.descShort + '</span>' +
+        '<span class="exp-desc-full" hidden>' + exp.descFull + '</span>' +
+        ' <button type="button" class="exp-more-btn">more</button>' +
+      '</p>';
+  }
+
+  function renderSingle(exp){
     return '<div class="exp-card">' +
       '<div class="exp-card-head">' +
         '<img class="exp-logo" src="' + exp.logo + '" alt="' + exp.company + ' logo" ' +
@@ -2023,17 +2147,39 @@
           '<p class="exp-location">' + exp.location + '</p>' +
         '</div>' +
       '</div>' +
-      '<p class="exp-desc" data-state="collapsed">' +
-        '<span class="exp-desc-short">' + exp.descShort + '</span>' +
-        '<span class="exp-desc-full" hidden>' + exp.descFull + '</span>' +
-        ' <button type="button" class="exp-more-btn">more</button>' +
-      '</p>' +
-      '<div class="exp-cta-row">' + ctasHtml + '</div>' +
+      renderDesc(exp) +
+      '<div class="exp-cta-row">' + renderCtas(exp.ctas) + '</div>' +
+    '</div>';
+  }
+
+  function renderMulti(exp){
+    var rolesHtml = exp.roles.map(function(role){
+      return '<div class="exp-timeline-item">' +
+        '<h4 class="exp-timeline-role">' + role.role + '</h4>' +
+        '<p class="exp-timeline-period">' + role.period + '</p>' +
+        '<p class="exp-timeline-location">' + role.location + '</p>' +
+        renderDesc(role) +
+      '</div>';
+    }).join('');
+
+    return '<div class="exp-card exp-card--multi">' +
+      '<div class="exp-card-head">' +
+        '<img class="exp-logo" src="' + exp.logo + '" alt="' + exp.company + ' logo" ' +
+          'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+        '<div class="exp-logo-fallback">' + exp.logoInitial + '</div>' +
+        '<div class="exp-card-headtext">' +
+          '<h3 class="exp-role">' + exp.company + '</h3>' +
+          '<p class="exp-company">' + exp.employment + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="exp-timeline">' + rolesHtml + '</div>' +
+      '<div class="exp-cta-row">' + renderCtas(exp.ctas) + '</div>' +
     '</div>';
   }
 
   EXP_DATA.forEach(function(exp){
-    listEl.insertAdjacentHTML('beforeend', renderSingle(exp));
+    var html = exp.type === 'multi' ? renderMulti(exp) : renderSingle(exp);
+    listEl.insertAdjacentHTML('beforeend', html);
   });
 
   // expand/collapse — delegated so it scales to however many entries get added later
