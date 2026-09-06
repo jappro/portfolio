@@ -198,8 +198,6 @@
     border-bottom:1px solid rgba(255,255,255,.07);
   }
 
-  .glass-canvas{ display:none; }
-
   .nav-inner{
     max-width:1280px;
     margin:0 auto;
@@ -317,32 +315,22 @@
       z-index:200;
     }
     .site-nav.nav-visible .nav-inner{
-      background:rgba(255,255,255,.07);
-      backdrop-filter:blur(24px) saturate(1.6);
-      -webkit-backdrop-filter:blur(24px) saturate(1.6);
-      border-color:rgba(255,255,255,.24);
+      background:rgba(255,255,255,.09);
+      backdrop-filter:blur(16px) saturate(1.15);
+      -webkit-backdrop-filter:blur(16px) saturate(1.15);
+      border-color:rgba(255,255,255,.22);
       box-shadow:
         inset 0 1.5px 0 rgba(255,255,255,.6),
         inset 0 -14px 22px -10px rgba(255,255,255,.08),
         inset 0 0 0 1px rgba(255,255,255,.03),
         0 14px 34px rgba(0,0,0,.4);
     }
-    .glass-canvas{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
-      display:block;
-      pointer-events:none;
-    }
-    .nav-mobile-menu{ overflow:hidden; }
     .nav-inner::before{
       content:'';
       position:absolute;
       inset:0;
       border-radius:inherit;
-      background:radial-gradient(130% 80% at 50% -25%, rgba(255,255,255,.5), transparent 60%);
+      background:radial-gradient(120% 90% at 28% -30%, rgba(255,255,255,.55), transparent 58%);
       pointer-events:none;
       z-index:0;
       opacity:0;
@@ -374,7 +362,7 @@
       margin:8px 12px 0;
       border-radius:22px;
       border:1px solid rgba(255,255,255,.13);
-      background:rgba(18,18,24,.42);
+      background:rgba(18,18,24,.38);
       box-shadow:0 14px 34px rgba(0,0,0,.4);
     }
   }
@@ -406,9 +394,9 @@
     flex-direction:column;
     gap:2px;
     padding:8px 24px 22px;
-    background:rgba(5,5,8,.45);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    background:rgba(5,5,8,.40);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
     z-index:1;
   }
 
@@ -1973,7 +1961,6 @@
 
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
-    <canvas class="glass-canvas" id="glassCanvasPill" aria-hidden="true"></canvas>
     <a class="nav-brand" href="#home">
       <span class="nav-logo">Uj</span>
       <span class="nav-name">Uche Japheth</span>
@@ -1997,7 +1984,6 @@
     </button>
   </div>
   <div class="nav-mobile-menu" id="navMobileMenu">
-    <canvas class="glass-canvas" id="glassCanvasDrawer" aria-hidden="true"></canvas>
     <a href="#home" class="nav-link nav-mobile-link" data-nav="home">Home</a>
     <a href="#about" class="nav-link nav-mobile-link" data-nav="about">About</a>
     <a href="#experience" class="nav-link nav-mobile-link" data-nav="experience">Experience</a>
@@ -2578,80 +2564,6 @@
         btn.setAttribute('aria-expanded', 'false');
       });
     });
-  })();
-
-  // Liquid-glass warp: real pixel warp + blur via Canvas2D (no WebGL,
-  // no backdrop-filter SVG references — works reliably on Safari/iOS,
-  // unlike the CSS-filter approach which iOS's WebKit engine can't render).
-  (function(){
-    var pillCanvas = document.getElementById('glassCanvasPill');
-    var drawerCanvas = document.getElementById('glassCanvasDrawer');
-    if (!pillCanvas && !drawerCanvas) return;
-
-    var img = new Image();
-    var ready = false;
-
-    function warpDraw(canvas, cropRect, opts){
-      if (!canvas || !ready) return;
-      var rect = canvas.getBoundingClientRect();
-      if (rect.width < 1 || rect.height < 1) return;
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var w = Math.max(1, Math.round(rect.width * dpr));
-      var h = Math.max(1, Math.round(rect.height * dpr));
-      canvas.width = w;
-      canvas.height = h;
-      var ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, w, h);
-      ctx.filter = 'blur(' + opts.blur + 'px)';
-
-      var strips = opts.strips;
-      var stripW = w / strips;
-      for (var i = 0; i < strips; i++){
-        var t = i / (strips - 1);
-        var edge = Math.abs(t - 0.5) * 2; // 0 at center, 1 at edges
-        var offsetY = Math.sin(t * Math.PI * opts.waves) * edge * (h * opts.amplitude);
-        var srcX = cropRect.x + t * cropRect.w;
-        var srcW = (cropRect.w / strips) + 2;
-        ctx.drawImage(
-          img,
-          srcX, cropRect.y, srcW, cropRect.h,
-          i * stripW - 1, offsetY, stripW + 2, h
-        );
-      }
-      ctx.filter = 'none';
-    }
-
-    function drawAll(){
-      warpDraw(pillCanvas, {
-        x: img.naturalWidth * 0.18, y: img.naturalHeight * 0.20,
-        w: img.naturalWidth * 0.64, h: img.naturalHeight * 0.20
-      }, { strips: 26, waves: 3, amplitude: 0.22, blur: 5 });
-
-      warpDraw(drawerCanvas, {
-        x: img.naturalWidth * 0.05, y: img.naturalHeight * 0.06,
-        w: img.naturalWidth * 0.90, h: img.naturalHeight * 0.55
-      }, { strips: 22, waves: 2.5, amplitude: 0.16, blur: 7 });
-    }
-
-    img.onload = function(){
-      ready = true;
-      drawAll();
-    };
-    img.src = 'src/UJ pfp.png';
-
-    var resizeTimer;
-    window.addEventListener('resize', function(){
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(drawAll, 150);
-    }, { passive:true });
-
-    // Redraw the pill's canvas whenever nav-visible toggles, since that's
-    // when the frosted pill background (and this canvas) becomes visible.
-    var nav = document.getElementById('siteNav');
-    if (nav){
-      var mo = new MutationObserver(function(){ drawAll(); });
-      mo.observe(nav, { attributes:true, attributeFilter:['class'] });
-    }
   })();
 
   // Nav scroll-spy (only observes sections that currently exist in the DOM)
