@@ -88,6 +88,7 @@
     font-family:'Inter', sans-serif;
     -webkit-font-smoothing:antialiased;
     transition:background .4s ease, color .4s ease;
+    overflow-x:hidden;
   }
 
   ::selection{ background:var(--purple-soft); }
@@ -1058,14 +1059,17 @@
     var stack = document.getElementById('baStack');
     var toggleRow = document.getElementById('baToggleRow');
     if(!stack) return;
-    var OVERSHOOT = 60;   // px past the true edge, so it's visibly cut off
+    var OVERSHOOT = 200;  // px past the true edge — generous on purpose so any
+                           // residual measurement error still reads as an obvious cut
 
-    // viewportWidth(): visualViewport is more reliable than
-    // window.innerWidth on mobile "desktop mode" browsers, where a
-    // virtual/zoomed viewport is in play — falls back cleanly on
-    // browsers that don't support it.
+    // viewportWidth(): document.documentElement.clientWidth is the
+    // LAYOUT viewport width — the exact same coordinate system that
+    // getBoundingClientRect() uses. window.innerWidth can include
+    // scrollbar width, and window.visualViewport tracks the VISUAL
+    // (zoomed) viewport, which can diverge from the layout viewport
+    // on mobile "desktop mode" — clientWidth avoids both problems.
     function viewportWidth(){
-      return window.visualViewport ? window.visualViewport.width : window.innerWidth;
+      return document.documentElement.clientWidth;
     }
 
     function bleedRight(){
@@ -1079,7 +1083,7 @@
       // (the actual overflow bug was fixed via min-width:0 on the grid
       // items) — set relative to the real viewport so it can never be
       // smaller than what a legitimately wide desktop screen needs.
-      var HARD_CAP = Math.max(vw * 1.4, 2000);
+      var HARD_CAP = Math.max(vw * 1.6, 2200);
 
       // stack: overshoots the true edge on purpose, so the crop is visible
       var stackTarget = trueEdgeWidth + OVERSHOOT;
