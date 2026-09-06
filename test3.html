@@ -505,9 +505,9 @@
     display:block;
     text-align:center;
     font-family:'Space Grotesk', sans-serif;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.22em;
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:.2em;
     text-transform:uppercase;
     color:rgba(190,180,255,.85);
     white-space:nowrap;
@@ -537,7 +537,7 @@
   .impact-diagram{
     position:relative;
     width:100%;
-    max-width:clamp(474px, 32vw, 580px);
+    max-width:clamp(494px, 33vw, 610px);
     aspect-ratio:1/1;
     margin:14px auto 0;
     align-self:center;
@@ -622,7 +622,7 @@
   .impact-card{
     position:absolute;
     width:38%;
-    padding:9px 11px;
+    padding:clamp(9px, 0.8vw, 13px) clamp(11px, 1vw, 15px);
     border-radius:14px;
     border:1px solid;
     background:rgba(14,14,20,.8);
@@ -664,7 +664,8 @@
   }
 
   .impact-ic{
-    width:24px; height:24px;
+    width:clamp(24px, 2.2vw, 30px);
+    height:clamp(24px, 2.2vw, 30px);
     border-radius:7px;
     display:flex;
     align-items:center;
@@ -672,10 +673,10 @@
     flex-shrink:0;
   }
 
-  .impact-ic svg{ width:12px; height:12px; }
+  .impact-ic svg{ width:clamp(12px, 1.1vw, 15px); height:clamp(12px, 1.1vw, 15px); }
 
   .impact-card h4{
-    font-size:11.5px;
+    font-size:clamp(11.5px, 1.05vw, 14.5px);
     font-weight:700;
     color:#fff;
     margin-bottom:2px;
@@ -683,7 +684,7 @@
   }
 
   .impact-card p{
-    font-size:9.8px;
+    font-size:clamp(9.8px, 0.9vw, 12.5px);
     line-height:1.35;
     color:rgba(255,255,255,.55);
     display:-webkit-box;
