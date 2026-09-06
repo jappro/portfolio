@@ -288,9 +288,6 @@
 
   @media (max-width:960px){
     .site-nav{
-      position:fixed;
-      top:0; left:0; right:0;
-      width:100%;
       background:transparent;
       border-bottom:none;
       padding:12px 12px 0;
@@ -1132,7 +1129,7 @@
     .hero-badge{ display:none; }
     .hero-col-photo{ display:none; }
     .hero-headline{ margin-top:-60px; }
-    .hero-mobile-photo{ display:block; }
+    .hero-mobile-photo{ display:block; position:relative; z-index:150; margin-top:-60px; }
     .hero-btn-row{ flex-direction:column; width:100%; }
     .hero-btn-primary, .hero-btn-secondary{ width:100%; justify-content:center; }
     .strip-label{ display:block; }
