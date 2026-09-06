@@ -997,7 +997,7 @@
         </div>
       </div>
 
-      <div class="ba-toggle-row">
+      <div class="ba-toggle-row" id="baToggleRow">
         <div class="ba-toggle" role="group" aria-label="Before and after dashboard toggle">
           <button type="button" class="ba-btn ba-before" data-state="before" aria-pressed="false">
             <span class="ba-dot ba-dot-red"></span>Before
@@ -1047,8 +1047,13 @@
   // explicit child width as the column's minimum size and blow out
   // the whole layout). HARD_CAP below is a second safety net in case
   // anything upstream changes.
+  // Also: the toggle row (#baToggleRow) gets the SAME computed width
+  // as the stack, so its flex-end alignment resolves to the exact
+  // same true right edge — instead of the stack's dynamic bled edge
+  // and the toggle's static column edge disagreeing with each other.
   (function(){
     var stack = document.getElementById('baStack');
+    var toggleRow = document.getElementById('baToggleRow');
     if(!stack) return;
     var OVERSHOOT = 60;   // px past the true edge, so it's visibly cut off
     var HARD_CAP = 1300;  // px — raised to match the new fluid container ceiling (1680px), still bounded
@@ -1057,10 +1062,22 @@
       stack.style.maxWidth = 'none';
       stack.style.width = '';
       var rect = stack.getBoundingClientRect();
-      var target = (window.innerWidth - rect.left) + OVERSHOOT;
-      target = Math.min(target, HARD_CAP);
-      target = Math.max(target, 320); // never collapse absurdly small either
-      stack.style.width = target + 'px';
+      var trueEdgeWidth = window.innerWidth - rect.left;
+
+      // stack: overshoots the true edge on purpose, so the crop is visible
+      var stackTarget = trueEdgeWidth + OVERSHOOT;
+      stackTarget = Math.min(stackTarget, HARD_CAP);
+      stackTarget = Math.max(stackTarget, 320);
+      stack.style.width = stackTarget + 'px';
+
+      // toggle row: stops exactly AT the true edge — no overshoot —
+      // so the clickable buttons stay fully on-screen and flush with
+      // the same edge the stack bleeds to, instead of drifting off it
+      if(toggleRow){
+        var toggleTarget = Math.min(trueEdgeWidth, HARD_CAP);
+        toggleTarget = Math.max(toggleTarget, 320);
+        toggleRow.style.width = toggleTarget + 'px';
+      }
     }
 
     bleedRight();
