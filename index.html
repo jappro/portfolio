@@ -198,6 +198,8 @@
     border-bottom:1px solid rgba(255,255,255,.07);
   }
 
+  .glass-canvas{ display:none; }
+
   .nav-inner{
     max-width:1280px;
     margin:0 auto;
@@ -325,14 +327,16 @@
         inset 0 0 0 1px rgba(255,255,255,.03),
         0 14px 34px rgba(0,0,0,.4);
     }
-    html.liquid-glass-on .site-nav.nav-visible .nav-inner{
-      backdrop-filter:url(#glassPill) blur(16px) saturate(1.7);
-      -webkit-backdrop-filter:url(#glassPill) blur(16px) saturate(1.7);
+    .glass-canvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-1;
+      display:block;
+      pointer-events:none;
     }
-    html.liquid-glass-on .nav-mobile-menu{
-      backdrop-filter:url(#glassDrawer) blur(14px) saturate(1.7);
-      -webkit-backdrop-filter:url(#glassDrawer) blur(14px) saturate(1.7);
-    }
+    .nav-mobile-menu{ overflow:hidden; }
     .nav-inner::before{
       content:'';
       position:absolute;
@@ -389,6 +393,9 @@
   }
 
   .nav-hamburger svg{ width:18px; height:18px; }
+  .nav-hamburger .icon-close{ display:none; }
+  .nav-hamburger.is-open .icon-menu{ display:none; }
+  .nav-hamburger.is-open .icon-close{ display:block; }
 
   .nav-mobile-menu{
     display:none;
@@ -1964,41 +1971,9 @@
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="glassPill" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="4" result="noise"/>
-      <feGaussianBlur in="noise" stdDeviation="3" result="softNoise"/>
-      <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="14" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="glassDrawer" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.014" numOctaves="2" seed="9" result="noise2"/>
-      <feGaussianBlur in="noise2" stdDeviation="4" result="softNoise2"/>
-      <feDisplacementMap in="SourceGraphic" in2="softNoise2" scale="46" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
-
-<script>
-  // Feature-detect real SVG-filter-via-backdrop-filter support (Chromium).
-  // Safari/Firefox will compute this back to 'none', so they silently
-  // keep the plain blur() glass already set as the base/fallback style.
-  (function(){
-    try {
-      var probe = document.createElement('div');
-      probe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:10px;height:10px;backdrop-filter:url(#glassPill) blur(1px);-webkit-backdrop-filter:url(#glassPill) blur(1px);';
-      document.body.appendChild(probe);
-      var computed = getComputedStyle(probe).backdropFilter || getComputedStyle(probe).webkitBackdropFilter || '';
-      document.body.removeChild(probe);
-      if (computed && computed.indexOf('url(') !== -1) {
-        document.documentElement.classList.add('liquid-glass-on');
-      }
-    } catch (e) { /* no-op: fallback glass stays active */ }
-  })();
-</script>
-
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
+    <canvas class="glass-canvas" id="glassCanvasPill" aria-hidden="true"></canvas>
     <a class="nav-brand" href="#home">
       <span class="nav-logo">Uj</span>
       <span class="nav-name">Uche Japheth</span>
@@ -2017,10 +1992,12 @@
       Let's Work Together
     </a>
     <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
   </div>
   <div class="nav-mobile-menu" id="navMobileMenu">
+    <canvas class="glass-canvas" id="glassCanvasDrawer" aria-hidden="true"></canvas>
     <a href="#home" class="nav-link nav-mobile-link" data-nav="home">Home</a>
     <a href="#about" class="nav-link nav-mobile-link" data-nav="about">About</a>
     <a href="#experience" class="nav-link nav-mobile-link" data-nav="experience">Experience</a>
@@ -2591,14 +2568,90 @@
     if (!btn || !menu) return;
     btn.addEventListener('click', function(){
       var open = menu.classList.toggle('open');
+      btn.classList.toggle('is-open', open);
       btn.setAttribute('aria-expanded', open);
     });
     menu.querySelectorAll('a').forEach(function(link){
       link.addEventListener('click', function(){
         menu.classList.remove('open');
+        btn.classList.remove('is-open');
         btn.setAttribute('aria-expanded', 'false');
       });
     });
+  })();
+
+  // Liquid-glass warp: real pixel warp + blur via Canvas2D (no WebGL,
+  // no backdrop-filter SVG references — works reliably on Safari/iOS,
+  // unlike the CSS-filter approach which iOS's WebKit engine can't render).
+  (function(){
+    var pillCanvas = document.getElementById('glassCanvasPill');
+    var drawerCanvas = document.getElementById('glassCanvasDrawer');
+    if (!pillCanvas && !drawerCanvas) return;
+
+    var img = new Image();
+    var ready = false;
+
+    function warpDraw(canvas, cropRect, opts){
+      if (!canvas || !ready) return;
+      var rect = canvas.getBoundingClientRect();
+      if (rect.width < 1 || rect.height < 1) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = Math.max(1, Math.round(rect.width * dpr));
+      var h = Math.max(1, Math.round(rect.height * dpr));
+      canvas.width = w;
+      canvas.height = h;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, w, h);
+      ctx.filter = 'blur(' + opts.blur + 'px)';
+
+      var strips = opts.strips;
+      var stripW = w / strips;
+      for (var i = 0; i < strips; i++){
+        var t = i / (strips - 1);
+        var edge = Math.abs(t - 0.5) * 2; // 0 at center, 1 at edges
+        var offsetY = Math.sin(t * Math.PI * opts.waves) * edge * (h * opts.amplitude);
+        var srcX = cropRect.x + t * cropRect.w;
+        var srcW = (cropRect.w / strips) + 2;
+        ctx.drawImage(
+          img,
+          srcX, cropRect.y, srcW, cropRect.h,
+          i * stripW - 1, offsetY, stripW + 2, h
+        );
+      }
+      ctx.filter = 'none';
+    }
+
+    function drawAll(){
+      warpDraw(pillCanvas, {
+        x: img.naturalWidth * 0.18, y: img.naturalHeight * 0.20,
+        w: img.naturalWidth * 0.64, h: img.naturalHeight * 0.20
+      }, { strips: 26, waves: 3, amplitude: 0.22, blur: 5 });
+
+      warpDraw(drawerCanvas, {
+        x: img.naturalWidth * 0.05, y: img.naturalHeight * 0.06,
+        w: img.naturalWidth * 0.90, h: img.naturalHeight * 0.55
+      }, { strips: 22, waves: 2.5, amplitude: 0.16, blur: 7 });
+    }
+
+    img.onload = function(){
+      ready = true;
+      drawAll();
+    };
+    img.src = 'src/UJ pfp.png';
+
+    var resizeTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(drawAll, 150);
+    }, { passive:true });
+
+    // Redraw the pill's canvas whenever nav-visible toggles, since that's
+    // when the frosted pill background (and this canvas) becomes visible.
+    var nav = document.getElementById('siteNav');
+    if (nav){
+      var mo = new MutationObserver(function(){ drawAll(); });
+      mo.observe(nav, { attributes:true, attributeFilter:['class'] });
+    }
   })();
 
   // Nav scroll-spy (only observes sections that currently exist in the DOM)
