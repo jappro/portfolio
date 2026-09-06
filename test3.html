@@ -1059,13 +1059,27 @@
     var toggleRow = document.getElementById('baToggleRow');
     if(!stack) return;
     var OVERSHOOT = 60;   // px past the true edge, so it's visibly cut off
-    var HARD_CAP = 1300;  // px — raised to match the new fluid container ceiling (1680px), still bounded
+
+    // viewportWidth(): visualViewport is more reliable than
+    // window.innerWidth on mobile "desktop mode" browsers, where a
+    // virtual/zoomed viewport is in play — falls back cleanly on
+    // browsers that don't support it.
+    function viewportWidth(){
+      return window.visualViewport ? window.visualViewport.width : window.innerWidth;
+    }
 
     function bleedRight(){
       stack.style.maxWidth = 'none';
       stack.style.width = '';
       var rect = stack.getBoundingClientRect();
-      var trueEdgeWidth = window.innerWidth - rect.left;
+      var vw = viewportWidth();
+      var trueEdgeWidth = vw - rect.left;
+
+      // HARD_CAP is just a sanity ceiling against runaway values now
+      // (the actual overflow bug was fixed via min-width:0 on the grid
+      // items) — set relative to the real viewport so it can never be
+      // smaller than what a legitimately wide desktop screen needs.
+      var HARD_CAP = Math.max(vw * 1.4, 2000);
 
       // stack: overshoots the true edge on purpose, so the crop is visible
       var stackTarget = trueEdgeWidth + OVERSHOOT;
@@ -1086,6 +1100,9 @@
     bleedRight();
     window.addEventListener('resize', bleedRight);
     window.addEventListener('load', bleedRight);
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize', bleedRight);
+    }
   })();
 </script>
 
