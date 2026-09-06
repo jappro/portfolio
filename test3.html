@@ -9,6 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    --container-max:1280px;
+    --container-pad:32px;
+
     --bg:#fafafa;
     --bg-alt:#f2f2f4;
     --card-bg:rgba(255,255,255,0.72);
@@ -56,6 +59,27 @@
 
   *{ box-sizing:border-box; margin:0; padding:0; }
 
+  /* ============ DESKTOP BREAKPOINT ============
+     Site's desktop layout takes over at 1024px and up.
+     Below this, these container rules don't apply (this file is a
+     desktop-only working copy, so nothing else is defined below
+     1024px here — but --container-max/--container-pad above give a
+     safe fallback so nothing breaks if this ever renders narrower).
+
+     Smart capping: instead of a fixed max-width that leaves a huge
+     static dead-gap on wide monitors, the container scales fluidly
+     with the viewport (90vw) between a floor (1024px — never
+     narrower than the breakpoint itself) and a ceiling (1680px — so
+     it doesn't stretch absurdly thin-and-wide on ultra-wide/32"+
+     screens). Side padding scales the same way instead of staying a
+     flat 32px forever. */
+  @media (min-width:1024px){
+    :root{
+      --container-max:clamp(1024px, 90vw, 1680px);
+      --container-pad:clamp(24px, 3vw, 56px);
+    }
+  }
+
   html{ scroll-behavior:smooth; overflow-x:hidden; }
 
   body{
@@ -89,9 +113,9 @@
   }
 
   .nav-inner{
-    max-width:1280px;
+    max-width:var(--container-max);
     margin:0 auto;
-    padding:16px 32px;
+    padding:16px var(--container-pad);
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -216,9 +240,9 @@
   .hero-wrap{
     position:relative;
     z-index:1;
-    max-width:1280px;
+    max-width:var(--container-max);
     margin:0 auto;
-    padding:28px 32px 16px;
+    padding:28px var(--container-pad) 16px;
     display:grid;
     grid-template-columns:1.05fr 1fr;
     gap:40px;
@@ -500,9 +524,9 @@
   .impact-section{
     position:relative;
     z-index:1;
-    max-width:1280px;
+    max-width:var(--container-max);
     margin:0 auto;
-    padding:0 32px 60px;
+    padding:0 var(--container-pad) 60px;
     display:grid;
     grid-template-columns:1fr 1.1fr;
     gap:48px;
@@ -1026,7 +1050,7 @@
     var stack = document.getElementById('baStack');
     if(!stack) return;
     var OVERSHOOT = 60;   // px past the true edge, so it's visibly cut off
-    var HARD_CAP = 900;   // px — this can never exceed this, no matter what
+    var HARD_CAP = 1300;  // px — raised to match the new fluid container ceiling (1680px), still bounded
 
     function bleedRight(){
       stack.style.maxWidth = 'none';
