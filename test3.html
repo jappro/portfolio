@@ -75,8 +75,8 @@
      flat 32px forever. */
   @media (min-width:1024px){
     :root{
-      --container-max:clamp(1024px, 90vw, 1680px);
-      --container-pad:clamp(24px, 3vw, 56px);
+      --container-max:clamp(1024px, 94vw, 1680px);
+      --container-pad:clamp(14px, 1.6vw, 40px);
     }
   }
 
@@ -137,13 +137,13 @@
     color:#0a0a0f;
     display:flex; align-items:center; justify-content:center;
     font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
+    font-weight:800;
     font-size:16px;
   }
 
   .nav-name{
     font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
+    font-weight:700;
     font-size:16px;
     color:#fff;
   }
@@ -486,7 +486,7 @@
   /* ============ IMPACT SECTION (orbital diagram + message) ============ */
   .impact-kicker{
     display:block;
-    text-align:center;
+    text-align:left;
     font-family:'Space Grotesk', sans-serif;
     font-size:15px;
     font-weight:800;
@@ -522,8 +522,8 @@
     width:100%;
     max-width:clamp(494px, 33vw, 610px);
     aspect-ratio:1/1;
-    margin:14px auto 0;
-    align-self:center;
+    margin:14px 0 0;
+    align-self:flex-start;
   }
 
   .impact-ring{
