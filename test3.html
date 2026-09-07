@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --container-max:1280px;
@@ -137,13 +137,13 @@
     color:#0a0a0f;
     display:flex; align-items:center; justify-content:center;
     font-family:'Space Grotesk', sans-serif;
-    font-weight:800;
+    font-weight:900;
     font-size:16px;
   }
 
   .nav-name{
     font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
+    font-weight:900;
     font-size:16px;
     color:#fff;
   }
@@ -157,7 +157,7 @@
   .nav-link{
     position:relative;
     font-size:14.5px;
-    font-weight:500;
+    font-weight:800;
     color:rgba(255,255,255,.68);
     text-decoration:none;
     padding-bottom:6px;
@@ -239,9 +239,9 @@
   .hero-wrap{
     position:relative;
     z-index:1;
-    max-width:var(--container-max);
+    max-width:clamp(1024px, 90vw, 1680px);
     margin:0 auto;
-    padding:28px var(--container-pad) 16px;
+    padding:28px clamp(24px, 3vw, 56px) 16px;
     display:grid;
     grid-template-columns:1.05fr 1fr;
     gap:40px;
@@ -486,7 +486,7 @@
   /* ============ IMPACT SECTION (orbital diagram + message) ============ */
   .impact-kicker{
     display:block;
-    text-align:left;
+    text-align:center;
     font-family:'Space Grotesk', sans-serif;
     font-size:15px;
     font-weight:800;
