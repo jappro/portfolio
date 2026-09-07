@@ -2596,7 +2596,7 @@
       '}';
 
     var FRAG_SRC =
-      'precision mediump float;' +
+      'precision highp float;' +
       'uniform sampler2D u_tex;' +
       'uniform vec2 u_uvOffset;' +
       'uniform vec2 u_uvScale;' +
@@ -2610,8 +2610,8 @@
       'void main(){' +
       '  float wave = sin(v_uv.x * 12.0 + u_time * 4.0) * 0.5' +
       '             + sin(v_uv.y * 9.0 - u_time * 3.0) * 0.5;' +
-      '  vec2 duv = v_uv + vec2(wave) * (u_intensity * 0.05 + 0.004);' +
-      '  float b = 0.01 + u_intensity * 0.012;' +
+      '  vec2 duv = v_uv + vec2(wave) * (u_intensity * 0.05);' +
+      '  float b = 0.006 + u_intensity * 0.012;' +
       '  vec4 c = sampleAt(duv) * 0.4;' +
       '  c += sampleAt(duv + vec2(b, 0.0)) * 0.15;' +
       '  c += sampleAt(duv - vec2(b, 0.0)) * 0.15;' +
@@ -2719,7 +2719,7 @@
         gl.useProgram(program);
         gl.uniform2f(uUvOffset, region.ox, region.oy);
         gl.uniform2f(uUvScale, region.sx, region.sy);
-        gl.uniform1f(uTime, (now - startTime) / 1000);
+        gl.uniform1f(uTime, ((now - startTime) / 1000) % 1000.0);
         gl.uniform1f(uIntensity, intensity);
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, texture);
