@@ -772,15 +772,17 @@
     box-shadow:var(--shadow);
     backdrop-filter:blur(6px);
     -webkit-backdrop-filter:blur(6px);
-    /* hover/tap feedback — box-shadow & border only here, since the
-       mobile scroll-pin script drives `transform` via inline styles
-       every frame and would fight a CSS transform transition */
-    transition:box-shadow 0.25s ease, border-color 0.25s ease;
+    /* hover/tap feedback — box-shadow, border & filter only here,
+       since the mobile scroll-pin script drives `transform` via
+       inline styles every frame and would fight a CSS transform
+       transition (that inline style always wins over CSS anyway) */
+    transition:box-shadow 0.25s ease, border-color 0.25s ease, filter 0.25s ease;
   }
   .phil-card:hover,
   .phil-card:active{
-    box-shadow:var(--shadow-hover);
     border-color:var(--purple);
+    box-shadow:0 0 0 2px var(--purple), var(--shadow-hover);
+    filter:brightness(1.12);
   }
   .phil-card + .phil-card{
     margin-top:24px;
