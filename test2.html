@@ -1813,7 +1813,11 @@
     <p class="exp-subheading">The titles tell you where I started. The work usually took me further.</p>
 
     <div class="exp-list" id="expList">
-      <!-- entries injected by JS -->
+      <!-- mobile/tablet entries injected by JS -->
+    </div>
+
+    <div class="exp-list-desktop" id="expListDesktop">
+      <!-- desktop rows injected by JS (logo replaces numbering; multi-role companies split into one row per role) -->
     </div>
 
   </div>
@@ -1979,6 +1983,64 @@
     background:rgba(255,255,255,0.07);
   }
   .exp-cta svg{ width:14px; height:14px; flex-shrink:0; }
+
+  /* ---- desktop row list: hidden until 1024px, mobile/tablet list hides then ---- */
+  .exp-list-desktop{ display:none; }
+
+  @media (min-width:1024px){
+    .exp-section{ padding:64px clamp(28px, 6vw, 96px) 88px; }
+    .exp-inner{ max-width:1400px; }
+    .exp-title{ font-size:40px; }
+    .exp-subheading{ font-size:17px; max-width:60ch; }
+
+    .exp-list{ display:none; }
+    .exp-list-desktop{
+      display:flex;
+      flex-direction:column;
+      border-top:1px solid rgba(255,255,255,0.1);
+    }
+
+    /* each row: logo | role/company/period/location | description + CTAs —
+       reuses the same .exp-card class (and its hover treatment) as mobile,
+       just reflowed into a 3-column grid instead of a stacked block */
+    .exp-list-desktop .exp-card{
+      display:grid;
+      grid-template-columns:56px 260px 1fr;
+      column-gap:36px;
+      align-items:start;
+      padding:32px 0;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+    .exp-list-desktop .exp-card-head{ margin-bottom:0; }
+    .exp-list-desktop .exp-logo,
+    .exp-list-desktop .exp-logo-fallback{ width:56px; height:56px; }
+
+    .exp-desktop-left{ padding-top:2px; }
+    .exp-desktop-left .exp-role{ font-size:18px; }
+
+    .exp-desktop-right .exp-desc{
+      margin-left:0;
+      margin-bottom:14px;
+      font-size:15px;
+    }
+    .exp-desktop-right .exp-cta-row{ margin-left:0; }
+
+    /* smart truncation: full text renders untouched by default; a row is
+       only clamped (and only then does the "more" button appear) once JS
+       measures that it actually overflows the clamp — see the script
+       below. Nothing here decides that on its own. */
+    .exp-desktop-right .exp-desc-full{
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:4;
+      overflow:hidden;
+    }
+    .exp-desc[data-state="expanded"] .exp-desc-full{
+      display:block;
+      -webkit-line-clamp:unset;
+      overflow:visible;
+    }
+  }
 
   /* ---- "View all 7+ experience" toggle ---- */
   .exp-toggle-btn{
@@ -2279,6 +2341,37 @@
     '</div>';
   }
 
+  // ---- desktop row rendering: logo replaces the numbering, description
+  // shows in full by default (no pre-cut short text) — a "more" button
+  // only appears if JS later measures that the text actually overflows
+  // its clamp (see checkDesktopClamps below)
+  function renderDesktopDesc(descFull){
+    return '<p class="exp-desc" data-state="collapsed">' +
+        '<span class="exp-desc-full">' + descFull + '</span>' +
+        ' <button type="button" class="exp-more-btn" hidden>more</button>' +
+      '</p>';
+  }
+
+  function renderDesktopRow(row){
+    return '<div class="exp-card">' +
+      '<div class="exp-card-head">' +
+        '<img class="exp-logo" src="' + row.logo + '" alt="' + row.company + ' logo" ' +
+          'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+        '<div class="exp-logo-fallback">' + row.logoInitial + '</div>' +
+      '</div>' +
+      '<div class="exp-desktop-left">' +
+        '<h3 class="exp-role">' + row.role + '</h3>' +
+        '<p class="exp-company">' + row.company + ' \u00b7 ' + row.employment + '</p>' +
+        '<p class="exp-period">' + row.period + '</p>' +
+        '<p class="exp-location">' + row.location + '</p>' +
+      '</div>' +
+      '<div class="exp-desktop-right">' +
+        renderDesktopDesc(row.descFull) +
+        (row.showCtas ? '<div class="exp-cta-row">' + renderCtas(row.ctas) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }
+
   var VISIBLE_COUNT = 3;
   var moreWrap = document.createElement('div');
   moreWrap.className = 'exp-more-list';
@@ -2310,6 +2403,97 @@
     });
   }
 
+  // ---- desktop: same 3-visible / toggle pattern, but multi-role companies
+  // are flattened into one row per role (sharing that company's logo),
+  // and each row's CTAs only render on the last role of the group so the
+  // Website/Social row doesn't repeat under every role
+  var listElDesktop = document.getElementById('expListDesktop');
+  var desktopRows = [];
+  EXP_DATA.forEach(function(exp, i){
+    var visible = i < VISIBLE_COUNT;
+    if (exp.type === 'multi'){
+      exp.roles.forEach(function(role, idx){
+        desktopRows.push({
+          visible: visible,
+          logo: exp.logo, logoInitial: exp.logoInitial,
+          role: role.role, company: exp.company, employment: exp.employment,
+          period: role.period, location: role.location, descFull: role.descFull,
+          ctas: exp.ctas, showCtas: idx === exp.roles.length - 1
+        });
+      });
+    } else {
+      desktopRows.push({
+        visible: visible,
+        logo: exp.logo, logoInitial: exp.logoInitial,
+        role: exp.role, company: exp.company, employment: exp.employment,
+        period: exp.period, location: exp.location, descFull: exp.descFull,
+        ctas: exp.ctas, showCtas: true
+      });
+    }
+  });
+
+  var moreWrapDesktop = document.createElement('div');
+  moreWrapDesktop.className = 'exp-more-list';
+  moreWrapDesktop.hidden = true;
+
+  desktopRows.forEach(function(row){
+    var html = renderDesktopRow(row);
+    if (row.visible){
+      listElDesktop.insertAdjacentHTML('beforeend', html);
+    } else {
+      moreWrapDesktop.insertAdjacentHTML('beforeend', html);
+    }
+  });
+
+  var toggleBtnDesktop = null;
+  if (desktopRows.some(function(r){ return !r.visible; })){
+    toggleBtnDesktop = document.createElement('button');
+    toggleBtnDesktop.type = 'button';
+    toggleBtnDesktop.className = 'exp-toggle-btn';
+    toggleBtnDesktop.textContent = 'View all ' + EXP_DATA.length + '+ experience';
+    listElDesktop.appendChild(toggleBtnDesktop);
+    listElDesktop.appendChild(moreWrapDesktop);
+
+    var expExpandedDesktop = false;
+    toggleBtnDesktop.addEventListener('click', function(){
+      expExpandedDesktop = !expExpandedDesktop;
+      moreWrapDesktop.hidden = !expExpandedDesktop;
+      toggleBtnDesktop.textContent = expExpandedDesktop ? 'Show less' : ('View all ' + EXP_DATA.length + '+ experience');
+    });
+  }
+
+  // desktop "more"/"less" just toggles the clamp (full text is already
+  // in the DOM) — distinct from the mobile handler below, which swaps
+  // between a separate pre-cut short span and the full span
+  listElDesktop.addEventListener('click', function(e){
+    var btn = e.target.closest('.exp-more-btn');
+    if (!btn) return;
+    var descEl = btn.closest('.exp-desc');
+    var expanded = descEl.getAttribute('data-state') === 'expanded';
+    descEl.setAttribute('data-state', expanded ? 'collapsed' : 'expanded');
+    btn.textContent = expanded ? 'more' : 'less';
+  });
+
+  // smart truncation: a description's "more" button only appears once
+  // layout confirms the text actually overflows its 4-line clamp —
+  // short descriptions just render in full with no button at all
+  function checkDesktopClamps(){
+    if (!window.matchMedia('(min-width:1024px)').matches) return;
+    listElDesktop.querySelectorAll('.exp-desc').forEach(function(descEl){
+      if (descEl.getAttribute('data-state') === 'expanded') return;
+      var fullEl = descEl.querySelector('.exp-desc-full');
+      var btn = descEl.querySelector('.exp-more-btn');
+      btn.hidden = !(fullEl.scrollHeight > fullEl.clientHeight + 1);
+    });
+  }
+  checkDesktopClamps();
+  window.addEventListener('load', checkDesktopClamps);
+  var expClampTimer;
+  window.addEventListener('resize', function(){
+    window.clearTimeout(expClampTimer);
+    expClampTimer = window.setTimeout(checkDesktopClamps, 150);
+  });
+
   // expand/collapse — delegated so it scales to however many entries get added later
   listEl.addEventListener('click', function(e){
     var btn = e.target.closest('.exp-more-btn');
@@ -2336,7 +2520,7 @@
   // screen gets the highlight class, same technique used for the
   // Core Capabilities cards — real :hover (CSS) handles pointer
   // devices, this handles touch/scroll
-  var expCards = listEl.querySelectorAll('.exp-card');
+  var expCards = document.querySelectorAll('#expList .exp-card, #expListDesktop .exp-card');
   var expScrollTicking = false;
   var expPointerActive = false; // true while a mouse/finger is actively resting on a card — scroll tracking backs off so it doesn't fight the direct interaction
   function updateExpHover(){
