@@ -198,8 +198,6 @@
     border-bottom:1px solid rgba(255,255,255,.07);
   }
 
-  .glass-canvas{ display:none; }
-
   .nav-inner{
     max-width:1280px;
     margin:0 auto;
@@ -317,7 +315,7 @@
       z-index:200;
     }
     .site-nav.nav-visible .nav-inner{
-      background:rgba(255,255,255,.09);
+      background:rgba(255,255,255,.06);
       backdrop-filter:blur(16px) saturate(1.15);
       -webkit-backdrop-filter:blur(16px) saturate(1.15);
       border-color:rgba(255,255,255,.22);
@@ -326,6 +324,10 @@
         inset 0 -14px 22px -10px rgba(255,255,255,.08),
         inset 0 0 0 1px rgba(255,255,255,.03),
         0 14px 34px rgba(0,0,0,.4);
+    }
+    html.svg-glass-on .site-nav.nav-visible .nav-inner{
+      backdrop-filter:url(#glassPillFilter) blur(10px) saturate(1.15);
+      -webkit-backdrop-filter:url(#glassPillFilter) blur(10px) saturate(1.15);
     }
     .nav-inner::before{
       content:'';
@@ -364,18 +366,13 @@
       margin:8px 12px 0;
       border-radius:22px;
       border:1px solid rgba(255,255,255,.13);
-      background:rgba(18,18,24,.38);
+      background:rgba(18,18,24,.28);
       box-shadow:0 14px 34px rgba(0,0,0,.4);
       overflow:hidden;
     }
-    .glass-canvas{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
-      display:block;
-      pointer-events:none;
+    html.svg-glass-on .nav-mobile-menu{
+      backdrop-filter:url(#glassDrawerFilter) blur(8px);
+      -webkit-backdrop-filter:url(#glassDrawerFilter) blur(8px);
     }
   }
 
@@ -406,7 +403,7 @@
     flex-direction:column;
     gap:2px;
     padding:8px 24px 22px;
-    background:rgba(5,5,8,.40);
+    background:rgba(5,5,8,.30);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     z-index:1;
@@ -1971,9 +1968,44 @@
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="glassPillFilter" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="4" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="3" result="softNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="16" xChannelSelector="R" yChannelSelector="G" result="warped"/>
+      <feGaussianBlur in="warped" stdDeviation="1.2"/>
+    </filter>
+    <filter id="glassDrawerFilter" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.014" numOctaves="2" seed="9" result="noise2"/>
+      <feGaussianBlur in="noise2" stdDeviation="4" result="softNoise2"/>
+      <feDisplacementMap in="SourceGraphic" in2="softNoise2" scale="30" xChannelSelector="R" yChannelSelector="G" result="warped2"/>
+      <feGaussianBlur in="warped2" stdDeviation="1.5"/>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+  // Feature-detect real SVG-filter-via-backdrop-filter support. Browsers
+  // that can't render it (Safari/WebKit) compute backdropFilter back to
+  // 'none', so they keep the plain blur() glass set as the base style —
+  // never a broken/invisible panel, just no extra warp on top.
+  (function(){
+    try {
+      var probe = document.createElement('div');
+      probe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:10px;height:10px;backdrop-filter:url(#glassPillFilter) blur(1px);-webkit-backdrop-filter:url(#glassPillFilter) blur(1px);';
+      document.body.appendChild(probe);
+      var computed = getComputedStyle(probe).backdropFilter || getComputedStyle(probe).webkitBackdropFilter || '';
+      document.body.removeChild(probe);
+      if (computed && computed.indexOf('url(') !== -1) {
+        document.documentElement.classList.add('svg-glass-on');
+      }
+    } catch (e) { /* no-op: fallback blur glass stays active */ }
+  })();
+</script>
+
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
-    <canvas class="glass-canvas" id="glassCanvasPill" aria-hidden="true"></canvas>
     <a class="nav-brand" href="#home">
       <span class="nav-logo">Uj</span>
       <span class="nav-name">Uche Japheth</span>
@@ -1997,7 +2029,6 @@
     </button>
   </div>
   <div class="nav-mobile-menu" id="navMobileMenu">
-    <canvas class="glass-canvas" id="glassCanvasDrawer" aria-hidden="true"></canvas>
     <a href="#home" class="nav-link nav-mobile-link" data-nav="home">Home</a>
     <a href="#about" class="nav-link nav-mobile-link" data-nav="about">About</a>
     <a href="#experience" class="nav-link nav-mobile-link" data-nav="experience">Experience</a>
@@ -2578,189 +2609,6 @@
         btn.setAttribute('aria-expanded', 'false');
       });
     });
-  })();
-
-  // WebGL liquid glass: real shader-based warp + blur, sampling the actual
-  // hero photo as a live-tracked texture (correct region updates as the
-  // page scrolls), with distortion intensity tied to scroll velocity so
-  // it visibly ripples while scrolling and settles when still. Works on
-  // Safari/iOS since it relies only on WebGL + Canvas2D image upload —
-  // no backdrop-filter, no SVG filter references.
-  (function(){
-    var VERT_SRC =
-      'attribute vec2 a_pos;' +
-      'varying vec2 v_uv;' +
-      'void main(){' +
-      '  v_uv = a_pos * 0.5 + 0.5;' +
-      '  gl_Position = vec4(a_pos, 0.0, 1.0);' +
-      '}';
-
-    var FRAG_SRC =
-      'precision highp float;' +
-      'uniform sampler2D u_tex;' +
-      'uniform vec2 u_uvOffset;' +
-      'uniform vec2 u_uvScale;' +
-      'uniform float u_time;' +
-      'uniform float u_intensity;' +
-      'varying vec2 v_uv;' +
-      'vec4 sampleAt(vec2 uv){' +
-      '  vec2 t = u_uvOffset + clamp(uv, 0.0, 1.0) * u_uvScale;' +
-      '  return texture2D(u_tex, t);' +
-      '}' +
-      'void main(){' +
-      '  float wave = sin(v_uv.x * 12.0 + u_time * 4.0) * 0.5' +
-      '             + sin(v_uv.y * 9.0 - u_time * 3.0) * 0.5;' +
-      '  vec2 duv = v_uv + vec2(wave) * (u_intensity * 0.05);' +
-      '  float b = 0.006 + u_intensity * 0.012;' +
-      '  vec4 c = sampleAt(duv) * 0.4;' +
-      '  c += sampleAt(duv + vec2(b, 0.0)) * 0.15;' +
-      '  c += sampleAt(duv - vec2(b, 0.0)) * 0.15;' +
-      '  c += sampleAt(duv + vec2(0.0, b)) * 0.15;' +
-      '  c += sampleAt(duv - vec2(0.0, b)) * 0.15;' +
-      '  c.rgb = mix(c.rgb, vec3(1.0), 0.10);' +
-      '  gl_FragColor = c;' +
-      '}';
-
-    function compile(gl, type, src){
-      var s = gl.createShader(type);
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
-        console.warn('glass shader error:', gl.getShaderInfoLog(s));
-        gl.deleteShader(s);
-        return null;
-      }
-      return s;
-    }
-
-    function setupGlass(canvas, getRegion, sharedImg){
-      if (!canvas) return;
-      var gl2 = canvas.getContext('webgl2');
-      var gl = gl2 || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) return; // no WebGL: canvas stays empty, CSS blur underneath still shows
-      var isGL2 = !!gl2;
-
-      var vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC);
-      var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC);
-      if (!vs || !fs) return;
-
-      var program = gl.createProgram();
-      gl.attachShader(program, vs);
-      gl.attachShader(program, fs);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)){
-        console.warn('glass program link error:', gl.getProgramInfoLog(program));
-        return;
-      }
-      gl.useProgram(program);
-
-      var quad = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
-      var buf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
-      var aPos = gl.getAttribLocation(program, 'a_pos');
-      gl.enableVertexAttribArray(aPos);
-      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-      var uTex = gl.getUniformLocation(program, 'u_tex');
-      var uUvOffset = gl.getUniformLocation(program, 'u_uvOffset');
-      var uUvScale = gl.getUniformLocation(program, 'u_uvScale');
-      var uTime = gl.getUniformLocation(program, 'u_time');
-      var uIntensity = gl.getUniformLocation(program, 'u_intensity');
-
-      var texture = gl.createTexture();
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      // WebGL2 supports mipmapping on non-power-of-two textures (our photo
-      // is NPOT); trilinear minification kills the sparkle/aliasing noise
-      // that plain LINEAR sampling produces when a detailed photo is
-      // downsampled into a small canvas. WebGL1 falls back to plain LINEAR.
-      if (isGL2){
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      } else {
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      }
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-      var texReady = false;
-      function uploadTexture(){
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sharedImg);
-        if (isGL2) gl.generateMipmap(gl.TEXTURE_2D);
-        texReady = true;
-      }
-      if (sharedImg.complete && sharedImg.naturalWidth) uploadTexture();
-      else sharedImg.addEventListener('load', uploadTexture);
-
-      var lastScrollY = window.scrollY;
-      var intensity = 0;
-      var startTime = performance.now();
-      var lastW = -1, lastH = -1;
-
-      function resize(){
-        var rect = canvas.getBoundingClientRect();
-        if (rect.width < 1 || rect.height < 1) return false;
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        var w = Math.max(1, Math.round(rect.width * dpr));
-        var h = Math.max(1, Math.round(rect.height * dpr));
-        if (w !== lastW || h !== lastH){
-          canvas.width = w;
-          canvas.height = h;
-          gl.viewport(0, 0, w, h);
-          lastW = w; lastH = h;
-        }
-        return true;
-      }
-
-      function frame(now){
-        requestAnimationFrame(frame);
-        if (!texReady) return;
-        if (!resize()) return;
-
-        var sy = window.scrollY;
-        var delta = Math.abs(sy - lastScrollY);
-        lastScrollY = sy;
-        intensity = Math.min(1, intensity * 0.90 + delta * 0.05);
-
-        var region = getRegion();
-        if (!region) return;
-
-        gl.useProgram(program);
-        gl.uniform2f(uUvOffset, region.ox, region.oy);
-        gl.uniform2f(uUvScale, region.sx, region.sy);
-        gl.uniform1f(uTime, ((now - startTime) / 1000) % 1000.0);
-        gl.uniform1f(uIntensity, intensity);
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.uniform1i(uTex, 0);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      }
-      requestAnimationFrame(frame);
-    }
-
-    var photoImg = document.querySelector('.mp-photo');
-    if (!photoImg) return;
-
-    function regionFor(canvas){
-      return function(){
-        var pr = photoImg.getBoundingClientRect();
-        var cr = canvas.getBoundingClientRect();
-        if (pr.width <= 0 || pr.height <= 0) return null;
-        return {
-          ox: (cr.left - pr.left) / pr.width,
-          oy: (cr.top - pr.top) / pr.height,
-          sx: cr.width / pr.width,
-          sy: cr.height / pr.height
-        };
-      };
-    }
-
-    var pillCanvas = document.getElementById('glassCanvasPill');
-    var drawerCanvas = document.getElementById('glassCanvasDrawer');
-    if (pillCanvas) setupGlass(pillCanvas, regionFor(pillCanvas), photoImg);
-    if (drawerCanvas) setupGlass(drawerCanvas, regionFor(drawerCanvas), photoImg);
   })();
 
   // Nav scroll-spy (only observes sections that currently exist in the DOM)
