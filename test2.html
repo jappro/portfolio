@@ -44,7 +44,17 @@
     --teal:#2dd4bf; --teal-soft:rgba(45,212,191,0.14);
     color-scheme:dark;
   }
-  body{ background:var(--bg); margin:0; }
+  html{ background:#08080b; }
+  body{ background:#08080b; margin:0; overflow-x:hidden; }
+  /* body's own dark color is hardcoded rather than var(--bg) — var(--bg)
+     only resolves to the dark value inside elements carrying
+     data-theme="dark", and body itself doesn't carry that attribute.
+     Left as var(--bg) it silently falls back to the light theme value,
+     which then shows through as a white sliver wherever a section's
+     100vw full-bleed breakout (see .cc-explorer) overflows the visible
+     viewport by a pixel or two — a known iOS Safari quirk, worse under
+     "Request Desktop Website" + landscape. overflow-x:hidden clips
+     that stray sliver so it can never become visible or scrollable. */
 
 </style>
 
@@ -1984,10 +1994,10 @@
   }
   .exp-cta svg{ width:14px; height:14px; flex-shrink:0; }
 
-  /* ---- desktop row list: hidden until 1024px, mobile/tablet list hides then ---- */
+  /* ---- desktop row list: hidden until 960px, mobile/tablet list hides then ---- */
   .exp-list-desktop{ display:none; }
 
-  @media (min-width:1024px){
+  @media (min-width:960px){
     .exp-section{ padding:64px clamp(28px, 6vw, 96px) 88px; }
     .exp-inner{ max-width:1400px; }
     .exp-title{ font-size:40px; }
@@ -2547,7 +2557,7 @@
   // layout confirms the text actually overflows its 4-line clamp —
   // short descriptions just render in full with no button at all
   function checkDesktopClamps(){
-    if (!window.matchMedia('(min-width:1024px)').matches) return;
+    if (!window.matchMedia('(min-width:960px)').matches) return;
     listElDesktop.querySelectorAll('.exp-desc').forEach(function(descEl){
       if (descEl.getAttribute('data-state') === 'expanded') return;
       var fullEl = descEl.querySelector('.exp-desc-full');
