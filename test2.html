@@ -2004,6 +2004,7 @@
        reuses the same .exp-card class (and its hover treatment) as mobile,
        just reflowed into a 3-column grid instead of a stacked block */
     .exp-list-desktop .exp-card{
+      position:relative;
       display:grid;
       grid-template-columns:56px 260px 1fr;
       column-gap:36px;
@@ -2011,9 +2012,55 @@
       padding:32px 0;
       border-bottom:1px solid rgba(255,255,255,0.1);
     }
+    /* grouped multi-role rows (Racine, Pecunity): no hairline between a
+       company's own roles — only after the group's last role, so it
+       still reads as one continuous block, same as mobile */
+    .exp-list-desktop .exp-card.exp-card--no-divider{ border-bottom:none; }
+
     .exp-list-desktop .exp-card-head{ margin-bottom:0; }
     .exp-list-desktop .exp-logo,
     .exp-list-desktop .exp-logo-fallback{ width:56px; height:56px; }
+
+    /* connecting line + dot: only the first role of a company keeps the
+       real logo; every following role shows a small dot in that same
+       column instead, linked to the row above by a thin vertical line —
+       both pieces are confined to their own row's box and meet exactly
+       at the shared row boundary, so together they read as one
+       continuous line running through the group */
+    .exp-line-down{
+      position:absolute;
+      left:27.25px;
+      top:88px; /* 32px row padding-top + 56px logo height */
+      bottom:0;
+      width:1.5px;
+      background:rgba(255,255,255,0.18);
+    }
+    .exp-line-up{
+      position:absolute;
+      left:27.25px;
+      top:0;
+      height:38px;
+      width:1.5px;
+      background:rgba(255,255,255,0.18);
+    }
+    .exp-line-down-mid{
+      position:absolute;
+      left:27.25px;
+      top:38px;
+      bottom:0;
+      width:1.5px;
+      background:rgba(255,255,255,0.18);
+    }
+    .exp-group-dot{
+      position:absolute;
+      left:24px;
+      top:38px;
+      transform:translateY(-50%);
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--text-lo);
+    }
 
     .exp-desktop-left{ padding-top:2px; }
     .exp-desktop-left .exp-role{ font-size:18px; }
@@ -2352,13 +2399,25 @@
       '</p>';
   }
 
+  function renderDesktopHead(row){
+    if (row.headType === 'dot'){
+      return '<div class="exp-card-head exp-card-head--dot">' +
+        (row.lineUp ? '<span class="exp-line-up" aria-hidden="true"></span>' : '') +
+        '<span class="exp-group-dot" aria-hidden="true"></span>' +
+        (row.lineDown ? '<span class="exp-line-down-mid" aria-hidden="true"></span>' : '') +
+      '</div>';
+    }
+    return '<div class="exp-card-head">' +
+      '<img class="exp-logo" src="' + row.logo + '" alt="' + row.company + ' logo" ' +
+        'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+      '<div class="exp-logo-fallback">' + row.logoInitial + '</div>' +
+      (row.lineDown ? '<span class="exp-line-down" aria-hidden="true"></span>' : '') +
+    '</div>';
+  }
+
   function renderDesktopRow(row){
-    return '<div class="exp-card">' +
-      '<div class="exp-card-head">' +
-        '<img class="exp-logo" src="' + row.logo + '" alt="' + row.company + ' logo" ' +
-          'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-        '<div class="exp-logo-fallback">' + row.logoInitial + '</div>' +
-      '</div>' +
+    return '<div class="exp-card' + (row.noBorder ? ' exp-card--no-divider' : '') + '">' +
+      renderDesktopHead(row) +
       '<div class="exp-desktop-left">' +
         '<h3 class="exp-role">' + row.role + '</h3>' +
         '<p class="exp-company">' + row.company + ' \u00b7 ' + row.employment + '</p>' +
@@ -2412,13 +2471,19 @@
   EXP_DATA.forEach(function(exp, i){
     var visible = i < VISIBLE_COUNT;
     if (exp.type === 'multi'){
-      exp.roles.forEach(function(role, idx){
+      exp.roles.forEach(function(role, idx, arr){
+        var isFirst = idx === 0;
+        var isLast = idx === arr.length - 1;
         desktopRows.push({
           visible: visible,
           logo: exp.logo, logoInitial: exp.logoInitial,
           role: role.role, company: exp.company, employment: exp.employment,
           period: role.period, location: role.location, descFull: role.descFull,
-          ctas: exp.ctas, showCtas: idx === exp.roles.length - 1
+          ctas: exp.ctas, showCtas: isLast,
+          headType: isFirst ? 'logo' : 'dot',
+          lineUp: !isFirst,
+          lineDown: !isLast,
+          noBorder: !isLast
         });
       });
     } else {
@@ -2427,7 +2492,11 @@
         logo: exp.logo, logoInitial: exp.logoInitial,
         role: exp.role, company: exp.company, employment: exp.employment,
         period: exp.period, location: exp.location, descFull: exp.descFull,
-        ctas: exp.ctas, showCtas: true
+        ctas: exp.ctas, showCtas: true,
+        headType: 'logo',
+        lineUp: false,
+        lineDown: false,
+        noBorder: false
       });
     }
   });
