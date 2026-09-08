@@ -1997,7 +1997,7 @@
 </head>
 <body>
 
-<div id="glassDebug" style="display:none;position:fixed;top:6px;left:6px;right:6px;z-index:99999;background:rgba(0,0,0,.92);color:#7CFC7C;font:11px/1.4 monospace;padding:8px 10px;border-radius:8px;max-height:40vh;overflow:auto;white-space:pre-wrap;"></div>
+<div id="glassDebug" style="display:none;position:fixed;bottom:6px;left:6px;right:6px;z-index:99999;background:rgba(0,0,0,.92);color:#7CFC7C;font:11px/1.4 monospace;padding:8px 10px;border-radius:8px;max-height:35vh;overflow:auto;white-space:pre-wrap;"></div>
 
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
@@ -2615,14 +2615,18 @@
   // uses a damped spring (not a sine wave), so it settles to a fixed rest
   // value and never loops or idles in motion.
   (function(){
-    function glassLog(msg){
+    var glassStatus = {};
+    function glassLog(key, msg){
+      glassStatus[key] = msg;
       var el = document.getElementById('glassDebug');
       if (!el) return;
       el.style.display = 'block';
-      el.textContent += msg + '\n';
+      var lines = [];
+      for (var k in glassStatus){ lines.push(glassStatus[k]); }
+      el.textContent = lines.join('\n');
     }
     window.glassLog = glassLog;
-    glassLog('[glass] script running…');
+    glassLog('boot', '[glass] script running…');
     try {
 
     // ---- Tunable parameters ----
@@ -2687,14 +2691,14 @@
       '  gl_FragColor = vec4(col, 1.0);' +
       '}';
 
-    function compile(gl, type, src){
+    function compile(gl, type, src, label){
       var s = gl.createShader(type);
       gl.shaderSource(s, src);
       gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
         var errMsg = gl.getShaderInfoLog(s);
         console.warn('glass shader error:', errMsg);
-        glassLog('[glass] SHADER COMPILE ERROR (' + (type === gl.VERTEX_SHADER ? 'vertex' : 'fragment') + '):\n' + errMsg);
+        glassLog('shader-' + label, '[glass:' + label + '] SHADER ERROR (' + (type === gl.VERTEX_SHADER ? 'vertex' : 'fragment') + '): ' + errMsg);
         gl.deleteShader(s);
         return null;
       }
@@ -2703,20 +2707,20 @@
 
     function setupGlass(canvas, getRegion, sharedImg, label){
       if (!canvas){
-        glassLog('[glass:' + label + '] canvas element not found in DOM');
+        glassLog('ctx-' + label, '[glass:' + label + '] canvas element not found in DOM');
         return;
       }
       var gl2 = canvas.getContext('webgl2');
       var gl = gl2 || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
       if (!gl){
-        glassLog('[glass:' + label + '] NO WebGL context available on this browser/device');
+        glassLog('ctx-' + label, '[glass:' + label + '] NO WebGL context available');
         return;
       }
       var isGL2 = !!gl2;
-      glassLog('[glass:' + label + '] context OK (webgl2=' + isGL2 + ')');
+      glassLog('ctx-' + label, '[glass:' + label + '] context OK (webgl2=' + isGL2 + ')');
 
-      var vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC);
-      var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC);
+      var vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC, label);
+      var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC, label);
       if (!vs || !fs) return;
 
       var program = gl.createProgram();
@@ -2726,10 +2730,10 @@
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)){
         var linkErr = gl.getProgramInfoLog(program);
         console.warn('glass program link error:', linkErr);
-        glassLog('[glass:' + label + '] PROGRAM LINK ERROR:\n' + linkErr);
+        glassLog('shader-' + label, '[glass:' + label + '] LINK ERROR: ' + linkErr);
         return;
       }
-      glassLog('[glass:' + label + '] shader compiled + linked OK');
+      glassLog('shader-' + label, '[glass:' + label + '] shader OK');
       gl.useProgram(program);
 
       var quad = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
@@ -2768,14 +2772,14 @@
           gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sharedImg);
           if (isGL2) gl.generateMipmap(gl.TEXTURE_2D);
           texReady = true;
-          glassLog('[glass:' + label + '] texture uploaded OK (' + sharedImg.naturalWidth + 'x' + sharedImg.naturalHeight + ')');
+          glassLog('tex-' + label, '[glass:' + label + '] texture OK (' + sharedImg.naturalWidth + 'x' + sharedImg.naturalHeight + ')');
         } catch (e) {
-          glassLog('[glass:' + label + '] TEXTURE UPLOAD ERROR: ' + e.message);
+          glassLog('tex-' + label, '[glass:' + label + '] TEXTURE ERROR: ' + e.message);
         }
       }
       if (sharedImg.complete && sharedImg.naturalWidth) uploadTexture();
       else sharedImg.addEventListener('load', uploadTexture);
-      glassLog('[glass:' + label + '] image complete=' + sharedImg.complete + ' naturalWidth=' + sharedImg.naturalWidth);
+      glassLog('tex-' + label, '[glass:' + label + '] image loading… complete=' + sharedImg.complete);
 
       var lastW = -1, lastH = -1;
       function resize(){
@@ -2799,17 +2803,19 @@
       var velocity = 0;
       var lastScrollY = window.scrollY;
       var lastTime = performance.now();
-      var loggedFirstDraw = false;
-      var loggedNoRegion = false;
-      var loggedNotReady = false;
+      var frameCount = 0;
 
       function frame(now){
         requestAnimationFrame(frame);
+        frameCount++;
         if (!texReady){
-          if (!loggedNotReady){ loggedNotReady = true; glassLog('[glass:' + label + '] waiting on texture…'); }
+          glassLog('draw-' + label, '[glass:' + label + '] waiting on texture…');
           return;
         }
-        if (!resize()) return;
+        if (!resize()){
+          glassLog('draw-' + label, '[glass:' + label + '] canvas has 0 size (not visible yet)');
+          return;
+        }
 
         var dt = Math.min((now - lastTime) / 1000, 0.05);
         lastTime = now;
@@ -2828,7 +2834,7 @@
 
         var region = getRegion();
         if (!region){
-          if (!loggedNoRegion){ loggedNoRegion = true; glassLog('[glass:' + label + '] getRegion() returned null (photo has 0 size?)'); }
+          glassLog('draw-' + label, '[glass:' + label + '] no region (photo has 0 size)');
           return;
         }
 
@@ -2845,12 +2851,14 @@
         gl.uniform1i(uTex, 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-        if (!loggedFirstDraw){
-          loggedFirstDraw = true;
-          glassLog('[glass:' + label + '] DRAWING OK — canvas ' + canvas.width + 'x' + canvas.height +
-            ', region ox=' + region.ox.toFixed(2) + ' oy=' + region.oy.toFixed(2) +
-            ' sx=' + region.sx.toFixed(2) + ' sy=' + region.sy.toFixed(2) +
-            ', intensity=' + intensity.toFixed(2));
+        // Update the live status every ~15 frames (not every frame, to
+        // avoid excessive DOM writes) so whenever you look, it's current.
+        if (frameCount % 15 === 0){
+          var overPhoto = (region.oy > -1 && region.oy < 1);
+          glassLog('draw-' + label, '[glass:' + label + '] LIVE ' + canvas.width + 'x' + canvas.height +
+            ' oy=' + region.oy.toFixed(2) + ' sy=' + region.sy.toFixed(2) +
+            ' intensity=' + intensity.toFixed(2) +
+            (overPhoto ? ' (over photo)' : ' (NOT over photo — scroll up to test)'));
         }
       }
       requestAnimationFrame(frame);
@@ -2858,7 +2866,7 @@
 
     var photoImg = document.querySelector('.mp-photo');
     if (!photoImg){
-      glassLog('[glass] ABORT: .mp-photo element not found in DOM');
+      glassLog('abort', '[glass] ABORT: .mp-photo element not found in DOM');
       return;
     }
 
@@ -2881,7 +2889,7 @@
     if (pillCanvas) setupGlass(pillCanvas, regionFor(pillCanvas), photoImg, 'pill');
     if (drawerCanvas) setupGlass(drawerCanvas, regionFor(drawerCanvas), photoImg, 'drawer');
     } catch (e) {
-      glassLog('[glass] UNCAUGHT ERROR: ' + e.message);
+      glassLog('error', '[glass] UNCAUGHT ERROR: ' + e.message);
     }
   })();
 
