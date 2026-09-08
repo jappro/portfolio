@@ -1843,7 +1843,12 @@
   }
 
   .exp-inner{
-    max-width:640px;
+    /* stays at 640px on true phones (90vw never exceeds 640px below
+       ~711px viewport width), then grows smoothly with the viewport
+       from there up to the 960px desktop cutoff (90vw of 960px ≈
+       864px) — no fixed tablet number, no jump at a breakpoint, and
+       the 960px+ media query below still takes over for desktop */
+    max-width:clamp(640px, 90vw, 880px);
     margin:0 auto;
   }
 
