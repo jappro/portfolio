@@ -1997,6 +1997,8 @@
 </head>
 <body>
 
+<div id="glassDebug" style="display:none;position:fixed;top:6px;left:6px;right:6px;z-index:99999;background:rgba(0,0,0,.92);color:#7CFC7C;font:11px/1.4 monospace;padding:8px 10px;border-radius:8px;max-height:40vh;overflow:auto;white-space:pre-wrap;"></div>
+
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
     <div class="nav-glass-lens" aria-hidden="true"></div>
@@ -2613,16 +2615,26 @@
   // uses a damped spring (not a sine wave), so it settles to a fixed rest
   // value and never loops or idles in motion.
   (function(){
+    function glassLog(msg){
+      var el = document.getElementById('glassDebug');
+      if (!el) return;
+      el.style.display = 'block';
+      el.textContent += msg + '\n';
+    }
+    window.glassLog = glassLog;
+    glassLog('[glass] script running…');
+    try {
+
     // ---- Tunable parameters ----
     var SCALE              = 0.32;  // overall displacement magnitude (30-35% requested)
-    var REFRACTION         = 0.08;   // how strongly the lens-shaped pull applies
+    var REFRACTION         = 0.8;   // how strongly the lens-shaped pull applies
     var DISPERSION         = 0.215; // chromatic aberration strength (20-23% requested)
     var BASELINE_INTENSITY = 0.15;  // resting distortion level (glass always has some lens shape)
     var MAX_BOOST          = 0.85;  // extra intensity available from scroll momentum
     var VELOCITY_TO_BOOST  = 0.05;  // scroll delta -> target boost conversion
     var SPRING_STIFFNESS   = 140;   // higher = snaps to target faster
     var SPRING_DAMPING     = 24;    // higher = settles with less/no overshoot
-    var BLUR_RADIUS        = 1.012; // softness of the sampled image
+    var BLUR_RADIUS        = 0.012; // softness of the sampled image
     // ----------------------------
 
     var VERT_SRC =
@@ -2680,19 +2692,28 @@
       gl.shaderSource(s, src);
       gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
-        console.warn('glass shader error:', gl.getShaderInfoLog(s));
+        var errMsg = gl.getShaderInfoLog(s);
+        console.warn('glass shader error:', errMsg);
+        glassLog('[glass] SHADER COMPILE ERROR (' + (type === gl.VERTEX_SHADER ? 'vertex' : 'fragment') + '):\n' + errMsg);
         gl.deleteShader(s);
         return null;
       }
       return s;
     }
 
-    function setupGlass(canvas, getRegion, sharedImg){
-      if (!canvas) return;
+    function setupGlass(canvas, getRegion, sharedImg, label){
+      if (!canvas){
+        glassLog('[glass:' + label + '] canvas element not found in DOM');
+        return;
+      }
       var gl2 = canvas.getContext('webgl2');
       var gl = gl2 || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) return;
+      if (!gl){
+        glassLog('[glass:' + label + '] NO WebGL context available on this browser/device');
+        return;
+      }
       var isGL2 = !!gl2;
+      glassLog('[glass:' + label + '] context OK (webgl2=' + isGL2 + ')');
 
       var vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC);
       var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC);
@@ -2703,9 +2724,12 @@
       gl.attachShader(program, fs);
       gl.linkProgram(program);
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)){
-        console.warn('glass program link error:', gl.getProgramInfoLog(program));
+        var linkErr = gl.getProgramInfoLog(program);
+        console.warn('glass program link error:', linkErr);
+        glassLog('[glass:' + label + '] PROGRAM LINK ERROR:\n' + linkErr);
         return;
       }
+      glassLog('[glass:' + label + '] shader compiled + linked OK');
       gl.useProgram(program);
 
       var quad = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
@@ -2738,14 +2762,20 @@
 
       var texReady = false;
       function uploadTexture(){
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sharedImg);
-        if (isGL2) gl.generateMipmap(gl.TEXTURE_2D);
-        texReady = true;
+        try {
+          gl.bindTexture(gl.TEXTURE_2D, texture);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sharedImg);
+          if (isGL2) gl.generateMipmap(gl.TEXTURE_2D);
+          texReady = true;
+          glassLog('[glass:' + label + '] texture uploaded OK (' + sharedImg.naturalWidth + 'x' + sharedImg.naturalHeight + ')');
+        } catch (e) {
+          glassLog('[glass:' + label + '] TEXTURE UPLOAD ERROR: ' + e.message);
+        }
       }
       if (sharedImg.complete && sharedImg.naturalWidth) uploadTexture();
       else sharedImg.addEventListener('load', uploadTexture);
+      glassLog('[glass:' + label + '] image complete=' + sharedImg.complete + ' naturalWidth=' + sharedImg.naturalWidth);
 
       var lastW = -1, lastH = -1;
       function resize(){
@@ -2769,10 +2799,16 @@
       var velocity = 0;
       var lastScrollY = window.scrollY;
       var lastTime = performance.now();
+      var loggedFirstDraw = false;
+      var loggedNoRegion = false;
+      var loggedNotReady = false;
 
       function frame(now){
         requestAnimationFrame(frame);
-        if (!texReady) return;
+        if (!texReady){
+          if (!loggedNotReady){ loggedNotReady = true; glassLog('[glass:' + label + '] waiting on texture…'); }
+          return;
+        }
         if (!resize()) return;
 
         var dt = Math.min((now - lastTime) / 1000, 0.05);
@@ -2791,7 +2827,10 @@
         if (intensity > 1.2) intensity = 1.2;
 
         var region = getRegion();
-        if (!region) return;
+        if (!region){
+          if (!loggedNoRegion){ loggedNoRegion = true; glassLog('[glass:' + label + '] getRegion() returned null (photo has 0 size?)'); }
+          return;
+        }
 
         gl.useProgram(program);
         gl.uniform2f(uUvOffset, region.ox, region.oy);
@@ -2805,12 +2844,23 @@
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.uniform1i(uTex, 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+        if (!loggedFirstDraw){
+          loggedFirstDraw = true;
+          glassLog('[glass:' + label + '] DRAWING OK — canvas ' + canvas.width + 'x' + canvas.height +
+            ', region ox=' + region.ox.toFixed(2) + ' oy=' + region.oy.toFixed(2) +
+            ' sx=' + region.sx.toFixed(2) + ' sy=' + region.sy.toFixed(2) +
+            ', intensity=' + intensity.toFixed(2));
+        }
       }
       requestAnimationFrame(frame);
     }
 
     var photoImg = document.querySelector('.mp-photo');
-    if (!photoImg) return;
+    if (!photoImg){
+      glassLog('[glass] ABORT: .mp-photo element not found in DOM');
+      return;
+    }
 
     function regionFor(canvas){
       return function(){
@@ -2828,8 +2878,11 @@
 
     var pillCanvas = document.getElementById('navGlassGlPill');
     var drawerCanvas = document.getElementById('navGlassGlDrawer');
-    if (pillCanvas) setupGlass(pillCanvas, regionFor(pillCanvas), photoImg);
-    if (drawerCanvas) setupGlass(drawerCanvas, regionFor(drawerCanvas), photoImg);
+    if (pillCanvas) setupGlass(pillCanvas, regionFor(pillCanvas), photoImg, 'pill');
+    if (drawerCanvas) setupGlass(drawerCanvas, regionFor(drawerCanvas), photoImg, 'drawer');
+    } catch (e) {
+      glassLog('[glass] UNCAUGHT ERROR: ' + e.message);
+    }
   })();
 
   // Nav scroll-spy (only observes sections that currently exist in the DOM)
