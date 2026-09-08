@@ -2838,6 +2838,22 @@
           return;
         }
 
+        // Only draw the distortion when the pill actually overlaps the
+        // photo (with a little margin). Feeding wildly out-of-range UVs
+        // to the shader confuses the GPU's automatic mip-level selection
+        // and produces stripe/aliasing artifacts — and there's nothing
+        // meaningful to distort out there anyway, so just clear to fully
+        // transparent and let the plain blur lens underneath show instead.
+        var overlaps = (region.oy + region.sy > -0.25) && (region.oy < 1.25);
+        if (!overlaps){
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          if (frameCount % 15 === 0){
+            glassLog('draw-' + label, '[glass:' + label + '] not over photo (oy=' + region.oy.toFixed(2) + ') — showing plain blur instead');
+          }
+          return;
+        }
+
         gl.useProgram(program);
         gl.uniform2f(uUvOffset, region.ox, region.oy);
         gl.uniform2f(uUvScale, region.sx, region.sy);
@@ -2854,11 +2870,9 @@
         // Update the live status every ~15 frames (not every frame, to
         // avoid excessive DOM writes) so whenever you look, it's current.
         if (frameCount % 15 === 0){
-          var overPhoto = (region.oy > -1 && region.oy < 1);
           glassLog('draw-' + label, '[glass:' + label + '] LIVE ' + canvas.width + 'x' + canvas.height +
             ' oy=' + region.oy.toFixed(2) + ' sy=' + region.sy.toFixed(2) +
-            ' intensity=' + intensity.toFixed(2) +
-            (overPhoto ? ' (over photo)' : ' (NOT over photo — scroll up to test)'));
+            ' intensity=' + intensity.toFixed(2) + ' (over photo, drawing)');
         }
       }
       requestAnimationFrame(frame);
