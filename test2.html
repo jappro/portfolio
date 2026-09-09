@@ -2776,7 +2776,7 @@
     transition:left 0.2s ease, width 0.2s ease;
   }
 
-  .tst-viewport{ overflow:hidden; }
+  .tst-viewport{ overflow:visible; }
   .tst-cards{
     display:flex;
     gap:20px;
@@ -2784,6 +2784,14 @@
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
     -ms-overflow-style:none;
+    /* overflow-x:auto forces overflow-y to compute as auto too (a CSS
+       overflow-module rule), which was clipping the box-shadow above
+       and below each card. Padding gives the shadow room to render
+       before it hits that clip edge; the matching negative margin
+       cancels the padding back out so the row's outer position and
+       width don't visibly shift. */
+    padding:20px 20px 24px 20px;
+    margin:-20px -20px -24px -20px;
   }
   .tst-cards::-webkit-scrollbar{ display:none; }
 
@@ -2792,12 +2800,18 @@
     width:320px;
     min-height:230px;
     scroll-snap-align:start;
-    background:var(--bg-alt);
-    border:1px solid var(--card-border);
-    border-radius:18px;
+    background:var(--bg); /* same color as the page background, not a boxed card color */
+    border:none; /* no ring — the shadow-background below does the separating instead */
+    border-radius:0; /* sharp, unrounded edges */
+    box-shadow:6px 6px 0 var(--bg-alt); /* solid (unblurred) offset shadow, slightly lighter than the card — this is what makes it pop since the card itself is invisible against the page */
     padding:24px;
     display:flex;
     flex-direction:column;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tst-card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:8px 14px 0 var(--bg-alt);
   }
 
   .tst-quote-text{
