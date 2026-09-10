@@ -841,7 +841,7 @@
   .phil-card__diagram svg{ width:100%; height:auto; display:block; }
 
   /* the floated desktop-only diagram duplicates stay hidden below
-     1024px — the mobile/tablet layout keeps using the original
+     900px — the mobile/small-tablet layout keeps using the original
      .phil-card__diagram block instead */
   .phil-card__diagram--float{
     display:none;
@@ -978,7 +978,7 @@
 </style>
 
 <style>
-  @media (min-width:1024px){
+  @media (min-width:900px){
 
     .phil-body-cards .phil-card{
       transition:box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
@@ -1081,17 +1081,32 @@
 
     .phil-body-cards{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr; /* single column at the 900-1023px "large tablet" tier — two columns would be too cramped */
       grid-template-areas:
-        "card1 card2"
-        "card3 card3"
-        "card4 card5";
-      align-items:stretch; /* row 1 (01/02) and row 3 (04/05) share the taller card's height */
+        "card1"
+        "card2"
+        "card3"
+        "card4"
+        "card5";
+      align-items:stretch;
       gap:32px;
-      max-width:1440px;
+      max-width:820px;
       margin:0 auto;
-      padding:64px 56px 96px;
+      padding:64px 40px 96px;
       height:auto;
+    }
+
+    /* true desktop: widen back out to the approved 2-column grid */
+    @media (min-width:1024px){
+      .phil-body-cards{
+        grid-template-columns:1fr 1fr;
+        grid-template-areas:
+          "card1 card2"
+          "card3 card3"
+          "card4 card5";
+        max-width:1440px;
+        padding:64px 56px 96px;
+      }
     }
 
     .phil-body-cards .phil-card{
@@ -1112,12 +1127,14 @@
     .phil-body-cards .phil-card[data-card-index="4"]{ grid-area:card4; z-index:auto; }
     .phil-body-cards .phil-card[data-card-index="5"]{ grid-area:card5; z-index:auto; }
 
-    /* ---------- row 1 (01/02) & row 3 (04/05): landscape cards,
-       single-column text flow — no left/right split. The visible
-       diagram is a duplicate placed inline in the markup (a float
-       needs to sit in the DOM right where the wrap should start;
-       the original .phil-card__diagram is hidden here and still
-       serves the mobile/tablet layout below 1024px). ---------- */
+    /* ---------- cards 01/02/04/05: landscape cards, single-column
+       text flow — no left/right split. The visible diagram is a
+       duplicate placed inline in the markup (a float needs to sit
+       in the DOM right where the wrap should start; the original
+       .phil-card__diagram is hidden here and still serves the
+       mobile/small-tablet layout below 900px). At 1024px+ these
+       cards pair up into the 2-column grid (01+02, 04+05); below
+       that (900-1023px) each sits in its own full-width row. ---------- */
     .phil-body-cards .phil-card[data-card-index="1"],
     .phil-body-cards .phil-card[data-card-index="2"],
     .phil-body-cards .phil-card[data-card-index="4"],
@@ -1306,7 +1323,7 @@
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ease = reduceMotion ? 1 : 0.15;
-  var desktopQuery = window.matchMedia ? window.matchMedia('(min-width: 1024px)') : null;
+  var desktopQuery = window.matchMedia ? window.matchMedia('(min-width: 900px)') : null;
 
   function isDesktop(){
     return !!(desktopQuery && desktopQuery.matches);
