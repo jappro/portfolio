@@ -2800,10 +2800,10 @@
     width:320px;
     min-height:230px;
     scroll-snap-align:start;
-    background:var(--bg); /* same color as the page background, not a boxed card color */
-    border:none; /* no ring — the shadow-background below does the separating instead */
+    background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
+    border:none; /* no ring — the shadow does the separating instead */
     border-radius:0; /* sharp, unrounded edges */
-    box-shadow:6px 6px 0 var(--bg-alt); /* solid (unblurred) offset shadow, slightly lighter than the card — this is what makes it pop since the card itself is invisible against the page */
+    box-shadow:6px 6px 0 rgba(255,255,255,0.08); /* solid (unblurred) offset shadow — lighter than the card itself now that the card is no longer background-colored */
     padding:24px;
     display:flex;
     flex-direction:column;
@@ -2811,7 +2811,7 @@
   }
   .tst-card:hover{
     transform:translateY(-8px) scale(1.02);
-    box-shadow:8px 14px 0 var(--bg-alt);
+    box-shadow:8px 14px 0 rgba(255,255,255,0.08);
   }
 
   .tst-quote-text{
