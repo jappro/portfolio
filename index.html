@@ -301,7 +301,7 @@
       overflow:hidden;
       padding:11px 16px;
       background:transparent;
-      border:1px solid transparent;
+      border:1px solid rgba(255,255,255,.08);
       border-radius:999px;
       box-shadow:none;
       transition:
@@ -404,6 +404,35 @@
   .nav-hamburger .icon-close{ display:none; }
   .nav-hamburger.is-open .icon-menu{ display:none; }
   .nav-hamburger.is-open .icon-close{ display:block; }
+
+  .nav-hamburger-static{ display:none; }
+
+  @media (max-width:960px){
+    .nav-hamburger-static{
+      display:flex;
+      position:fixed;
+      top:23px;
+      right:24px;
+      width:40px; height:40px;
+      border-radius:50%;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;
+      cursor:pointer;
+      z-index:160;
+    }
+    .nav-hamburger-static svg{ width:18px; height:18px; }
+    .nav-hamburger-static .icon-close{ display:none; }
+    .nav-hamburger-static.is-open .icon-menu{ display:none; }
+    .nav-hamburger-static.is-open .icon-close{ display:block; }
+
+    #siteNav.nav-visible + .nav-hamburger-static,
+    #siteNav:has(.nav-mobile-menu.open) + .nav-hamburger-static{
+      display:none;
+    }
+  }
 
   .nav-mobile-menu{
     display:none;
@@ -2015,6 +2044,11 @@
   </div>
 </nav>
 
+<button class="nav-hamburger-static" id="navHamburgerStatic" aria-label="Open menu" aria-expanded="false">
+  <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+
 <header class="hero-new" id="home">
   <div class="hero-glow" aria-hidden="true"></div>
 
@@ -2567,22 +2601,34 @@
     }, { passive:true });
   })();
 
-  // Mobile nav hamburger toggle
+  // Mobile nav hamburger toggle (real button + the static-state duplicate
+  // that sits above the photo — both control the same drawer, kept in sync)
   (function(){
     var btn = document.getElementById('navHamburger');
+    var btnStatic = document.getElementById('navHamburgerStatic');
     var menu = document.getElementById('navMobileMenu');
     if (!btn || !menu) return;
-    btn.addEventListener('click', function(){
-      var open = menu.classList.toggle('open');
+
+    function setOpen(open){
+      menu.classList.toggle('open', open);
       btn.classList.toggle('is-open', open);
       btn.setAttribute('aria-expanded', open);
+      if (btnStatic){
+        btnStatic.classList.toggle('is-open', open);
+        btnStatic.setAttribute('aria-expanded', open);
+      }
+    }
+
+    btn.addEventListener('click', function(){
+      setOpen(!menu.classList.contains('open'));
     });
-    menu.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click', function(){
-        menu.classList.remove('open');
-        btn.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', 'false');
+    if (btnStatic){
+      btnStatic.addEventListener('click', function(){
+        setOpen(!menu.classList.contains('open'));
       });
+    }
+    menu.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){ setOpen(false); });
     });
   })();
 
