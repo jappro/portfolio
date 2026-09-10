@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>Uche Japheth — Professional Profile</title>
+<meta name="title" content="Uche Japheth — Professional Profile">
+<meta name="description" content="Community operations, brand growth, business operations, and data analysis — explore the full resume collection of Uche Japheth.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://resume-pied-five.vercel.app/">
+<meta property="og:title" content="Uche Japheth — Professional Profile">
+<meta property="og:description" content="Community operations, brand growth, business operations, and data analysis — explore the full resume collection of Uche Japheth.">
+<meta property="og:site_name" content="Uche Japheth">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Uche Japheth — Professional Profile">
+<meta name="twitter:description" content="Community operations, brand growth, business operations, and data analysis — explore the full resume collection of Uche Japheth.">
+
+<link rel="canonical" href="https://resume-pied-five.vercel.app/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafafa;
+    --bg-alt:#f2f2f4;
+    --card-bg:rgba(255,255,255,0.72);
+    --card-border:rgba(15,15,20,0.07);
+    --text-hi:#111114;
+    --text-mid:#52525b;
+    --text-lo:#8b8b93;
+    --shadow:0 24px 60px rgba(15,15,20,0.08);
+    --shadow-hover:0 30px 70px rgba(15,15,20,0.14);
+
+    --purple:#7c5cff;
+    --purple-soft:rgba(124,92,255,0.12);
+    --blue:#2f5fe0;
+    --blue-soft:rgba(47,95,224,0.1);
+    --amber:#c9711a;
+    --amber-soft:rgba(201,113,26,0.12);
+    --teal:#128f7c;
+    --teal-soft:rgba(18,143,124,0.12);
+
+    color-scheme:light;
+  }
+
+  [data-theme="dark"]{
+    --bg:#08080b;
+    --bg-alt:#0d0d12;
+    --card-bg:rgba(255,255,255,0.045);
+    --card-border:rgba(255,255,255,0.09);
+    --text-hi:#f5f5f7;
+    --text-mid:#b6b6bf;
+    --text-lo:#7c7c86;
+    --shadow:0 24px 60px rgba(0,0,0,0.5);
+    --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
+
+    --purple:#a48cff;
+    --purple-soft:rgba(164,140,255,0.14);
+    --blue:#6f93ff;
+    --blue-soft:rgba(111,147,255,0.14);
+    --amber:#e6a24d;
+    --amber-soft:rgba(230,162,77,0.14);
+    --teal:#2dd4bf;
+    --teal-soft:rgba(45,212,191,0.14);
+
+    color-scheme:dark;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; overflow-x:hidden; }
+
+  body{
+    background:var(--bg);
+    color:var(--text-hi);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    transition:background .4s ease, color .4s ease;
+  }
+
+  ::selection{ background:var(--purple-soft); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ============ LAYOUT ============ */
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  section.section{ padding:110px 0; }
+
+  .section-kicker{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    text-align:center;
+    color:var(--text-mid);
+    margin-bottom:52px;
+  }
+
+  .section-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:32px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:52px;
+    letter-spacing:-0.01em;
+  }
+
+  /* reveal-on-scroll */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ============ SITE NAV ============ */
+  .site-nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(5,5,8,.72);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+
+  .nav-inner{
+    max-width:1280px;
+    margin:0 auto;
+    padding:16px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+  }
+
+  .nav-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    flex-shrink:0;
+  }
+
+  .nav-logo{
+    width:38px; height:38px;
+    border-radius:11px;
+    background:#fff;
+    color:#0a0a0f;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:16px;
+  }
+
+  .nav-name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:16px;
+    color:#fff;
+  }
+
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+  }
+
+  .nav-link{
+    position:relative;
+    font-size:14.5px;
+    font-weight:500;
+    color:rgba(255,255,255,.68);
+    text-decoration:none;
+    padding-bottom:6px;
+    transition:color .2s ease;
+    white-space:nowrap;
+  }
+
+  .nav-link:hover{ color:#fff; }
+
+  .nav-link.active{ color:#a48cff; }
+
+  .nav-link.active::after{
+    content:'';
+    position:absolute;
+    left:50%; bottom:-2px;
+    width:5px; height:5px;
+    border-radius:50%;
+    background:#a48cff;
+    transform:translateX(-50%);
+    box-shadow:0 0 8px rgba(164,140,255,.8);
+  }
+
+  .nav-cta{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 20px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.04);
+    color:#fff;
+    font-size:13.5px;
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+  }
+
+  .nav-cta svg{ width:15px; height:15px; }
+
+  .nav-cta:hover{ transform:translateY(-2px); border-color:rgba(164,140,255,.5); background:rgba(164,140,255,.1); }
+
+  .nav-glass-lens{ display:none; }
+
+  @media (max-width:960px){
+    .site-nav{
+      background:transparent;
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+      border-bottom:none;
+      padding:12px 12px 0;
+    }
+    .nav-inner{
+      position:relative;
+      overflow:hidden;
+      padding:11px 16px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:999px;
+      box-shadow:none;
+      transition:
+        border-color .45s cubic-bezier(.16,1,.3,1),
+        box-shadow .45s cubic-bezier(.16,1,.3,1);
+    }
+    .site-nav.nav-visible{
+      z-index:200;
+    }
+    .site-nav:has(.nav-mobile-menu.open){
+      z-index:200;
+    }
+    .site-nav.nav-visible .nav-inner{
+      border-color:rgba(255,255,255,.18);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,.6),
+        inset 0 -14px 22px -10px rgba(255,255,255,.08),
+        inset 0 0 0 1px rgba(255,255,255,.03),
+        0 14px 34px rgba(0,0,0,.4);
+    }
+    .nav-glass-lens{
+      display:block;
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      z-index:-1;
+      pointer-events:none;
+      background:transparent;
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+      transition:background .45s cubic-bezier(.16,1,.3,1);
+    }
+    .site-nav.nav-visible .nav-glass-lens{
+      background:rgba(255,255,255,.035);
+    }
+    .nav-inner::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      border-radius:inherit;
+      background:linear-gradient(115deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.12) 22%, transparent 46%);
+      pointer-events:none;
+      z-index:0;
+      opacity:0;
+      transition:opacity .45s ease;
+    }
+    .nav-inner::after{
+      content:'';
+      position:absolute;
+      top:9%; left:14%;
+      width:26%;
+      height:22%;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.55), transparent 70%);
+      filter:blur(2px);
+      pointer-events:none;
+      z-index:0;
+      opacity:0;
+      transition:opacity .45s ease;
+    }
+    .site-nav.nav-visible .nav-inner::before,
+    .site-nav.nav-visible .nav-inner::after{
+      opacity:1;
+    }
+    .nav-brand, .nav-hamburger{
+      position:relative;
+      z-index:1;
+    }
+    .nav-mobile-menu{
+      margin:8px 12px 0;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.13);
+      background:transparent;
+      box-shadow:0 14px 34px rgba(0,0,0,.4);
+      overflow:hidden;
+    }
+    .nav-glass-lens-drawer{
+      inset:5px;
+      border-radius:18px;
+      background:rgba(18,18,24,.28);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+    }
+  }
+
+  .nav-hamburger{
+    display:none;
+    width:40px; height:40px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.16);
+    color:#fff;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+
+  .nav-hamburger svg{ width:18px; height:18px; }
+  .nav-hamburger .icon-close{ display:none; }
+  .nav-hamburger.is-open .icon-menu{ display:none; }
+  .nav-hamburger.is-open .icon-close{ display:block; }
+
+  .nav-hamburger-static{ display:none; }
+
+  @media (max-width:960px){
+    .nav-hamburger-static{
+      display:flex;
+      position:fixed;
+      top:24px;
+      right:29px;
+      width:40px; height:40px;
+      border-radius:50%;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;
+      cursor:pointer;
+      z-index:160;
+    }
+    .nav-hamburger-static svg{ width:18px; height:18px; }
+    .nav-hamburger-static .icon-close{ display:none; }
+    .nav-hamburger-static.is-open .icon-menu{ display:none; }
+    .nav-hamburger-static.is-open .icon-close{ display:block; }
+
+    #siteNav.nav-visible + .nav-hamburger-static,
+    #siteNav:has(.nav-mobile-menu.open) + .nav-hamburger-static{
+      display:none;
+    }
+  }
+
+  .nav-mobile-menu{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    flex-direction:column;
+    gap:2px;
+    padding:8px 24px 22px;
+    background:transparent;
+    z-index:1;
+  }
+
+  .nav-mobile-menu.open{ display:flex; }
+
+  .nav-mobile-link{
+    padding:13px 2px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:15.5px;
+    text-shadow:0 2px 10px rgba(0,0,0,.7);
+  }
+
+  .nav-mobile-cta{
+    margin-top:14px;
+    text-align:center;
+    padding:14px;
+    border-radius:999px;
+    background:linear-gradient(135deg,#7c5cff,#5b8dff);
+    color:#fff;
+    font-weight:700;
+    font-size:14.5px;
+    text-decoration:none;
+  }
+
+  @media (max-width:960px){
+    .nav-cta{ display:none; }
+    .nav-hamburger{ display:flex; }
+  }
+
+  @media (max-width:960px){
+    .nav-links{ display:none; }
+    .nav-name{ display:none; }
+    .nav-cta span{ display:none; }
+  }
+
+  /* ============ HERO (NEW) ============ */
+  .hero-new{
+    position:relative;
+    background:#050507;
+    padding-bottom:0;
+  }
+
+  .hero-glow{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(620px 520px at 82% 38%, rgba(124,92,255,.30), transparent 62%),
+      radial-gradient(520px 460px at 88% 55%, rgba(47,95,224,.22), transparent 60%),
+      radial-gradient(680px 560px at -6% -10%, rgba(10,10,14,.95), transparent 55%),
+      radial-gradient(680px 560px at 106% -8%, rgba(10,10,14,.95), transparent 55%),
+      radial-gradient(760px 620px at 46% 46%, rgba(6,6,9,.85), transparent 60%);
+  }
+
+  .hero-wrap{
+    position:relative;
+    z-index:1;
+    max-width:1280px;
+    margin:0 auto;
+    padding:64px 32px 60px;
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:40px;
+    align-items:center;
+  }
+
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid rgba(74,222,128,.28);
+    background:rgba(74,222,128,.08);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#8fe3ac;
+    margin-bottom:26px;
+  }
+
+  .hero-badge-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:#4ADE80;
+    box-shadow:0 0 8px rgba(74,222,128,.8);
+  }
+
+  .hero-headline{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(42px,5.4vw,68px);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    margin-bottom:24px;
+  }
+
+  .hero-headline .line{ display:block; }
+  .line-white{ color:#fff; }
+  .line-violet{ color:#8B8FFF; }
+  .line-green{ color:#4ADE80; }
+
+  .hero-accent-line{
+    width:64px; height:3px;
+    border-radius:2px;
+    background:linear-gradient(90deg,#7c5cff,#5b8dff);
+    margin-bottom:22px;
+  }
+
+  .hero-sub{
+    font-size:19px;
+    line-height:1.55;
+    color:rgba(255,255,255,.82);
+    max-width:520px;
+    margin-bottom:16px;
+  }
+
+  .tint-violet{ color:#a48cff; font-weight:600; }
+  .tint-blue{ color:#6f93ff; font-weight:600; }
+  .tint-green{ color:#4ADE80; font-weight:600; }
+
+  .hero-desc{
+    font-size:15px;
+    line-height:1.7;
+    color:rgba(255,255,255,.55);
+    max-width:500px;
+    margin-bottom:34px;
+  }
+
+  .hero-btn-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+
+  .hero-btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:15px 26px;
+    border-radius:999px;
+    background:linear-gradient(135deg,#7c5cff,#5b8dff);
+    color:#fff;
+    font-weight:700;
+    font-size:14.5px;
+    text-decoration:none;
+    box-shadow:0 16px 36px rgba(124,92,255,.32);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+
+  .hero-btn-primary svg{ width:16px; height:16px; }
+  .hero-btn-primary:hover{ transform:translateY(-3px); box-shadow:0 20px 44px rgba(124,92,255,.42); }
+
+  .hero-btn-secondary{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:15px 24px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.18);
+    color:#fff;
+    font-weight:600;
+    font-size:14.5px;
+    text-decoration:none;
+    transition:transform .25s ease, border-color .25s ease, background .25s ease;
+  }
+
+  .hero-btn-secondary svg{ width:16px; height:16px; }
+  .hero-btn-secondary:hover{ transform:translateY(-3px); border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.05); }
+
+  .hero-mobile-photo{
+    display:none;
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1.05;
+    margin-bottom:30px;
+  }
+
+  .mp-clip{
+    position:absolute;
+    inset:0;
+    border-radius:26px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.14);
+    background:#0a0a10;
+    z-index:1;
+  }
+
+  .mp-glow{
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(60% 55% at 20% 15%, rgba(124,92,255,.55), transparent 60%),
+      radial-gradient(55% 60% at 55% 45%, rgba(56,189,248,.4), transparent 65%),
+      radial-gradient(50% 55% at 85% 80%, rgba(74,222,128,.35), transparent 60%),
+      radial-gradient(45% 50% at 90% 25%, rgba(250,204,21,.22), transparent 60%);
+  }
+
+  .mp-orbit{
+    position:absolute;
+    top:9%; left:9%; right:9%; bottom:9%;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:50%;
+  }
+
+  .mp-orbit-dot{ position:absolute; border-radius:50%; }
+  .mp-dot-1{ width:8px; height:8px; background:#a48cff; top:20%; left:10%; box-shadow:0 0 10px rgba(164,140,255,.9); }
+  .mp-dot-2{ width:6px; height:6px; background:#6f93ff; top:46%; right:4%; box-shadow:0 0 8px rgba(111,147,255,.8); }
+
+  .mp-photo{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    width:100%;
+    height:auto;
+    aspect-ratio:898/1122;
+    object-fit:cover;
+    object-position:bottom;
+    border-radius:0 0 26px 26px;
+    z-index:2;
+  }
+
+  .mp-icon{
+    position:absolute;
+    width:42px; height:42px;
+    border-radius:13px;
+    display:flex; align-items:center; justify-content:center;
+    z-index:3;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.16);
+  }
+
+  .mp-icon svg{ width:19px; height:19px; }
+
+  .mp-icon-community{ top:9%; right:8%; background:rgba(124,92,255,.3); color:#c9bfff; }
+  .mp-icon-systems{ top:46%; left:6%; background:rgba(47,95,224,.32); color:#a9c1ff; }
+  .mp-icon-growth{ top:60%; right:6%; background:rgba(74,222,128,.3); color:#a8f0c0; }
+
+  .mp-pill{
+    position:absolute;
+    left:6%; bottom:6%;
+    z-index:4;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 16px;
+    border-radius:999px;
+    background:rgba(10,10,16,.78);
+    border:1px solid rgba(74,222,128,.4);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:#eafff0;
+    max-width:88%;
+  }
+
+  .mp-pill-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:#4ADE80;
+    box-shadow:0 0 8px rgba(74,222,128,.8);
+    flex-shrink:0;
+  }
+
+  .hero-col-photo{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:520px;
+  }
+
+  .hero-orbit{
+    position:absolute;
+    width:420px; height:420px;
+    border:1px dashed rgba(255,255,255,.16);
+    border-radius:50%;
+  }
+
+  .orbit-dot{
+    position:absolute;
+    border-radius:50%;
+  }
+  .orbit-dot-1{ width:9px; height:9px; background:#8B8FFF; top:8%; right:14%; box-shadow:0 0 10px rgba(139,143,255,.8); }
+  .orbit-dot-2{ width:7px; height:7px; background:#4ADE80; top:38%; right:-2%; box-shadow:0 0 10px rgba(74,222,128,.8); }
+  .orbit-dot-3{ width:6px; height:6px; background:rgba(255,255,255,.5); bottom:10%; left:22%; }
+
+  .hero-photo-frame{
+    position:relative;
+    width:340px; height:420px;
+    border-radius:28px;
+    overflow:hidden;
+    background:linear-gradient(160deg,#1a1a24,#0a0a10);
+    box-shadow:0 40px 90px rgba(0,0,0,.55);
+    border:1px solid rgba(255,255,255,.08);
+  }
+
+  .hero-photo-frame img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .hero-float-card{
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    width:186px;
+    padding:16px 16px 15px;
+    border-radius:16px;
+    background:rgba(20,20,28,.72);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 20px 46px rgba(0,0,0,.35);
+  }
+
+  .float-ic{
+    width:30px; height:30px;
+    border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:6px;
+  }
+  .float-ic svg{ width:15px; height:15px; }
+
+  .card-community{ top:8%; left:-8%; }
+  .card-community .float-ic{ background:rgba(164,140,255,.14); color:#a48cff; }
+
+  .card-systems{ top:44%; left:-4%; }
+  .card-systems .float-ic{ background:rgba(111,147,255,.14); color:#6f93ff; }
+
+  .card-growth{ top:34%; right:-10%; }
+  .card-growth .float-ic{ background:rgba(74,222,128,.14); color:#4ADE80; }
+
+  .float-label{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:#fff;
+  }
+
+  .float-desc{
+    font-size:12px;
+    line-height:1.4;
+    color:rgba(255,255,255,.6);
+  }
+
+  /* ============ IMPACT SECTION (orbital diagram + message) ============ */
+  .impact-heading{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  .impact-heading-line{
+    flex:1;
+    max-width:220px;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+  }
+
+  .impact-heading span:not(.impact-heading-line){
+    font-family:'Space Grotesk', sans-serif;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:rgba(190,180,255,.85);
+    white-space:nowrap;
+  }
+
+  .impact-section{
+    position:relative;
+    z-index:1;
+    max-width:1280px;
+    margin:0 auto;
+    padding:36px 32px 60px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:stretch;
+  }
+
+  .impact-diagram{
+    position:relative;
+    width:100%;
+    max-width:440px;
+    aspect-ratio:1/1;
+    margin:0 auto;
+    align-self:center;
+  }
+
+  .impact-ring{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:76%;
+    height:76%;
+    z-index:1;
+    filter:drop-shadow(0 0 14px rgba(139,143,255,.35));
+  }
+
+  .impact-connectors{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+  }
+
+  .impact-dot{
+    position:absolute;
+    top:50%; left:50%;
+    width:7px; height:7px;
+    margin:-3.5px 0 0 -3.5px;
+    border-radius:50%;
+    offset-path:circle(38% at 50% 50%);
+    animation:orbitLoop 14s linear infinite;
+    box-shadow:0 0 10px currentColor;
+    z-index:1;
+  }
+
+  .dot-1{ background:#a48cff; color:#a48cff; animation-delay:0s; }
+  .dot-2{ background:#6f93ff; color:#6f93ff; animation-delay:-2.8s; }
+  .dot-3{ background:#4ADE80; color:#4ADE80; animation-delay:-5.6s; }
+  .dot-4{ background:#e6a24d; color:#e6a24d; animation-delay:-8.4s; }
+  .dot-5{ background:#38bdf8; color:#38bdf8; animation-delay:-11.2s; }
+
+  @keyframes orbitLoop{
+    0%{ offset-distance:0%; }
+    100%{ offset-distance:100%; }
+  }
+
+  .impact-center{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:30%;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(124,92,255,.35), rgba(10,10,16,.92));
+    border:1px solid rgba(164,140,255,.4);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    z-index:2;
+    box-shadow:0 0 40px rgba(124,92,255,.25);
+  }
+
+  .impact-cube{
+    width:30%;
+    color:#8B8FFF;
+    filter:drop-shadow(0 0 10px rgba(139,143,255,.6));
+  }
+
+  .impact-cube svg{ width:100%; height:100%; display:block; }
+
+  .impact-center-label{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(9px,1.2vw,11.5px);
+    letter-spacing:.08em;
+    color:#fff;
+  }
+
+  .impact-card{
+    position:absolute;
+    width:38%;
+    padding:9px 11px;
+    border-radius:14px;
+    border:1px solid;
+    background:rgba(14,14,20,.8);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    box-shadow:0 14px 28px rgba(0,0,0,.35);
+    z-index:3;
+  }
+
+  .card-pos-1{ top:-4%; left:50%; transform:translateX(-50%); }
+  .card-pos-2{ top:28%; right:-6%; }
+  .card-pos-3{ bottom:3%; right:2%; }
+  .card-pos-4{ bottom:3%; left:2%; }
+  .card-pos-5{ top:28%; left:-6%; }
+
+  .impact-violet{ border-color:rgba(164,140,255,.35); }
+  .impact-violet .impact-ic{ background:rgba(164,140,255,.15); color:#a48cff; }
+
+  .impact-blue{ border-color:rgba(111,147,255,.35); }
+  .impact-blue .impact-ic{ background:rgba(111,147,255,.15); color:#6f93ff; }
+
+  .impact-green{ border-color:rgba(74,222,128,.35); }
+  .impact-green .impact-ic{ background:rgba(74,222,128,.15); color:#4ADE80; }
+
+  .impact-amber{ border-color:rgba(230,162,77,.35); }
+  .impact-amber .impact-ic{ background:rgba(230,162,77,.15); color:#e6a24d; }
+
+  .impact-blue2{ border-color:rgba(56,189,248,.35); }
+  .impact-blue2 .impact-ic{ background:rgba(56,189,248,.15); color:#38bdf8; }
+
+  .impact-card-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+
+  .impact-card-text{
+    min-width:0;
+  }
+
+  .impact-ic{
+    width:24px; height:24px;
+    border-radius:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+
+  .impact-ic svg{ width:12px; height:12px; }
+
+  .impact-card h4{
+    font-size:11.5px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:2px;
+    line-height:1.22;
+  }
+
+  .impact-card p{
+    font-size:9.8px;
+    line-height:1.35;
+    color:rgba(255,255,255,.55);
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+
+  .impact-card p.marquee-mode{
+    display:block;
+    -webkit-line-clamp:unset;
+    white-space:nowrap;
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    mask-image:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  }
+
+  .impact-desc-track{
+    display:inline-flex;
+    gap:26px;
+    animation:descMarquee 6.5s linear infinite;
+  }
+
+  @keyframes descMarquee{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .impact-desc-track{ animation:none; }
+  }
+
+  .impact-message{
+    position:relative;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.035);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    box-shadow:0 30px 70px rgba(0,0,0,.35);
+    padding:36px 36px 32px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+
+  .impact-arrow{
+    position:absolute;
+    top:-44px;
+    left:44px;
+    width:86px;
+    height:56px;
+    pointer-events:none;
+  }
+
+  .impact-message-scroll{
+    overflow-y:auto;
+    padding-right:8px;
+    min-height:0;
+  }
+
+  .im-lead{
+    font-size:19px;
+    line-height:1.5;
+    color:rgba(255,255,255,.85);
+    margin-bottom:22px;
+  }
+
+  .im-white{ color:#fff; font-weight:700; }
+  .im-blue{ color:#6f93ff; font-weight:600; }
+  .im-violet{ color:#a48cff; font-weight:600; }
+  .im-green{ color:#4ADE80; font-weight:600; }
+
+  .im-list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+    margin-bottom:24px;
+  }
+
+  .im-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,.78);
+  }
+
+  .im-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    margin-top:7px;
+    flex-shrink:0;
+  }
+
+  .im-divider{
+    height:1px;
+    background:rgba(255,255,255,.1);
+    margin-bottom:22px;
+  }
+
+  .im-body{
+    font-size:15px;
+    line-height:1.6;
+    color:rgba(255,255,255,.8);
+    margin-bottom:18px;
+  }
+
+  .im-body:last-child{ margin-bottom:0; }
+  .im-body strong{ color:#fff; }
+
+  @media (max-width:960px){
+    .impact-heading{ padding:0 20px; }
+    .impact-heading-line{ max-width:60px; }
+    .impact-heading span:not(.impact-heading-line){ font-size:10.5px; }
+    .impact-section{ grid-template-columns:1fr; padding:24px 20px 44px; gap:0; }
+    .impact-message{ display:none; }
+    .impact-diagram{ max-width:340px; }
+    .impact-card p{ -webkit-line-clamp:1; }
+    .card-pos-2, .card-pos-5{ top:31%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .impact-dot{ animation:none; offset-distance:0%; }
+  }
+
+  @media (max-width:960px){
+    .hero-wrap{ grid-template-columns:1fr; padding:28px 20px 36px; text-align:left; z-index:150; }
+    .hero-badge{ display:none; }
+    .hero-col-photo{ display:none; }
+    .hero-headline{ margin-top:-60px; }
+    .hero-mobile-photo{ display:block; }
+    .hero-btn-row{ flex-direction:column; width:100%; }
+    .hero-btn-primary, .hero-btn-secondary{ width:100%; justify-content:center; }
+  }
+
+  @media (max-width:420px){
+    .mp-icon{ width:36px; height:36px; border-radius:11px; }
+    .mp-icon svg{ width:16px; height:16px; }
+    .mp-pill{ font-size:9.5px; padding:8px 13px; }
+  }
+
+  /* ============ TECH STACK ============ */
+  .stack-groups{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:28px;
+  }
+
+  .stack-group-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-lo);
+    text-align:center;
+    margin-bottom:16px;
+  }
+
+  .capsules{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .capsule{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 14px;
+    border-radius:999px;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    backdrop-filter:blur(10px);
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--text-mid);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+
+  .capsule:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
+
+  .capsule .cap-ic{
+    width:18px; height:18px;
+    flex-shrink:0;
+    border-radius:5px;
+    overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  .capsule .cap-ic svg, .capsule .cap-ic img{ width:100%; height:100%; }
+
+  .capsule.text-only{ justify-content:center; font-weight:600; }
+
+  /* ============ FOOTER ============ */
+  footer.footer{
+    text-align:center;
+    padding:36px 0 50px;
+    font-size:12px;
+    color:var(--text-lo);
+    position:relative;
+    z-index:1;
+  }
+
+  /* =======================================================
+     RESPONSIVE
+     ======================================================= */
+  @media (max-width:900px){
+    .stack-groups{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  @media (max-width:600px){
+    section.section{ padding:80px 0; }
+    .wrap{ padding:0 22px; }
+    .section-title{ font-size:26px; }
+    .stack-groups{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <div class="nav-glass-lens" aria-hidden="true"></div>
+    <a class="nav-brand" href="#home">
+      <span class="nav-logo">Uj</span>
+      <span class="nav-name">Uche Japheth</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link" data-nav="home">Home</a>
+      <a href="#ethos" class="nav-link" data-nav="ethos">Ethos & Execution</a>
+      <a href="#experience" class="nav-link" data-nav="experience">Experience</a>
+      <a href="#projects" class="nav-link" data-nav="projects">Projects</a>
+      <a href="#about" class="nav-link" data-nav="about">About</a>
+      <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+    </div>
+    <a class="nav-cta" href="#contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-8-8 18-2-8-8-2Z"/></svg>
+      Let's Work Together
+    </a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="navMobileMenu">
+    <div class="nav-glass-lens nav-glass-lens-drawer" aria-hidden="true"></div>
+    <a href="#home" class="nav-link nav-mobile-link" data-nav="home">Home</a>
+    <a href="#ethos" class="nav-link nav-mobile-link" data-nav="ethos">Ethos & Execution</a>
+    <a href="#experience" class="nav-link nav-mobile-link" data-nav="experience">Experience</a>
+    <a href="#projects" class="nav-link nav-mobile-link" data-nav="projects">Projects</a>
+    <a href="#about" class="nav-link nav-mobile-link" data-nav="about">About</a>
+    <a href="#contact" class="nav-link nav-mobile-link" data-nav="contact">Contact</a>
+    <a href="#contact" class="nav-mobile-cta">Let's Work Together</a>
+  </div>
+</nav>
+
+<button class="nav-hamburger-static" id="navHamburgerStatic" aria-label="Open menu" aria-expanded="false">
+  <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+
+<header class="hero-new" id="home">
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="hero-wrap">
+    <div class="hero-mobile-photo">
+      <div class="mp-clip">
+        <div class="mp-glow"></div>
+        <div class="mp-orbit">
+          <span class="mp-orbit-dot mp-dot-1"></span>
+          <span class="mp-orbit-dot mp-dot-2"></span>
+        </div>
+      </div>
+      <img class="mp-photo" src="src/UJ pfp.png" alt="Uche Japheth" width="898" height="1122">
+      <span class="mp-icon mp-icon-community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      <span class="mp-icon mp-icon-systems"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
+      <span class="mp-icon mp-icon-growth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+      <div class="mp-pill"><span class="mp-pill-dot"></span>Community is Product</div>
+    </div>
+
+    <div class="hero-col-text">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>Open to New Opportunities</div>
+
+      <h1 class="hero-headline">
+        <span class="line line-white">Community.</span>
+        <span class="line line-violet">Systems.</span>
+        <span class="line line-green">Growth.</span>
+      </h1>
+
+      <div class="hero-accent-line"></div>
+
+      <p class="hero-sub">Building <span class="tint-violet">communities</span>, improving <span class="tint-blue">systems</span>, and creating structure through <span class="tint-green">technology</span>.</p>
+
+      <p class="hero-desc">I work across community, content, operations, and technology, connecting the people, information, and systems that help businesses grow.</p>
+
+      <div class="hero-btn-row">
+        <a class="hero-btn-primary" href="#projects">Explore my work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="hero-btn-secondary" href="#resumes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5a1 1 0 0 0 1 1h5"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/></svg>
+          View my resumes
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-col-photo">
+      <div class="hero-orbit" aria-hidden="true">
+        <span class="orbit-dot orbit-dot-1"></span>
+        <span class="orbit-dot orbit-dot-2"></span>
+        <span class="orbit-dot orbit-dot-3"></span>
+      </div>
+
+      <div class="hero-photo-frame">
+        <img src="src/hero-photo.jpg" alt="Uche Japheth">
+      </div>
+
+      <div class="hero-float-card card-community">
+        <span class="float-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="float-label">COMMUNITY</span>
+        <span class="float-desc">Building &amp; nurturing engaged communities</span>
+      </div>
+
+      <div class="hero-float-card card-systems">
+        <span class="float-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
+        <span class="float-label">SYSTEMS</span>
+        <span class="float-desc">Designing processes that scale</span>
+      </div>
+
+      <div class="hero-float-card card-growth">
+        <span class="float-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+        <span class="float-label">GROWTH</span>
+        <span class="float-desc">Driving growth through strategy &amp; content</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="impact-heading">
+    <span class="impact-heading-line"></span>
+    <span>How I Drive Product Impact</span>
+    <span class="impact-heading-line"></span>
+  </div>
+
+  <div class="impact-section">
+
+    <div class="impact-diagram">
+      <svg class="impact-ring" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a48cff"/>
+            <stop offset="45%" stop-color="#38bdf8"/>
+            <stop offset="100%" stop-color="#4ADE80"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#ringGrad)" stroke-width="0.9" opacity="0.55"/>
+        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="0.3" stroke-dasharray="0.5 2.5"/>
+      </svg>
+      <svg class="impact-connectors" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <line x1="50" y1="34" x2="50" y2="13" stroke="#a48cff" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
+        <line x1="63.9" y1="42" x2="82" y2="31" stroke="#6f93ff" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
+        <line x1="59.2" y1="63.1" x2="71.5" y2="80.5" stroke="#4ADE80" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
+        <line x1="40.8" y1="63.1" x2="28.5" y2="80.5" stroke="#e6a24d" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
+        <line x1="36.1" y1="42" x2="18" y2="31" stroke="#38bdf8" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
+      </svg>
+      <span class="impact-dot dot-1"></span>
+      <span class="impact-dot dot-2"></span>
+      <span class="impact-dot dot-3"></span>
+      <span class="impact-dot dot-4"></span>
+      <span class="impact-dot dot-5"></span>
+
+      <div class="impact-center">
+        <span class="impact-cube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.3 6.6 3.7-6.6 3.7-6.6-3.7L12 4.3ZM5 9.2l6 3.4v6.9l-6-3.3V9.2Zm8 10.3v-6.9l6-3.4v6.9l-6 3.4Z"/></svg></span>
+        <span class="impact-center-label">PRODUCT</span>
+      </div>
+
+      <div class="impact-card card-pos-1 impact-violet">
+        <div class="impact-card-row">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <div class="impact-card-text">
+            <h4>Web3 Community Builder</h4>
+            <p class="impact-desc">Community Operations &amp; Engagement</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="impact-card card-pos-2 impact-blue">
+        <div class="impact-card-row">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <div class="impact-card-text">
+            <h4>Content &amp; Growth</h4>
+            <p class="impact-desc">Social Media Strategy &amp; Content Creation</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="impact-card card-pos-3 impact-green">
+        <div class="impact-card-row">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/></svg></span>
+          <div class="impact-card-text">
+            <h4>Customer Experience</h4>
+            <p class="impact-desc">Voice of Customer &amp; Experience Insights</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="impact-card card-pos-4 impact-amber">
+        <div class="impact-card-row">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
+          <div class="impact-card-text">
+            <h4>Operations &amp; Systems</h4>
+            <p class="impact-desc">Process Improvement &amp; Workflow Design</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="impact-card card-pos-5 impact-blue2">
+        <div class="impact-card-row">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V13"/><path d="M11 20V8"/><path d="M18 20V4"/></svg></span>
+          <div class="impact-card-text">
+            <h4>Data &amp; Insights</h4>
+            <p class="impact-desc">Data Analysis &amp; Reporting</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="impact-message" id="impactMessage">
+      <svg class="impact-arrow" viewBox="0 0 90 60" fill="none"><path d="M85 50C60 55 25 45 8 12" stroke="rgba(180,170,255,.55)" stroke-width="1.6" stroke-linecap="round"/><path d="M2 8 L8 12 L13 4" stroke="rgba(180,170,255,.55)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="impact-message-scroll">
+        <p class="im-lead"><span class="im-white">The goal was never to do everything.</span><br>It was to understand how different functions <span class="im-blue">systematically</span> contribute to <span class="im-violet">improving a product</span>.</p>
+
+        <ul class="im-list">
+          <li><span class="im-dot" style="background:#a48cff"></span>Community conversations become feedback.</li>
+          <li><span class="im-dot" style="background:#6f93ff"></span>Feedback reveals product insight.</li>
+          <li><span class="im-dot" style="background:#6f93ff"></span>Product insight shapes better decisions, content, and experiences.</li>
+          <li><span class="im-dot" style="background:#4ADE80"></span>Operations make the process repeatable.</li>
+          <li><span class="im-dot" style="background:#e6a24d"></span>Data helps reveal what the system is telling us.</li>
+        </ul>
+
+        <div class="im-divider"></div>
+
+        <p class="im-body">These aren't five unrelated jobs to me.<br><span class="im-violet">They're five angles of the same system.</span></p>
+
+        <p class="im-body">My work is about reducing the gaps between people, information, and the decisions that shape a product.</p>
+
+        <p class="im-body"><strong>I don't</strong> <span class="im-violet">need to own every part of the system.</span><br><strong>I</strong> <span class="im-green">help the parts work better together.</span></p>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<section class="section" id="ethos">
+  <div class="wrap">
+    <!-- Ethos & Execution section — to be plugged in -->
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="wrap">
+    <!-- Experience + Testimonial section — to be plugged in -->
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="wrap">
+    <!-- Projects section — to be plugged in -->
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <!-- About / Story section — to be plugged in -->
+  </div>
+</section>
+
+<section class="section final-cta" id="contact">
+  <div class="wrap">
+    <!-- Contact / Final CTA section — to be plugged in -->
+  </div>
+</section>
+
+<section class="section" id="stack">
+  <div class="wrap">
+    <h2 class="section-title reveal">Tech Stack</h2>
+    <div class="stack-groups">
+
+      <div class="reveal">
+        <div class="stack-group-title">AI</div>
+        <div class="capsules">
+          <span class="capsule"><span class="cap-ic" style="color:#10A37F"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z"/></svg></span>ChatGPT</span>
+          <span class="capsule"><span class="cap-ic"><svg fill="#D97757" viewBox="0 0 24 24"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span>Claude</span>
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 24 24"><defs><linearGradient id="gem-a" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs><path fill="url(#gem-a)" d="M12 2c.7 4.4 3.6 7.3 8 8-4.4.7-7.3 3.6-8 8-.7-4.4-3.6-7.3-8-8 4.4-.7 7.3-3.6 8-8Z"/></svg></span>Gemini</span>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-title">Analytics</div>
+        <div class="capsules">
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 486 500"><defs><radialGradient id="hxls-a" cx="-746.66" cy="781.44" r="13.89" fx="-746.66" fy="781.44" gradientTransform="matrix(-28.32596 -29.80763 -23.11916 21.97986 -2596.39 -38900.31)" gradientUnits="userSpaceOnUse"><stop offset=".06" stop-color="#379539"/><stop offset=".42" stop-color="#297c2d"/><stop offset=".7" stop-color="#15561c"/></radialGradient><radialGradient id="hxls-b" cx="-773.19" cy="771.25" r="13.89" fx="-773.19" fy="771.25" gradientTransform="matrix(-11.97612 -11.58137 -8.95853 9.26806 -2155.12 -15858.88)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#073b10"/><stop offset=".99" stop-color="#084a13" stop-opacity="0"/></radialGradient><radialGradient id="hxls-f" cx="-824.11" cy="810.99" r="13.89" fx="-824.11" fy="810.99" gradientTransform="matrix(-9.02 0 0 19.09 -7120.4 -15378.69)" gradientUnits="userSpaceOnUse"><stop offset=".29" stop-color="#4eb43b"/><stop offset="1" stop-color="#72cc61" stop-opacity="0"/></radialGradient><radialGradient id="hxls-h" cx="-769.14" cy="808.9" r="13.89" fx="-769.14" fy="808.9" gradientTransform="matrix(-16.9077 -13.68182 13.64112 -16.86345 -23523.37 3309.71)" gradientUnits="userSpaceOnUse"><stop offset=".44" stop-color="#79e96d"/><stop offset="1" stop-color="#d0eb76"/></radialGradient><radialGradient id="hxls-i" cx="-675.64" cy="793.28" r="13.89" fx="-675.64" fy="793.28" gradientTransform="matrix(15.99196 15.99755 45.54153 -45.54797 -25315.85 47178.18)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#20a85e"/><stop offset=".94" stop-color="#09442a"/></radialGradient><radialGradient id="hxls-j" cx="-657.62" cy="853.99" r="13.89" fx="-657.62" fy="853.99" gradientTransform="matrix(0 11.2 12.9 0 -10902.85 7734.8)" gradientUnits="userSpaceOnUse"><stop offset=".58" stop-color="#33a662" stop-opacity="0"/><stop offset=".97" stop-color="#98f0b0"/></radialGradient><linearGradient id="hxls-c" x1="69.43" x2="260.84" y1="210.33" y2="210.33" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#52d17c"/><stop offset=".33" stop-color="#4aa647"/></linearGradient><linearGradient id="hxls-d" x1="194.4" x2="194.4" y1="335.33" y2="161.68" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#29852f"/><stop offset=".5" stop-color="#4aa647" stop-opacity="0"/></linearGradient><linearGradient id="hxls-e" x1="80.49" x2="311.45" y1="297.22" y2="497.54" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66d052"/><stop offset="1" stop-color="#85e972"/></linearGradient><linearGradient id="hxls-g" x1="182.11" x2="69.43" y1="377" y2="377" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset=".18" stop-color="#c0e075" stop-opacity="0"/><stop offset="1" stop-color="#d1eb95"/></linearGradient></defs><path d="M69.43 159.72c0-34.52 27.98-62.5 62.49-62.5h354.09v361.11c0 23.01-18.65 41.67-41.66 41.67H152.74c-46.01 0-83.31-37.31-83.31-83.33V159.72Z" style="fill:url(#hxls-a)"/><path d="M69.43 159.72c0-34.52 27.98-62.5 62.49-62.5h354.09v361.11c0 23.01-18.65 41.67-41.66 41.67H152.74c-46.01 0-83.31-37.31-83.31-83.33V159.72Z" style="fill:url(#hxls-b);fill-opacity:.7"/><path d="M69.43 229.17c0-34.52 27.98-62.5 62.49-62.5h187.46c-23.01 0-41.66 18.66-41.66 41.67v83.33c0 23.01-18.65 41.67-41.66 41.67h-83.31c-46.01 0-83.31 37.31-83.31 83.33v-187.5Z" style="fill:url(#hxls-c)"/><path d="M69.43 229.17c0-34.52 27.98-62.5 62.49-62.5h187.46c-23.01 0-41.66 18.66-41.66 41.67v83.33c0 23.01-18.65 41.67-41.66 41.67h-83.31c-46.01 0-83.31 37.31-83.31 83.33v-187.5Z" style="fill:url(#hxls-d);fill-opacity:.3"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-e)"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-f)"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-g)"/><rect width="208.29" height="166.67" x="277.71" rx="41.66" ry="41.66" style="fill:url(#hxls-h)"/><rect width="222.17" height="222.22" y="236.11" rx="45.13" ry="45.13" style="fill:url(#hxls-i)"/><rect width="222.17" height="222.22" y="236.11" rx="45.13" ry="45.13" style="fill-opacity:.3;fill:url(#hxls-j)"/><path d="M169.48 410.71h-34.25l-21.5-40.47c-.77-1.42-1.36-2.54-1.77-3.37-.35-.88-.74-1.89-1.15-3.01h-.35c-.53 1.42-1.03 2.57-1.5 3.45-.47.89-1.03 1.98-1.68 3.28l-22.3 40.11h-32.3l38.76-63.58-36.1-63.4h33.8l19.11 36.13c.77 1.48 1.42 2.78 1.95 3.9.59 1.06 1.18 2.33 1.77 3.81h.35l1.95-4.07c.53-1 1.24-2.33 2.12-3.98l19.82-35.77h32.21l-36.63 62.43 37.7 64.55Z" style="fill:#fff"/></svg></span>Excel</span>
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 74 100"><mask id="hgs-mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="71" height="98"><path d="M45.398 1.43036H7.86688C4.22415 1.43036 1.24374 4.41077 1.24374 8.0535V91.9465C1.24374 95.5893 4.22415 98.5697 7.86688 98.5697H65.2674C68.9101 98.5697 71.8905 95.5893 71.8905 91.9465V27.9229L45.398 1.43036Z" fill="white"/></mask><g mask="url(#hgs-mask0)"><path d="M45.398 1.43036H7.86688C4.22415 1.43036 1.24374 4.41077 1.24374 8.0535V91.9465C1.24374 95.5893 4.22415 98.5697 7.86688 98.5697H65.2674C68.9101 98.5697 71.8905 95.5893 71.8905 91.9465V27.9229L56.4365 16.8843L45.398 1.43036Z" fill="#0F9D58"/></g><path d="M18.9054 48.8962V80.908H54.2288V48.8962H18.9054ZM34.3594 76.4926H23.3209V70.9733H34.3594V76.4926ZM34.3594 67.6617H23.3209V62.1424H34.3594V67.6617ZM34.3594 58.8309H23.3209V53.3116H34.3594V58.8309ZM49.8134 76.4926H38.7748V70.9733H49.8134V76.4926ZM49.8134 67.6617H38.7748V62.1424H49.8134V67.6617ZM49.8134 58.8309H38.7748V53.3116H49.8134V58.8309Z" fill="#F1F1F1"/></svg></span>Google Sheets</span>
+          <span class="capsule text-only">SEO</span>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-title">Operations</div>
+        <div class="capsules">
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 268.152 273.883"><defs><linearGradient id="hgws-a"><stop offset="0" stop-color="#0fbc5c"/><stop offset="1" stop-color="#0cba65"/></linearGradient><linearGradient id="hgws-g"><stop offset=".231" stop-color="#0fbc5f"/><stop offset=".861" stop-color="#67c30f"/><stop offset="1" stop-color="#86c504"/></linearGradient><linearGradient id="hgws-h"><stop offset=".142" stop-color="#1abd4d"/><stop offset=".861" stop-color="#ffce0a"/></linearGradient><linearGradient id="hgws-f"><stop offset=".316" stop-color="#ff4c3c"/><stop offset="1" stop-color="#ff9f13"/></linearGradient><linearGradient id="hgws-b"><stop offset=".231" stop-color="#ff4541"/><stop offset="1" stop-color="#ff8c18"/></linearGradient><linearGradient id="hgws-d"><stop offset=".408" stop-color="#fb4e5a"/><stop offset="1" stop-color="#ff4540"/></linearGradient><linearGradient id="hgws-c"><stop offset=".132" stop-color="#0cba65"/><stop offset=".859" stop-color="#3086ff"/></linearGradient><linearGradient id="hgws-e"><stop offset=".366" stop-color="#ff4e3a"/><stop offset="1" stop-color="#fdcd01"/></linearGradient><linearGradient xlink:href="#hgws-a" id="hgws-s" x1="219.7" x2="254.467" y1="329.535" y2="329.535" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-b" id="hgws-m" cx="109.627" cy="135.862" r="71.46" fx="109.627" fy="135.862" gradientTransform="matrix(-1.93688 1.043 1.45573 2.55542 290.525 -400.634)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-c" id="hgws-n" cx="45.259" cy="279.274" r="71.46" fx="45.259" fy="279.274" gradientTransform="matrix(-3.5126 -4.45809 -1.69255 1.26062 870.8 191.554)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-d" id="hgws-l" cx="304.017" cy="118.009" r="47.854" fx="304.017" fy="118.009" gradientTransform="matrix(2.06435 0 0 2.59204 -297.679 -151.747)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-e" id="hgws-o" cx="181.001" cy="177.201" r="71.46" fx="181.001" fy="177.201" gradientTransform="matrix(-.24858 2.08314 2.96249 .33417 -255.146 -331.164)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-f" id="hgws-p" cx="207.673" cy="108.097" r="41.102" fx="207.673" fy="108.097" gradientTransform="matrix(-1.2492 1.34326 -3.89684 -3.4257 880.501 194.905)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-g" id="hgws-r" cx="109.627" cy="135.862" r="71.46" fx="109.627" fy="135.862" gradientTransform="matrix(-1.93688 -1.043 1.45573 -2.55542 290.525 838.683)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-h" id="hgws-j" cx="154.87" cy="145.969" r="71.46" fx="154.87" fy="145.969" gradientTransform="matrix(-.0814 -1.93722 2.92674 -.11625 -215.135 632.86)" gradientUnits="userSpaceOnUse"/><clipPath id="hgws-i" clipPathUnits="userSpaceOnUse"><path d="M371.378 193.24H237.083v53.438h77.167c-1.241 7.563-4.026 15.003-8.105 21.786-4.674 7.773-10.451 13.69-16.373 18.196-17.74 13.498-38.42 16.258-52.783 16.258-36.283 0-67.283-23.286-79.285-54.928-.484-1.149-.805-2.335-1.197-3.507a81.115 81.115 0 0 1-4.101-25.448c0-9.226 1.569-18.057 4.43-26.398 11.285-32.897 42.985-57.467 80.179-57.467 7.481 0 14.685.884 21.517 2.648a77.668 77.668 0 0 1 33.425 18.25l40.834-39.712c-24.839-22.616-57.219-36.32-95.844-36.32-30.878 0-59.386 9.553-82.748 25.7-18.945 13.093-34.483 30.625-44.97 50.985-9.753 18.879-15.094 39.8-15.094 62.294 0 22.495 5.35 43.633 15.103 62.337v.126c10.302 19.857 25.368 36.954 43.678 49.988 15.997 11.386 44.68 26.551 84.031 26.551 22.63 0 42.687-4.051 60.375-11.644 12.76-5.478 24.065-12.622 34.301-21.804 13.525-12.132 24.117-27.139 31.347-44.404 7.23-17.265 11.097-36.79 11.097-57.957 0-9.858-.998-19.87-2.689-28.968Z"/></clipPath></defs><g clip-path="url(#hgws-i)" transform="matrix(.95792 0 0 .98525 -90.174 -78.856)"><path fill="url(#hgws-j)" d="M92.076 219.958c.148 22.14 6.501 44.983 16.117 63.424v.127c6.949 13.392 16.445 23.97 27.26 34.452l65.327-23.67c-12.36-6.235-14.246-10.055-23.105-17.026-9.054-9.066-15.802-19.473-20.004-31.677h-.17l.17-.127c-2.765-8.058-3.037-16.613-3.14-25.503Z"/><path fill="url(#hgws-l)" d="M237.083 79.025c-6.456 22.526-3.988 44.421 0 57.161 7.457.006 14.64.888 21.45 2.647a77.662 77.662 0 0 1 33.424 18.25l41.88-40.726c-24.81-22.59-54.667-37.297-96.754-37.332Z"/><path fill="url(#hgws-m)" d="M236.943 78.847c-31.67 0-60.91 9.798-84.871 26.359a145.533 145.533 0 0 0-24.332 21.15c-1.904 17.744 14.257 39.551 46.262 39.37 15.528-17.936 38.495-29.542 64.056-29.542l.07.002-1.044-57.335c-.048 0-.093-.004-.14-.004Z"/><path fill="url(#hgws-n)" d="m341.475 226.379-28.268 19.285c-1.24 7.562-4.028 15.002-8.107 21.786-4.674 7.772-10.45 13.69-16.373 18.196-17.702 13.47-38.328 16.244-52.687 16.255-14.842 25.102-17.444 37.675 1.043 57.934 22.877-.016 43.157-4.117 61.046-11.796 12.931-5.551 24.388-12.792 34.761-22.097 13.706-12.295 24.442-27.503 31.769-45 7.327-17.497 11.245-37.282 11.245-58.734Z"/><path fill="#3086ff" d="M234.996 191.21v57.498h136.006c1.196-7.874 5.152-18.064 5.152-26.5 0-9.858-.996-21.899-2.687-30.998Z"/><path fill="url(#hgws-o)" d="M128.39 124.327c-8.394 9.119-15.564 19.326-21.249 30.364-9.753 18.879-15.094 41.83-15.094 64.324 0 .317.026.627.029.944 4.32 8.224 59.666 6.649 62.456 0-.004-.31-.039-.613-.039-.924 0-9.226 1.57-16.026 4.43-24.367 3.53-10.289 9.056-19.763 16.123-27.926 1.602-2.031 5.875-6.397 7.121-9.016.475-.997-.862-1.557-.937-1.908-.083-.393-1.876-.077-2.277-.37-1.275-.929-3.8-1.414-5.334-1.845-3.277-.921-8.708-2.953-11.725-5.06-9.536-6.658-24.417-14.612-33.505-24.216Z"/><path fill="url(#hgws-p)" d="M162.099 155.857c22.112 13.301 28.471-6.714 43.173-12.977l-25.574-52.664a144.74 144.74 0 0 0-26.543 14.504c-12.316 8.512-23.192 18.9-32.176 30.72Z"/><path fill="url(#hgws-r)" d="M171.099 290.222c-29.683 10.641-34.33 11.023-37.062 29.29a144.806 144.806 0 0 0 16.792 13.984c15.996 11.386 46.766 26.551 86.118 26.551.046 0 .09-.004.137-.004v-59.157l-.094.002c-14.736 0-26.512-3.843-38.585-10.527-2.977-1.648-8.378 2.777-11.123.799-3.786-2.729-12.9 2.35-16.183-.938Z"/><path fill="url(#hgws-s)" d="M219.7 299.023v59.996c5.506.64 11.236 1.028 17.247 1.028 6.026 0 11.855-.307 17.52-.872v-59.748a105.119 105.119 0 0 1-17.477 1.461c-5.932 0-11.7-.686-17.29-1.865Z" opacity=".5"/></g></svg></span>Google Workspace</span>
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 78.799 96"><defs><linearGradient id="hmso-a" gradientUnits="userSpaceOnUse" x1="16.942" x2="85.671" y1="83.36" y2="89.583"><stop offset="0" stop-color="#f32b44"/><stop offset=".6" stop-color="#a4070a"/></linearGradient><linearGradient id="hmso-b"><stop offset="0" stop-opacity=".4"/><stop offset="1" stop-opacity="0"/></linearGradient><linearGradient id="hmso-c" gradientUnits="userSpaceOnUse" x1="63.515" x2="33.003" xlink:href="#hmso-b" y1="87.298" y2="84.535"/><linearGradient id="hmso-d" gradientUnits="userSpaceOnUse" x1="44.738" x2="-5.901" y1="-3.312" y2="71.527"><stop offset="0" stop-color="#800600"/><stop offset=".6" stop-color="#c72127"/><stop offset="1" stop-color="#b85ba2"/></linearGradient><linearGradient id="hmso-e" gradientUnits="userSpaceOnUse" x1="45.823" x2="35.099" xlink:href="#hmso-b" y1="-4.81" y2="11.039"/><linearGradient id="hmso-f" gradientUnits="userSpaceOnUse" x1="61.486" x2="61.486" y1="-4.887" y2="88.781"><stop offset="0" stop-color="#ffb900"/><stop offset=".5" stop-color="#d83b01"/></linearGradient></defs><path d="m19.143 75.558c-2.724 0-4.945 2.121-4.945 4.753 0 1.789 1.031 3.322 2.565 4.14l19.118 10.246a10.11 10.11 0 0 0 4.969 1.303c1.164 0 2.275-.204 3.306-.562l6.531-1.814v-18.091c.027.025-31.519.025-31.545.025z" fill="url(#hmso-a)"/><path d="m19.143 75.558c-2.724 0-4.945 2.121-4.945 4.753 0 1.789 1.031 3.322 2.565 4.14l19.118 10.246a10.11 10.11 0 0 0 4.969 1.303c1.164 0 2.275-.204 3.306-.562l6.531-1.814v-18.091c.027.025-31.519.025-31.545.025z" fill="url(#hmso-c)"/><path d="m43.736.383a9.968 9.968 0 0 0 -2.777-.383c-1.56 0-3.12.307-4.522 1.022-.29.128-31.096 16.864-31.096 16.864-.423.205-.82.46-1.19.716-.052.025-.079.051-.132.077-.238.178-.45.357-.687.536-.106.077-.212.18-.291.256-.132.127-.265.255-.37.383-.37.383-1.005 1.2-1.005 1.2a9.15 9.15 0 0 0 -1.666 5.291v44.46c0 2.633 2.221 4.754 4.945 4.754.687 0 1.322-.128 1.904-.384l8.805-4.778c1.586-.766 2.856-2.07 3.517-3.68.158-.332.29-.74.37-1.15.026-.102.053-.23.053-.332 0-.05.026-.127.026-.178.027-.18.053-.384.053-.562 0-.154.027-.282.027-.435v-23.662-7.385c0-2.07.925-3.935 2.38-5.238 0 0-.688.613 0 0 .687-.613 1.586-1.15 2.644-1.507 1.057-.384 26.072-9.122 26.072-9.122v-14.744z" fill="url(#hmso-d)"/><path d="m43.736.383a9.968 9.968 0 0 0 -2.777-.383c-1.56 0-3.12.307-4.522 1.022-.29.128-31.096 16.864-31.096 16.864-.423.205-.82.46-1.19.716-.052.025-.079.051-.132.077-.238.178-.45.357-.687.536-.106.077-.212.18-.291.256-.132.127-.265.255-.37.383-.37.383-1.005 1.2-1.005 1.2a9.15 9.15 0 0 0 -1.666 5.291v44.46c0 2.633 2.221 4.754 4.945 4.754.687 0 1.322-.128 1.904-.384l8.805-4.778c1.586-.766 2.856-2.07 3.517-3.68.158-.332.29-.74.37-1.15.026-.102.053-.23.053-.332 0-.05.026-.127.026-.178.027-.18.053-.384.053-.562 0-.154.027-.282.027-.435v-23.662-7.385c0-2.07.925-3.935 2.38-5.238 0 0-.688.613 0 0 .687-.613 1.586-1.15 2.644-1.507 1.057-.384 26.072-9.122 26.072-9.122v-14.744z" fill="url(#hmso-e)"/><path d="m71.898 8.35-27.738-7.843c4.019 1.508 6.53 4.906 6.53 9.046 0 0-.025 75.2 0 77.014.027 4.088-2.67 7.589-6.53 8.892.846-.23 27.738-7.717 27.738-7.717 3.992-1.226 6.875-4.804 6.875-9.07v-61.252c.026-4.24-2.883-7.844-6.875-9.07z" fill="url(#hmso-f)"/></svg></span>Microsoft Office</span>
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 256 268"><path fill="#FFF" d="M16.092 11.538 164.09.608c18.179-1.56 22.85-.508 34.28 7.801l47.243 33.282C253.406 47.414 256 48.975 256 55.207v182.527c0 11.439-4.155 18.205-18.696 19.24L65.44 267.378c-10.913.517-16.11-1.043-21.825-8.327L8.826 213.814C2.586 205.487 0 199.254 0 191.97V29.726c0-9.352 4.155-17.153 16.092-18.188Z"/><path d="M164.09.608 16.092 11.538C4.155 12.573 0 20.374 0 29.726v162.245c0 7.284 2.585 13.516 8.826 21.843l34.789 45.237c5.715 7.284 10.912 8.844 21.825 8.327l171.864-10.404c14.532-1.035 18.696-7.801 18.696-19.24V55.207c0-5.911-2.336-7.614-9.21-12.66l-1.185-.856L198.37 8.409C186.94.1 182.27-.952 164.09.608ZM69.327 52.22c-14.033.945-17.216 1.159-25.186-5.323L23.876 30.778c-2.06-2.086-1.026-4.69 4.163-5.207l142.274-10.395c11.947-1.043 18.17 3.12 22.842 6.758l24.401 17.68c1.043.525 3.638 3.637.517 3.637L71.146 52.095l-1.819.125Zm-16.36 183.954V81.222c0-6.767 2.077-9.887 8.3-10.413L230.02 60.93c5.724-.517 8.31 3.12 8.31 9.879v153.917c0 6.767-1.044 12.49-10.387 13.008l-161.487 9.361c-9.343.517-13.489-2.594-13.489-10.921ZM212.377 89.53c1.034 4.681 0 9.362-4.681 9.897l-7.783 1.542v114.404c-6.758 3.637-12.981 5.715-18.18 5.715-8.308 0-10.386-2.604-16.609-10.396l-50.898-80.079v77.476l16.1 3.646s0 9.362-12.989 9.362l-35.814 2.077c-1.043-2.086 0-7.284 3.63-8.318l9.351-2.595V109.823l-12.98-1.052c-1.044-4.68 1.55-11.439 8.826-11.965l38.426-2.585 52.958 81.113v-71.76l-13.498-1.552c-1.043-5.733 3.111-9.896 8.3-10.404l35.84-2.087Z"/></svg></span>Notion</span>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-title">Development</div>
+        <div class="capsules">
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 1024 1024"><path fill="#1b1f23" fill-rule="evenodd" d="M512 0C229.12 0 0 229.12 0 512c0 226.56 146.56 417.92 350.08 485.76 25.6 4.48 35.2-10.88 35.2-24.32 0-12.16-.64-52.48-.64-95.36-128.64 23.68-161.92-31.36-172.16-60.16-5.76-14.72-30.72-60.16-52.48-72.32-17.92-9.6-43.52-33.28-.64-33.92 40.32-.64 69.12 37.12 78.72 52.48 46.08 77.44 119.68 55.68 149.12 42.24 4.48-33.28 17.92-55.68 32.64-68.48-113.92-12.8-232.96-56.96-232.96-252.8 0-55.68 19.84-101.76 52.48-137.6-5.12-12.8-23.04-65.28 5.12-135.68 0 0 42.88-13.44 140.8 52.48 40.96-11.52 84.48-17.28 128-17.28s87.04 5.76 128 17.28c97.92-66.56 140.8-52.48 140.8-52.48 28.16 70.4 10.24 122.88 5.12 135.68 32.64 35.84 52.48 81.28 52.48 137.6 0 196.48-119.68 240-233.6 252.8 18.56 16 34.56 46.72 34.56 94.72 0 68.48-.64 123.52-.64 140.8 0 13.44 9.6 29.44 35.2 24.32C877.44 929.92 1024 737.92 1024 512 1024 229.12 794.88 0 512 0" clip-rule="evenodd"/></svg></span>GitHub</span>
+          <span class="capsule"><span class="cap-ic"><svg viewBox="0 0 256 289"><path fill="#539e43" d="M128 288.464c-3.975 0-7.685-1.06-11.13-2.915l-35.247-20.936c-5.3-2.915-2.65-3.975-1.06-4.505c7.155-2.385 8.48-2.915 15.9-7.156c.796-.53 1.856-.265 2.65.265l27.032 16.166c1.06.53 2.385.53 3.18 0l105.74-61.217c1.06-.53 1.59-1.59 1.59-2.915V83.08c0-1.325-.53-2.385-1.59-2.915l-105.74-60.953c-1.06-.53-2.385-.53-3.18 0L20.405 80.166c-1.06.53-1.59 1.855-1.59 2.915v122.17c0 1.06.53 2.385 1.59 2.915l28.887 16.695c15.636 7.95 25.44-1.325 25.44-10.6V93.68c0-1.59 1.326-3.18 3.181-3.18h13.516c1.59 0 3.18 1.325 3.18 3.18v120.58c0 20.936-11.396 33.126-31.272 33.126c-6.095 0-10.865 0-24.38-6.625l-27.827-15.9C4.24 220.885 0 213.465 0 205.515V83.346C0 75.396 4.24 67.976 11.13 64L116.87 2.783c6.625-3.71 15.635-3.71 22.26 0L244.87 64C251.76 67.975 256 75.395 256 83.346v122.17c0 7.95-4.24 15.37-11.13 19.345L139.13 286.08c-3.445 1.59-7.42 2.385-11.13 2.385m32.596-84.009c-46.377 0-55.917-21.2-55.917-39.221c0-1.59 1.325-3.18 3.18-3.18h13.78c1.59 0 2.916 1.06 2.916 2.65c2.12 14.045 8.215 20.936 36.306 20.936c22.261 0 31.802-5.035 31.802-16.96c0-6.891-2.65-11.926-37.367-15.372c-28.886-2.915-46.907-9.275-46.907-32.33c0-21.467 18.02-34.187 48.232-34.187c33.921 0 50.617 11.66 52.737 37.101q0 1.193-.795 2.385c-.53.53-1.325 1.06-2.12 1.06h-13.78c-1.326 0-2.65-1.06-2.916-2.385c-3.18-14.575-11.395-19.345-33.126-19.345c-24.38 0-27.296 8.48-27.296 14.84c0 7.686 3.445 10.07 36.306 14.31c32.597 4.24 47.967 10.336 47.967 33.127c-.265 23.321-19.345 36.571-53.002 36.571"/></svg></span>Node.js</span>
+          <span class="capsule"><span class="cap-ic" style="background:#0B0D0E;border-radius:5px;padding:2px"><svg viewBox="0 0 1024 1024"><path d="M4.8 438.2A520.7 520.7 0 000 489.7h777.8c-2.7-5.3-6.4-10-10-14.7-133-171.8-204.5-157-306.9-161.3-34-1.4-57.2-2-193-2-72.7 0-151.7.2-228.6.4A621 621 0 0015 386.3h398.6v51.9H4.8zm779.1 103.5H.4c.8 13.8 2.1 27.5 4 41h723.4c32.2 0 50.3-18.3 56.1-41zM45 724.3s120 294.5 466.5 299.7c207 0 385-123 465.9-299.7H45z" fill="#fff"/><path d="M511.5 0A512.2 512.2 0 0065.3 260.6l202.7-.2c158.4 0 164.2.6 195.2 2l19.1.6c66.7 2.3 148.7 9.4 213.2 58.2 35 26.5 85.6 85 115.7 126.5 27.9 38.5 35.9 82.8 17 125.2-17.5 39-55 62.2-100.4 62.2H16.7s4.2 18 10.6 37.8h970.6a510.4 510.4 0 0026.1-160.7A512.4 512.4 0 00511.5 0z" fill="#fff"/></svg></span>Railway</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© Uche Japheth — Resume Series</p>
+</footer>
+
+<script>
+  // Mobile nav pill: hidden while at the hero top, fades in once scrolling begins
+  (function(){
+    var nav = document.getElementById('siteNav');
+    if (!nav) return;
+
+    function isMobile(){
+      return window.matchMedia('(max-width:960px)').matches;
+    }
+
+    function update(){
+      if (!isMobile()) {
+        nav.classList.remove('nav-hidden', 'nav-visible');
+        return;
+      }
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-visible');
+        nav.classList.remove('nav-hidden');
+      } else {
+        nav.classList.add('nav-hidden');
+        nav.classList.remove('nav-visible');
+      }
+    }
+
+    update();
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update, { passive:true });
+  })();
+
+  // Impact card description marquee — only when text is actually truncated on small screens
+  (function(){
+    var descs = Array.prototype.slice.call(document.querySelectorAll('.impact-desc'));
+    if (!descs.length) return;
+
+    descs.forEach(function(p){
+      if (!p.dataset.fullText) p.dataset.fullText = p.textContent.trim();
+    });
+
+    var resizeTimer;
+
+    function evaluate(){
+      var isMobile = window.matchMedia('(max-width:960px)').matches;
+
+      descs.forEach(function(p){
+        // Reset to plain state before re-measuring
+        p.classList.remove('marquee-mode');
+        p.textContent = p.dataset.fullText;
+
+        if (!isMobile) return;
+
+        // Force single-line measurement
+        var prevWhiteSpace = p.style.whiteSpace;
+        var prevClamp = p.style.webkitLineClamp;
+        p.style.whiteSpace = 'nowrap';
+        p.style.webkitLineClamp = 'unset';
+
+        var overflowing = p.scrollWidth > p.clientWidth + 1;
+
+        p.style.whiteSpace = prevWhiteSpace;
+        p.style.webkitLineClamp = prevClamp;
+
+        if (overflowing) {
+          var text = p.dataset.fullText;
+          p.classList.add('marquee-mode');
+          p.innerHTML =
+            '<span class="impact-desc-track">' +
+              '<span>' + text + '</span>' +
+              '<span aria-hidden="true">' + text + '</span>' +
+            '</span>';
+        }
+      });
+    }
+
+    evaluate();
+
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(evaluate, 200);
+    }, { passive:true });
+  })();
+
+  // Mobile nav hamburger toggle (real button + the static-state duplicate
+  // that sits above the photo — both control the same drawer, kept in sync)
+  (function(){
+    var btn = document.getElementById('navHamburger');
+    var btnStatic = document.getElementById('navHamburgerStatic');
+    var menu = document.getElementById('navMobileMenu');
+    if (!btn || !menu) return;
+
+    function setOpen(open){
+      menu.classList.toggle('open', open);
+      btn.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open);
+      if (btnStatic){
+        btnStatic.classList.toggle('is-open', open);
+        btnStatic.setAttribute('aria-expanded', open);
+      }
+    }
+
+    btn.addEventListener('click', function(){
+      setOpen(!menu.classList.contains('open'));
+    });
+    if (btnStatic){
+      btnStatic.addEventListener('click', function(){
+        setOpen(!menu.classList.contains('open'));
+      });
+    }
+    menu.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){ setOpen(false); });
+    });
+  })();
+
+  // Nav scroll-spy (only observes sections that currently exist in the DOM)
+  (function(){
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+    if (!navLinks.length) return;
+
+    var sections = navLinks.map(function(link){
+      var id = link.getAttribute('data-nav');
+      var el = document.getElementById(id);
+      return el ? { id: id, el: el, link: link } : null;
+    }).filter(Boolean);
+
+    if (!sections.length) return;
+
+    function setActive(id){
+      navLinks.forEach(function(link){
+        link.classList.toggle('active', link.getAttribute('data-nav') === id);
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            var match = sections.find(function(s){ return s.el === entry.target; });
+            if (match) setActive(match.id);
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+      sections.forEach(function(s){ io.observe(s.el); });
+    }
+
+    setActive(sections[0].id);
+  })();
+
+  // Scroll reveal
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+</body>
+</html>
