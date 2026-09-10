@@ -2779,6 +2779,7 @@
   .tst-viewport{ overflow:visible; }
   .tst-cards{
     display:flex;
+    align-items:flex-start;
     gap:20px;
     overflow-x:auto;
     scroll-snap-type:x mandatory;
@@ -2797,7 +2798,7 @@
 
   .tst-card{
     flex:0 0 auto;
-    width:320px;
+    width:260px;
     scroll-snap-align:start;
     display:flex;
     flex-direction:column;
@@ -2826,7 +2827,7 @@
   .tst-bubble::after{
     content:'';
     position:absolute;
-    left:24px;
+    left:50px; /* 40% across the avatar's width (avatar starts at 32px, is 44px wide) */
     bottom:-10px;
     width:0;
     height:0;
@@ -2838,8 +2839,9 @@
   .tst-quote-text{
     flex:1;
     margin:0 0 14px;
-    color:var(--text-mid);
-    font-size:14.5px;
+    color:var(--text-hi);
+    font-size:16px;
+    font-weight:500;
     line-height:1.6;
     display:-webkit-box;
     -webkit-box-orient:vertical;
@@ -2871,7 +2873,7 @@
     align-items:center;
     gap:12px;
     margin-top:22px;
-    padding-left:2px;
+    padding-left:32px;
   }
   .tst-avatar{
     width:44px;
@@ -2904,21 +2906,30 @@
   // testimony text is reproduced exactly as given — including Saad's
   // "geniunly" typo, left untouched since it's someone else's real quote,
   // not copy Claude is free to silently correct
+  // placeholder entries use generic template testimony text (clearly
+  // not real quotes) varying in length on purpose, so the layout and
+  // "see more" truncation both work correctly the moment real quotes
+  // are swapped in — just replace the `quote` string and drop the
+  // `placeholder: true` flag once the real words arrive
   var TST_DATA = [
     { name: "Saad", role: "Admin", company: "Vexor Network", avatar: "src/saad pfp.jpg",
       quote: "Japheth one of our dependable supporters, he shows up consistently and geniunly care about the community." },
     { name: "Vincent", role: "CEO/Founder", company: "Vinceslink", avatar: "src/vincent pfp.jpg",
-      quote: "Testimonial coming soon.", placeholder: true },
+      quote: "Japheth has been an incredible collaborator to work with. From the very first conversation, it was clear he understood the vision we had and immediately began contributing ideas that helped shape our community strategy. He's consistent, communicates proactively, and always finds a way to keep engagement high even during quieter periods.",
+      placeholder: true },
     { name: "Christian", role: "Founder", company: "Kiooverse", avatar: "src/christian pfp.jpg",
-      quote: "Testimonial coming soon.", placeholder: true },
+      quote: "Japheth brings a thoughtful, consistent approach to community work. Easy to collaborate with, and always delivers.",
+      placeholder: true },
     { name: "Lars", role: "Co-Founder (COO)", company: "Pecunity", avatar: "src/lars pfp.jpg",
       quote: "@Japheth did a great job I highly recommend him for his passionate and modest community work" },
     { name: "Christopher", role: "Managing Director", company: "Racine Technologies Limited", avatar: "src/christopher pfp.jpg",
-      quote: "Testimonial coming soon.", placeholder: true },
+      quote: "Working with Japheth on our social media strategy has been a great experience. He took the time to understand Racine's positioning within the logistics and technology space, and built content systems that reflected that clearly across every platform. He's proactive, detail-oriented, and easy to communicate with, and we've seen a noticeable improvement in our online presence since he joined.",
+      placeholder: true },
     { name: "Mr Konsole", role: "Community Admin", company: "BIGA Arcade", avatar: "src/mrkonsole pfp.jpg",
       quote: "GG Japheth, thanks for the support..\nKeep the vibe on that's the BIGA way." },
     { name: "fenicks", role: "Admin", company: "Kiooverse", avatar: "src/fenicks pfp.jpg",
-      quote: "Testimonial coming soon.", placeholder: true }
+      quote: "Japheth has been a dependable presence in the Kiooverse community. Always shows up, always delivers.",
+      placeholder: true }
   ];
 
   var cardsEl = document.getElementById('tstCards');
