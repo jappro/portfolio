@@ -2824,16 +2824,17 @@
   }
   /* the small triangular tail pointing down toward the avatar below —
      positioned near the avatar's horizontal position, not centered */
-  .tst-bubble::after{
-    content:'';
+  /* tail is a real inline SVG (see the JS render), not a pseudo-element —
+     clip-path attempts on ::after rendered incorrectly, and SVG gives
+     precise, reliable control over this irregular shape */
+  .tst-tail{
     position:absolute;
-    left:50px; /* 40% across the avatar's width (avatar starts at 32px, is 44px wide) */
-    bottom:-10px;
-    width:0;
-    height:0;
-    border-left:10px solid transparent;
-    border-right:10px solid transparent;
-    border-top:12px solid var(--bg-alt);
+    left:0;
+    bottom:-22px;
+    width:34px;
+    height:22px;
+    color:var(--bg-alt); /* the <path> uses fill="currentColor" */
+    pointer-events:none;
   }
 
   .tst-quote-text{
@@ -2944,6 +2945,7 @@
       '<div class="tst-bubble">' +
         '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
         '<button type="button" class="tst-see-more" hidden>see more</button>' +
+        '<svg class="tst-tail" viewBox="0 0 34 22" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 22 L13 13 L34 0 Z" fill="currentColor"/></svg>' +
       '</div>' +
       '<div class="tst-person">' +
         '<img class="tst-avatar" src="' + t.avatar + '" alt="' + t.name + '" ' +
