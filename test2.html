@@ -2791,8 +2791,8 @@
        before it hits that clip edge; the matching negative margin
        cancels the padding back out so the row's outer position and
        width don't visibly shift. */
-    padding:36px 44px 52px 36px;
-    margin:-36px -44px -52px -36px;
+    padding:36px 44px 64px 36px;
+    margin:-36px -44px -64px -36px;
   }
   .tst-cards::-webkit-scrollbar{ display:none; }
 
@@ -2829,12 +2829,20 @@
      precise, reliable control over this irregular shape */
   .tst-tail{
     position:absolute;
-    left:0;
-    bottom:-22px;
-    width:34px;
-    height:22px;
+    left:0; /* flush with the bubble's own left edge */
+    bottom:-56px; /* tripled size (66px tall) nudged up 10px so it overlaps into the bubble rather than leaving any gap */
+    width:102px;
+    height:66px;
     color:var(--bg-alt); /* the <path> uses fill="currentColor" */
     pointer-events:none;
+    /* drop-shadow (not box-shadow) follows the triangle's actual filled
+       shape rather than its rectangular bounding box — same values as
+       the bubble's own shadow so they read as one continuous shape */
+    filter:drop-shadow(6px 6px 24px rgba(255,255,255,0.09));
+    transition:filter 0.2s ease;
+  }
+  .tst-card:hover .tst-tail{
+    filter:drop-shadow(8px 16px 32px rgba(255,255,255,0.13));
   }
 
   .tst-quote-text{
@@ -2873,7 +2881,7 @@
     display:flex;
     align-items:center;
     gap:12px;
-    margin-top:22px;
+    margin-top:60px;
     padding-left:32px;
   }
   .tst-avatar{
@@ -2945,7 +2953,7 @@
       '<div class="tst-bubble">' +
         '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
         '<button type="button" class="tst-see-more" hidden>see more</button>' +
-        '<svg class="tst-tail" viewBox="0 0 34 22" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 22 L13 13 L34 0 Z" fill="currentColor"/></svg>' +
+        '<svg class="tst-tail" viewBox="0 0 102 66" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 66 L39 39 L102 0 Z" fill="currentColor"/></svg>' +
       '</div>' +
       '<div class="tst-person">' +
         '<img class="tst-avatar" src="' + t.avatar + '" alt="' + t.name + '" ' +
