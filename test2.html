@@ -2790,28 +2790,49 @@
        before it hits that clip edge; the matching negative margin
        cancels the padding back out so the row's outer position and
        width don't visibly shift. */
-    padding:20px 20px 24px 20px;
-    margin:-20px -20px -24px -20px;
+    padding:36px 44px 52px 36px;
+    margin:-36px -44px -52px -36px;
   }
   .tst-cards::-webkit-scrollbar{ display:none; }
 
   .tst-card{
     flex:0 0 auto;
     width:320px;
-    min-height:230px;
     scroll-snap-align:start;
-    background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
-    border:none; /* no ring — the shadow does the separating instead */
-    border-radius:0; /* sharp, unrounded edges */
-    box-shadow:6px 6px 0 rgba(255,255,255,0.08); /* solid (unblurred) offset shadow — lighter than the card itself now that the card is no longer background-colored */
-    padding:24px;
     display:flex;
     flex-direction:column;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    transition:transform 0.2s ease;
   }
   .tst-card:hover{
     transform:translateY(-8px) scale(1.02);
-    box-shadow:8px 14px 0 rgba(255,255,255,0.08);
+  }
+
+  .tst-bubble{
+    position:relative;
+    min-height:150px;
+    background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
+    border-radius:16px; /* slightly rounded, chat-bubble style — not sharp, not fully pill-rounded */
+    box-shadow:6px 6px 24px rgba(255,255,255,0.09); /* blurred offset shadow that fades outward, instead of a hard-edged solid rectangle */
+    padding:20px 22px;
+    display:flex;
+    flex-direction:column;
+    transition:box-shadow 0.2s ease;
+  }
+  .tst-card:hover .tst-bubble{
+    box-shadow:8px 16px 32px rgba(255,255,255,0.13);
+  }
+  /* the small triangular tail pointing down toward the avatar below —
+     positioned near the avatar's horizontal position, not centered */
+  .tst-bubble::after{
+    content:'';
+    position:absolute;
+    left:24px;
+    bottom:-10px;
+    width:0;
+    height:0;
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+    border-top:12px solid var(--bg-alt);
   }
 
   .tst-quote-text{
@@ -2849,7 +2870,8 @@
     display:flex;
     align-items:center;
     gap:12px;
-    margin-top:auto;
+    margin-top:22px;
+    padding-left:2px;
   }
   .tst-avatar{
     width:44px;
@@ -2908,8 +2930,10 @@
 
   TST_DATA.forEach(function(t){
     var html = '<div class="tst-card' + (t.placeholder ? ' tst-card--placeholder' : '') + '">' +
-      '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
-      '<button type="button" class="tst-see-more" hidden>see more</button>' +
+      '<div class="tst-bubble">' +
+        '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
+        '<button type="button" class="tst-see-more" hidden>see more</button>' +
+      '</div>' +
       '<div class="tst-person">' +
         '<img class="tst-avatar" src="' + t.avatar + '" alt="' + t.name + '" ' +
           'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
