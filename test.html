@@ -784,35 +784,6 @@
     margin-top:24px;
   }
 
-  /* each card highlights in its own accent color, kept minimal —
-     a thin colored ring on top of the existing ambient shadow,
-     no brightness/lightening jump */
-  .phil-card[data-card-index="1"]:hover,
-  .phil-card[data-card-index="1"].phil-card--pointer-active{
-    border-color:var(--purple);
-    box-shadow:var(--shadow), 0 0 0 1.5px var(--purple);
-  }
-  .phil-card[data-card-index="2"]:hover,
-  .phil-card[data-card-index="2"].phil-card--pointer-active{
-    border-color:var(--blue);
-    box-shadow:var(--shadow), 0 0 0 1.5px var(--blue);
-  }
-  .phil-card[data-card-index="3"]:hover,
-  .phil-card[data-card-index="3"].phil-card--pointer-active{
-    border-color:var(--green);
-    box-shadow:var(--shadow), 0 0 0 1.5px var(--green);
-  }
-  .phil-card[data-card-index="4"]:hover,
-  .phil-card[data-card-index="4"].phil-card--pointer-active{
-    border-color:var(--amber);
-    box-shadow:var(--shadow), 0 0 0 1.5px var(--amber);
-  }
-  .phil-card[data-card-index="5"]:hover,
-  .phil-card[data-card-index="5"].phil-card--pointer-active{
-    border-color:var(--teal);
-    box-shadow:var(--shadow), 0 0 0 1.5px var(--teal);
-  }
-
   .phil-card__badge{
     display:inline-flex;
     align-self:flex-start;
@@ -1015,6 +986,35 @@
     .phil-body-cards .phil-card:hover,
     .phil-body-cards .phil-card--pointer-active{
       transform:translateY(-6px);
+    }
+
+    /* each card highlights in its own accent color, kept minimal —
+       a thin colored ring on top of the existing ambient shadow.
+       Desktop only — no hover color on mobile/tablet. */
+    .phil-body-cards .phil-card[data-card-index="1"]:hover,
+    .phil-body-cards .phil-card[data-card-index="1"].phil-card--pointer-active{
+      border-color:var(--purple);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--purple);
+    }
+    .phil-body-cards .phil-card[data-card-index="2"]:hover,
+    .phil-body-cards .phil-card[data-card-index="2"].phil-card--pointer-active{
+      border-color:var(--blue);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--blue);
+    }
+    .phil-body-cards .phil-card[data-card-index="3"]:hover,
+    .phil-body-cards .phil-card[data-card-index="3"].phil-card--pointer-active{
+      border-color:var(--green);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--green);
+    }
+    .phil-body-cards .phil-card[data-card-index="4"]:hover,
+    .phil-body-cards .phil-card[data-card-index="4"].phil-card--pointer-active{
+      border-color:var(--amber);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--amber);
+    }
+    .phil-body-cards .phil-card[data-card-index="5"]:hover,
+    .phil-body-cards .phil-card[data-card-index="5"].phil-card--pointer-active{
+      border-color:var(--teal);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--teal);
     }
 
     .phil-wrapper{
