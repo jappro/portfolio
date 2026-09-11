@@ -769,7 +769,7 @@
     justify-content:center; /* leftover space distributes evenly around the content group instead of collecting into one gap */
     max-width:min(680px, 92vw);
     margin:0 auto;
-    height:clamp(560px, 82vh, 760px); /* fills the screen properly — this is a full-viewport scroll-pin slot, not a content-hugging card */
+    height:max(560px, 82vh); /* tracks the ACTUAL device height, phone or tablet — no artificial ceiling capping it below the real slot height */
     background:rgba(9,9,13,0.86);
     border:1px solid var(--card-border);
     border-radius:22px;
