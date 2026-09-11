@@ -699,10 +699,21 @@
   .phil-body-bg{
     position:absolute;
     inset:0;
-    background-image:url("src/mobile philosophy card background image.jpg");
+    background-image:
+      /* bottom blend into matte black — painted on top, fades the
+         blobs out before the section ends */
+      linear-gradient(to top, var(--bg) 0%, transparent 14%),
+      /* left blob: amber + teal */
+      radial-gradient(ellipse 58% 40% at 8% 32%, var(--amber-soft) 0%, transparent 62%),
+      radial-gradient(ellipse 52% 42% at 6% 58%, var(--teal-soft) 0%, transparent 64%),
+      /* right blob: purple (smallest) + teal + green */
+      radial-gradient(ellipse 34% 26% at 92% 24%, var(--purple-soft) 0%, transparent 58%),
+      radial-gradient(ellipse 60% 44% at 94% 50%, var(--teal-soft) 0%, transparent 62%),
+      radial-gradient(ellipse 64% 48% at 92% 76%, var(--green-soft) 0%, transparent 64%),
+      /* center blob: purple, sized to peek past the card's edges */
+      radial-gradient(ellipse 48% 58% at 50% 50%, var(--purple-soft) 0%, transparent 68%);
     background-repeat:no-repeat;
-    background-position:center top;
-    background-size:cover;
+    background-color:var(--bg);
     z-index:0;
     pointer-events:none;
     -webkit-touch-callout:none;
