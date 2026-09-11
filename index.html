@@ -23,6 +23,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    --container-max:1280px;
+    --container-pad:32px;
+
     --bg:#fafafa;
     --bg-alt:#f2f2f4;
     --card-bg:rgba(255,255,255,0.72);
@@ -66,6 +69,18 @@
     --teal-soft:rgba(45,212,191,0.14);
 
     color-scheme:dark;
+  }
+
+  /* Desktop container fluid sizing: scales with viewport between a
+     floor (1024px, the breakpoint itself) and a ceiling (1680px, so
+     it doesn't stretch too thin on ultra-wide monitors). Only kicks
+     in at native desktop widths so it can never force overflow on
+     mobile/tablet, which keep the flat fallback above. */
+  @media (min-width:1024px){
+    :root{
+      --container-max:clamp(1024px, 94vw, 1680px);
+      --container-pad:clamp(14px, 1.6vw, 40px);
+    }
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -152,22 +167,36 @@
     flex-shrink:0;
   }
 
-  .nav-logo{
-    width:38px; height:38px;
-    border-radius:11px;
-    background:#fff;
-    color:#0a0a0f;
-    display:flex; align-items:center; justify-content:center;
+  .logo-text{
     font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:16px;
+    font-weight:900;
+    font-size:18px;
+    color:#fff;
+    white-space:pre;
+    display:inline-flex;
   }
 
-  .nav-name{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:16px;
-    color:#fff;
+  .logo-char{
+    display:inline-block;
+    transform-origin:50% 100%;
+    transition:transform .2s cubic-bezier(.34,1.56,.64,1), color .2s ease;
+  }
+
+  .logo-char.enlarge{
+    transform:scale(1.4) translateY(-2px);
+    color:#a48cff;
+  }
+
+  .logo-cursor{
+    display:inline-block;
+    width:2px;
+    height:15px;
+    margin-left:2px;
+    vertical-align:-2px;
+    background:#a48cff;
+    box-shadow:0 0 6px rgba(164,140,255,.7);
+    opacity:1;
+    transition:opacity .08s linear;
   }
 
   .nav-links{
@@ -208,19 +237,33 @@
     gap:8px;
     padding:11px 20px;
     border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.04);
+    background:linear-gradient(180deg, #26262c 0%, #16161a 100%);
     color:#fff;
-    font-size:13.5px;
-    font-weight:600;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
     text-decoration:none;
     white-space:nowrap;
-    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    border:1px solid rgba(255,255,255,0.14);
+    box-shadow:
+      0 8px 18px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.14),
+      inset 0 -2px 5px rgba(0,0,0,0.35);
+    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
   }
 
   .nav-cta svg{ width:15px; height:15px; }
 
-  .nav-cta:hover{ transform:translateY(-2px); border-color:rgba(164,140,255,.5); background:rgba(164,140,255,.1); }
+  .nav-cta:hover,
+  .nav-cta:focus-visible{ filter:brightness(1.2); }
+  .nav-cta:active{
+    transform:translateY(1px);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      inset 0 -2px 3px rgba(0,0,0,0.4);
+  }
 
   .nav-glass-lens{ display:none; }
 
@@ -397,11 +440,24 @@
     text-align:center;
     padding:14px;
     border-radius:999px;
-    background:linear-gradient(135deg,#7c5cff,#5b8dff);
+    background:linear-gradient(180deg, #2a2a30 0%, #08080b 55%, #000000 100%);
+    border:1px solid rgba(255,255,255,0.18);
+    box-shadow:
+      0 12px 28px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      inset 0 -3px 6px rgba(0,0,0,0.35);
     color:#fff;
     font-weight:700;
     font-size:14.5px;
     text-decoration:none;
+    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .nav-mobile-cta:active{
+    transform:translateY(1px);
+    box-shadow:
+      0 6px 16px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      inset 0 -2px 4px rgba(0,0,0,0.3);
   }
 
   @media (max-width:960px){
@@ -411,7 +467,6 @@
 
   @media (max-width:960px){
     .nav-links{ display:none; }
-    .nav-name{ display:none; }
     .nav-cta span{ display:none; }
   }
 
@@ -438,29 +493,13 @@
   .hero-wrap{
     position:relative;
     z-index:1;
-    max-width:1280px;
+    max-width:clamp(1024px, 90vw, 1680px);
     margin:0 auto;
-    padding:64px 32px 60px;
+    padding:28px clamp(24px, 3vw, 56px) 16px;
     display:grid;
     grid-template-columns:1.05fr 1fr;
     gap:40px;
     align-items:center;
-  }
-
-  .hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:8px 16px;
-    border-radius:999px;
-    border:1px solid rgba(74,222,128,.28);
-    background:rgba(74,222,128,.08);
-    font-size:11.5px;
-    font-weight:700;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:#8fe3ac;
-    margin-bottom:26px;
   }
 
   .hero-badge-dot{
@@ -492,7 +531,8 @@
   }
 
   .hero-sub{
-    font-size:19px;
+    font-size:21px;
+    font-weight:600;
     line-height:1.55;
     color:rgba(255,255,255,.82);
     max-width:520px;
@@ -504,7 +544,8 @@
   .tint-green{ color:#4ADE80; font-weight:600; }
 
   .hero-desc{
-    font-size:15px;
+    font-size:17px;
+    font-weight:600;
     line-height:1.7;
     color:rgba(255,255,255,.55);
     max-width:500px;
@@ -521,36 +562,63 @@
     display:inline-flex;
     align-items:center;
     gap:9px;
-    padding:15px 26px;
+    padding:17px 34px;
     border-radius:999px;
-    background:linear-gradient(135deg,#7c5cff,#5b8dff);
-    color:#fff;
-    font-weight:700;
-    font-size:14.5px;
+    background:linear-gradient(180deg, #a48cff 0%, #7c5cff 55%, #6b46e0 100%);
+    color:#141414;
+    font-weight:800;
+    font-size:15.5px;
+    letter-spacing:0.01em;
     text-decoration:none;
-    box-shadow:0 16px 36px rgba(124,92,255,.32);
-    transition:transform .25s ease, box-shadow .25s ease;
+    border:1px solid rgba(255,255,255,0.18);
+    box-shadow:
+      0 12px 28px rgba(124,92,255,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      inset 0 -3px 6px rgba(0,0,0,0.22);
+    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
   }
 
   .hero-btn-primary svg{ width:16px; height:16px; }
-  .hero-btn-primary:hover{ transform:translateY(-3px); box-shadow:0 20px 44px rgba(124,92,255,.42); }
+  .hero-btn-primary:hover,
+  .hero-btn-primary:focus-visible{ filter:brightness(1.08); }
+  .hero-btn-primary:active{
+    transform:translateY(1px);
+    box-shadow:
+      0 6px 16px rgba(124,92,255,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -2px 4px rgba(0,0,0,0.22);
+  }
 
   .hero-btn-secondary{
     display:inline-flex;
     align-items:center;
     gap:9px;
-    padding:15px 24px;
+    padding:15px 27px;
     border-radius:999px;
-    border:1px solid rgba(255,255,255,.18);
+    background:linear-gradient(180deg, #4a4a56 0%, #2c2c35 55%, #1c1c22 100%);
     color:#fff;
-    font-weight:600;
+    font-weight:700;
     font-size:14.5px;
+    letter-spacing:0.01em;
     text-decoration:none;
-    transition:transform .25s ease, border-color .25s ease, background .25s ease;
+    border:1px solid rgba(255,255,255,0.16);
+    box-shadow:
+      0 10px 24px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      inset 0 -3px 6px rgba(0,0,0,0.3);
+    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
   }
 
   .hero-btn-secondary svg{ width:16px; height:16px; }
-  .hero-btn-secondary:hover{ transform:translateY(-3px); border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.05); }
+  .hero-btn-secondary:hover,
+  .hero-btn-secondary:focus-visible{ filter:brightness(1.15); }
+  .hero-btn-secondary:active{
+    transform:translateY(1px);
+    box-shadow:
+      0 5px 14px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.16),
+      inset 0 -2px 4px rgba(0,0,0,0.32);
+  }
 
   .hero-mobile-photo{
     display:none;
@@ -659,9 +727,10 @@
 
   .hero-orbit{
     position:absolute;
-    width:420px; height:420px;
-    border:1px dashed rgba(255,255,255,.16);
+    width:520px; height:520px;
+    border:1px dashed rgba(255,255,255,.14);
     border-radius:50%;
+    z-index:0;
   }
 
   .orbit-dot{
@@ -674,18 +743,76 @@
 
   .hero-photo-frame{
     position:relative;
-    width:340px; height:420px;
-    border-radius:28px;
-    overflow:hidden;
-    background:linear-gradient(160deg,#1a1a24,#0a0a10);
-    box-shadow:0 40px 90px rgba(0,0,0,.55);
-    border:1px solid rgba(255,255,255,.08);
+    width:460px; height:600px;
+    z-index:1;
   }
 
-  .hero-photo-frame img{
+  .hero-photo-glow{
+    position:absolute;
+    inset:-70px;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(46% 42% at 62% 32%, rgba(124,92,255,.55), transparent 68%),
+      radial-gradient(42% 46% at 78% 60%, rgba(47,95,224,.5), transparent 70%),
+      radial-gradient(36% 36% at 40% 75%, rgba(45,212,191,.22), transparent 70%);
+    filter:blur(40px);
+  }
+
+  .hero-photo-img{
+    position:relative;
+    z-index:1;
     width:100%; height:100%;
-    object-fit:cover;
-    display:block;
+    background-image:url('src/hero-photo.png');
+    background-size:contain;
+    background-position:bottom center;
+    background-repeat:no-repeat;
+    transform:translateY(-24px);
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-user-drag:none;
+    user-drag:none;
+    pointer-events:none;
+
+    /* fade the hard left/right/bottom photo-crop edges to transparent
+       so they dissolve into whatever sits behind (glow/bg) instead of
+       showing a straight cut line at the shoulders/chest */
+    mask-image:
+      linear-gradient(to right, transparent 0%, #000 9%),
+      linear-gradient(to left,  transparent 0%, #000 9%),
+      linear-gradient(to top,   transparent 0%, #000 16%);
+    mask-repeat:no-repeat;
+    mask-size:100% 100%;
+    mask-composite:intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, #000 9%),
+      linear-gradient(to left,  transparent 0%, #000 9%),
+      linear-gradient(to top,   transparent 0%, #000 16%);
+    -webkit-mask-repeat:no-repeat;
+    -webkit-mask-size:100% 100%;
+    -webkit-mask-composite:source-in, source-in;
+  }
+
+  .hero-photo-badge{
+    position:absolute;
+    z-index:2;
+    bottom:12%;
+    right:-4%;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid rgba(74,222,128,.28);
+    background:rgba(10,10,16,.72);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#8fe3ac;
+    white-space:nowrap;
   }
 
   .hero-float-card{
@@ -711,13 +838,13 @@
   }
   .float-ic svg{ width:15px; height:15px; }
 
-  .card-community{ top:8%; left:-8%; }
+  .card-community{ top:6%; left:-2%; }
   .card-community .float-ic{ background:rgba(164,140,255,.14); color:#a48cff; }
 
-  .card-systems{ top:44%; left:-4%; }
+  .card-systems{ top:50%; left:-6%; }
   .card-systems .float-ic{ background:rgba(111,147,255,.14); color:#6f93ff; }
 
-  .card-growth{ top:34%; right:-10%; }
+  .card-growth{ top:26%; right:-14%; }
   .card-growth .float-ic{ background:rgba(74,222,128,.14); color:#4ADE80; }
 
   .float-label{
@@ -764,25 +891,55 @@
     white-space:nowrap;
   }
 
+  .impact-kicker{
+    display:none;
+    text-align:left;
+    margin-left:80px;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:rgba(190,180,255,.85);
+    white-space:nowrap;
+    margin-bottom:46px;
+  }
+
+  .impact-diagram-col{
+    display:flex;
+    flex-direction:column;
+    padding-top:6px;
+    min-width:0;
+  }
+
+  /* Desktop swaps the centered mobile/tablet heading (with the two
+     side lines) for the smaller left-aligned kicker sitting above
+     just the diagram column. */
+  @media (min-width:1024px){
+    .impact-heading{ display:none; }
+    .impact-kicker{ display:block; }
+  }
+
   .impact-section{
     position:relative;
     z-index:1;
-    max-width:1280px;
+    max-width:var(--container-max);
     margin:0 auto;
-    padding:36px 32px 60px;
+    padding:0 var(--container-pad) 60px;
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1.1fr;
     gap:48px;
-    align-items:stretch;
+    align-items:start;
+    overflow:visible;
   }
 
   .impact-diagram{
     position:relative;
     width:100%;
-    max-width:440px;
+    max-width:clamp(494px, 33vw, 610px);
     aspect-ratio:1/1;
-    margin:0 auto;
-    align-self:center;
+    margin:14px 0 0;
+    align-self:flex-start;
   }
 
   .impact-ring{
@@ -864,7 +1021,7 @@
   .impact-card{
     position:absolute;
     width:38%;
-    padding:9px 11px;
+    padding:clamp(9px, 0.8vw, 13px) clamp(11px, 1vw, 15px);
     border-radius:14px;
     border:1px solid;
     background:rgba(14,14,20,.8);
@@ -906,7 +1063,8 @@
   }
 
   .impact-ic{
-    width:24px; height:24px;
+    width:clamp(24px, 2.2vw, 30px);
+    height:clamp(24px, 2.2vw, 30px);
     border-radius:7px;
     display:flex;
     align-items:center;
@@ -914,10 +1072,10 @@
     flex-shrink:0;
   }
 
-  .impact-ic svg{ width:12px; height:12px; }
+  .impact-ic svg{ width:clamp(12px, 1.1vw, 15px); height:clamp(12px, 1.1vw, 15px); }
 
   .impact-card h4{
-    font-size:11.5px;
+    font-size:clamp(11.5px, 1.05vw, 14.5px);
     font-weight:700;
     color:#fff;
     margin-bottom:2px;
@@ -925,7 +1083,7 @@
   }
 
   .impact-card p{
-    font-size:9.8px;
+    font-size:clamp(9.8px, 0.9vw, 12.5px);
     line-height:1.35;
     color:rgba(255,255,255,.55);
     display:-webkit-box;
@@ -958,93 +1116,137 @@
     .impact-desc-track{ animation:none; }
   }
 
-  .impact-message{
-    position:relative;
-    border-radius:24px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.035);
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-    box-shadow:0 30px 70px rgba(0,0,0,.35);
-    padding:36px 36px 32px;
+  /* ============ FROM SIGNALS TO IMPACT (before/after stack) ============ */
+  .signals-panel{
     display:flex;
     flex-direction:column;
-    min-height:0;
+    position:relative;
+    overflow:visible;
+    margin-top:-42px;
+    min-width:0;
   }
 
-  .impact-arrow{
+  .signals-top{
+    position:relative;
+    top:38px;
+    left:22px;
+    margin-bottom:12px;
+  }
+
+  .signals-heading{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:27px;
+    letter-spacing:-0.01em;
+    color:#fff;
+    margin-bottom:10px;
+  }
+
+  .signals-sub{
+    font-size:17px;
+    font-weight:600;
+    line-height:1.55;
+    color:rgba(255,255,255,.6);
+    max-width:380px;
+    margin-bottom:0;
+  }
+
+  .ba-toggle-row{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:8px;
+  }
+
+  .ba-toggle{
+    display:flex;
+    gap:10px;
+  }
+
+  .ba-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 17px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.03);
+    color:rgba(255,255,255,.6);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.02em;
+    cursor:pointer;
+    transition:border-color .25s ease, background .25s ease, color .25s ease;
+  }
+
+  .ba-dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .ba-dot-red{ background:#ef4444; box-shadow:0 0 8px rgba(239,68,68,.7); }
+  .ba-dot-green{ background:#4ADE80; box-shadow:0 0 8px rgba(74,222,128,.7); }
+
+  .ba-btn.ba-before.active{ border-color:rgba(239,68,68,.45); background:rgba(239,68,68,.12); color:#fecaca; }
+  .ba-btn.ba-after.active{ border-color:rgba(74,222,128,.45); background:rgba(74,222,128,.12); color:#bbf7d0; }
+
+  .ba-stack{
+    position:relative;
+    width:100%;
+    max-width:820px;
+    aspect-ratio:1440/1024;
+    margin-left:auto;
+  }
+
+  .ba-shot{
     position:absolute;
-    top:-44px;
-    left:44px;
-    width:86px;
-    height:56px;
+    inset:0;
+    border-radius:14px;
+    background-size:cover;
+    background-position:top center;
+    background-repeat:no-repeat;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 30px 70px rgba(0,0,0,.5);
+    transition:transform .5s cubic-bezier(.16,1,.3,1), opacity .5s ease;
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-user-drag:none;
+    user-drag:none;
     pointer-events:none;
   }
 
-  .impact-message-scroll{
-    overflow-y:auto;
-    padding-right:8px;
-    min-height:0;
+  .ba-shot-before{ background-image:url('src/IMG_2673.png'); }
+  .ba-shot-after{ background-image:url('src/IMG_2674.png'); }
+
+  .ba-stack[data-active="after"] .ba-shot-after{
+    transform:translate(0,0) scale(1);
+    opacity:1;
+    z-index:2;
+  }
+  .ba-stack[data-active="after"] .ba-shot-before{
+    transform:translate(-7%,9%) scale(.93);
+    opacity:.85;
+    z-index:1;
   }
 
-  .im-lead{
-    font-size:19px;
-    line-height:1.5;
-    color:rgba(255,255,255,.85);
-    margin-bottom:22px;
+  .ba-stack[data-active="before"] .ba-shot-before{
+    transform:translate(0,0) scale(1);
+    opacity:1;
+    z-index:2;
+  }
+  .ba-stack[data-active="before"] .ba-shot-after{
+    transform:translate(-7%,9%) scale(.93);
+    opacity:.85;
+    z-index:1;
   }
 
-  .im-white{ color:#fff; font-weight:700; }
-  .im-blue{ color:#6f93ff; font-weight:600; }
-  .im-violet{ color:#a48cff; font-weight:600; }
-  .im-green{ color:#4ADE80; font-weight:600; }
-
-  .im-list{
-    list-style:none;
-    display:flex;
-    flex-direction:column;
-    gap:11px;
-    margin-bottom:24px;
+  /* Signals panel (before/after) is desktop/large-tablet only —
+     mobile keeps the diagram-only impact view untouched. */
+  @media (max-width:1023px){
+    .signals-panel{ display:none !important; }
   }
-
-  .im-list li{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    font-size:14.5px;
-    line-height:1.5;
-    color:rgba(255,255,255,.78);
-  }
-
-  .im-dot{
-    width:7px; height:7px;
-    border-radius:50%;
-    margin-top:7px;
-    flex-shrink:0;
-  }
-
-  .im-divider{
-    height:1px;
-    background:rgba(255,255,255,.1);
-    margin-bottom:22px;
-  }
-
-  .im-body{
-    font-size:15px;
-    line-height:1.6;
-    color:rgba(255,255,255,.8);
-    margin-bottom:18px;
-  }
-
-  .im-body:last-child{ margin-bottom:0; }
-  .im-body strong{ color:#fff; }
 
   @media (max-width:960px){
     .impact-heading{ padding:0 20px; }
     .impact-heading-line{ max-width:60px; }
     .impact-heading span:not(.impact-heading-line){ font-size:10.5px; }
     .impact-section{ grid-template-columns:1fr; padding:24px 20px 44px; gap:0; }
-    .impact-message{ display:none; }
     .impact-diagram{ max-width:340px; }
     .impact-card p{ -webkit-line-clamp:1; }
     .card-pos-2, .card-pos-5{ top:31%; }
@@ -1055,604 +1257,55 @@
   }
 
   @media (max-width:960px){
-    .hero-wrap{ grid-template-columns:1fr; padding:28px 20px 36px; text-align:left; z-index:150; }
-    .hero-badge{ display:none; }
+    .hero-wrap{ max-width:100%; grid-template-columns:1fr; padding:28px 20px 36px; text-align:left; z-index:150; }
     .hero-col-photo{ display:none; }
+    .hero-sub{ font-size:19px; font-weight:400; }
+    .hero-desc{ font-size:15px; font-weight:400; }
     .hero-headline{ margin-top:-60px; }
     .hero-mobile-photo{ display:block; }
     .hero-btn-row{ flex-direction:column; width:100%; }
     .hero-btn-primary, .hero-btn-secondary{ width:100%; justify-content:center; }
+
+    /* glossy-pill treatment, mobile only */
+    .hero-btn-primary{
+      background:linear-gradient(180deg, #a48cff 0%, #7c5cff 55%, #6b46e0 100%);
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow:
+        0 12px 28px rgba(124,92,255,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.4),
+        inset 0 -3px 6px rgba(0,0,0,0.22);
+      transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .hero-btn-primary:active{
+      transform:translateY(1px);
+      box-shadow:
+        0 6px 16px rgba(124,92,255,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        inset 0 -2px 4px rgba(0,0,0,0.22);
+    }
+
+    .hero-btn-secondary{
+      background:linear-gradient(180deg, #2a2a30 0%, #08080b 55%, #000000 100%);
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow:
+        0 12px 28px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        inset 0 -3px 6px rgba(0,0,0,0.35);
+      transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .hero-btn-secondary:active{
+      transform:translateY(1px);
+      box-shadow:
+        0 6px 16px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.1),
+        inset 0 -2px 4px rgba(0,0,0,0.3);
+    }
   }
 
   @media (max-width:420px){
     .mp-icon{ width:36px; height:36px; border-radius:11px; }
     .mp-icon svg{ width:16px; height:16px; }
     .mp-pill{ font-size:9.5px; padding:8px 13px; }
-  }
-
-  /* ============ STORY / ABOUT ============ */
-  .section-label{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:11.5px;
-    font-weight:700;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:var(--text-lo);
-    text-align:center;
-    margin-bottom:14px;
-  }
-
-  .story-heading{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:clamp(24px,3.4vw,30px);
-    font-weight:700;
-    text-align:center;
-    max-width:640px;
-    margin:0 auto 36px;
-    letter-spacing:-0.01em;
-  }
-
-  .story-body{
-    max-width:680px;
-    margin:0 auto;
-    text-align:center;
-  }
-
-  .story-body p{
-    font-size:15px;
-    line-height:1.75;
-    color:var(--text-mid);
-    margin-bottom:18px;
-    text-align:left;
-  }
-
-  .story-more{
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .6s cubic-bezier(.16,1,.3,1);
-  }
-
-  .story-more p:last-child{ margin-bottom:0; }
-
-  .story-toggle{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    margin-top:4px;
-    font-family:'Space Grotesk', sans-serif;
-    font-size:13px;
-    font-weight:600;
-    color:var(--purple);
-    background:none;
-    border:none;
-    cursor:pointer;
-    padding:8px 0;
-  }
-
-  .story-toggle svg{ width:14px; height:14px; transition:transform .3s ease; }
-  .story-toggle.expanded svg{ transform:rotate(180deg); }
-
-  .value-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-top:44px;
-    max-width:900px;
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .value-card{
-    text-align:center;
-    padding:22px 16px;
-    border-radius:18px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-  }
-
-  .value-card h4{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:14.5px;
-    font-weight:700;
-    margin-bottom:6px;
-  }
-
-  .value-card p{
-    font-size:12px;
-    line-height:1.5;
-    color:var(--text-mid);
-  }
-
-  @media (max-width:900px){
-    .value-grid{ grid-template-columns:repeat(2,1fr); }
-  }
-
-  @media (max-width:600px){
-    .value-grid{ grid-template-columns:1fr; }
-  }
-
-  /* ============ STOCK CARD STACK ============ */
-  .stock-driver{ position:relative; height:320vh; }
-
-  .stock-stage{
-    position:sticky;
-    top:0;
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-  }
-
-  .stock-stack{
-    position:relative;
-    width:min(560px, 90vw);
-    aspect-ratio:1.72/1;
-  }
-
-  .stock-card{
-    position:absolute;
-    inset:0;
-    border-radius:26px;
-    overflow:hidden;
-    box-shadow:0 30px 70px rgba(0,0,0,.35);
-    cursor:pointer;
-    opacity:0;
-    transition:transform .8s cubic-bezier(.16,1,.3,1), opacity .5s ease;
-    will-change:transform;
-  }
-
-  .stock-purple{ background:#2A1065; z-index:1; }
-  .stock-blue{ background:#0D2A5C; z-index:2; }
-  .stock-amber{ background:#A85D1B; z-index:3; }
-  .stock-teal{ background:#0D3B36; z-index:4; }
-
-  .stock-card[data-dir="top-right"]{ transform:translate(140%,-120%) rotate(20deg); }
-  .stock-card[data-dir="left"]{ transform:translate(-170%,10%) rotate(-14deg); }
-  .stock-card[data-dir="top-left"]{ transform:translate(-140%,-120%) rotate(-20deg); }
-  .stock-card[data-dir="bottom"]{ transform:translate(10%,170%) rotate(10deg); }
-
-  .stock-card.landed{ opacity:1; }
-  .stock-card.landed.stock-purple{ transform:translate(18px,-14px) rotate(6deg) scale(.97); }
-  .stock-card.landed.stock-blue{ transform:translate(10px,-8px) rotate(3deg) scale(.985); }
-  .stock-card.landed.stock-amber{ transform:translate(4px,-4px) rotate(-2deg) scale(.995); }
-  .stock-card.landed.stock-teal{ transform:translate(0,0) rotate(0deg) scale(1); }
-
-  .stock-card.collapsing{
-    transition:transform .55s cubic-bezier(.4,0,.2,1), opacity .45s ease;
-    opacity:0;
-    pointer-events:none;
-  }
-  .stock-card.collapsing.stock-purple{ transform:translate(-70px,-50px) rotate(-12deg) scale(.75); }
-  .stock-card.collapsing.stock-blue{ transform:translate(70px,-50px) rotate(12deg) scale(.75); }
-  .stock-card.collapsing.stock-amber{ transform:translate(-70px,50px) rotate(12deg) scale(.75); }
-  .stock-card.collapsing.stock-teal{ transform:translate(70px,50px) rotate(-12deg) scale(.75); }
-
-  .stock-banner{ position:relative; height:44%; overflow:hidden; }
-
-  .stock-dots{
-    position:absolute; inset:0;
-    background-image:radial-gradient(currentColor 1px, transparent 1.6px);
-    background-size:11px 11px;
-  }
-
-  .stock-purple .stock-banner{ background:linear-gradient(135deg,#FCCB4D,#F2B518); }
-  .stock-purple .stock-dots{ color:rgba(0,0,0,.18); }
-
-  .stock-blue .stock-banner{ background:linear-gradient(135deg,#BCC0C6,#9CA1A9); }
-  .stock-blue .stock-dots{ color:rgba(0,0,0,.15); }
-
-  .stock-amber .stock-banner{ background:linear-gradient(135deg,#3A3D42,#232529); }
-  .stock-amber .stock-dots{ color:rgba(255,255,255,.14); }
-
-  .stock-teal .stock-banner{ background:linear-gradient(135deg,#FFFFFF,#F1F1F1); }
-  .stock-teal .stock-dots{ color:rgba(0,0,0,.08); }
-
-  .stock-wave{ position:absolute; left:0; right:0; bottom:-1px; width:100%; height:42%; }
-  .stock-purple .stock-wave path{ fill:#2A1065; }
-  .stock-blue .stock-wave path{ fill:#0D2A5C; }
-  .stock-amber .stock-wave path{ fill:#A85D1B; }
-  .stock-teal .stock-wave path{ fill:#0D3B36; }
-
-  .stock-body{
-    position:relative;
-    height:56%;
-    display:flex;
-    align-items:center;
-    gap:5%;
-    padding:0 5% 14% 6%;
-  }
-
-  .stock-left{
-    flex:0 0 auto;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    margin-top:-30%;
-  }
-
-  .stock-photo{
-    width:78px; height:78px;
-    flex-shrink:0;
-    overflow:hidden;
-    border:3px solid;
-  }
-
-  .stock-photo.circle{ border-radius:50%; }
-  .stock-photo.block{ border-radius:14px; }
-  .stock-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-  .stock-purple .stock-photo{ border-color:#F5B722; }
-  .stock-blue .stock-photo{ border-color:#B0B4BC; }
-  .stock-amber .stock-photo{ border-color:#3A3D42; }
-  .stock-teal .stock-photo{ border-color:#FFFFFF; }
-
-  .stock-name{
-    margin-top:10px;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:800;
-    font-size:clamp(15px,2.4vw,20px);
-    white-space:nowrap;
-  }
-
-  .stock-purple .stock-name{ color:#F5B722; }
-  .stock-blue .stock-name{ color:#C7CBD1; }
-  .stock-amber .stock-name{ color:#F1EBE1; }
-  .stock-teal .stock-name{ color:#FFFFFF; }
-
-  .stock-right{
-    flex:1;
-    min-width:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:2px;
-    padding-left:5%;
-    position:relative;
-  }
-
-  .stock-right::before{
-    content:'';
-    position:absolute;
-    left:0; top:6%; bottom:6%;
-    width:1px;
-  }
-
-  .stock-purple .stock-right::before{ background:linear-gradient(180deg, transparent, #F5B722, transparent); }
-  .stock-blue .stock-right::before{ background:linear-gradient(180deg, transparent, #B0B4BC, transparent); }
-  .stock-amber .stock-right::before{ background:linear-gradient(180deg, transparent, #3A3D42, transparent); }
-  .stock-teal .stock-right::before{ background:linear-gradient(180deg, transparent, #FFFFFF, transparent); }
-
-  .stock-tag{
-    display:flex;
-    align-items:center;
-    gap:3%;
-    font-size:clamp(10.5px,1.7vw,13.5px);
-    font-weight:600;
-    padding:5% 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-
-  .stock-tag:last-child{ border-bottom:none; }
-
-  .stock-purple .stock-tag{ color:#fff; }
-  .stock-blue .stock-tag{ color:#fff; }
-  .stock-amber .stock-tag{ color:#F1EBE1; }
-  .stock-teal .stock-tag{ color:#fff; }
-
-  .stock-tag-ic{
-    width:22px; height:22px;
-    flex-shrink:0;
-    border-radius:7px;
-    display:flex; align-items:center; justify-content:center;
-    background:rgba(255,255,255,.1);
-  }
-
-  .stock-tag-ic svg{ width:11px; height:11px; }
-
-  .stock-purple .stock-tag-ic{ color:#F5B722; }
-  .stock-blue .stock-tag-ic{ color:#B0B4BC; }
-  .stock-amber .stock-tag-ic{ background:rgba(0,0,0,.22); color:#F1EBE1; }
-  .stock-teal .stock-tag-ic{ color:#FFFFFF; }
-
-  .stock-cta{
-    position:absolute;
-    right:5%; bottom:8%;
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:800;
-    font-size:clamp(10.5px,1.6vw,13px);
-    padding:8px 16px;
-    border-radius:999px;
-    box-shadow:0 10px 22px rgba(0,0,0,.3);
-  }
-
-  .stock-cta svg{ width:13px; height:13px; }
-
-  .stock-purple .stock-cta{ background:#F5B722; color:#2A1065; }
-  .stock-blue .stock-cta{ background:#B0B4BC; color:#0D2A5C; }
-  .stock-amber .stock-cta{ background:#2C2F33; color:#F1EBE1; }
-  .stock-teal .stock-cta{ background:#FFFFFF; color:#0D3B36; }
-
-  .tap-hint{
-    margin-top:30px;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:800;
-    font-size:13px;
-    letter-spacing:.16em;
-    color:var(--text-mid);
-    opacity:0;
-    transition:opacity .5s ease;
-    animation:tapFloat 1.8s ease-in-out infinite;
-  }
-
-  .tap-hint.show{ opacity:1; }
-
-  @keyframes tapFloat{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(8px); }
-  }
-
-  .stock-progress{
-    display:flex;
-    gap:8px;
-    margin-top:22px;
-  }
-
-  .stock-progress span{
-    width:7px; height:7px;
-    border-radius:50%;
-    background:var(--card-border);
-    transition:background .3s ease, transform .3s ease;
-  }
-
-  .stock-progress span.on{ background:var(--purple); transform:scale(1.3); }
-
-  .unstocked-wrap{ display:none; }
-  .unstocked-wrap.visible{ display:block; animation:fadeUp .6s cubic-bezier(.16,1,.3,1); }
-
-  @keyframes fadeUp{
-    from{ opacity:0; transform:translateY(20px); }
-    to{ opacity:1; transform:translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .stock-driver{ height:auto; }
-    .stock-stage{ position:relative; height:auto; padding:20px 0; }
-    .stock-card{ position:relative; opacity:1 !important; transform:none !important; margin-bottom:16px; transition:none; }
-    .stock-stack{ display:flex; flex-direction:column; aspect-ratio:auto; gap:16px; }
-    .tap-hint{ animation:none; }
-  }
-
-  @media (max-width:860px){
-    .stock-driver{ height:auto; }
-    .stock-stage{ position:relative; height:auto; padding:10px 0 0; }
-    .stock-stack{ width:100%; aspect-ratio:1.5/1; }
-    .stock-photo{ width:60px; height:60px; }
-    .stock-name{ font-size:15px; }
-  }
-
-  /* ============ RESUME CARDS ============ */
-  .resume-grid{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:22px;
-  }
-
-  .resume-card{
-    display:block;
-    border-radius:22px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-    box-shadow:var(--shadow);
-    text-decoration:none;
-    color:var(--text-hi);
-    position:relative;
-    overflow:hidden;
-    transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease, border-color .3s ease;
-  }
-
-  .resume-card-image{
-    aspect-ratio:16/9.5;
-    overflow:hidden;
-    position:relative;
-    background:var(--card-glow);
-  }
-
-  .resume-card-image img{
-    width:100%; height:100%;
-    object-fit:cover;
-    object-position:top center;
-    display:block;
-    transition:transform .5s cubic-bezier(.16,1,.3,1);
-  }
-
-  .resume-card:hover .resume-card-image img{ transform:scale(1.05); }
-
-  .resume-card-image::after{
-    content:'';
-    position:absolute;
-    left:0; right:0; bottom:0;
-    height:3px;
-  }
-
-  .card-purple .resume-card-image::after{ background:var(--purple); }
-  .card-blue .resume-card-image::after{ background:var(--blue); }
-  .card-amber .resume-card-image::after{ background:var(--amber); }
-  .card-teal .resume-card-image::after{ background:var(--teal); }
-
-  .resume-card-body{ padding:26px 28px 30px; }
-
-  .resume-card::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%), var(--card-glow), transparent 60%);
-    opacity:0;
-    transition:opacity .35s ease;
-    pointer-events:none;
-  }
-
-  .resume-card:hover{
-    transform:translateY(-8px);
-    box-shadow:var(--shadow-hover);
-  }
-
-  .resume-card:hover::before{ opacity:1; }
-
-  .card-purple{ --card-glow: var(--purple-soft); }
-  .card-blue{ --card-glow: var(--blue-soft); }
-  .card-amber{ --card-glow: var(--amber-soft); }
-  .card-teal{ --card-glow: var(--teal-soft); }
-
-  .card-top{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    margin-bottom:14px;
-  }
-
-  .card-dot{
-    width:11px; height:11px;
-    border-radius:50%;
-    flex-shrink:0;
-    box-shadow:0 0 0 5px var(--card-glow);
-  }
-
-  .card-purple .card-dot{ background:var(--purple); }
-  .card-blue .card-dot{ background:var(--blue); }
-  .card-amber .card-dot{ background:var(--amber); }
-  .card-teal .card-dot{ background:var(--teal); }
-
-  .resume-card h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:19px;
-    font-weight:700;
-  }
-
-  .resume-card p{
-    font-size:13.8px;
-    line-height:1.6;
-    color:var(--text-mid);
-    margin-bottom:22px;
-  }
-
-  .card-cta{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-family:'Space Grotesk', sans-serif;
-    font-size:13px;
-    font-weight:600;
-    transition:gap .25s ease;
-  }
-
-  .card-purple .card-cta{ color:var(--purple); }
-  .card-blue .card-cta{ color:var(--blue); }
-  .card-amber .card-cta{ color:var(--amber); }
-  .card-teal .card-cta{ color:var(--teal); }
-
-  .resume-card:hover .card-cta{ gap:10px; }
-
-  /* ============ PROJECTS ============ */
-  .project-grid{
-    display:grid;
-    grid-template-columns:1.4fr 1fr;
-    gap:22px;
-  }
-
-  .project-card{
-    display:block;
-    padding:36px 32px;
-    border-radius:22px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(16px);
-    box-shadow:var(--shadow);
-    text-decoration:none;
-    color:var(--text-hi);
-    transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
-    min-height:190px;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-  }
-
-  a.project-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-hover); }
-
-  .project-card.disabled{ opacity:.6; }
-
-  .project-card h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:22px;
-    font-weight:700;
-    margin-bottom:8px;
-  }
-
-  .project-card p{
-    font-size:13.8px;
-    color:var(--text-mid);
-    margin-bottom:18px;
-  }
-
-  .proj-cta{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:13px;
-    font-weight:600;
-    color:var(--teal);
-  }
-
-  .proj-cta.muted{ color:var(--text-lo); }
-
-  /* ============ PHILOSOPHY ============ */
-  .philosophy-grid{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:20px;
-  }
-
-  .philosophy-card{
-    text-align:center;
-    padding:30px 20px;
-  }
-
-  .philosophy-icon{
-    width:46px; height:46px;
-    border-radius:14px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(10px);
-    display:flex; align-items:center; justify-content:center;
-    margin:0 auto 18px;
-  }
-
-  .philosophy-icon svg{ width:20px; height:20px; color:var(--purple); }
-
-  .philosophy-card:nth-child(2) .philosophy-icon svg{ color:var(--blue); }
-  .philosophy-card:nth-child(3) .philosophy-icon svg{ color:var(--teal); }
-  .philosophy-card:nth-child(4) .philosophy-icon svg{ color:var(--amber); }
-
-  .philosophy-card h4{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:15.5px;
-    font-weight:700;
-    margin-bottom:10px;
-  }
-
-  .philosophy-card p{
-    font-size:13px;
-    line-height:1.6;
-    color:var(--text-mid);
   }
 
   /* ============ TECH STACK ============ */
@@ -1708,50 +1361,6 @@
 
   .capsule.text-only{ justify-content:center; font-weight:600; }
 
-  /* ============ FINAL CTA ============ */
-  .final-cta{ text-align:center; }
-
-  .final-cta h2{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:30px;
-    font-weight:700;
-    margin-bottom:14px;
-    letter-spacing:-0.01em;
-  }
-
-  .final-cta p{
-    font-size:15px;
-    color:var(--text-mid);
-    margin-bottom:36px;
-  }
-
-  .cta-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:14px;
-  }
-
-  .cta-btn{
-    display:flex;
-    align-items:center;
-    gap:9px;
-    padding:13px 22px;
-    border-radius:999px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(10px);
-    text-decoration:none;
-    color:var(--text-hi);
-    font-size:13.5px;
-    font-weight:600;
-    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  }
-
-  .cta-btn:hover{ transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--purple); }
-
-  .cta-btn svg{ width:16px; height:16px; }
-
   /* ============ FOOTER ============ */
   footer.footer{
     text-align:center;
@@ -1766,9 +1375,6 @@
      RESPONSIVE
      ======================================================= */
   @media (max-width:900px){
-    .resume-grid{ grid-template-columns:1fr; }
-    .project-grid{ grid-template-columns:1fr; }
-    .philosophy-grid{ grid-template-columns:repeat(2,1fr); }
     .stack-groups{ grid-template-columns:repeat(2,1fr); }
   }
 
@@ -1776,7 +1382,6 @@
     section.section{ padding:80px 0; }
     .wrap{ padding:0 22px; }
     .section-title{ font-size:26px; }
-    .philosophy-grid{ grid-template-columns:1fr; }
     .stack-groups{ grid-template-columns:1fr; }
   }
 </style>
@@ -1786,9 +1391,8 @@
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
     <div class="nav-glass-lens" aria-hidden="true"></div>
-    <a class="nav-brand" href="#home">
-      <span class="nav-logo">Uj</span>
-      <span class="nav-name">Uche Japheth</span>
+    <a class="nav-brand" href="#home" aria-label="Uche Japheth">
+      <span id="logoText" class="logo-text" aria-hidden="true"></span><span id="logoCursor" class="logo-cursor" aria-hidden="true"></span>
     </a>
     <div class="nav-links" id="navLinks">
       <a href="#home" class="nav-link" data-nav="home">Home</a>
@@ -1800,7 +1404,7 @@
     </div>
     <a class="nav-cta" href="#contact">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-8-8 18-2-8-8-2Z"/></svg>
-      Let's Work Together
+      Put Me To Work
     </a>
     <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
       <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -1815,7 +1419,7 @@
     <a href="#projects" class="nav-link nav-mobile-link" data-nav="projects">Projects</a>
     <a href="#about" class="nav-link nav-mobile-link" data-nav="about">About</a>
     <a href="#contact" class="nav-link nav-mobile-link" data-nav="contact">Contact</a>
-    <a href="#contact" class="nav-mobile-cta">Let's Work Together</a>
+    <a href="#contact" class="nav-mobile-cta">PUT ME TO WORK</a>
   </div>
 </nav>
 
@@ -1844,8 +1448,6 @@
     </div>
 
     <div class="hero-col-text">
-      <div class="hero-badge"><span class="hero-badge-dot"></span>Open to New Opportunities</div>
-
       <h1 class="hero-headline">
         <span class="line line-white">Community.</span>
         <span class="line line-violet">Systems.</span>
@@ -1877,7 +1479,8 @@
       </div>
 
       <div class="hero-photo-frame">
-        <img src="src/hero-photo.jpg" alt="Uche Japheth">
+        <div class="hero-photo-glow" aria-hidden="true"></div>
+        <div class="hero-photo-img" role="img" aria-label="Uche Japheth"></div>
       </div>
 
       <div class="hero-float-card card-community">
@@ -1897,6 +1500,8 @@
         <span class="float-label">GROWTH</span>
         <span class="float-desc">Driving growth through strategy &amp; content</span>
       </div>
+
+      <div class="hero-photo-badge"><span class="hero-badge-dot"></span>Community is Product</div>
     </div>
   </div>
 
@@ -1907,6 +1512,9 @@
   </div>
 
   <div class="impact-section">
+
+    <div class="impact-diagram-col">
+      <span class="impact-kicker">How I Drive Product Impact</span>
 
     <div class="impact-diagram">
       <svg class="impact-ring" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -1988,27 +1596,30 @@
         </div>
       </div>
     </div>
+    </div>
 
-    <div class="impact-message" id="impactMessage">
-      <svg class="impact-arrow" viewBox="0 0 90 60" fill="none"><path d="M85 50C60 55 25 45 8 12" stroke="rgba(180,170,255,.55)" stroke-width="1.6" stroke-linecap="round"/><path d="M2 8 L8 12 L13 4" stroke="rgba(180,170,255,.55)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-      <div class="impact-message-scroll">
-        <p class="im-lead"><span class="im-white">The goal was never to do everything.</span><br>It was to understand how different functions <span class="im-blue">systematically</span> contribute to <span class="im-violet">improving a product</span>.</p>
+    <div class="signals-panel">
+      <div class="signals-top">
+        <div class="signals-text">
+          <h3 class="signals-heading">From Signals to Impact</h3>
+          <p class="signals-sub">What changes when people, information, and decisions start connecting.</p>
+        </div>
+      </div>
 
-        <ul class="im-list">
-          <li><span class="im-dot" style="background:#a48cff"></span>Community conversations become feedback.</li>
-          <li><span class="im-dot" style="background:#6f93ff"></span>Feedback reveals product insight.</li>
-          <li><span class="im-dot" style="background:#6f93ff"></span>Product insight shapes better decisions, content, and experiences.</li>
-          <li><span class="im-dot" style="background:#4ADE80"></span>Operations make the process repeatable.</li>
-          <li><span class="im-dot" style="background:#e6a24d"></span>Data helps reveal what the system is telling us.</li>
-        </ul>
+      <div class="ba-toggle-row" id="baToggleRow">
+        <div class="ba-toggle" role="group" aria-label="Before and after dashboard toggle">
+          <button type="button" class="ba-btn ba-before" data-state="before" aria-pressed="false">
+            <span class="ba-dot ba-dot-red"></span>Before
+          </button>
+          <button type="button" class="ba-btn ba-after active" data-state="after" aria-pressed="true">
+            <span class="ba-dot ba-dot-green"></span>After
+          </button>
+        </div>
+      </div>
 
-        <div class="im-divider"></div>
-
-        <p class="im-body">These aren't five unrelated jobs to me.<br><span class="im-violet">They're five angles of the same system.</span></p>
-
-        <p class="im-body">My work is about reducing the gaps between people, information, and the decisions that shape a product.</p>
-
-        <p class="im-body"><strong>I don't</strong> <span class="im-violet">need to own every part of the system.</span><br><strong>I</strong> <span class="im-green">help the parts work better together.</span></p>
+      <div class="ba-stack" id="baStack" data-active="after">
+        <div class="ba-shot ba-shot-before" role="img" aria-label="Before dashboard"></div>
+        <div class="ba-shot ba-shot-after" role="img" aria-label="After dashboard"></div>
       </div>
     </div>
 
@@ -2017,29 +1628,7 @@
 
 <section class="section" id="ethos">
   <div class="wrap">
-    <h2 class="section-title reveal">Professional Philosophy</h2>
-    <div class="philosophy-grid">
-      <div class="philosophy-card reveal">
-        <div class="philosophy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.2 7.3 10 16.2M15.8 7.3 14 16.2M8.4 5.5h7.2"/></svg></div>
-        <h4>Think in Systems</h4>
-        <p>I believe lasting improvements come from well-designed processes rather than short-term fixes.</p>
-      </div>
-      <div class="philosophy-card reveal">
-        <div class="philosophy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4z"/></svg></div>
-        <h4>Communicate Clearly</h4>
-        <p>Whether supporting communities or collaborating with teams, clear communication builds trust.</p>
-      </div>
-      <div class="philosophy-card reveal">
-        <div class="philosophy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h4>Keep Learning</h4>
-        <p>Every new skill is another tool for solving real business problems.</p>
-      </div>
-      <div class="philosophy-card reveal">
-        <div class="philosophy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div>
-        <h4>Take Ownership</h4>
-        <p>I don't wait for perfect conditions before contributing.</p>
-      </div>
-    </div>
+    <!-- Ethos & Execution section — to be plugged in -->
   </div>
 </section>
 
@@ -2051,206 +1640,19 @@
 
 <section class="section" id="projects">
   <div class="wrap">
-    <h2 class="section-title reveal">Featured Projects</h2>
-    <div class="project-grid">
-      <a class="project-card reveal" href="PASTE_VINCESLINK_URL_HERE" target="_blank" rel="noopener">
-        <h3>VINCESlink</h3>
-        <p>AI-powered retail experience</p>
-        <span class="proj-cta">Open →</span>
-      </a>
-      <div class="project-card disabled reveal">
-        <h3>Alfaf AI</h3>
-        <p>Workflow automation assistant</p>
-        <span class="proj-cta muted">Coming Soon</span>
-      </div>
-    </div>
+    <!-- Projects section — to be plugged in -->
   </div>
 </section>
 
 <section class="section" id="about">
   <div class="wrap">
-    <div class="section-label reveal">The Story</div>
-    <h2 class="story-heading reveal">A foundation built through curiosity.</h2>
-    <div class="story-body reveal">
-      <p>I didn't begin by choosing a single career path. I began by asking questions, taking on responsibilities, and learning how different parts of a business work together.</p>
-      <div class="story-more" id="storyMore">
-        <p>That curiosity led me into Web3 communities, brand communication, business operations, and data-driven problem solving. Each opportunity introduced a new perspective, but they all shared one common purpose: helping people and organizations work more effectively.</p>
-        <p>Rather than chasing titles, I've focused on building practical skills, understanding systems, and contributing wherever I can create meaningful value. Along the way, I've managed online communities, supported business operations, developed digital products, and explored how AI and data can improve everyday workflows.</p>
-        <p>Today, this collection of résumés represents more than different career paths. It reflects a single professional philosophy—approaching every challenge with curiosity, structure, ownership, and a commitment to continuous learning.</p>
-      </div>
-      <button class="story-toggle" id="storyToggle" aria-expanded="false">
-        <span id="storyToggleLabel">Read the full story</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg>
-      </button>
-    </div>
-
-    <div class="value-grid reveal">
-      <div class="value-card"><h4>Curiosity</h4><p>Always learning before assuming.</p></div>
-      <div class="value-card"><h4>Structure</h4><p>Creating systems that improve execution.</p></div>
-      <div class="value-card"><h4>Ownership</h4><p>Taking responsibility from idea to delivery.</p></div>
-      <div class="value-card"><h4>Growth</h4><p>Building skills that compound over time.</p></div>
-    </div>
+    <!-- About / Story section — to be plugged in -->
   </div>
 </section>
 
 <section class="section final-cta" id="contact">
   <div class="wrap">
-    <h2 class="reveal">Interested in working together?</h2>
-    <p class="reveal">Explore my professional resumes or connect with me.</p>
-    <div class="cta-buttons reveal">
-      <a class="cta-btn" href="https://linkedin.com/in/jappr0" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12M7.11 20.45H3.56V9h3.55z"/></svg>
-        LinkedIn
-      </a>
-      <a class="cta-btn" href="https://github.com/jappro" target="_blank" rel="noopener">
-        <svg viewBox="0 0 1024 1024" fill="currentColor"><path fill-rule="evenodd" d="M512 0C229.12 0 0 229.12 0 512c0 226.56 146.56 417.92 350.08 485.76 25.6 4.48 35.2-10.88 35.2-24.32 0-12.16-.64-52.48-.64-95.36-128.64 23.68-161.92-31.36-172.16-60.16-5.76-14.72-30.72-60.16-52.48-72.32-17.92-9.6-43.52-33.28-.64-33.92 40.32-.64 69.12 37.12 78.72 52.48 46.08 77.44 119.68 55.68 149.12 42.24 4.48-33.28 17.92-55.68 32.64-68.48-113.92-12.8-232.96-56.96-232.96-252.8 0-55.68 19.84-101.76 52.48-137.6-5.12-12.8-23.04-65.28 5.12-135.68 0 0 42.88-13.44 140.8 52.48 40.96-11.52 84.48-17.28 128-17.28s87.04 5.76 128 17.28c97.92-66.56 140.8-52.48 140.8-52.48 28.16 70.4 10.24 122.88 5.12 135.68 32.64 35.84 52.48 81.28 52.48 137.6 0 196.48-119.68 240-233.6 252.8 18.56 16 34.56 46.72 34.56 94.72 0 68.48-.64 123.52-.64 140.8 0 13.44 9.6 29.44 35.2 24.32C877.44 929.92 1024 737.92 1024 512 1024 229.12 794.88 0 512 0" clip-rule="evenodd"/></svg>
-        GitHub
-      </a>
-      <a class="cta-btn" href="https://jappro.github.io/portfolio/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z"/></svg>
-        Portfolio
-      </a>
-      <a class="cta-btn" href="mailto:camzyxworld@gmail.com">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
-        Email
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- The two sections below are no longer linked from the nav (Resumes and Tech Stack were folded into Projects/About in the new site plan). Left in place, unlinked, pending your decision on where this content goes. -->
-
-<section class="section" id="resumes">
-  <div class="wrap">
-
-    <!-- STOCKED STACK -->
-    <div class="stock-driver" id="stockDriver">
-    <div class="stock-stage" id="stockStage">
-      <div class="stock-stack" id="stockStack">
-
-        <div class="stock-card stock-purple" data-dir="top-right" role="button" tabindex="0" aria-label="Resume collection, tap to view all four resumes">
-          <div class="stock-banner">
-            <div class="stock-dots"></div>
-            <svg class="stock-wave" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0,0 H400 V22 C320,22 300,54 250,54 C205,54 185,20 140,20 C95,20 65,34 0,30 Z"/></svg>
-          </div>
-          <div class="stock-body">
-            <div class="stock-left">
-              <div class="stock-photo circle"><img src="src/IMG_0804.jpg" alt="Uche Japheth"></div>
-              <div class="stock-name">Uche Japheth</div>
-            </div>
-            <div class="stock-right">
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5 7-5s7 2 7 5"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.3c2.6.4 4.5 1.9 4.5 3.7"/></svg></span>Web3 Community Moderator</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Community Operations</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>Growth</div>
-            </div>
-          </div>
-          <span class="stock-cta">View Resume <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-
-        <div class="stock-card stock-blue" data-dir="left" role="button" tabindex="0" aria-label="Resume collection, tap to view all four resumes">
-          <div class="stock-banner">
-            <div class="stock-dots"></div>
-            <svg class="stock-wave" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0,0 H400 V22 C320,22 300,54 250,54 C205,54 185,20 140,20 C95,20 65,34 0,30 Z"/></svg>
-          </div>
-          <div class="stock-body">
-            <div class="stock-left">
-              <div class="stock-photo block"><img src="src/smm-hpf.jpg" alt="Uche Japheth"></div>
-              <div class="stock-name">Uche Japheth</div>
-            </div>
-            <div class="stock-right">
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>Social Media Management</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>Brand Growth</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4z"/></svg></span>Content Strategy</div>
-            </div>
-          </div>
-          <span class="stock-cta">View Resume <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-
-        <div class="stock-card stock-amber" data-dir="top-left" role="button" tabindex="0" aria-label="Resume collection, tap to view all four resumes">
-          <div class="stock-banner">
-            <div class="stock-dots"></div>
-            <svg class="stock-wave" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0,0 H400 V22 C320,22 300,54 250,54 C205,54 185,20 140,20 C95,20 65,34 0,30 Z"/></svg>
-          </div>
-          <div class="stock-body">
-            <div class="stock-left">
-              <div class="stock-photo block"><img src="src/ops-hpf.jpg" alt="Uche Japheth"></div>
-              <div class="stock-name">Uche Japheth</div>
-            </div>
-            <div class="stock-right">
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg></span>Operations Coordination</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span>Virtual Assistance</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg></span>AI-Driven Workflows</div>
-            </div>
-          </div>
-          <span class="stock-cta">View Resume <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-
-        <div class="stock-card stock-teal" data-dir="bottom" role="button" tabindex="0" aria-label="Resume collection, tap to view all four resumes">
-          <div class="stock-banner">
-            <div class="stock-dots"></div>
-            <svg class="stock-wave" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0,0 H400 V22 C320,22 300,54 250,54 C205,54 185,20 140,20 C95,20 65,34 0,30 Z"/></svg>
-          </div>
-          <div class="stock-body">
-            <div class="stock-left">
-              <div class="stock-photo circle"><img src="src/data-hpf.jpg" alt="Uche Japheth"></div>
-              <div class="stock-name">Uche Japheth</div>
-            </div>
-            <div class="stock-right">
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></span>Data Analysis</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 3v3M15 3v3M8 12h8M8 16h5"/></svg></span>Reporting</div>
-              <div class="stock-tag"><span class="stock-tag-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg></span>AI-Assisted Insights</div>
-            </div>
-          </div>
-          <span class="stock-cta">View Resume <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-
-      </div>
-      <div class="stock-progress" id="stockProgress">
-        <span></span><span></span><span></span><span></span>
-      </div>
-      <div class="tap-hint" id="tapHint">TAP!</div>
-    </div>
-    </div>
-
-    <!-- UNSTOCKED GRID -->
-    <div class="unstocked-wrap" id="unstockedWrap">
-      <h2 class="section-kicker">Choose the role you'd like to know me for.</h2>
-      <div class="resume-grid" id="resumeGrid">
-        <a class="resume-card card-purple" href="cm.html">
-          <div class="resume-card-image"><img src="src/cm-rmm.jpg" alt="Community Operations resume cover" loading="lazy"></div>
-          <div class="resume-card-body">
-            <div class="card-top"><span class="card-dot"></span><h3>Community Operations</h3></div>
-            <p>Managing communities. Building trust. Supporting users. Strengthening engagement.</p>
-            <span class="card-cta">Explore Community Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </a>
-        <a class="resume-card card-blue" href="smm.html">
-          <div class="resume-card-image"><img src="src/smm-rmm.jpg" alt="Social Media &amp; Brand Growth resume cover" loading="lazy"></div>
-          <div class="resume-card-body">
-            <div class="card-top"><span class="card-dot"></span><h3>Social Media &amp; Brand Growth</h3></div>
-            <p>Communication. Campaigns. Content. Community.</p>
-            <span class="card-cta">See Brand &amp; Growth Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </a>
-        <a class="resume-card card-amber" href="ops.html">
-          <div class="resume-card-image"><img src="src/ops-rmm.jpg" alt="Operations Coordinator resume cover" loading="lazy"></div>
-          <div class="resume-card-body">
-            <div class="card-top"><span class="card-dot"></span><h3>Operations Coordinator</h3></div>
-            <p>Systems. Organization. Documentation. AI Workflows.</p>
-            <span class="card-cta">Review Operations Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </a>
-        <a class="resume-card card-teal" href="data.html">
-          <div class="resume-card-image"><img src="src/data-rmm.jpg" alt="Junior Data Analyst resume cover" loading="lazy"></div>
-          <div class="resume-card-body">
-            <div class="card-top"><span class="card-dot"></span><h3>Junior Data Analyst</h3></div>
-            <p>Data. Insights. Reporting. Decision Support.</p>
-            <span class="card-cta">Discover My Analytics Experience <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </a>
-      </div>
-    </div>
-
+    <!-- Contact / Final CTA section — to be plugged in -->
   </div>
 </section>
 
@@ -2304,6 +1706,247 @@
 </footer>
 
 <script>
+  /* ---- Before/After dashboard toggle + full-bleed screenshot stack ---- */
+  (function(){
+    var stack = document.getElementById('baStack');
+    var buttons = document.querySelectorAll('.ba-btn');
+    if (!stack || !buttons.length) return;
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var state = btn.getAttribute('data-state');
+        stack.setAttribute('data-active', state);
+        buttons.forEach(function(b){
+          var isActive = b === btn;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      });
+    });
+  })();
+
+  // Full-bleed the before/after stack to the true right edge of the
+  // viewport. Pure CSS can't know the stack's real screen position
+  // (it sits inside a centered, variable-width grid column), so we
+  // measure it on load/resize and set an explicit pixel width that
+  // reaches — and slightly overshoots — the actual browser edge.
+  // html{overflow-x:hidden} clips the overshoot, giving the crop.
+  //
+  // Safety: .signals-panel / .impact-diagram-col carry min-width:0 so
+  // this explicit width can never force the CSS Grid track to expand
+  // (Grid's default min-width:auto would otherwise treat a large
+  // explicit child width as the column's minimum size and blow out
+  // the whole layout). HARD_CAP below is a second safety net in case
+  // anything upstream changes.
+  // Also: the toggle row (#baToggleRow) gets the SAME computed width
+  // as the stack, so its flex-end alignment resolves to the exact
+  // same true right edge — instead of the stack's dynamic bled edge
+  // and the toggle's static column edge disagreeing with each other.
+  (function(){
+    var stack = document.getElementById('baStack');
+    var toggleRow = document.getElementById('baToggleRow');
+    if(!stack) return;
+    var OVERSHOOT = 200;  // px past the true edge — generous on purpose so any
+                           // residual measurement error still reads as an obvious cut
+
+    // viewportWidth(): document.documentElement.clientWidth is the
+    // LAYOUT viewport width — the exact same coordinate system that
+    // getBoundingClientRect() uses. window.innerWidth can include
+    // scrollbar width, and window.visualViewport tracks the VISUAL
+    // (zoomed) viewport, which can diverge from the layout viewport
+    // on mobile "desktop mode" — clientWidth avoids both problems.
+    function viewportWidth(){
+      return document.documentElement.clientWidth;
+    }
+
+    function bleedRight(){
+      // Skip entirely when the signals panel isn't shown (mobile/tablet) —
+      // no point measuring a display:none element, and it avoids fighting
+      // the mobile layout with a leftover inline width if the user resizes
+      // across the breakpoint.
+      if (window.matchMedia('(max-width:1023px)').matches) return;
+
+      stack.style.maxWidth = 'none';
+      stack.style.width = '';
+      var rect = stack.getBoundingClientRect();
+      var vw = viewportWidth();
+      var trueEdgeWidth = vw - rect.left;
+
+      // HARD_CAP is just a sanity ceiling against runaway values now
+      // (the actual overflow bug was fixed via min-width:0 on the grid
+      // items) — set relative to the real viewport so it can never be
+      // smaller than what a legitimately wide desktop screen needs.
+      var HARD_CAP = Math.max(vw * 1.6, 2200);
+
+      // stack: overshoots the true edge on purpose, so the crop is visible
+      var stackTarget = trueEdgeWidth + OVERSHOOT;
+      stackTarget = Math.min(stackTarget, HARD_CAP);
+      stackTarget = Math.max(stackTarget, 320);
+      stack.style.width = stackTarget + 'px';
+
+      // toggle row: stops exactly AT the true edge — no overshoot —
+      // so the clickable buttons stay fully on-screen and flush with
+      // the same edge the stack bleeds to, instead of drifting off it
+      if(toggleRow){
+        var toggleTarget = Math.min(trueEdgeWidth, HARD_CAP);
+        toggleTarget = Math.max(toggleTarget, 320);
+        toggleRow.style.width = toggleTarget + 'px';
+      }
+    }
+
+    bleedRight();
+    window.addEventListener('resize', bleedRight);
+    window.addEventListener('load', bleedRight);
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize', bleedRight);
+    }
+  })();
+
+  /* ---- Animated nav logo (typewriter / enlarge-sweep / erase) ---- */
+  // ============ ANIMATED NAV LOGO ============
+  // Sequence: type "@jappro" -> enlarge-sweep -> 1 blink -> swap the
+  // trailing "o" for "0" -> 2 blinks -> erase (no retype) ->
+  // type "Uche" -> 1 blink -> type " Japheth" -> enlarge-sweep that
+  // kills the cursor blink exactly as it reaches the final "h" ->
+  // stays static. Runs fresh on every page load/refresh, which is
+  // what makes it "repeat on revisit" with no extra loop needed.
+  // Shared across mobile and desktop — nav-brand is a single element,
+  // only nav-links/nav-cta are hidden on mobile, so this animation
+  // plays identically on every breakpoint.
+  (function(){
+    const textEl = document.getElementById('logoText');
+    const cursorEl = document.getElementById('logoCursor');
+    if(!textEl || !cursorEl) return;
+
+    const TYPE_SPEED = 95;    // ms between typed characters
+    const BLINK_MS = 420;     // continuous-blink toggle interval
+    const BLINK_HOLD = 220;   // ms per phase of an exact-count blink
+    const ENLARGE_STEP = 85;  // ms between each letter starting its pop
+    const ENLARGE_HOLD = 200; // ms the pop scale is held before falling back
+
+    let blinkTimer = null;
+
+    function sleep(ms){ return new Promise(res => setTimeout(res, ms)); }
+    function setCursorVisible(v){ cursorEl.style.opacity = v ? '1' : '0'; }
+
+    function startContinuousBlink(){
+      stopContinuousBlink();
+      let visible = true;
+      setCursorVisible(true);
+      blinkTimer = setInterval(() => {
+        visible = !visible;
+        setCursorVisible(visible);
+      }, BLINK_MS);
+    }
+
+    function stopContinuousBlink(){
+      if(blinkTimer){ clearInterval(blinkTimer); blinkTimer = null; }
+    }
+
+    async function blinkExact(times){
+      stopContinuousBlink();
+      for(let i = 0; i < times; i++){
+        setCursorVisible(false);
+        await sleep(BLINK_HOLD);
+        setCursorVisible(true);
+        await sleep(BLINK_HOLD);
+      }
+    }
+
+    function currentChars(){
+      return Array.from(textEl.querySelectorAll('.logo-char'));
+    }
+
+    function appendChar(ch){
+      const span = document.createElement('span');
+      span.className = 'logo-char';
+      // non-breaking space so a literal space still renders with
+      // visible width and survives the browser's whitespace collapsing
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      textEl.appendChild(span);
+      return span;
+    }
+
+    async function typeText(str){
+      for(const ch of str){
+        appendChar(ch);
+        await sleep(TYPE_SPEED);
+      }
+    }
+
+    async function deleteChars(count){
+      for(let i = 0; i < count; i++){
+        const chars = currentChars();
+        const last = chars[chars.length - 1];
+        if(last) last.remove();
+        await sleep(TYPE_SPEED);
+      }
+    }
+
+    async function eraseAll(){
+      await deleteChars(currentChars().length);
+    }
+
+    // sweeps the enlarge pop across every current character, left to
+    // right; stopBlinkOnLast lets the caller kill the cursor blink at
+    // the exact moment the sweep reaches the final character
+    async function enlargeSweep({ stopBlinkOnLast = false } = {}){
+      const chars = currentChars();
+      for(let i = 0; i < chars.length; i++){
+        const span = chars[i];
+        const isLast = i === chars.length - 1;
+        if(isLast && stopBlinkOnLast){
+          stopContinuousBlink();
+        }
+        span.classList.add('enlarge');
+        setTimeout(() => span.classList.remove('enlarge'), ENLARGE_HOLD);
+        await sleep(ENLARGE_STEP);
+      }
+      await sleep(ENLARGE_HOLD + 20); // let the final letter settle back
+    }
+
+    async function runSequence(){
+      textEl.innerHTML = '';
+      setCursorVisible(true);
+      startContinuousBlink();
+
+      // ---- TEXT 1: @jappro ----
+      await typeText('@jappro');
+      await enlargeSweep();
+
+      await blinkExact(1);
+
+      await deleteChars(1);        // drop the trailing "o"
+      appendChar('0');             // -> @jappr0
+      await sleep(TYPE_SPEED);
+
+      await blinkExact(2);
+
+      await eraseAll();            // type & erase — erase only, no retype
+
+      await sleep(180);
+
+      // ---- TEXT 2: Uche Japheth ----
+      startContinuousBlink();
+      await typeText('Uche');
+
+      await blinkExact(1);
+
+      startContinuousBlink();
+      await typeText(' Japheth');
+
+      // sweep across the whole phrase; blink stops the instant it
+      // reaches the final "h" — then it stays static, permanently
+      await enlargeSweep({ stopBlinkOnLast: true });
+      setCursorVisible(false);
+    }
+
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', runSequence);
+    } else {
+      runSequence();
+    }
+  })();
+
   // Mobile nav pill: hidden while at the hero top, fades in once scrolling begins
   (function(){
     var nav = document.getElementById('siteNav');
@@ -2465,146 +2108,6 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     items.forEach(function(el){ io.observe(el); });
-  })();
-
-  // Story read-more toggle
-  (function(){
-    var btn = document.getElementById('storyToggle');
-    var more = document.getElementById('storyMore');
-    var label = document.getElementById('storyToggleLabel');
-    if (!btn || !more) return;
-    btn.addEventListener('click', function(){
-      var expanded = more.classList.toggle('expanded');
-      btn.classList.toggle('expanded', expanded);
-      btn.setAttribute('aria-expanded', expanded);
-      if (expanded) {
-        more.style.maxHeight = more.scrollHeight + 'px';
-        label.textContent = 'Show less';
-      } else {
-        more.style.maxHeight = '0px';
-        label.textContent = 'Read the full story';
-      }
-    });
-  })();
-
-  // Stock card stack controller
-  (function(){
-    var driver = document.getElementById('stockDriver');
-    var stage = document.getElementById('stockStage');
-    var cards = Array.prototype.slice.call(document.querySelectorAll('.stock-card'));
-    var tapHint = document.getElementById('tapHint');
-    var progressDots = document.querySelectorAll('#stockProgress span');
-    var unstockedWrap = document.getElementById('unstockedWrap');
-    if (!driver || !stage || !cards.length) return;
-
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var isMobile = window.matchMedia('(max-width: 860px)').matches;
-    var collapsed = false;
-    var landedCount = 0;
-
-    function setLanded(n){
-      landedCount = n;
-      cards.forEach(function(card, i){
-        if (i < n) card.classList.add('landed');
-        else card.classList.remove('landed');
-      });
-      progressDots.forEach(function(dot, i){
-        dot.classList.toggle('on', i < n);
-      });
-      if (tapHint) tapHint.classList.toggle('show', n >= cards.length);
-    }
-
-    function collapse(){
-      if (collapsed) return;
-      collapsed = true;
-      if (tapHint) tapHint.classList.remove('show');
-
-      if (reduceMotion) {
-        driver.style.display = 'none';
-        unstockedWrap.classList.add('visible');
-        return;
-      }
-
-      cards.forEach(function(card, i){
-        card.style.transitionDelay = (i * 70) + 'ms';
-        card.classList.add('collapsing');
-      });
-
-      setTimeout(function(){
-        driver.style.display = 'none';
-        unstockedWrap.classList.add('visible');
-        if (isMobile) {
-          var lastCard = document.querySelector('#resumeGrid .resume-card:last-child');
-          if (lastCard) {
-            setTimeout(function(){
-              lastCard.scrollIntoView({ behavior:'smooth', block:'center' });
-            }, 150);
-          }
-        }
-      }, 650);
-    }
-
-    cards.forEach(function(card){
-      card.addEventListener('click', collapse);
-      card.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); collapse(); }
-      });
-    });
-    if (tapHint) tapHint.addEventListener('click', collapse);
-
-    if (reduceMotion) {
-      setLanded(cards.length);
-      return;
-    }
-
-    if (isMobile) {
-      // Simple staggered entrance once the stack scrolls into view — no scroll-trapping
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting && !collapsed) {
-            cards.forEach(function(card, i){
-              setTimeout(function(){
-                card.classList.add('landed');
-                if (progressDots[i]) progressDots[i].classList.add('on');
-                if (i === cards.length - 1) {
-                  setTimeout(function(){ tapHint.classList.add('show'); }, 300);
-                }
-              }, i * 220);
-            });
-            io.disconnect();
-          }
-        });
-      }, { threshold: 0.35 });
-      io.observe(stage);
-      return;
-    }
-
-    // Desktop: sticky-scroll driven progress (native scroll, no wheel hijacking)
-    function onScroll(){
-      if (collapsed) return;
-      var rect = driver.getBoundingClientRect();
-      var total = rect.height - window.innerHeight;
-      if (total <= 0) { setLanded(cards.length); return; }
-      var scrolled = -rect.top;
-      var progress = Math.min(Math.max(scrolled / total, 0), 1);
-      var n = Math.min(cards.length, Math.floor(progress * cards.length + 0.0001));
-      if (progress >= 0.98) n = cards.length;
-      if (n !== landedCount) setLanded(n);
-    }
-
-    window.addEventListener('scroll', onScroll, { passive:true });
-    onScroll();
-  })();
-
-  // Card mouse-follow glow
-  (function(){
-    document.querySelectorAll('.resume-card').forEach(function(card){
-      card.addEventListener('mousemove', function(e){
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-        card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-      });
-    });
   })();
 </script>
 </body>
