@@ -222,11 +222,21 @@
      touched. Fades from transparent (near the curve) to fully
      opaque page background color, so the straight edge dissolves
      into the page instead of showing a visible cut.
+
+     The element itself is 30% wider than the photo (15% overhang
+     each side) and extends the same full-strip coverage into that
+     overhang, so the shaded strip at the photo's left/right edges
+     continues seamlessly into the surrounding page background
+     instead of stopping abruptly at the photo's own border. The
+     gradient's transparent point is pinned to the exact height
+     where the shape begins (50%), with two easing stops before
+     full opacity, so the top of the shape fades in gradually
+     instead of appearing as a visible line.
   */
   .about-photo-shade{
     position:absolute;
-    left:0;
-    right:0;
+    left:-15%;
+    width:130%;
     bottom:0;
     height:36%;
     z-index:1;
@@ -497,15 +507,16 @@
       ></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <div class="about-photo-shade" aria-hidden="true">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg viewBox="0 0 130 100" preserveAspectRatio="none">
           <defs>
             <linearGradient id="aboutPhotoShadeGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"  style="stop-color:var(--bg); stop-opacity:0" />
-              <stop offset="55%" style="stop-color:var(--bg); stop-opacity:0.45" />
+              <stop offset="50%" style="stop-color:var(--bg); stop-opacity:0" />
+              <stop offset="65%" style="stop-color:var(--bg); stop-opacity:0.12" />
+              <stop offset="80%" style="stop-color:var(--bg); stop-opacity:0.42" />
               <stop offset="100%" style="stop-color:var(--bg); stop-opacity:1" />
             </linearGradient>
           </defs>
-          <path d="M0,100 L0,50 Q50,150 100,50 L100,100 Z" fill="url(#aboutPhotoShadeGrad)" />
+          <path d="M0,100 L15,100 L15,50 Q65,150 115,50 L115,100 L130,100 Z" fill="url(#aboutPhotoShadeGrad)" />
         </svg>
       </div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
