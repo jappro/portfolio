@@ -744,7 +744,7 @@
     position:absolute;
     left:20px;
     right:20px;
-    top:50%;
+    top:5vh;
     margin:0 auto;
     will-change:transform;
   }
@@ -1305,7 +1305,7 @@
     for(var i = 0; i < count; i++){
       var card = cards[i];
       if(i === 0){
-        card.style.transform = 'translateY(-50%)';
+        card.style.transform = 'translateY(0)';
         continue;
       }
       var local = p - (i - 1);
@@ -1313,7 +1313,7 @@
       if(local > 1) local = 1;
       var remaining = 1 - local;
       var slidePx = remaining * vh;
-      card.style.transform = 'translateY(calc(-50% + ' + slidePx + 'px))';
+      card.style.transform = 'translateY(' + slidePx + 'px)';
     }
   }
 
