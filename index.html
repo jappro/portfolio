@@ -1251,7 +1251,7 @@
     .signals-panel{ display:none !important; }
   }
 
-  @media (max-width:960px){
+  @media (max-width:1023px){
     .impact-heading{ padding:0 20px; }
     .impact-heading-line{ max-width:60px; }
     .impact-heading span:not(.impact-heading-line){ font-size:10.5px; }
@@ -1262,11 +1262,19 @@
     .card-pos-2, .card-pos-5{ top:31%; }
   }
 
+  /* Tablet gets a bigger diagram than phones — there's the extra width
+     to spare and a 340px cap would look lost in the middle of the
+     screen. Placed after the rule above so it wins in the 640–1023
+     overlap; phones (<640, where this query doesn't match) keep 340px. */
+  @media (min-width:640px) and (max-width:1023px){
+    .impact-diagram{ max-width:clamp(360px, 46vw, 480px); }
+  }
+
   @media (prefers-reduced-motion: reduce){
     .impact-dot{ animation:none; offset-distance:0%; }
   }
 
-  @media (max-width:960px){
+  @media (max-width:639px){
     .hero-wrap{ max-width:100%; grid-template-columns:1fr; padding:28px 20px 36px; text-align:left; z-index:150; }
     .hero-col-photo{ display:none; }
     .hero-sub{ font-size:19px; font-weight:400; }
@@ -1276,7 +1284,7 @@
     .hero-btn-row{ flex-direction:column; width:100%; }
     .hero-btn-primary, .hero-btn-secondary{ width:100%; justify-content:center; }
 
-    /* glossy-pill treatment, mobile only */
+    /* glossy-pill treatment, phone only */
     .hero-btn-primary{
       background:linear-gradient(180deg, #a48cff 0%, #7c5cff 55%, #6b46e0 100%);
       border:1px solid rgba(255,255,255,0.18);
@@ -1310,6 +1318,41 @@
         inset 0 1px 0 rgba(255,255,255,0.1),
         inset 0 -2px 4px rgba(0,0,0,0.3);
     }
+  }
+
+  /* ============ TABLET (640–1023px) ============
+     Inherits desktop's two-column structure (photo beside text, not
+     stacked like phone) so the portrait photo never dominates the
+     screen the way the phone layout would if simply stretched wider.
+     Everything below is desktop's approach at reduced scale, not a
+     copy of the phone layout. */
+  @media (min-width:640px) and (max-width:1023px){
+    .hero-wrap{ gap:clamp(20px, 4vw, 40px); }
+    .hero-sub{ font-size:18px; }
+    .hero-desc{ font-size:15px; }
+
+    .hero-col-photo{ min-height:clamp(320px, 46vw, 460px); }
+
+    .hero-orbit{ width:clamp(260px, 40vw, 380px); height:clamp(260px, 40vw, 380px); }
+
+    .hero-photo-frame{
+      width:clamp(240px, 32vw, 340px);
+      height:clamp(310px, 42vw, 440px);
+    }
+    .hero-photo-glow{ inset:-40px; filter:blur(26px); }
+
+    .hero-float-card{
+      width:clamp(140px, 20vw, 168px);
+      padding:12px 12px 11px;
+      gap:3px;
+    }
+    .float-ic{ width:24px; height:24px; margin-bottom:4px; }
+    .float-ic svg{ width:12px; height:12px; }
+    .float-label{ font-size:10.5px; }
+    .float-desc{ font-size:11px; line-height:1.35; }
+
+    .hero-btn-primary{ padding:clamp(13px, 2vw, 17px) clamp(22px, 4vw, 34px); }
+    .hero-btn-secondary{ padding:clamp(12px, 1.8vw, 15px) clamp(18px, 3vw, 27px); }
   }
 
   @media (max-width:420px){
@@ -1997,7 +2040,7 @@
     var resizeTimer;
 
     function evaluate(){
-      var isMobile = window.matchMedia('(max-width:960px)').matches;
+      var isMobile = window.matchMedia('(max-width:1023px)').matches;
 
       descs.forEach(function(p){
         // Reset to plain state before re-measuring
