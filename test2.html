@@ -2782,7 +2782,6 @@
   .tst-viewport{
     overflow:visible;
     min-width:0; /* grid items default to min-width:auto, which refuses to shrink below content size unless overflow is non-visible — since we need overflow:visible for the shadow, min-width:0 does the shrink-to-track-size job instead. Without this, the grid track expanded to fit all 7 cards, leaving nothing for .tst-cards to actually scroll — this was the real cause of the nav buttons doing nothing. */
-    max-width:905px; /* shows exactly 3 full cards + 25% of a 4th: (3 × 260px card) + (3 × 20px gaps) + (0.25 × 260px) = 905px */
   }
   .tst-cards{
     display:flex;
@@ -2805,8 +2804,13 @@
 
   .tst-card{
     position:relative;
-    flex:0 0 auto;
-    width:260px;
+    /* sized so exactly 3.25 cards fill the container's real width: subtract
+       the 3 gaps between the 4 partially-visible cards, then divide by 3.25.
+       This grows with the available desktop space instead of the old
+       fixed 260px + a capped viewport. max-width guards against the card
+       ballooning on very wide monitors. */
+    flex:0 0 calc((100% - 60px) / 3.25);
+    max-width:340px;
     scroll-snap-align:start;
     display:flex;
     flex-direction:column;
@@ -2836,10 +2840,10 @@
 
   .tst-bubble{
     position:relative;
-    min-height:150px;
+    min-height:184px; /* scaled up from 150px alongside the card's ~22% width increase */
     background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
     border-radius:16px; /* slightly rounded, chat-bubble style — not sharp, not fully pill-rounded */
-    padding:20px 22px;
+    padding:24px 27px; /* scaled up from 20px 22px */
     display:flex;
     flex-direction:column;
   }
@@ -2858,8 +2862,8 @@
        (see the render function) is what actually hides the overlap:
        the bubble is opaque and paints afterward, naturally covering
        whatever part of the tail sits underneath it. */
-    width:102px;
-    height:66px;
+    width:124px; /* scaled up from 102px alongside the card's width increase */
+    height:80px; /* scaled up from 66px */
     color:var(--bg-alt); /* the <path> uses fill="currentColor" */
     pointer-events:none;
   }
@@ -2899,13 +2903,13 @@
   .tst-person{
     display:flex;
     align-items:center;
-    gap:12px;
-    margin-top:10px; /* pulled way up — safe now that the info is shifted right, out of the tail's deep-hanging zone */
-    padding-left:64px; /* nudged further right so the row sits past where the tail still visibly hangs down, avoiding any overlap once pulled upward */
+    gap:14px; /* scaled up from 12px */
+    margin-top:12px; /* scaled up from 10px */
+    padding-left:78px; /* scaled up from 64px, keeping it past the tail's deep-hanging zone at the new size */
   }
   .tst-avatar{
-    width:44px;
-    height:44px;
+    width:54px; /* scaled up from 44px */
+    height:54px;
     border-radius:50%;
     object-fit:cover;
     flex-shrink:0;
@@ -2913,21 +2917,21 @@
   }
   .tst-avatar-fallback{
     display:none;
-    width:44px;
-    height:44px;
+    width:54px;
+    height:54px;
     border-radius:50%;
     align-items:center;
     justify-content:center;
     background:linear-gradient(135deg, var(--purple), var(--blue));
     color:#ffffff;
-    font-size:15px;
+    font-size:17px;
     font-weight:700;
     flex-shrink:0;
   }
   .tst-person-text{ min-width:0; }
-  .tst-name{ margin:0 0 2px; color:var(--text-hi); font-size:14.5px; font-weight:700; }
-  .tst-role{ margin:0 0 1px; color:var(--text-lo); font-size:13px; font-weight:500; }
-  .tst-company-line{ margin:0; color:var(--text-lo); font-size:13px; font-weight:400; }
+  .tst-name{ margin:0 0 2px; color:var(--text-hi); font-size:16px; font-weight:700; }
+  .tst-role{ margin:0 0 1px; color:var(--text-lo); font-size:14px; font-weight:500; }
+  .tst-company-line{ margin:0; color:var(--text-lo); font-size:14px; font-weight:400; }
 </style>
 
 <script>
@@ -2971,7 +2975,7 @@
   TST_DATA.forEach(function(t){
     var html = '<div class="tst-card' + (t.placeholder ? ' tst-card--placeholder' : '') + '">' +
       '<div class="tst-bubble-wrap">' +
-        '<svg class="tst-tail" viewBox="0 0 102 66" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 66 L39 39 L102 0 Z" fill="currentColor"/></svg>' +
+        '<svg class="tst-tail" viewBox="0 0 124 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 80 L48 48 L124 0 Z" fill="currentColor"/></svg>' +
         '<div class="tst-bubble">' +
           '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
           '<button type="button" class="tst-see-more" hidden>see more</button>' +
@@ -2991,7 +2995,7 @@
     cardsEl.insertAdjacentHTML('beforeend', html);
   });
 
-  var TAIL_OVERLAP = 18; // how far the tail tucks up behind the bubble's bottom edge
+  var TAIL_OVERLAP = 22; // scaled up from 18px; how far the tail tucks up behind the bubble's bottom edge
 
   // the tail's vertical position depends on the bubble's actual rendered
   // height, which varies with quote length and with "see more"
