@@ -195,21 +195,31 @@
     mask-image:linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
   }
 
-  .about-photo-edge-fade{
+  .about-photo-notch-fade{
     position:absolute;
     bottom:0;
-    width:110px;
-    height:110px;
+    height:18%;
+    width:46%;
+    overflow:hidden;
     z-index:2;
     pointer-events:none;
   }
-  .about-photo-edge-fade--left{
-    left:0;
-    background:radial-gradient(circle 74px at 0% 100%, var(--bg) 0%, var(--bg) 18%, transparent 100%);
+  .about-photo-notch-fade--left{left:0;}
+  .about-photo-notch-fade--right{right:0;}
+
+  .about-photo-notch-fade__glow{
+    position:absolute;
+    bottom:0;
+    width:140px;
+    height:140px;
   }
-  .about-photo-edge-fade--right{
+  .about-photo-notch-fade--left .about-photo-notch-fade__glow{
+    left:0;
+    background:radial-gradient(circle 100px at 0% 100%, var(--bg) 0%, var(--bg) 32%, transparent 100%);
+  }
+  .about-photo-notch-fade--right .about-photo-notch-fade__glow{
     right:0;
-    background:radial-gradient(circle 74px at 100% 100%, var(--bg) 0%, var(--bg) 18%, transparent 100%);
+    background:radial-gradient(circle 100px at 100% 100%, var(--bg) 0%, var(--bg) 32%, transparent 100%);
   }
 
   .about-photo-fallback{
@@ -274,7 +284,7 @@
   .about-container.is-expanded .about-photo-note{
     display:none;
   }
-  .about-container.is-expanded .about-photo-edge-fade{
+  .about-container.is-expanded .about-photo-notch-fade{
     display:none;
   }
 
@@ -487,8 +497,12 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
-      <div class="about-photo-edge-fade about-photo-edge-fade--left"></div>
-      <div class="about-photo-edge-fade about-photo-edge-fade--right"></div>
+      <div class="about-photo-notch-fade about-photo-notch-fade--left">
+        <div class="about-photo-notch-fade__glow"></div>
+      </div>
+      <div class="about-photo-notch-fade about-photo-notch-fade--right">
+        <div class="about-photo-notch-fade__glow"></div>
+      </div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
