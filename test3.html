@@ -193,6 +193,25 @@
     background-repeat:no-repeat;
   }
 
+  /* single shade layer, exactly matching the photo's own box —
+     heavy curved fade at the two bottom corners, minimal fade across
+     the center, nothing touches the head/face area above it */
+  .about-photo-shade{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 36% 26% at 0% 100%,
+        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
+      radial-gradient(ellipse 36% 26% at 100% 100%,
+        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
+      linear-gradient(to top,
+        rgba(8,8,11,0.32) 0%, rgba(8,8,11,0.16) 10%, rgba(8,8,11,0) 20%),
+      linear-gradient(to top,
+        rgba(8,8,11,0.55) 0%, rgba(8,8,11,0) 6%);
+  }
+
   .about-photo-fallback{
     position:relative;
     z-index:1;
@@ -210,33 +229,6 @@
   }
   .about-photo-wrap.photo-missing .about-photo{display:none;}
   .about-photo-wrap.photo-missing .about-photo-fallback{display:flex;}
-
-  /* ===== Bottom edge fade (mask-based) =====
-     Fixes the hard rectangular cutoff where the transparent-bg
-     portrait PNG ends. Rather than painting a shape on top and
-     trying to match it to whatever's behind (page bg, blob colors,
-     etc.), this fades the photo's OWN pixels to transparent at the
-     bottom using a CSS mask. Whatever is genuinely behind shows
-     through naturally, so there's nothing to color-match and no
-     seam possible.
-
-     The fade starts at the exact height where the blob background
-     ends (~82% down the photo) at the left/right edges, and dips
-     down to almost no fade at the center (over the zipper/collar),
-     matching the U-curve shape. See #aboutPhotoFadeMask below.
-  */
-  .about-photo{
-    -webkit-mask-image:url(#aboutPhotoFadeMask);
-    mask-image:url(#aboutPhotoFadeMask);
-    -webkit-mask-repeat:no-repeat;
-    mask-repeat:no-repeat;
-    -webkit-mask-size:100% 100%;
-    mask-size:100% 100%;
-  }
-  .about-container.is-expanded .about-photo{
-    -webkit-mask-image:none;
-    mask-image:none;
-  }
 
   .about-photo-note{
     position:absolute;
@@ -280,6 +272,9 @@
     background-size:cover;
   }
   .about-container.is-expanded .about-photo-note{
+    display:none;
+  }
+  .about-container.is-expanded .about-photo-shade{
     display:none;
   }
 
@@ -492,28 +487,10 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
+      <div class="about-photo-shade"></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
-
-    <!-- Hidden mask definition: fades the portrait's own pixels to
-         transparent at the bottom in a U-curve shape (see the
-         "Bottom edge fade" CSS comment above for why). -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="aboutPhotoFadeGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0"    stop-color="#fff"/>
-          <stop offset="0.4"  stop-color="#ccc"/>
-          <stop offset="0.75" stop-color="#333"/>
-          <stop offset="1"    stop-color="#000"/>
-        </linearGradient>
-        <mask id="aboutPhotoFadeMask" maskContentUnits="objectBoundingBox">
-          <rect x="0" y="0" width="1" height="1" fill="#fff"/>
-          <path d="M0,1 L0,0.82 Q0.5,1.18 1,0.82 L1,1 Z" fill="url(#aboutPhotoFadeGrad)"/>
-        </mask>
-      </defs>
-    </svg>
-
 
   </div>
 </section>
