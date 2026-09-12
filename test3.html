@@ -159,16 +159,24 @@
   .about-photo-wrap{
     position:relative;
     width:100%;
-    max-width:280px;
-    margin:36px auto 0;
+    max-width:200px;
+    margin:4px auto 0;
     transition:opacity .55s ease, filter .55s ease, transform .55s ease;
   }
 
   .about-photo-blob{
     position:absolute;
-    inset:-14px -6px -22px;
-    border-radius:34px 34px 46px 30px;
-    background:linear-gradient(150deg, var(--purple) 0%, var(--blue) 100%);
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:122%;
+    height:46%;
+    border-radius:22px;
+    background:
+      radial-gradient(55% 65% at 18% 22%, var(--amber) 0%, transparent 62%),
+      radial-gradient(75% 85% at 88% 18%, var(--blue) 0%, transparent 60%),
+      radial-gradient(95% 100% at 50% 105%, var(--bg) 0%, transparent 55%),
+      var(--purple);
     z-index:0;
   }
 
@@ -177,16 +185,14 @@
     z-index:1;
     display:block;
     width:100%;
-    aspect-ratio:4/5;
-    object-fit:cover;
-    border-radius:28px 28px 40px 24px;
+    height:auto;
   }
 
   .about-photo-fallback{
     position:relative;
     z-index:1;
-    aspect-ratio:4/5;
-    border-radius:28px 28px 40px 24px;
+    aspect-ratio:1/1;
+    border-radius:20px;
     border:1.5px dashed rgba(255,255,255,0.5);
     display:none;
     align-items:center;
@@ -202,14 +208,14 @@
 
   .about-photo-note{
     position:absolute;
-    right:2px;
-    bottom:-30px;
+    right:4%;
+    bottom:24%;
     z-index:2;
     font-family:'Caveat',cursive;
     font-weight:600;
-    font-size:21px;
+    font-size:19px;
     line-height:1.25;
-    color:var(--text-mid);
+    color:#fff;
     transform:rotate(-3deg);
     text-align:right;
   }
@@ -228,13 +234,17 @@
     z-index:0;
   }
   .about-container.is-expanded .about-photo-blob{
-    inset:0;
+    left:0;
+    top:0;
+    transform:none;
+    width:100%;
+    height:100%;
     border-radius:28px;
   }
   .about-container.is-expanded .about-photo{
     width:100%;
     height:100%;
-    border-radius:28px;
+    object-fit:cover;
   }
   .about-container.is-expanded .about-photo-note{
     display:none;
