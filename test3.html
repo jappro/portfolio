@@ -186,55 +186,17 @@
     position:relative;
     z-index:1;
     width:100%;
-    aspect-ratio:930/1122;
+    aspect-ratio:1007/1217;
     background-image:url('src/about-portrait.png');
     background-size:contain;
     background-position:center bottom;
     background-repeat:no-repeat;
   }
 
-  .about-photo-bottom-fade{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:18%;
-    background:linear-gradient(to bottom, transparent 0%, #08080b 100%);
-    z-index:2;
-    pointer-events:none;
-  }
-
-  .about-photo-notch-fade{
-    position:absolute;
-    bottom:0;
-    height:18%;
-    width:46%;
-    overflow:hidden;
-    z-index:2;
-    pointer-events:none;
-  }
-  .about-photo-notch-fade--left{left:0;}
-  .about-photo-notch-fade--right{right:0;}
-
-  .about-photo-notch-fade__glow{
-    position:absolute;
-    bottom:0;
-    width:140px;
-    height:140px;
-  }
-  .about-photo-notch-fade--left .about-photo-notch-fade__glow{
-    left:0;
-    background:radial-gradient(circle 100px at 0% 100%, #08080b 0%, #08080b 32%, transparent 100%);
-  }
-  .about-photo-notch-fade--right .about-photo-notch-fade__glow{
-    right:0;
-    background:radial-gradient(circle 100px at 100% 100%, #08080b 0%, #08080b 32%, transparent 100%);
-  }
-
   .about-photo-fallback{
     position:relative;
     z-index:1;
-    aspect-ratio:930/1122;
+    aspect-ratio:1007/1217;
     border-radius:20px;
     border:1.5px dashed rgba(255,255,255,0.5);
     display:none;
@@ -291,12 +253,6 @@
     background-size:cover;
   }
   .about-container.is-expanded .about-photo-note{
-    display:none;
-  }
-  .about-container.is-expanded .about-photo-notch-fade{
-    display:none;
-  }
-  .about-container.is-expanded .about-photo-bottom-fade{
     display:none;
   }
 
@@ -509,13 +465,6 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
-      <div class="about-photo-bottom-fade"></div>
-      <div class="about-photo-notch-fade about-photo-notch-fade--left">
-        <div class="about-photo-notch-fade__glow"></div>
-      </div>
-      <div class="about-photo-notch-fade about-photo-notch-fade--right">
-        <div class="about-photo-notch-fade__glow"></div>
-      </div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
