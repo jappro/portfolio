@@ -213,12 +213,15 @@
 
   /* ===== Bottom blend shade =====
      Fixes the hard rectangular cutoff where the transparent-bg
-     portrait PNG ends. A U-shaped gradient patch sits at the
-     bottom of the photo: it touches the hard cutoff line at the
-     left/right edges (no visible change there) and curves upward
-     through the center (over the zipper/collar), fading from
-     transparent to fully opaque page background color so the
-     straight edge dissolves into the page instead of showing a cut.
+     portrait PNG ends. A valley-shaped (U) gradient patch sits at
+     the bottom of the photo: at the left/right edges it starts
+     right where the blob background meets the photo and covers
+     the full strip down to the hard cutoff line (deepest fade
+     there), then curves down to almost nothing at the center
+     (over the zipper/collar), where the original cutoff is barely
+     touched. Fades from transparent (near the curve) to fully
+     opaque page background color, so the straight edge dissolves
+     into the page instead of showing a visible cut.
   */
   .about-photo-shade{
     position:absolute;
@@ -502,7 +505,7 @@
               <stop offset="100%" style="stop-color:var(--bg); stop-opacity:1" />
             </linearGradient>
           </defs>
-          <path d="M0,100 Q50,-50 100,100 Z" fill="url(#aboutPhotoShadeGrad)" />
+          <path d="M0,100 L0,50 Q50,150 100,50 L100,100 Z" fill="url(#aboutPhotoShadeGrad)" />
         </svg>
       </div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
