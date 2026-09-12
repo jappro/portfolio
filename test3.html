@@ -159,8 +159,9 @@
   .about-photo-wrap{
     position:relative;
     width:100%;
-    max-width:200px;
+    max-width:228px;
     margin:4px auto 0;
+    transform:translate(-14px, -10px);
     transition:opacity .55s ease, filter .55s ease, transform .55s ease;
   }
 
@@ -173,10 +174,11 @@
     height:64%;
     border-radius:22px;
     background:
-      radial-gradient(55% 65% at 18% 22%, var(--amber) 0%, transparent 62%),
-      radial-gradient(75% 85% at 88% 18%, var(--blue) 0%, transparent 60%),
-      radial-gradient(95% 100% at 50% 105%, var(--bg) 0%, transparent 55%),
-      var(--purple);
+      radial-gradient(65% 65% at 15% 15%, #4527a0 0%, transparent 60%),
+      radial-gradient(50% 50% at 88% 12%, rgba(122,74,18,0.5) 0%, transparent 58%),
+      radial-gradient(70% 70% at 85% 88%, #0f1c4a 0%, transparent 62%),
+      radial-gradient(75% 75% at 12% 90%, #0a0a0e 0%, transparent 55%),
+      #1a1030;
     z-index:0;
   }
 
@@ -231,6 +233,7 @@
     width:100%;
     height:100%;
     margin:0;
+    transform:none;
     opacity:0.1;
     filter:grayscale(0.4) blur(0.5px);
     pointer-events:none;
