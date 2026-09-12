@@ -170,7 +170,7 @@
     top:50%;
     transform:translate(-50%,-50%);
     width:122%;
-    height:46%;
+    height:64%;
     border-radius:22px;
     background:
       radial-gradient(55% 65% at 18% 22%, var(--amber) 0%, transparent 62%),
@@ -183,15 +183,18 @@
   .about-photo{
     position:relative;
     z-index:1;
-    display:block;
     width:100%;
-    height:auto;
+    aspect-ratio:930/1122;
+    background-image:url('src/about-portrait.png');
+    background-size:contain;
+    background-position:center bottom;
+    background-repeat:no-repeat;
   }
 
   .about-photo-fallback{
     position:relative;
     z-index:1;
-    aspect-ratio:1/1;
+    aspect-ratio:930/1122;
     border-radius:20px;
     border:1.5px dashed rgba(255,255,255,0.5);
     display:none;
@@ -244,7 +247,7 @@
   .about-container.is-expanded .about-photo{
     width:100%;
     height:100%;
-    object-fit:cover;
+    background-size:cover;
   }
   .about-container.is-expanded .about-photo-note{
     display:none;
@@ -453,13 +456,13 @@
 
     <div class="about-photo-wrap" id="aboutPhotoWrap">
       <div class="about-photo-blob"></div>
-      <img
-        src="src/about-photo.png"
-        alt="Portrait photo"
+      <div
         class="about-photo"
         id="aboutPhotoImg"
-      >
-      <div class="about-photo-fallback">Add photo at<br>src/about-photo.png</div>
+        role="img"
+        aria-label="Portrait photo"
+      ></div>
+      <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
 
@@ -502,11 +505,12 @@
     });
 
     // graceful fallback if the photo file isn't present yet
-    var img = document.getElementById('aboutPhotoImg');
     var wrap = document.getElementById('aboutPhotoWrap');
-    img.addEventListener('error', function(){
+    var preload = new Image();
+    preload.onerror = function(){
       wrap.classList.add('photo-missing');
-    });
+    };
+    preload.src = 'src/about-portrait.png';
   })();
 </script>
 
