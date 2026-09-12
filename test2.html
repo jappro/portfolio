@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio Sections — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <!-- ============================================================
   PORTFOLIO SECTIONS — standalone test build
   Contains, in page order: CORE CAPABILITIES, then EXPERIENCE.
@@ -2776,7 +2779,10 @@
     transition:left 0.2s ease, width 0.2s ease;
   }
 
-  .tst-viewport{ overflow:visible; }
+  .tst-viewport{
+    overflow:visible;
+    min-width:0; /* grid items default to min-width:auto, which refuses to shrink below content size unless overflow is non-visible — since we need overflow:visible for the shadow, min-width:0 does the shrink-to-track-size job instead. Without this, the grid track expanded to fit all 7 cards, leaving nothing for .tst-cards to actually scroll — this was the real cause of the nav buttons doing nothing. */
+  }
   .tst-cards{
     display:flex;
     align-items:flex-start;
@@ -2797,6 +2803,7 @@
   .tst-cards::-webkit-scrollbar{ display:none; }
 
   .tst-card{
+    position:relative;
     flex:0 0 auto;
     width:260px;
     scroll-snap-align:start;
@@ -2808,19 +2815,32 @@
     transform:translateY(-8px) scale(1.02);
   }
 
+  .tst-bubble-wrap{
+    position:relative;
+    /* ONE shadow for the combined bubble+tail shape — this is what
+       actually fixes the seam. Giving each piece its own shadow meant
+       the bubble's box-shadow (which paints as part of the bubble's own
+       box, after the tail) would wash back over the tail's top edge
+       with a DIFFERENT shadow than the tail's own, creating a visible
+       mismatch right where they meet. filter:drop-shadow here follows
+       the real combined alpha shape of everything inside this wrapper,
+       so there's only ever one shadow, correctly shaped, with nothing
+       to mismatch. */
+    filter:drop-shadow(6px 6px 24px rgba(255,255,255,0.09));
+    transition:filter 0.2s ease;
+  }
+  .tst-card:hover .tst-bubble-wrap{
+    filter:drop-shadow(8px 16px 32px rgba(255,255,255,0.13));
+  }
+
   .tst-bubble{
     position:relative;
     min-height:150px;
     background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
     border-radius:16px; /* slightly rounded, chat-bubble style — not sharp, not fully pill-rounded */
-    box-shadow:6px 6px 24px rgba(255,255,255,0.09); /* blurred offset shadow that fades outward, instead of a hard-edged solid rectangle */
     padding:20px 22px;
     display:flex;
     flex-direction:column;
-    transition:box-shadow 0.2s ease;
-  }
-  .tst-card:hover .tst-bubble{
-    box-shadow:8px 16px 32px rgba(255,255,255,0.13);
   }
   /* the small triangular tail pointing down toward the avatar below —
      positioned near the avatar's horizontal position, not centered */
@@ -2830,19 +2850,17 @@
   .tst-tail{
     position:absolute;
     left:0; /* flush with the bubble's own left edge */
-    bottom:-56px; /* tripled size (66px tall) nudged up 10px so it overlaps into the bubble rather than leaving any gap */
+    /* 'top' is set dynamically by JS (positionTails()) as
+       bubble.offsetHeight - overlap — the bubble's height varies with
+       quote length and with "see more" expansion, so this can't be a
+       fixed CSS value. Being a DOM sibling that comes BEFORE the bubble
+       (see the render function) is what actually hides the overlap:
+       the bubble is opaque and paints afterward, naturally covering
+       whatever part of the tail sits underneath it. */
     width:102px;
     height:66px;
     color:var(--bg-alt); /* the <path> uses fill="currentColor" */
     pointer-events:none;
-    /* drop-shadow (not box-shadow) follows the triangle's actual filled
-       shape rather than its rectangular bounding box — same values as
-       the bubble's own shadow so they read as one continuous shape */
-    filter:drop-shadow(6px 6px 24px rgba(255,255,255,0.09));
-    transition:filter 0.2s ease;
-  }
-  .tst-card:hover .tst-tail{
-    filter:drop-shadow(8px 16px 32px rgba(255,255,255,0.13));
   }
 
   .tst-quote-text{
@@ -2881,8 +2899,8 @@
     display:flex;
     align-items:center;
     gap:12px;
-    margin-top:60px;
-    padding-left:32px;
+    margin-top:10px; /* pulled way up — safe now that the info is shifted right, out of the tail's deep-hanging zone */
+    padding-left:64px; /* nudged further right so the row sits past where the tail still visibly hangs down, avoiding any overlap once pulled upward */
   }
   .tst-avatar{
     width:44px;
@@ -2906,8 +2924,9 @@
     flex-shrink:0;
   }
   .tst-person-text{ min-width:0; }
-  .tst-name{ margin:0; color:var(--text-hi); font-size:14.5px; font-weight:700; }
-  .tst-role{ margin:0; color:var(--text-lo); font-size:13px; }
+  .tst-name{ margin:0 0 2px; color:var(--text-hi); font-size:14.5px; font-weight:700; }
+  .tst-role{ margin:0 0 1px; color:var(--text-lo); font-size:13px; font-weight:500; }
+  .tst-company-line{ margin:0; color:var(--text-lo); font-size:13px; font-weight:400; }
 </style>
 
 <script>
@@ -2950,10 +2969,12 @@
 
   TST_DATA.forEach(function(t){
     var html = '<div class="tst-card' + (t.placeholder ? ' tst-card--placeholder' : '') + '">' +
-      '<div class="tst-bubble">' +
-        '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
-        '<button type="button" class="tst-see-more" hidden>see more</button>' +
+      '<div class="tst-bubble-wrap">' +
         '<svg class="tst-tail" viewBox="0 0 102 66" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 66 L39 39 L102 0 Z" fill="currentColor"/></svg>' +
+        '<div class="tst-bubble">' +
+          '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
+          '<button type="button" class="tst-see-more" hidden>see more</button>' +
+        '</div>' +
       '</div>' +
       '<div class="tst-person">' +
         '<img class="tst-avatar" src="' + t.avatar + '" alt="' + t.name + '" ' +
@@ -2961,12 +2982,28 @@
         '<div class="tst-avatar-fallback">' + initials(t.name) + '</div>' +
         '<div class="tst-person-text">' +
           '<p class="tst-name">' + t.name + '</p>' +
-          '<p class="tst-role">' + t.role + ', ' + t.company + '</p>' +
+          '<p class="tst-role">' + t.role + '</p>' +
+          '<p class="tst-company-line">' + t.company + '</p>' +
         '</div>' +
       '</div>' +
     '</div>';
     cardsEl.insertAdjacentHTML('beforeend', html);
   });
+
+  var TAIL_OVERLAP = 18; // how far the tail tucks up behind the bubble's bottom edge
+
+  // the tail's vertical position depends on the bubble's actual rendered
+  // height, which varies with quote length and with "see more"
+  // expansion — so it can't be a fixed CSS value, it has to be measured
+  function positionTails(){
+    cardsEl.querySelectorAll('.tst-card').forEach(function(card){
+      var bubble = card.querySelector('.tst-bubble');
+      var tail = card.querySelector('.tst-tail');
+      if (!bubble || !tail) return;
+      tail.style.top = (bubble.offsetHeight - TAIL_OVERLAP) + 'px';
+    });
+  }
+  positionTails();
 
   // "see more"/"see less" toggle
   cardsEl.addEventListener('click', function(e){
@@ -2977,6 +3014,7 @@
     var expanded = quoteEl.getAttribute('data-expanded') === 'true';
     quoteEl.setAttribute('data-expanded', expanded ? 'false' : 'true');
     btn.textContent = expanded ? 'see more' : 'see less';
+    positionTails(); // bubble height just changed — recalculate
   });
 
   // smart truncation — a card's "see more" only appears once layout
@@ -2992,10 +3030,14 @@
   }
   checkTstClamps();
   window.addEventListener('load', checkTstClamps);
+  window.addEventListener('load', positionTails);
   var tstClampTimer;
   window.addEventListener('resize', function(){
     window.clearTimeout(tstClampTimer);
-    tstClampTimer = window.setTimeout(checkTstClamps, 150);
+    tstClampTimer = window.setTimeout(function(){
+      checkTstClamps();
+      positionTails(); // card width can change on resize, which can rewrap text and change bubble height
+    }, 150);
   });
 
   // manual carousel: prev/next scroll by one card width, progress bar
