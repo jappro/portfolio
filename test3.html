@@ -191,8 +191,17 @@
     background-size:contain;
     background-position:center bottom;
     background-repeat:no-repeat;
-    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
-    mask-image:linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+  }
+
+  .about-photo-bottom-fade{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:18%;
+    background:linear-gradient(to bottom, transparent 0%, #08080b 100%);
+    z-index:2;
+    pointer-events:none;
   }
 
   .about-photo-notch-fade{
@@ -215,11 +224,11 @@
   }
   .about-photo-notch-fade--left .about-photo-notch-fade__glow{
     left:0;
-    background:radial-gradient(circle 100px at 0% 100%, var(--bg) 0%, var(--bg) 32%, transparent 100%);
+    background:radial-gradient(circle 100px at 0% 100%, #08080b 0%, #08080b 32%, transparent 100%);
   }
   .about-photo-notch-fade--right .about-photo-notch-fade__glow{
     right:0;
-    background:radial-gradient(circle 100px at 100% 100%, var(--bg) 0%, var(--bg) 32%, transparent 100%);
+    background:radial-gradient(circle 100px at 100% 100%, #08080b 0%, #08080b 32%, transparent 100%);
   }
 
   .about-photo-fallback{
@@ -285,6 +294,9 @@
     display:none;
   }
   .about-container.is-expanded .about-photo-notch-fade{
+    display:none;
+  }
+  .about-container.is-expanded .about-photo-bottom-fade{
     display:none;
   }
 
@@ -497,6 +509,7 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
+      <div class="about-photo-bottom-fade"></div>
       <div class="about-photo-notch-fade about-photo-notch-fade--left">
         <div class="about-photo-notch-fade__glow"></div>
       </div>
