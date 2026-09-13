@@ -208,6 +208,22 @@
     pointer-events:none;
   }
 
+  /* Circular blob sitting right on top of where the background blob's
+     bottom-left corner meets the photo's left edge — overlapping both
+     the blob background and the bottom-blend band. Hard solid core,
+     medium tone near its circumference, gone shortly past it. */
+  .about-photo-corner-blob{
+    position:absolute;
+    left:-55px;
+    bottom:-25px;
+    width:110px;
+    height:110px;
+    background:radial-gradient(circle closest-side,
+      #08080b 0%, #08080b 50%, rgba(8,8,11,0.55) 75%, rgba(8,8,11,0) 100%);
+    z-index:3;
+    pointer-events:none;
+  }
+
   .about-photo-fallback{
     position:relative;
     z-index:1;
@@ -271,6 +287,9 @@
     display:none;
   }
   .about-container.is-expanded .about-photo-bottom-blend{
+    display:none;
+  }
+  .about-container.is-expanded .about-photo-corner-blob{
     display:none;
   }
 
@@ -484,6 +503,7 @@
         aria-label="Portrait photo"
       ></div>
       <div class="about-photo-bottom-blend"></div>
+      <div class="about-photo-corner-blob"></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
