@@ -193,25 +193,6 @@
     background-repeat:no-repeat;
   }
 
-  /* single shade layer, exactly matching the photo's own box —
-     heavy curved fade at the two bottom corners, minimal fade across
-     the center, nothing touches the head/face area above it */
-  .about-photo-shade{
-    position:absolute;
-    inset:0;
-    z-index:2;
-    pointer-events:none;
-    background:
-      radial-gradient(ellipse 36% 26% at 0% 100%,
-        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
-      radial-gradient(ellipse 36% 26% at 100% 100%,
-        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
-      linear-gradient(to top,
-        rgba(8,8,11,0.32) 0%, rgba(8,8,11,0.16) 10%, rgba(8,8,11,0) 20%),
-      linear-gradient(to top,
-        rgba(8,8,11,0.55) 0%, rgba(8,8,11,0) 6%);
-  }
-
   .about-photo-fallback{
     position:relative;
     z-index:1;
@@ -229,6 +210,42 @@
   }
   .about-photo-wrap.photo-missing .about-photo{display:none;}
   .about-photo-wrap.photo-missing .about-photo-fallback{display:flex;}
+
+  /* ===== Bottom edge fade (mask-based) =====
+     Fixes the hard rectangular cutoff where the transparent-bg
+     portrait PNG ends. Rather than painting a shape on top and
+     trying to match it to whatever's behind (page bg, blob colors,
+     etc.), this fades the photo's OWN pixels to transparent at the
+     bottom using a CSS mask. Whatever is genuinely behind shows
+     through naturally, so there's nothing to color-match and no
+     seam possible.
+
+     The fade starts at the exact height where the blob background
+     ends (~82% down the photo) at the left/right edges, and dips
+     down to almost no fade at the center (over the zipper/collar),
+     matching the U-curve shape.
+
+     Implementation note (tested/confirmed in this environment):
+     an inline data-URI SVG as mask-image silently fails to apply
+     at all here, regardless of its contents. A <mask> element
+     referenced by ID from the page's own DOM does work — but a
+     gradient fill *inside* that DOM mask renders as solid instead
+     of fading. The combination that actually works is a DOM mask
+     built from ~24 stacked solid-color bands (white to black),
+     clipped to the curve shape — see #aboutPhotoFadeMask below.
+  */
+  .about-photo{
+    -webkit-mask-image:url(#aboutPhotoFadeMask);
+    mask-image:url(#aboutPhotoFadeMask);
+    -webkit-mask-repeat:no-repeat;
+    mask-repeat:no-repeat;
+    -webkit-mask-size:100% 100%;
+    mask-size:100% 100%;
+  }
+  .about-container.is-expanded .about-photo{
+    -webkit-mask-image:none;
+    mask-image:none;
+  }
 
   .about-photo-note{
     position:absolute;
@@ -272,9 +289,6 @@
     background-size:cover;
   }
   .about-container.is-expanded .about-photo-note{
-    display:none;
-  }
-  .about-container.is-expanded .about-photo-shade{
     display:none;
   }
 
@@ -487,10 +501,50 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
-      <div class="about-photo-shade"></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
+
+    <!-- Hidden mask: fades the portrait's own pixels to transparent
+         at the bottom, in a U-curve shape, using stacked solid
+         color bands (see the CSS comment above for why bands
+         instead of a gradient fill). -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <clipPath id="aboutPhotoFadeClip">
+          <path d="M0,1 L0,0.82 Q0.5,1.18 1,0.82 L1,1 Z"/>
+        </clipPath>
+        <mask id="aboutPhotoFadeMask" maskContentUnits="objectBoundingBox">
+          <rect x="0" y="0" width="1" height="1" fill="#fff"/>
+          <g clip-path="url(#aboutPhotoFadeClip)">
+          <rect y='0.82000' width='1' height='0.00765' fill='rgb(255,255,255)'/>
+          <rect y='0.82750' width='1' height='0.00765' fill='rgb(244,244,244)'/>
+          <rect y='0.83500' width='1' height='0.00765' fill='rgb(233,233,233)'/>
+          <rect y='0.84250' width='1' height='0.00765' fill='rgb(222,222,222)'/>
+          <rect y='0.85000' width='1' height='0.00765' fill='rgb(211,211,211)'/>
+          <rect y='0.85750' width='1' height='0.00765' fill='rgb(200,200,200)'/>
+          <rect y='0.86500' width='1' height='0.00765' fill='rgb(188,188,188)'/>
+          <rect y='0.87250' width='1' height='0.00765' fill='rgb(177,177,177)'/>
+          <rect y='0.88000' width='1' height='0.00765' fill='rgb(166,166,166)'/>
+          <rect y='0.88750' width='1' height='0.00765' fill='rgb(155,155,155)'/>
+          <rect y='0.89500' width='1' height='0.00765' fill='rgb(144,144,144)'/>
+          <rect y='0.90250' width='1' height='0.00765' fill='rgb(133,133,133)'/>
+          <rect y='0.91000' width='1' height='0.00765' fill='rgb(122,122,122)'/>
+          <rect y='0.91750' width='1' height='0.00765' fill='rgb(111,111,111)'/>
+          <rect y='0.92500' width='1' height='0.00765' fill='rgb(100,100,100)'/>
+          <rect y='0.93250' width='1' height='0.00765' fill='rgb(89,89,89)'/>
+          <rect y='0.94000' width='1' height='0.00765' fill='rgb(78,78,78)'/>
+          <rect y='0.94750' width='1' height='0.00765' fill='rgb(67,67,67)'/>
+          <rect y='0.95500' width='1' height='0.00765' fill='rgb(55,55,55)'/>
+          <rect y='0.96250' width='1' height='0.00765' fill='rgb(44,44,44)'/>
+          <rect y='0.97000' width='1' height='0.00765' fill='rgb(33,33,33)'/>
+          <rect y='0.97750' width='1' height='0.00765' fill='rgb(22,22,22)'/>
+          <rect y='0.98500' width='1' height='0.00765' fill='rgb(11,11,11)'/>
+          <rect y='0.99250' width='1' height='0.00765' fill='rgb(0,0,0)'/>
+          </g>
+        </mask>
+      </defs>
+    </svg>
 
   </div>
 </section>
