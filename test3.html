@@ -191,25 +191,28 @@
     background-size:contain;
     background-position:center bottom;
     background-repeat:no-repeat;
-  }
 
-  /* single shade layer, exactly matching the photo's own box —
-     heavy curved fade at the two bottom corners, minimal fade across
-     the center, nothing touches the head/face area above it */
-  .about-photo-shade{
-    position:absolute;
-    inset:0;
-    z-index:2;
-    pointer-events:none;
-    background:
-      radial-gradient(ellipse 36% 26% at 0% 100%,
-        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
-      radial-gradient(ellipse 36% 26% at 100% 100%,
-        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
-      linear-gradient(to top,
-        rgba(8,8,11,0.32) 0%, rgba(8,8,11,0.16) 10%, rgba(8,8,11,0) 20%),
-      linear-gradient(to top,
-        rgba(8,8,11,0.55) 0%, rgba(8,8,11,0) 6%);
+    /* ===== double (triple) mask, intersected =====
+       Layer 1: gentle full-width fade near the very bottom (minimal, covers center/zipper too)
+       Layer 2: sharp fade anchored on the bottom-left corner
+       Layer 3: sharp fade anchored on the bottom-right corner
+       mask-composite:intersect multiplies all three together, so a pixel
+       only stays fully visible if ALL THREE say "visible" — near a
+       corner, layer 2 or 3 drags it to invisible regardless of the others;
+       near the center it's only layer 1's gentle fade that applies;
+       above ~26% height none of the three do anything, so the face
+       is never touched. This reveals the real page background
+       underneath — a true bleed, not a painted-on color. */
+    -webkit-mask-image:
+      linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,1) 24%, rgba(0,0,0,1) 100%),
+      radial-gradient(ellipse 36% 26% at 0% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,1) 100%),
+      radial-gradient(ellipse 36% 26% at 100% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,1) 100%);
+    mask-image:
+      linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,1) 24%, rgba(0,0,0,1) 100%),
+      radial-gradient(ellipse 36% 26% at 0% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,1) 100%),
+      radial-gradient(ellipse 36% 26% at 100% 100%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,1) 100%);
+    -webkit-mask-composite: source-in, source-in;
+    mask-composite: intersect, intersect;
   }
 
   .about-photo-fallback{
@@ -270,11 +273,10 @@
     width:100%;
     height:100%;
     background-size:cover;
+    -webkit-mask-image:none;
+    mask-image:none;
   }
   .about-container.is-expanded .about-photo-note{
-    display:none;
-  }
-  .about-container.is-expanded .about-photo-shade{
     display:none;
   }
 
@@ -487,7 +489,6 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
-      <div class="about-photo-shade"></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
