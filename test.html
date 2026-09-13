@@ -844,7 +844,7 @@
   .phil-card__diagram svg{ width:100%; height:auto; display:block; }
 
   /* the floated desktop-only diagram duplicates stay hidden below
-     900px — the mobile/small-tablet layout keeps using the original
+     1024px — the mobile/tablet layouts keep using the original
      .phil-card__diagram block instead */
   .phil-card__diagram--float{
     display:none;
@@ -936,7 +936,141 @@
 </style>
 
 <style>
-  @media (min-width:900px){
+  /* ============================================================
+     PROFESSIONAL PHILOSOPHY — TABLET (768px to 1023px)
+     Purpose-built for this range: not the mobile scroll-pin funnel,
+     not the desktop split-column grid. A static, non-scrolling bento
+     grid using each card's natural vertical/portrait content flow
+     (heading, paragraphs, diagram below — the same internal shape
+     mobile cards already use), arranged two-up with the concepts
+     card spanning full width.
+  ============================================================= */
+  @media (min-width:768px) and (max-width:1023.98px){
+
+    /* ---------- release the scroll-pin funnel ---------- */
+    .phil-body{
+      height:auto;
+      margin-top:0;
+    }
+    .phil-body-sticky{
+      position:relative; /* not static — keeps .phil-body-bg's inset:0 sized to the actual content height below, instead of collapsing */
+      height:auto;
+      overflow:visible;
+    }
+
+    /* ---------- header: centered, tablet-scaled (distinct from
+       both mobile's left-aligned fluid type and desktop's 72-104px
+       giant scale) ---------- */
+    .phil-header{
+      max-width:640px;
+      margin:0 auto;
+      padding-top:0;
+      text-align:center;
+    }
+    .phil-eyebrow{
+      font-size:15px;
+      letter-spacing:0.17em;
+    }
+    .phil-heading{
+      max-width:600px;
+      font-size:clamp(42px, 5.2vw, 56px);
+      line-height:1.15;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .phil-intro{
+      max-width:560px;
+      font-size:18px;
+      line-height:1.6;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .phil-divider{
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .phil-section{
+      padding:64px 48px 48px;
+    }
+
+    /* ---------- body: static bento grid, no absolute positioning,
+       no scroll-driven transforms ---------- */
+    .phil-body-cards{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-areas:
+        "card1 card2"
+        "card3 card3"
+        "card4 card5";
+      align-items:stretch;
+      gap:24px;
+      max-width:900px;
+      margin:0 auto;
+      padding:48px 40px 72px;
+      height:auto;
+    }
+
+    .phil-body-cards .phil-card{
+      position:static;
+      left:auto;
+      right:auto;
+      top:auto;
+      margin:0;
+      max-width:none;
+      width:auto;
+      height:auto;
+      min-height:420px;
+      justify-content:flex-start; /* content packs from the top — no full-slot centering needed in a normal grid cell */
+      transition:box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+    .phil-body-cards .phil-card + .phil-card{ margin-top:0; }
+
+    .phil-body-cards .phil-card[data-card-index="1"]{ grid-area:card1; z-index:auto; }
+    .phil-body-cards .phil-card[data-card-index="2"]{ grid-area:card2; z-index:auto; }
+    .phil-body-cards .phil-card[data-card-index="3"]{ grid-area:card3; z-index:auto; }
+    .phil-body-cards .phil-card[data-card-index="4"]{ grid-area:card4; z-index:auto; }
+    .phil-body-cards .phil-card[data-card-index="5"]{ grid-area:card5; z-index:auto; }
+
+    /* diagrams sized down to fit a ~400px-wide grid column comfortably */
+    .phil-body-cards .phil-card__diagram{ max-width:220px; }
+    .phil-body-cards .phil-card__diagram--icon{ max-width:140px; }
+
+    /* lift + colored ring on hover/tap — same accent language as
+       desktop, declared fresh here so the desktop rule stays untouched */
+    .phil-body-cards .phil-card:hover,
+    .phil-body-cards .phil-card--pointer-active{
+      transform:translateY(-4px);
+    }
+    .phil-body-cards .phil-card[data-card-index="1"]:hover,
+    .phil-body-cards .phil-card[data-card-index="1"].phil-card--pointer-active{
+      border-color:var(--purple);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--purple);
+    }
+    .phil-body-cards .phil-card[data-card-index="2"]:hover,
+    .phil-body-cards .phil-card[data-card-index="2"].phil-card--pointer-active{
+      border-color:var(--blue);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--blue);
+    }
+    .phil-body-cards .phil-card[data-card-index="3"]:hover,
+    .phil-body-cards .phil-card[data-card-index="3"].phil-card--pointer-active{
+      border-color:var(--green);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--green);
+    }
+    .phil-body-cards .phil-card[data-card-index="4"]:hover,
+    .phil-body-cards .phil-card[data-card-index="4"].phil-card--pointer-active{
+      border-color:var(--amber);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--amber);
+    }
+    .phil-body-cards .phil-card[data-card-index="5"]:hover,
+    .phil-body-cards .phil-card[data-card-index="5"].phil-card--pointer-active{
+      border-color:var(--teal);
+      box-shadow:var(--shadow), 0 0 0 1.5px var(--teal);
+    }
+  }
+</style>
+
+<style>
+  @media (min-width:1024px){
 
     .phil-body-cards .phil-card{
       transition:box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
@@ -948,7 +1082,8 @@
 
     /* each card highlights in its own accent color, kept minimal —
        a thin colored ring on top of the existing ambient shadow.
-       Desktop only — no hover color on mobile/tablet. */
+       Desktop only (1024px+) — mobile and tablet have their own
+       treatment. */
     .phil-body-cards .phil-card[data-card-index="1"]:hover,
     .phil-body-cards .phil-card[data-card-index="1"].phil-card--pointer-active{
       border-color:var(--purple);
@@ -1039,34 +1174,17 @@
 
     .phil-body-cards{
       display:grid;
-      grid-template-columns:1fr; /* single column at the 900-1023px "large tablet" tier — two columns would be too cramped */
+      grid-template-columns:1fr 1fr;
       grid-template-areas:
-        "card1"
-        "card2"
-        "card3"
-        "card4"
-        "card5";
-      align-items:stretch;
+        "card1 card2"
+        "card3 card3"
+        "card4 card5";
+      align-items:stretch; /* row 1 (01/02) and row 3 (04/05) share the taller card's height */
       gap:32px;
-      max-width:clamp(760px, 90vw, 900px);
+      max-width:min(1680px, 94vw);
       margin:0 auto;
-      padding:clamp(48px, 7vw, 64px) clamp(24px, 4vw, 40px) clamp(72px, 9vw, 96px);
+      padding:64px clamp(56px, 4vw, 72px) 96px;
       height:auto;
-    }
-
-    /* true desktop: widen back out to the approved 2-column grid.
-       Container width/padding stay fluid across the whole 1024px+
-       range instead of freezing at one size then jumping at 1600px. */
-    @media (min-width:1024px){
-      .phil-body-cards{
-        grid-template-columns:1fr 1fr;
-        grid-template-areas:
-          "card1 card2"
-          "card3 card3"
-          "card4 card5";
-        max-width:min(1680px, 94vw);
-        padding:64px clamp(56px, 4vw, 72px) 96px;
-      }
     }
 
     .phil-body-cards .phil-card{
@@ -1092,9 +1210,8 @@
        duplicate placed inline in the markup (a float needs to sit
        in the DOM right where the wrap should start; the original
        .phil-card__diagram is hidden here and still serves the
-       mobile/small-tablet layout below 900px). At 1024px+ these
-       cards pair up into the 2-column grid (01+02, 04+05); below
-       that (900-1023px) each sits in its own full-width row. ---------- */
+       mobile/tablet layouts below 1024px). These cards pair up
+       into the 2-column grid (01+02, 04+05). ---------- */
     .phil-body-cards .phil-card[data-card-index="1"],
     .phil-body-cards .phil-card[data-card-index="2"],
     .phil-body-cards .phil-card[data-card-index="4"],
@@ -1275,10 +1392,12 @@
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ease = reduceMotion ? 1 : 0.15;
-  var desktopQuery = window.matchMedia ? window.matchMedia('(min-width: 900px)') : null;
+  /* scroll-pin funnel is mobile-only now — tablet (768-1023px) and
+     desktop (1024px+) both use static, non-scrolling layouts */
+  var funnelOffQuery = window.matchMedia ? window.matchMedia('(min-width: 768px)') : null;
 
-  function isDesktop(){
-    return !!(desktopQuery && desktopQuery.matches);
+  function isFunnelOff(){
+    return !!(funnelOffQuery && funnelOffQuery.matches);
   }
 
   function clearTransforms(){
@@ -1318,7 +1437,7 @@
   }
 
   function tick(){
-    if(isDesktop()){ rafId = null; return; }
+    if(isFunnelOff()){ rafId = null; return; }
     currentProgress += (targetProgress - currentProgress) * ease;
     if(Math.abs(targetProgress - currentProgress) < 0.0005){
       currentProgress = targetProgress;
@@ -1337,7 +1456,7 @@
   }
 
   function onScrollOrResize(){
-    if(isDesktop()){
+    if(isFunnelOff()){
       clearTransforms();
       targetProgress = 0;
       currentProgress = 0;
@@ -1350,7 +1469,7 @@
   window.addEventListener('scroll', onScrollOrResize, { passive: true });
   window.addEventListener('resize', onScrollOrResize);
 
-  if(isDesktop()){
+  if(isFunnelOff()){
     clearTransforms();
   } else {
     computeTarget();
