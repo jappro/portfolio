@@ -3043,9 +3043,13 @@
       /* same shadow-clipping fix as the desktop cards row: overflow-x:auto
          forces overflow-y:auto too, which would clip the card's own
          drop-shadow — padding gives it room, the negative margin cancels
-         the padding back out so nothing shifts visually */
-      padding:24px 8px 48px;
-      margin:-24px -8px -48px;
+         the padding back out so nothing shifts visually. Kept small
+         (unlike desktop's 24/48px) since the mobile card itself is much
+         smaller now and its shadow needs far less clearance — a bigger
+         buffer here was also sitting close enough to the nav row below
+         to risk overlapping it. */
+      padding:10px 8px 14px;
+      margin:-10px -8px -14px;
     }
     .tst-mobile-cards::-webkit-scrollbar{ display:none; }
 
@@ -3054,8 +3058,8 @@
        desktop — only the sizing/flex-basis changes here, so the card
        itself never needs its own separate visual rules */
     .tst-mobile-cards .tst-card{
-      flex:0 0 calc(100% - 5px);
-      max-width:calc(100% - 5px);
+      flex:0 0 calc(100% - 24px);
+      max-width:calc(100% - 24px);
       scroll-snap-align:start;
     }
     .tst-mobile-cards .tst-bubble{
@@ -3072,6 +3076,8 @@
     .tst-mobile-cards .tst-avatar-fallback{ width:44px; height:44px; font-size:15px; }
 
     .tst-mobile-nav{
+      position:relative;
+      z-index:2;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -3262,10 +3268,20 @@
   window.addEventListener('resize', updateNavState);
   updateNavState();
 
-  // ---- mobile: single-card swipeable carousel + minimal numbered tracker
+  // ---- mobile: single-card swipeable carousel + minimal dot tracker
   // (a small visual indicator only — not tappable; only the chevrons
   // navigate). Supports both direct touch-swipe (native scroll-snap)
-  // and the prev/next buttons, which stay in sync with each other.
+  // and the prev/next buttons.
+  //
+  // Rewritten to track the current card with an explicit index instead
+  // of deriving the next scroll position from scrollBy() + a
+  // computed-style gap lookup at click time — that computed-style gap
+  // read isn't reliable across browsers for a flex `gap`, and any
+  // mismatch there meant a chevron tap could scroll short of a full
+  // card and get pulled back by scroll-snap, reading as "the button
+  // doesn't do anything." Using scrollTo() with an index-based target
+  // (index * step) sidesteps that: each tap always targets an exact,
+  // correct snap point.
   function renderTrackerMobile(activeIndex){
     // minimal dot indicator (e.g. "• • •") — visual only, not tappable
     trackerElMobile.innerHTML = TST_DATA.map(function(t, i){
@@ -3274,35 +3290,48 @@
   }
   renderTrackerMobile(0);
 
-  function mobileCardStep(){
+  var MOBILE_GAP = 16; // must match .tst-mobile-cards' CSS `gap` value
+  var mobileIndex = 0;
+
+  function mobileStep(){
     var card = cardsElMobile.querySelector('.tst-card');
-    if (!card) return 0;
-    var style = window.getComputedStyle(cardsElMobile);
-    var gap = parseFloat(style.columnGap || style.gap) || 0;
-    return card.getBoundingClientRect().width + gap;
+    return card ? card.getBoundingClientRect().width + MOBILE_GAP : 0;
+  }
+
+  function goToMobileIndex(i){
+    mobileIndex = Math.max(0, Math.min(TST_DATA.length - 1, i));
+    cardsElMobile.scrollTo({ left: mobileIndex * mobileStep(), behavior: 'smooth' });
+    updateMobileNavState();
   }
 
   function updateMobileNavState(){
     var maxScroll = cardsElMobile.scrollWidth - cardsElMobile.clientWidth;
-    var step = mobileCardStep();
-    var activeIndex = step > 0 ? Math.round(cardsElMobile.scrollLeft / step) : 0;
-    activeIndex = Math.max(0, Math.min(TST_DATA.length - 1, activeIndex));
-
-    prevBtnMobile.disabled = cardsElMobile.scrollLeft <= 2;
-    nextBtnMobile.disabled = maxScroll <= 2 || cardsElMobile.scrollLeft >= maxScroll - 2;
-    renderTrackerMobile(activeIndex);
+    prevBtnMobile.disabled = mobileIndex <= 0;
+    nextBtnMobile.disabled = mobileIndex >= TST_DATA.length - 1 || maxScroll <= 2;
+    renderTrackerMobile(mobileIndex);
   }
 
-  prevBtnMobile.addEventListener('click', function(){
-    cardsElMobile.scrollBy({ left: -mobileCardStep(), behavior: 'smooth' });
-  });
-  nextBtnMobile.addEventListener('click', function(){
-    cardsElMobile.scrollBy({ left: mobileCardStep(), behavior: 'smooth' });
-  });
+  prevBtnMobile.addEventListener('click', function(){ goToMobileIndex(mobileIndex - 1); });
+  nextBtnMobile.addEventListener('click', function(){ goToMobileIndex(mobileIndex + 1); });
+
+  // keeps the index (and therefore the dots/button disabled-state) in
+  // sync when the person swipes by hand instead of using the chevrons
+  var mobileScrollTicking = false;
   cardsElMobile.addEventListener('scroll', function(){
-    window.requestAnimationFrame(updateMobileNavState);
+    if (mobileScrollTicking) return;
+    mobileScrollTicking = true;
+    window.requestAnimationFrame(function(){
+      mobileScrollTicking = false;
+      var step = mobileStep();
+      if (step > 0){
+        mobileIndex = Math.max(0, Math.min(TST_DATA.length - 1, Math.round(cardsElMobile.scrollLeft / step)));
+      }
+      updateMobileNavState();
+    });
   }, { passive: true });
+
   window.addEventListener('resize', updateMobileNavState);
+  window.addEventListener('load', updateMobileNavState); // re-check after webfonts finish loading, which can shift card widths
   updateMobileNavState();
 })();
 </script>
