@@ -2862,12 +2862,29 @@
        mismatch right where they meet. filter:drop-shadow here follows
        the real combined alpha shape of everything inside this wrapper,
        so there's only ever one shadow, correctly shaped, with nothing
-       to mismatch. */
-    filter:drop-shadow(6px 6px 24px rgba(255,255,255,0.09));
+       to mismatch.
+       The same principle is used for the thin trim line: four tightly
+       offset, zero-blur drop-shadows layered alongside the blurred one
+       outline the real painted shape (rounded bubble + tail point
+       together) as a single continuous line, instead of styling the
+       bubble's border and the tail's SVG stroke separately (which
+       produced two disconnected outlines). Applies to desktop and
+       mobile alike — the mobile card only overrides sizing, not this. */
+    filter:
+      drop-shadow(6px 6px 24px rgba(255,255,255,0.09))
+      drop-shadow(1px 0 0 rgba(255,255,255,0.3))
+      drop-shadow(-1px 0 0 rgba(255,255,255,0.3))
+      drop-shadow(0 1px 0 rgba(255,255,255,0.3))
+      drop-shadow(0 -1px 0 rgba(255,255,255,0.3));
     transition:filter 0.2s ease;
   }
   .tst-card:hover .tst-bubble-wrap{
-    filter:drop-shadow(8px 16px 32px rgba(255,255,255,0.13));
+    filter:
+      drop-shadow(8px 16px 32px rgba(255,255,255,0.13))
+      drop-shadow(1px 0 0 rgba(255,255,255,0.3))
+      drop-shadow(-1px 0 0 rgba(255,255,255,0.3))
+      drop-shadow(0 1px 0 rgba(255,255,255,0.3))
+      drop-shadow(0 -1px 0 rgba(255,255,255,0.3));
   }
 
   .tst-bubble{
@@ -3018,6 +3035,7 @@
     .tst-mobile-viewport{ overflow:visible; }
     .tst-mobile-cards{
       display:flex;
+      gap:16px; /* space between cards — they were snapped edge-to-edge before */
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       scrollbar-width:none;
@@ -3036,30 +3054,18 @@
        desktop — only the sizing/flex-basis changes here, so the card
        itself never needs its own separate visual rules */
     .tst-mobile-cards .tst-card{
-      flex:0 0 100%;
-      max-width:none;
+      flex:0 0 calc(100% - 5px);
+      max-width:calc(100% - 5px);
       scroll-snap-align:start;
     }
     .tst-mobile-cards .tst-bubble{
       min-height:170px;
       padding:18px 20px;
-      /* very minimal trim — thinner and more subtle than the outer
-         .tst-mobile-frame box border */
-      border:1px solid rgba(255,255,255,0.15);
     }
     .tst-mobile-cards .tst-quote-text{ font-size:15px; }
-
-    /* tail scaled down to match the smaller bubble, and given the same
-       thin trim on its two outer edges so it reads as one continuous
-       outline with the bubble border above — the shared edge where the
-       tail tucks behind the bubble doesn't need a stroke, only the
-       exposed left/bottom-point edges do */
     .tst-mobile-cards .tst-tail{ width:90px; height:58px; }
-    .tst-mobile-cards .tst-tail path{
-      stroke:rgba(255,255,255,0.15);
-      stroke-width:1.2;
-      stroke-linejoin:round;
-    }
+    /* trim no longer set here — it now lives on the base .tst-bubble-wrap
+       rule, shared by desktop and mobile alike */
 
     .tst-mobile-cards .tst-person{ padding-left:62px; margin-top:10px; }
     .tst-mobile-cards .tst-avatar,
@@ -3270,7 +3276,10 @@
 
   function mobileCardStep(){
     var card = cardsElMobile.querySelector('.tst-card');
-    return card ? card.getBoundingClientRect().width : 0;
+    if (!card) return 0;
+    var style = window.getComputedStyle(cardsElMobile);
+    var gap = parseFloat(style.columnGap || style.gap) || 0;
+    return card.getBoundingClientRect().width + gap;
   }
 
   function updateMobileNavState(){
