@@ -211,40 +211,49 @@
   .about-photo-wrap.photo-missing .about-photo{display:none;}
   .about-photo-wrap.photo-missing .about-photo-fallback{display:flex;}
 
-  /* ===== Bottom edge fade (mask-based) =====
+  /* ===== Bottom edge fade (overlay-based) =====
      Fixes the hard rectangular cutoff where the transparent-bg
-     portrait PNG ends. Rather than painting a shape on top and
-     trying to match it to whatever's behind (page bg, blob colors,
-     etc.), this fades the photo's OWN pixels to transparent at the
-     bottom using a CSS mask. Whatever is genuinely behind shows
-     through naturally, so there's nothing to color-match and no
-     seam possible.
+     portrait PNG ends.
 
-     The fade starts at the exact height where the blob background
-     ends (~82% down the photo) at the left/right edges, and dips
-     down to almost no fade at the center (over the zipper/collar),
-     matching the U-curve shape.
+     History: two earlier attempts used CSS `mask-image` (first a
+     data-URI SVG, then a DOM-referenced <mask>). Both tested fine
+     in this environment's browser engine, but failed in real-world
+     Chrome (mobile) — CSS masking support/behavior for HTML
+     elements is inconsistent enough across browsers that it isn't
+     safe to rely on here.
 
-     Implementation note (tested/confirmed in this environment):
-     an inline data-URI SVG as mask-image silently fails to apply
-     at all here, regardless of its contents. A <mask> element
-     referenced by ID from the page's own DOM does work — but a
-     gradient fill *inside* that DOM mask renders as solid instead
-     of fading. The combination that actually works is a DOM mask
-     built from 90 stacked solid-color bands (white to black),
-     clipped to the curve shape — see #aboutPhotoFadeMask below.
+     This version instead uses a plain, visible SVG shape layered
+     on top of the photo (not a mask) — the same basic technique as
+     an <img> or a gradient background, which is essentially
+     universally supported. It's filled with a gradient from
+     transparent to solid var(--bg). This is safe to color-match
+     here specifically because the blob background ends exactly
+     where this fade zone begins (~82% down the photo) — below that
+     point, only the plain page background is ever behind the
+     photo, at both edges and center, so there's no risk of the
+     overlay's color mismatching something colorful behind it.
+
+     Shape: at the left/right edges the shade covers the full
+     bottom 18% of the photo (deepest fade, right where the hard
+     cutoff was worst). It curves upward to almost no coverage at
+     the center (over the zipper/collar).
   */
-  .about-photo{
-    -webkit-mask-image:url(#aboutPhotoFadeMask);
-    mask-image:url(#aboutPhotoFadeMask);
-    -webkit-mask-repeat:no-repeat;
-    mask-repeat:no-repeat;
-    -webkit-mask-size:100% 100%;
-    mask-size:100% 100%;
+  .about-photo-shade{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:18%;
+    z-index:1;
+    pointer-events:none;
   }
-  .about-container.is-expanded .about-photo{
-    -webkit-mask-image:none;
-    mask-image:none;
+  .about-photo-shade svg{
+    display:block;
+    width:100%;
+    height:100%;
+  }
+  .about-container.is-expanded .about-photo-shade{
+    display:none;
   }
 
   .about-photo-note{
@@ -502,115 +511,21 @@
         aria-label="Portrait photo"
       ></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
+      <div class="about-photo-shade" aria-hidden="true">
+        <svg viewBox="0 0 1 1" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="aboutPhotoShadeGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0"    style="stop-color:var(--bg); stop-opacity:0"/>
+              <stop offset="0.4"  style="stop-color:var(--bg); stop-opacity:0.15"/>
+              <stop offset="0.75" style="stop-color:var(--bg); stop-opacity:0.6"/>
+              <stop offset="1"    style="stop-color:var(--bg); stop-opacity:1"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,1 L0,0 Q0.5,2 1,0 L1,1 Z" fill="url(#aboutPhotoShadeGrad)"/>
+        </svg>
+      </div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
-
-    <!-- Hidden mask: fades the portrait's own pixels to transparent
-         at the bottom, in a U-curve shape, using stacked solid
-         color bands (see the CSS comment above for why bands
-         instead of a gradient fill). -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-      <defs>
-        <clipPath id="aboutPhotoFadeClip">
-          <path d="M0,1 L0,0.82 Q0.5,1.18 1,0.82 L1,1 Z"/>
-        </clipPath>
-        <mask id="aboutPhotoFadeMask" maskContentUnits="objectBoundingBox">
-          <rect x="0" y="0" width="1" height="1" fill="#fff"/>
-          <g clip-path="url(#aboutPhotoFadeClip)">
-          <rect y='0.820000' width='1' height='0.003000' fill='rgb(255,255,255)'/>
-          <rect y='0.822000' width='1' height='0.003000' fill='rgb(252,252,252)'/>
-          <rect y='0.824000' width='1' height='0.003000' fill='rgb(249,249,249)'/>
-          <rect y='0.826000' width='1' height='0.003000' fill='rgb(246,246,246)'/>
-          <rect y='0.828000' width='1' height='0.003000' fill='rgb(244,244,244)'/>
-          <rect y='0.830000' width='1' height='0.003000' fill='rgb(241,241,241)'/>
-          <rect y='0.832000' width='1' height='0.003000' fill='rgb(238,238,238)'/>
-          <rect y='0.834000' width='1' height='0.003000' fill='rgb(235,235,235)'/>
-          <rect y='0.836000' width='1' height='0.003000' fill='rgb(232,232,232)'/>
-          <rect y='0.838000' width='1' height='0.003000' fill='rgb(229,229,229)'/>
-          <rect y='0.840000' width='1' height='0.003000' fill='rgb(226,226,226)'/>
-          <rect y='0.842000' width='1' height='0.003000' fill='rgb(223,223,223)'/>
-          <rect y='0.844000' width='1' height='0.003000' fill='rgb(221,221,221)'/>
-          <rect y='0.846000' width='1' height='0.003000' fill='rgb(218,218,218)'/>
-          <rect y='0.848000' width='1' height='0.003000' fill='rgb(215,215,215)'/>
-          <rect y='0.850000' width='1' height='0.003000' fill='rgb(212,212,212)'/>
-          <rect y='0.852000' width='1' height='0.003000' fill='rgb(209,209,209)'/>
-          <rect y='0.854000' width='1' height='0.003000' fill='rgb(206,206,206)'/>
-          <rect y='0.856000' width='1' height='0.003000' fill='rgb(203,203,203)'/>
-          <rect y='0.858000' width='1' height='0.003000' fill='rgb(201,201,201)'/>
-          <rect y='0.860000' width='1' height='0.003000' fill='rgb(198,198,198)'/>
-          <rect y='0.862000' width='1' height='0.003000' fill='rgb(195,195,195)'/>
-          <rect y='0.864000' width='1' height='0.003000' fill='rgb(192,192,192)'/>
-          <rect y='0.866000' width='1' height='0.003000' fill='rgb(189,189,189)'/>
-          <rect y='0.868000' width='1' height='0.003000' fill='rgb(186,186,186)'/>
-          <rect y='0.870000' width='1' height='0.003000' fill='rgb(183,183,183)'/>
-          <rect y='0.872000' width='1' height='0.003000' fill='rgb(181,181,181)'/>
-          <rect y='0.874000' width='1' height='0.003000' fill='rgb(178,178,178)'/>
-          <rect y='0.876000' width='1' height='0.003000' fill='rgb(175,175,175)'/>
-          <rect y='0.878000' width='1' height='0.003000' fill='rgb(172,172,172)'/>
-          <rect y='0.880000' width='1' height='0.003000' fill='rgb(169,169,169)'/>
-          <rect y='0.882000' width='1' height='0.003000' fill='rgb(166,166,166)'/>
-          <rect y='0.884000' width='1' height='0.003000' fill='rgb(163,163,163)'/>
-          <rect y='0.886000' width='1' height='0.003000' fill='rgb(160,160,160)'/>
-          <rect y='0.888000' width='1' height='0.003000' fill='rgb(158,158,158)'/>
-          <rect y='0.890000' width='1' height='0.003000' fill='rgb(155,155,155)'/>
-          <rect y='0.892000' width='1' height='0.003000' fill='rgb(152,152,152)'/>
-          <rect y='0.894000' width='1' height='0.003000' fill='rgb(149,149,149)'/>
-          <rect y='0.896000' width='1' height='0.003000' fill='rgb(146,146,146)'/>
-          <rect y='0.898000' width='1' height='0.003000' fill='rgb(143,143,143)'/>
-          <rect y='0.900000' width='1' height='0.003000' fill='rgb(140,140,140)'/>
-          <rect y='0.902000' width='1' height='0.003000' fill='rgb(138,138,138)'/>
-          <rect y='0.904000' width='1' height='0.003000' fill='rgb(135,135,135)'/>
-          <rect y='0.906000' width='1' height='0.003000' fill='rgb(132,132,132)'/>
-          <rect y='0.908000' width='1' height='0.003000' fill='rgb(129,129,129)'/>
-          <rect y='0.910000' width='1' height='0.003000' fill='rgb(126,126,126)'/>
-          <rect y='0.912000' width='1' height='0.003000' fill='rgb(123,123,123)'/>
-          <rect y='0.914000' width='1' height='0.003000' fill='rgb(120,120,120)'/>
-          <rect y='0.916000' width='1' height='0.003000' fill='rgb(117,117,117)'/>
-          <rect y='0.918000' width='1' height='0.003000' fill='rgb(115,115,115)'/>
-          <rect y='0.920000' width='1' height='0.003000' fill='rgb(112,112,112)'/>
-          <rect y='0.922000' width='1' height='0.003000' fill='rgb(109,109,109)'/>
-          <rect y='0.924000' width='1' height='0.003000' fill='rgb(106,106,106)'/>
-          <rect y='0.926000' width='1' height='0.003000' fill='rgb(103,103,103)'/>
-          <rect y='0.928000' width='1' height='0.003000' fill='rgb(100,100,100)'/>
-          <rect y='0.930000' width='1' height='0.003000' fill='rgb(97,97,97)'/>
-          <rect y='0.932000' width='1' height='0.003000' fill='rgb(95,95,95)'/>
-          <rect y='0.934000' width='1' height='0.003000' fill='rgb(92,92,92)'/>
-          <rect y='0.936000' width='1' height='0.003000' fill='rgb(89,89,89)'/>
-          <rect y='0.938000' width='1' height='0.003000' fill='rgb(86,86,86)'/>
-          <rect y='0.940000' width='1' height='0.003000' fill='rgb(83,83,83)'/>
-          <rect y='0.942000' width='1' height='0.003000' fill='rgb(80,80,80)'/>
-          <rect y='0.944000' width='1' height='0.003000' fill='rgb(77,77,77)'/>
-          <rect y='0.946000' width='1' height='0.003000' fill='rgb(74,74,74)'/>
-          <rect y='0.948000' width='1' height='0.003000' fill='rgb(72,72,72)'/>
-          <rect y='0.950000' width='1' height='0.003000' fill='rgb(69,69,69)'/>
-          <rect y='0.952000' width='1' height='0.003000' fill='rgb(66,66,66)'/>
-          <rect y='0.954000' width='1' height='0.003000' fill='rgb(63,63,63)'/>
-          <rect y='0.956000' width='1' height='0.003000' fill='rgb(60,60,60)'/>
-          <rect y='0.958000' width='1' height='0.003000' fill='rgb(57,57,57)'/>
-          <rect y='0.960000' width='1' height='0.003000' fill='rgb(54,54,54)'/>
-          <rect y='0.962000' width='1' height='0.003000' fill='rgb(52,52,52)'/>
-          <rect y='0.964000' width='1' height='0.003000' fill='rgb(49,49,49)'/>
-          <rect y='0.966000' width='1' height='0.003000' fill='rgb(46,46,46)'/>
-          <rect y='0.968000' width='1' height='0.003000' fill='rgb(43,43,43)'/>
-          <rect y='0.970000' width='1' height='0.003000' fill='rgb(40,40,40)'/>
-          <rect y='0.972000' width='1' height='0.003000' fill='rgb(37,37,37)'/>
-          <rect y='0.974000' width='1' height='0.003000' fill='rgb(34,34,34)'/>
-          <rect y='0.976000' width='1' height='0.003000' fill='rgb(32,32,32)'/>
-          <rect y='0.978000' width='1' height='0.003000' fill='rgb(29,29,29)'/>
-          <rect y='0.980000' width='1' height='0.003000' fill='rgb(26,26,26)'/>
-          <rect y='0.982000' width='1' height='0.003000' fill='rgb(23,23,23)'/>
-          <rect y='0.984000' width='1' height='0.003000' fill='rgb(20,20,20)'/>
-          <rect y='0.986000' width='1' height='0.003000' fill='rgb(17,17,17)'/>
-          <rect y='0.988000' width='1' height='0.003000' fill='rgb(14,14,14)'/>
-          <rect y='0.990000' width='1' height='0.003000' fill='rgb(11,11,11)'/>
-          <rect y='0.992000' width='1' height='0.003000' fill='rgb(9,9,9)'/>
-          <rect y='0.994000' width='1' height='0.003000' fill='rgb(6,6,6)'/>
-          <rect y='0.996000' width='1' height='0.003000' fill='rgb(3,3,3)'/>
-          <rect y='0.998000' width='1' height='0.003000' fill='rgb(0,0,0)'/>
-          </g>
-        </mask>
-      </defs>
-    </svg>
 
   </div>
 </section>
