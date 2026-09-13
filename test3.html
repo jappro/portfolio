@@ -237,13 +237,24 @@
      bottom 18% of the photo (deepest fade, right where the hard
      cutoff was worst). It curves upward to almost no coverage at
      the center (over the zipper/collar).
+
+     Follow-up fix: 18% was too short a physical distance for the
+     transition to read as smooth — it looked like a visible curved
+     line rather than a blend once actually checked at real 1x
+     device resolution (not just supersampled testing). Increased
+     to 30% for a longer, more gradual transition. The extra height
+     pushes slightly above where the blob background ends, but the
+     gradient stays near-zero opacity through that small overlap,
+     so it doesn't visibly tint the blob — it only becomes
+     noticeably dark once past the blob's edge, where only the
+     plain page background is behind it.
   */
   .about-photo-shade{
     position:absolute;
     left:0;
     right:0;
     bottom:0;
-    height:18%;
+    height:30%;
     z-index:1;
     pointer-events:none;
   }
@@ -516,8 +527,8 @@
           <defs>
             <linearGradient id="aboutPhotoShadeGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0"    style="stop-color:var(--bg); stop-opacity:0"/>
-              <stop offset="0.4"  style="stop-color:var(--bg); stop-opacity:0.15"/>
-              <stop offset="0.75" style="stop-color:var(--bg); stop-opacity:0.6"/>
+              <stop offset="0.4"  style="stop-color:var(--bg); stop-opacity:0.06"/>
+              <stop offset="0.7"  style="stop-color:var(--bg); stop-opacity:0.35"/>
               <stop offset="1"    style="stop-color:var(--bg); stop-opacity:1"/>
             </linearGradient>
           </defs>
