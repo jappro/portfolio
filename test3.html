@@ -193,6 +193,25 @@
     background-repeat:no-repeat;
   }
 
+  /* single shade layer, exactly matching the photo's own box —
+     heavy curved fade at the two bottom corners, minimal fade across
+     the center, nothing touches the head/face area above it */
+  .about-photo-shade{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 36% 26% at 0% 100%,
+        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
+      radial-gradient(ellipse 36% 26% at 100% 100%,
+        rgba(8,8,11,0.95) 0%, rgba(8,8,11,0.55) 40%, rgba(8,8,11,0) 100%),
+      linear-gradient(to top,
+        rgba(8,8,11,0.32) 0%, rgba(8,8,11,0.16) 10%, rgba(8,8,11,0) 20%),
+      linear-gradient(to top,
+        rgba(8,8,11,0.55) 0%, rgba(8,8,11,0) 6%);
+  }
+
   .about-photo-fallback{
     position:relative;
     z-index:1;
@@ -210,62 +229,6 @@
   }
   .about-photo-wrap.photo-missing .about-photo{display:none;}
   .about-photo-wrap.photo-missing .about-photo-fallback{display:flex;}
-
-  /* ===== Bottom edge fade (overlay-based) =====
-     Fixes the hard rectangular cutoff where the transparent-bg
-     portrait PNG ends.
-
-     History: two earlier attempts used CSS `mask-image` (first a
-     data-URI SVG, then a DOM-referenced <mask>). Both tested fine
-     in this environment's browser engine, but failed in real-world
-     Chrome (mobile) — CSS masking support/behavior for HTML
-     elements is inconsistent enough across browsers that it isn't
-     safe to rely on here.
-
-     This version instead uses a plain, visible SVG shape layered
-     on top of the photo (not a mask) — the same basic technique as
-     an <img> or a gradient background, which is essentially
-     universally supported. It's filled with a gradient from
-     transparent to solid var(--bg). This is safe to color-match
-     here specifically because the blob background ends exactly
-     where this fade zone begins (~82% down the photo) — below that
-     point, only the plain page background is ever behind the
-     photo, at both edges and center, so there's no risk of the
-     overlay's color mismatching something colorful behind it.
-
-     Shape: at the left/right edges the shade covers the full
-     bottom 18% of the photo (deepest fade, right where the hard
-     cutoff was worst). It curves upward to almost no coverage at
-     the center (over the zipper/collar).
-
-     Follow-up fix: 18% was too short a physical distance for the
-     transition to read as smooth — it looked like a visible curved
-     line rather than a blend once actually checked at real 1x
-     device resolution (not just supersampled testing). Increased
-     to 30% for a longer, more gradual transition. The extra height
-     pushes slightly above where the blob background ends, but the
-     gradient stays near-zero opacity through that small overlap,
-     so it doesn't visibly tint the blob — it only becomes
-     noticeably dark once past the blob's edge, where only the
-     plain page background is behind it.
-  */
-  .about-photo-shade{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:30%;
-    z-index:1;
-    pointer-events:none;
-  }
-  .about-photo-shade svg{
-    display:block;
-    width:100%;
-    height:100%;
-  }
-  .about-container.is-expanded .about-photo-shade{
-    display:none;
-  }
 
   .about-photo-note{
     position:absolute;
@@ -309,6 +272,9 @@
     background-size:cover;
   }
   .about-container.is-expanded .about-photo-note{
+    display:none;
+  }
+  .about-container.is-expanded .about-photo-shade{
     display:none;
   }
 
@@ -521,20 +487,8 @@
         role="img"
         aria-label="Portrait photo"
       ></div>
+      <div class="about-photo-shade"></div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
-      <div class="about-photo-shade" aria-hidden="true">
-        <svg viewBox="0 0 1 1" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="aboutPhotoShadeGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0"    style="stop-color:var(--bg); stop-opacity:0"/>
-              <stop offset="0.4"  style="stop-color:var(--bg); stop-opacity:0.06"/>
-              <stop offset="0.7"  style="stop-color:var(--bg); stop-opacity:0.35"/>
-              <stop offset="1"    style="stop-color:var(--bg); stop-opacity:1"/>
-            </linearGradient>
-          </defs>
-          <path d="M0,1 L0,0 Q0.5,2 1,0 L1,1 Z" fill="url(#aboutPhotoShadeGrad)"/>
-        </svg>
-      </div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
 
