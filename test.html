@@ -28,13 +28,13 @@
     color-scheme:dark;
   }
   *{box-sizing:border-box;}
-  body{margin:0; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; background:var(--bg);}
+  body{margin:0; font-family:'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:var(--bg);}
 </style>
 </head>
 <body>
 <div class="phil-wrapper">
 
-<section class="phil-section" id="philosophy">
+<section class="phil-section" id="ethos">
 
   <div class="phil-bg" aria-hidden="true"></div>
   <div class="phil-stars" aria-hidden="true">
@@ -73,10 +73,10 @@
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;700&display=swap');
 
   .phil-heading, .phil-card__heading, .phil-card__heading--flow, .phil-eyebrow{
-    font-family:'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family:'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-style:normal;
   }
 
@@ -206,7 +206,7 @@
   }
 </style>
 
-<section class="phil-body" id="philosophy-body">
+<section class="phil-body" id="ethos-body">
 
   <div class="phil-body-sticky">
 
@@ -1380,7 +1380,7 @@
 
 <script>
 (function(){
-  var section = document.getElementById('philosophy-body');
+  var section = document.getElementById('ethos-body');
   if(!section) return;
 
   var cardsWrap = section.querySelector('.phil-body-cards');
