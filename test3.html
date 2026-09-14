@@ -217,18 +217,26 @@
      no gradient-vs-polygon mismatch and no residual hard edge anywhere.
      It also naturally bleeds a little past the crisp triangle boundary
      before fully disappearing, per the "fade out, don't cut off" ask. */
+  /* Outer element only handles position + blur (no clip-path here) so the
+     blur is free to spread past the shape's original boundary instead of
+     being clipped back to it. The inner element holds the actual crisp
+     triangle; blurring happens to the whole rendered result afterward. */
   .about-photo-corner-triangle{
     position:absolute;
     left:0;
     top:82%;
     transform:translateX(-50%);
-    width:78px;
-    height:68px;
-    clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
-    background:#08080b;
-    filter:blur(11px);
+    width:88px;
+    height:76px;
+    filter:blur(22px);
     z-index:3;
     pointer-events:none;
+  }
+  .about-photo-corner-triangle-inner{
+    width:100%;
+    height:100%;
+    clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
+    background:#08080b;
   }
 
   .about-photo-fallback{
@@ -510,7 +518,9 @@
         aria-label="Portrait photo"
       ></div>
       <div class="about-photo-bottom-blend"></div>
-      <div class="about-photo-corner-triangle"></div>
+      <div class="about-photo-corner-triangle">
+        <div class="about-photo-corner-triangle-inner"></div>
+      </div>
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <p class="about-photo-note">Curious mind.<br>Building what's next.</p>
     </div>
