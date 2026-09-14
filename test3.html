@@ -268,6 +268,28 @@
     mask-position:center bottom;
     -webkit-mask-repeat:no-repeat;
     mask-repeat:no-repeat;
+    /* Hidden until the JS below confirms the (same) image file has
+       actually loaded — otherwise the mask can lag a frame behind
+       the visible photo and the hard edge flashes briefly before
+       the shade catches up. Fades in instead of popping in. */
+    opacity:0;
+    transition:opacity .25s ease;
+    /* Forces this element onto its own stable GPU compositing
+       layer. Without this, some browsers re-rasterize a masked
+       element at a slightly different sub-pixel offset during
+       scroll, which can show up as a thin bright seam right at the
+       mask's edge for a frame. This is a real device/scroll
+       behavior I can't verify from a static screenshot — it's the
+       standard fix for this category of bug, but confirm on your
+       device. */
+    transform:translateZ(0);
+    -webkit-transform:translateZ(0);
+    will-change:transform;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  .about-photo-wrap.photo-ready .about-photo-shade{
+    opacity:1;
   }
   .about-container.is-expanded .about-photo-shade{
     display:none;
@@ -570,11 +592,18 @@
       }
     });
 
-    // graceful fallback if the photo file isn't present yet
+    // graceful fallback if the photo file isn't present yet, and a
+    // signal for when it's safe to reveal the shade (see the
+    // .about-photo-shade CSS — it stays opacity:0 until this class
+    // is added, since the mask depends on the same file loading and
+    // would otherwise pop in a moment after the photo does)
     var wrap = document.getElementById('aboutPhotoWrap');
     var preload = new Image();
     preload.onerror = function(){
       wrap.classList.add('photo-missing');
+    };
+    preload.onload = function(){
+      wrap.classList.add('photo-ready');
     };
     preload.src = 'src/about-portrait.png';
   })();
