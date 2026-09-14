@@ -212,19 +212,21 @@
      bottom-left corner meets the photo's left edge — overlapping both
      the blob background and the bottom-blend band. Hard solid core,
      medium tone near its circumference, gone shortly past it. */
-  /* Triangle sitting right on the point where the background blob's
-     bottom edge meets the photo's left side — apex pinned exactly there,
-     widening downward. Heavier at center, fading out toward its edges. */
+  /* True equilateral triangle (130 wide, 112.6 tall), solid fill, then
+     blurred — blur softens *every* edge evenly by definition, so there's
+     no gradient-vs-polygon mismatch and no residual hard edge anywhere.
+     It also naturally bleeds a little past the crisp triangle boundary
+     before fully disappearing, per the "fade out, don't cut off" ask. */
   .about-photo-corner-triangle{
     position:absolute;
     left:0;
     top:82%;
     transform:translateX(-50%);
-    width:120px;
-    height:150px;
+    width:78px;
+    height:68px;
     clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
-    background:radial-gradient(ellipse at 50% 60%,
-      #08080b 0%, #08080b 35%, rgba(8,8,11,0.5) 65%, rgba(8,8,11,0) 100%);
+    background:#08080b;
+    filter:blur(11px);
     z-index:3;
     pointer-events:none;
   }
