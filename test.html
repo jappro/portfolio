@@ -1531,5 +1531,179 @@
 })();
 </script>
 
+<style>
+  /* ============================================================
+     PROFESSIONAL PHILOSOPHY — scroll reveal
+     Header (eyebrow/heading/intro/divider) fades + rises into place
+     on every breakpoint. Cards additionally get a one-time "flash"
+     in their own accent color as they arrive — the same purple/
+     blue/green/amber/teal already used for hover, so a card's color
+     identity is the first thing you see when it appears, not just
+     something you discover on hover. Card fade+rise+flash is scoped
+     to tablet/desktop (768px+): mobile already has its own dramatic
+     entrance via the scroll-pin funnel, so it's left untouched here.
+  ============================================================= */
+
+  .phil-eyebrow.phil-reveal,
+  .phil-heading.phil-reveal,
+  .phil-intro.phil-reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity 0.7s cubic-bezier(.16,.84,.44,1), transform 0.7s cubic-bezier(.16,.84,.44,1);
+  }
+  .phil-eyebrow.phil-reveal--visible,
+  .phil-heading.phil-reveal--visible,
+  .phil-intro.phil-reveal--visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .phil-divider.phil-reveal{
+    opacity:0;
+    transition:opacity 0.5s ease;
+  }
+  .phil-divider.phil-reveal--visible{
+    opacity:1;
+  }
+  .phil-divider.phil-reveal .phil-divider__line{
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:transform 0.8s cubic-bezier(.16,.84,.44,1) 0.15s;
+  }
+  .phil-divider.phil-reveal--visible .phil-divider__line{
+    transform:scaleX(1);
+  }
+  .phil-divider.phil-reveal .phil-divider__spark{
+    opacity:0;
+    transform:scale(0.3);
+    transition:opacity 0.4s ease 0.5s, transform 0.4s ease 0.5s;
+  }
+  .phil-divider.phil-reveal--visible .phil-divider__spark{
+    opacity:0.8;
+    transform:scale(1);
+  }
+
+  @media (min-width:768px){
+    .phil-card.phil-reveal{
+      opacity:0;
+      transform:translateY(40px) scale(0.97);
+    }
+    /* --visible state, if the animations below were ever skipped for
+       any reason, still lands on the fully-visible resting values */
+    .phil-card.phil-reveal--visible{
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
+
+    @keyframes phil-rise-in{
+      from{ opacity:0; transform:translateY(40px) scale(0.97); }
+      to{ opacity:1; transform:translateY(0) scale(1); }
+    }
+    @keyframes phil-flash-purple{
+      0%{ box-shadow:var(--shadow), 0 0 0 3px var(--purple), 0 0 46px 6px var(--purple-soft); }
+      100%{ box-shadow:var(--shadow); }
+    }
+    @keyframes phil-flash-blue{
+      0%{ box-shadow:var(--shadow), 0 0 0 3px var(--blue), 0 0 46px 6px var(--blue-soft); }
+      100%{ box-shadow:var(--shadow); }
+    }
+    @keyframes phil-flash-green{
+      0%{ box-shadow:var(--shadow), 0 0 0 3px var(--green), 0 0 46px 6px var(--green-soft); }
+      100%{ box-shadow:var(--shadow); }
+    }
+    @keyframes phil-flash-amber{
+      0%{ box-shadow:var(--shadow), 0 0 0 3px var(--amber), 0 0 46px 6px var(--amber-soft); }
+      100%{ box-shadow:var(--shadow); }
+    }
+    @keyframes phil-flash-teal{
+      0%{ box-shadow:var(--shadow), 0 0 0 3px var(--teal), 0 0 46px 6px var(--teal-soft); }
+      100%{ box-shadow:var(--shadow); }
+    }
+    /* `animation` is a separate CSS mechanism from `transition` — using
+       it here (instead of a transition, which would collide with and
+       silently replace the hover `transition` declared elsewhere on
+       this same element) keeps hover/tap feedback fully intact after
+       the reveal plays. animation-fill-mode:forwards keeps the card
+       at its revealed opacity/transform once the animation ends. */
+    .phil-card[data-card-index="1"].phil-reveal--visible{ animation:phil-rise-in 0.7s cubic-bezier(.16,.84,.44,1) forwards, phil-flash-purple 1.1s ease-out; }
+    .phil-card[data-card-index="2"].phil-reveal--visible{ animation:phil-rise-in 0.7s cubic-bezier(.16,.84,.44,1) forwards, phil-flash-blue 1.1s ease-out; }
+    .phil-card[data-card-index="3"].phil-reveal--visible{ animation:phil-rise-in 0.7s cubic-bezier(.16,.84,.44,1) forwards, phil-flash-green 1.1s ease-out; }
+    .phil-card[data-card-index="4"].phil-reveal--visible{ animation:phil-rise-in 0.7s cubic-bezier(.16,.84,.44,1) forwards, phil-flash-amber 1.1s ease-out; }
+    .phil-card[data-card-index="5"].phil-reveal--visible{ animation:phil-rise-in 0.7s cubic-bezier(.16,.84,.44,1) forwards, phil-flash-teal 1.1s ease-out; }
+
+    /* once the rise-in animation finishes, JS adds this class to cancel
+       the animation outright — an animation with fill-mode:forwards
+       holds its end value with priority even over a later :hover
+       transform, so without this, hovering a card could stop lifting
+       after its first reveal. Handing off to the plain (non-animated)
+       .phil-reveal--visible rule above lets :hover reclaim transform
+       normally, permanently. */
+    .phil-card.phil-reveal--done{
+      animation:none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .phil-reveal{
+      transition:none !important;
+      animation:none !important;
+      opacity:1 !important;
+      transform:none !important;
+    }
+  }
+</style>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var headerEls = Array.prototype.slice.call(
+    document.querySelectorAll('#ethos .phil-eyebrow, #ethos .phil-heading, #ethos .phil-intro, #ethos .phil-divider')
+  );
+  var cardEls = Array.prototype.slice.call(document.querySelectorAll('#ethos-body .phil-card'));
+
+  var headerDelay = { 'phil-eyebrow':0, 'phil-heading':90, 'phil-intro':180, 'phil-divider':270 };
+  function delayFor(el){
+    if(el.classList.contains('phil-card')){
+      var idx = el.getAttribute('data-card-index');
+      return (idx === '2' || idx === '5') ? 120 : 0; /* right-column card in its row arrives just after its left partner */
+    }
+    for(var key in headerDelay){
+      if(el.classList.contains(key)) return headerDelay[key];
+    }
+    return 0;
+  }
+
+  var allEls = headerEls.concat(cardEls);
+  allEls.forEach(function(el){ el.classList.add('phil-reveal'); });
+
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    allEls.forEach(function(el){ el.classList.add('phil-reveal--visible'); });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var el = entry.target;
+      setTimeout(function(){
+        el.classList.add('phil-reveal--visible');
+        if(el.classList.contains('phil-card')){
+          el.addEventListener('animationend', function onEnd(e){
+            if(e.animationName === 'phil-rise-in'){
+              el.classList.add('phil-reveal--done');
+              el.removeEventListener('animationend', onEnd);
+            }
+          });
+        }
+      }, delayFor(el));
+      observer.unobserve(el);
+    });
+  }, { threshold:0.2, rootMargin:'0px 0px -8% 0px' });
+
+  allEls.forEach(function(el){ observer.observe(el); });
+})();
+</script>
+
 </body>
 </html>
