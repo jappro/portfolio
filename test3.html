@@ -247,6 +247,27 @@
       radial-gradient(ellipse 92% 95% at 0% 100%, var(--bg) 0%, transparent 72%),
       radial-gradient(ellipse 92% 95% at 100% 100%, var(--bg) 0%, transparent 72%),
       linear-gradient(to top, var(--bg) 0%, var(--bg) 4%, transparent 78%);
+    /* Confines the shade to only where the portrait's own pixels
+       are opaque, using the same PNG as a mask on its alpha
+       channel — so past the person's silhouette (where the PNG is
+       transparent and the blob shows through), the shade
+       disappears automatically instead of painting a rectangle
+       over the blob. Sized/positioned to line up with the same
+       bottom-anchored portion of the photo this box already
+       covers: this box is 38% of the full photo's height, so the
+       mask image is scaled to 100/38 ≈ 263% of the box's own
+       height and bottom-anchored, matching .about-photo's own
+       "center bottom" positioning. */
+    -webkit-mask-image:url('src/about-portrait.png');
+    mask-image:url('src/about-portrait.png');
+    -webkit-mask-mode:alpha;
+    mask-mode:alpha;
+    -webkit-mask-size:100% 263.16%;
+    mask-size:100% 263.16%;
+    -webkit-mask-position:center bottom;
+    mask-position:center bottom;
+    -webkit-mask-repeat:no-repeat;
+    mask-repeat:no-repeat;
   }
   .about-container.is-expanded .about-photo-shade{
     display:none;
