@@ -281,9 +281,21 @@
        mask's edge for a frame. This is a real device/scroll
        behavior I can't verify from a static screenshot — it's the
        standard fix for this category of bug, but confirm on your
-       device. */
-    transform:translateZ(0);
-    -webkit-transform:translateZ(0);
+       device.
+
+       The scale(1.02) below is a separate fix for a separate
+       symptom: at non-1x zoom (pinch/double-tap zoom), percentage-
+       based sizing on this element, the photo, and the blob can
+       each round to a slightly different sub-pixel boundary, and
+       daylight from the page background peeks through the gap as a
+       hairline. Scaling this element up ~2% around its own center
+       makes it deliberately overhang its logical edges, so any
+       rounding gap gets swallowed by that overlap instead of
+       showing. Same caveat as above — this is real zoom/rounding
+       behavior I can't reproduce pixel-for-pixel here; it's the
+       standard treatment, confirm on your device. */
+    transform:translateZ(0) scale(1.02);
+    -webkit-transform:translateZ(0) scale(1.02);
     will-change:transform;
     backface-visibility:hidden;
     -webkit-backface-visibility:hidden;
