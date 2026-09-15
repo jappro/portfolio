@@ -71,12 +71,17 @@ html{ scroll-behavior:smooth; overflow-x:hidden; background:#050507; }
    don't explicitly paint over it (landscape mode, viewport taller
    than content, gaps between sections), which was the white
    top/bottom/side-bar bug seen across sections including Core
-   Capabilities. overflow-x:hidden added on body as well as html so
-   the horizontal clip holds regardless of which element ends up
-   establishing the scroll container. */
+   Capabilities.
+
+   overflow-x:hidden stays ONLY on html, matching the original working
+   code — do NOT also add it to body. Mobile Safari has a well-known
+   quirk where overflow-x:hidden on body specifically (not html) makes
+   it treat body's own box as the containing block for position:fixed/
+   sticky elements instead of the true viewport, which broke the
+   sticky nav pill and the fixed mobile hamburger button the first
+   time this was tried. */
 body{
   background:#050507;
-  overflow-x:hidden;
   color:var(--text-hi);
   font-family:'Inter', sans-serif;
   -webkit-font-smoothing:antialiased;
