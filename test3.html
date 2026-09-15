@@ -348,6 +348,8 @@
      being repurposed as the background (that's .about-expanded-bg's
      job now) */
   .about-container.is-expanded .about-photo-wrap{
+    position:absolute;
+    inset:0;
     opacity:0;
     pointer-events:none;
     transition:opacity .4s ease;
@@ -470,6 +472,44 @@
     margin:0;
   }
 
+  /* ===== Metrics ===== */
+
+  .about-metrics{
+    margin-top:44px;
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:4px 20px;
+  }
+
+  .about-metric-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--card-border);
+  }
+  .about-metric-row:last-child{
+    border-bottom:none;
+  }
+
+  .about-metric-num{
+    flex:0 0 auto;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-0.01em;
+    color:var(--text-hi);
+  }
+
+  .about-metric-label{
+    flex:0 0 auto;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--text-mid);
+    text-align:right;
+  }
+
 </style>
 </head>
 <body>
@@ -567,6 +607,29 @@
       <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
       <div class="about-photo-shade" aria-hidden="true"></div>
       <p class="about-photo-note">People first.<br>Better systems, better results.</p>
+    </div>
+
+    <div class="about-metrics">
+      <div class="about-metric-row">
+        <span class="about-metric-num">4+</span>
+        <span class="about-metric-label">Years</span>
+      </div>
+      <div class="about-metric-row">
+        <span class="about-metric-num">5+</span>
+        <span class="about-metric-label">Core capabilities</span>
+      </div>
+      <div class="about-metric-row">
+        <span class="about-metric-num">10+</span>
+        <span class="about-metric-label">Projects &amp; collaborations</span>
+      </div>
+      <div class="about-metric-row">
+        <span class="about-metric-num">8K+</span>
+        <span class="about-metric-label">Web3 community audience</span>
+      </div>
+      <div class="about-metric-row">
+        <span class="about-metric-num">200+</span>
+        <span class="about-metric-label">Non-Web3 social audience</span>
+      </div>
     </div>
 
   </div>
