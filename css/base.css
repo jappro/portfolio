@@ -61,10 +61,22 @@
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
-html{ scroll-behavior:smooth; overflow-x:hidden; }
+html{ scroll-behavior:smooth; overflow-x:hidden; background:#050507; }
 
+/* Hardcoded to the site's real dark background (matches .hero-new's
+   #050507) instead of var(--bg), which defaults to a LIGHT value
+   (#fafafa) in :root and only flips dark under [data-theme="dark"] —
+   an attribute nothing in the site's JS currently ever sets. Left as
+   var(--bg), the page background renders white everywhere sections
+   don't explicitly paint over it (landscape mode, viewport taller
+   than content, gaps between sections), which was the white
+   top/bottom/side-bar bug seen across sections including Core
+   Capabilities. overflow-x:hidden added on body as well as html so
+   the horizontal clip holds regardless of which element ends up
+   establishing the scroll container. */
 body{
-  background:var(--bg);
+  background:#050507;
+  overflow-x:hidden;
   color:var(--text-hi);
   font-family:'Inter', sans-serif;
   -webkit-font-smoothing:antialiased;
@@ -453,4 +465,3 @@ section.section{ padding:110px 0; }
   .nav-links{ display:none; }
   .nav-cta span{ display:none; }
 }
-
