@@ -310,7 +310,7 @@
   .about-photo-note{
     position:absolute;
     right:-32%;
-    bottom:15%;
+    bottom:10%;
     z-index:2;
     font-family:'Caveat',cursive;
     font-weight:600;
@@ -321,35 +321,36 @@
     text-align:right;
   }
 
-  /* faint background state once "See more" is open */
-  .about-container.is-expanded .about-photo-wrap{
+  /* ===== "See more" expanded background =====
+     A separate, independent element for the faint full-bleed
+     background shown while the expanded story is open — decoupled
+     from the portrait image on purpose, so it can use its own file
+     without touching .about-photo at all. Swap the background-image
+     path below to change it. */
+  .about-expanded-bg{
     position:absolute;
     inset:0;
-    max-width:none;
-    width:100%;
-    height:100%;
-    margin:0;
-    transform:none;
-    opacity:0.1;
-    filter:grayscale(0.4) blur(0.5px);
-    pointer-events:none;
     z-index:0;
-  }
-  .about-container.is-expanded .about-photo-blob{
-    left:0;
-    top:0;
-    transform:none;
-    width:100%;
-    height:100%;
-    border-radius:28px;
-  }
-  .about-container.is-expanded .about-photo{
-    width:100%;
-    height:100%;
+    opacity:0;
+    pointer-events:none;
+    background-image:url('src/about-portrait-bg.jpg');
     background-size:cover;
+    background-position:center;
+    border-radius:28px;
+    filter:grayscale(0.4) blur(0.5px);
+    transition:opacity .5s ease;
   }
-  .about-container.is-expanded .about-photo-note{
-    display:none;
+  .about-container.is-expanded .about-expanded-bg{
+    opacity:0.1;
+  }
+
+  /* the small portrait simply fades out while expanded, instead of
+     being repurposed as the background (that's .about-expanded-bg's
+     job now) */
+  .about-container.is-expanded .about-photo-wrap{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .4s ease;
   }
 
   /* ===== Expanded story ===== */
@@ -475,6 +476,8 @@
 
 <section id="about">
   <div class="about-container" id="aboutContainer">
+
+    <div class="about-expanded-bg" aria-hidden="true"></div>
 
     <div class="about-content">
 
