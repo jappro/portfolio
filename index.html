@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -260,11 +260,16 @@
 
   </div>
 </header>
-     
-<!-- PROFESSIONAL PHILOSOPHY
-     STARTS HERE -->
-     
-<<div class="phil-wrapper">
+
+<!-- ============ PROFESSIONAL PHILOSOPHY ============
+     Temporarily standalone for testing. Per the plan, once Core
+     Capabilities is built, both will be wrapped under one outer
+     <section id="ethos"> together — id="ethos" is left on
+     .phil-section for now since Philosophy's own JS scopes its
+     scroll-reveal queries as "#ethos .phil-eyebrow" etc. (descendant
+     selectors, which will keep matching correctly even if id="ethos"
+     later moves to an outer wrapper instead). -->
+<div class="phil-wrapper">
 
 <section class="phil-section" id="ethos">
 
@@ -777,8 +782,11 @@
 
 </div>
 
-<script src="js/philosophy.js"></script>
+<!-- Sections below this point (Experience, Projects, About, Contact)
+     will be added incrementally as their HTML/CSS/JS comes in. -->
+
 <script src="js/main.js"></script>
 <script src="js/hero-impact.js"></script>
+<script src="js/philosophy.js"></script>
 </body>
 </html>
