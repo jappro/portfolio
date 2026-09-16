@@ -510,6 +510,58 @@
     text-align:right;
   }
 
+  /* ===== CTA: View CV ===== */
+
+  .about-cta-wrap{
+    margin-top:28px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .about-cta-btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    border-radius:999px;
+    border:1.5px solid var(--purple);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 45%),
+      var(--bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.07),
+      0 8px 20px rgba(0,0,0,0.4);
+    color:var(--text-hi);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    letter-spacing:0.01em;
+    text-decoration:none;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .about-cta-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--purple);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 12px 26px rgba(124,92,255,0.28);
+  }
+  .about-cta-btn:active{
+    transform:translateY(0);
+  }
+  .about-cta-btn:focus-visible{
+    outline:2px solid var(--purple);
+    outline-offset:3px;
+  }
+
+  .about-cta-icon{
+    width:16px;
+    height:16px;
+    flex:0 0 auto;
+    color:var(--purple);
+  }
+
 </style>
 </head>
 <body>
@@ -630,6 +682,23 @@
         <span class="about-metric-num">200+</span>
         <span class="about-metric-label">Non-Web3 social audience</span>
       </div>
+    </div>
+
+    <div class="about-cta-wrap">
+      <a href="cv.html" class="about-cta-btn">
+        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
+          <path d="M14 2v6h6"/>
+          <line x1="8" y1="13" x2="16" y2="13"/>
+          <line x1="8" y1="17" x2="16" y2="17"/>
+          <line x1="8" y1="9" x2="10" y2="9"/>
+        </svg>
+        <span>View CV</span>
+        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="7 7 17 7 17 17"/>
+        </svg>
+      </a>
     </div>
 
   </div>
