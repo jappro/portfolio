@@ -470,3 +470,141 @@ section.section{ padding:110px 0; }
   .nav-links{ display:none; }
   .nav-cta span{ display:none; }
 }
+
+/* ============================================================
+   SHARED SECTION-REVEAL SYSTEM
+   Introduced by Core Capabilities, explicitly meant to be reused by
+   later sections (Experience+Testimonials next) rather than each
+   duplicating its own copy. Distinct from the .reveal/.in-view
+   utility above (which stays as-is for anything already using it)
+   and from Philosophy's own .phil-reveal system (which needs its
+   per-element stagger/color-flash choreography that this generic one
+   can't replicate) — this is a third, parallel entrance-animation
+   system now in the codebase. Not a conflict, just worth knowing:
+   three different reveal mechanisms exist by design, one per section
+   family's actual needs.
+============================================================= */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(28px) scale(0.98);
+  filter:blur(6px);
+  transition:opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+             transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+             filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change:opacity, transform, filter;
+}
+[data-reveal].is-visible{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  filter:blur(0);
+}
+[data-reveal-list] [data-reveal]:nth-child(1){ transition-delay:0ms; }
+[data-reveal-list] [data-reveal]:nth-child(2){ transition-delay:90ms; }
+[data-reveal-list] [data-reveal]:nth-child(3){ transition-delay:180ms; }
+[data-reveal-list] [data-reveal]:nth-child(4){ transition-delay:270ms; }
+[data-reveal-list] [data-reveal]:nth-child(5){ transition-delay:360ms; }
+[data-reveal-list] [data-reveal]:nth-child(6){ transition-delay:450ms; }
+[data-reveal-list] [data-reveal]:nth-child(7){ transition-delay:540ms; }
+[data-reveal-list] [data-reveal]:nth-child(n+8){ transition-delay:600ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(1){ transition-delay:0ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(2){ transition-delay:90ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(3){ transition-delay:180ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(4){ transition-delay:270ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(5){ transition-delay:360ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(6){ transition-delay:450ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(7){ transition-delay:540ms; }
+[data-reveal-list] [data-reveal-soft]:nth-child(n+8){ transition-delay:600ms; }
+
+[data-reveal-soft]{
+  opacity:0;
+  filter:blur(6px);
+}
+[data-reveal-soft].is-visible{
+  opacity:1;
+  filter:blur(0);
+}
+
+[data-reveal-delay="1"]{ transition-delay:120ms; }
+
+@media (prefers-reduced-motion: reduce){
+  [data-reveal], [data-reveal-soft]{
+    opacity:1 !important;
+    transform:none !important;
+    filter:none !important;
+    transition:none !important;
+  }
+}
+
+/* Shared heading font-family. Extend this selector list (don't add a
+   duplicate rule) when a future section's heading classes are known —
+   e.g. Experience/Testimonials' .exp-title/.exp-role/.tst-title etc.
+   are intentionally left off for now since that section hasn't been
+   built yet and its exact class names aren't confirmed. */
+.cc-title,
+.cc-explorer-title,
+.cc-cap-title,
+.cc-explorer-number{
+  font-family:'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ============================================================
+   SHARED DECORATIVE BLOB SYSTEM (mechanism only)
+   Generic positioning/blur/mask — a section opts in with class
+   "has-blobs" plus a ".section-blobs" wrapper containing
+   ".section-blob" spans, then supplies its OWN color palette
+   scoped to itself (see capabilities.css for Core Capabilities'
+   colors) rather than that palette living here. Keeps this file
+   generic and lets each section's accent colors stay with that
+   section's own file.
+============================================================= */
+.has-blobs{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+.section-blobs{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 15%,
+    rgba(0,0,0,1) 85%,
+    rgba(0,0,0,0) 100%);
+  mask-image:linear-gradient(to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 15%,
+    rgba(0,0,0,1) 85%,
+    rgba(0,0,0,0) 100%);
+}
+.section-blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:0.5;
+}
+.section-blob--left{
+  top:12%;
+  left:-8%;
+  width:46%;
+  height:46%;
+}
+.section-blob--right{
+  top:10%;
+  right:-8%;
+  width:44%;
+  height:44%;
+}
+.section-blob--mid{
+  top:46%;
+  left:50%;
+  transform:translateX(-50%);
+  width:52%;
+  height:38%;
+  opacity:0.42;
+}
+@media (max-width:767.98px){
+  .section-blob{ filter:blur(60px); opacity:0.42; }
+  .section-blob--mid{ opacity:0.36; }
+}
