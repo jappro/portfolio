@@ -1,1 +1,1046 @@
+/* ============================================================
+   CORE CAPABILITIES — scoped stylesheet
+   The shared infrastructure this section depends on (design tokens,
+   the [data-reveal] scroll-reveal engine, the .has-blobs/.section-blob
+   decorative system, and the Space-Grotesk heading rule) now lives in
+   base.css instead of being duplicated here — see the chat explanation
+   for why each piece moved. Only Core-Capabilities-specific rules
+   remain in this file.
+
+   Removed from the original delivery, and why:
+   - :root / [data-theme="dark"] token block — duplicated base.css's
+     tokens, and its --teal value (#128f7c/#2dd4bf) conflicted with
+     Philosophy's (#0e7490/#22d3ee), which base.css now uses globally.
+     Resolved in favor of Philosophy's value since nothing here needs
+     the specific old shade back.
+   - html{background} / body{background; overflow-x:hidden} — the
+     body-level overflow-x:hidden would have reintroduced the exact
+     bug that broke the sticky nav earlier. The global html{overflow-x:
+     hidden} already in base.css should catch the same iOS Safari
+     100vw-breakout sliver this was written to guard against.
+
+   Still depends on the Space Grotesk + Inter Google Fonts link in
+   index.html's <head> — note Space Grotesk weight 400 (used by
+   .cc-title-line--green) isn't in the current link yet; flagged in
+   chat to fix when index.html is next touched.
+============================================================= */
+
+/* ---- Core Capabilities' own blob palette (mechanism is in base.css) ---- */
+.cc-section .section-blob--left{
+  background:radial-gradient(circle at 40% 40%, var(--purple), rgba(0,0,0,0) 70%),
+             radial-gradient(circle at 65% 62%, var(--teal), rgba(0,0,0,0) 70%);
+}
+.cc-section .section-blob--right{
+  background:radial-gradient(circle at 55% 40%, #4ADE80, rgba(0,0,0,0) 70%),
+             radial-gradient(circle at 38% 62%, var(--amber), rgba(0,0,0,0) 70%);
+}
+.cc-section .section-blob--mid{
+  background:radial-gradient(ellipse at 50% 50%, var(--blue), rgba(0,0,0,0) 72%);
+}
+
+/* content sits above the blob layer */
+.cc-section > .cc-inner{
+  position:relative;
+  z-index:1;
+}
+
+/* ===================== CORE CAPABILITIES — SCOPED STYLES ===================== */
+
+/* visually hides content from sighted users while keeping it
+   readable by screen readers — used for the live-region announcer */
+.cc-sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+.cc-section{
+  background:var(--bg);
+  padding:44px 20px 64px;
+  /* Explicit sans-serif stack — without this the browser falls back
+     to its default SERIF font, which is what made everything look
+     "wrong" before. Swap 'Inter' for your actual brand font if the
+     rest of the site uses a custom webfont. */
+  font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --cc-amber-trim:#f2c98a; /* lighter than --amber, used only for card borders/glow */
+  --cc-amber-trim-soft:rgba(242,201,138,0.18);
+}
+
+.cc-inner{
+  max-width:640px;
+  margin:0 auto;
+}
+
+/* ---- header ---- */
+.cc-title{
+  margin:0 0 26px;
+  text-align:center;
+  font-size:32px;
+  line-height:1.18;
+  font-weight:900;
+  letter-spacing:-0.01em;
+}
+.cc-title-line{ display:block; }
+.cc-title-line--hi{ color:var(--text-hi); }
+.cc-title-line--purple{ color:var(--purple); }
+.cc-title-line--green{
+  color:#4ADE80;
+  font-size:1.18em; /* relative to .cc-title's size, so it scales correctly at every breakpoint without needing separate overrides */
+  font-weight:400;
+  letter-spacing:-0.005em;
+}
+
+.cc-subheading{
+  margin:0 0 32px;
+  color:var(--text-hi);
+  font-size:17px;
+  font-weight:600;
+  line-height:1.75;
+  text-align:left;
+  max-width:100%;
+}
+
+/* ---- expandable (internally scrollable) quote box ---- */
+.cc-quote{
+  position:relative;
+  background:var(--purple-soft);
+  border:1px solid var(--card-border);
+  border-radius:24px;
+  padding:26px 22px 22px;
+  margin-bottom:28px;
+  overflow:hidden;
+}
+
+.cc-quote-mark{
+  position:absolute;
+  color:var(--teal);
+  font-family:Georgia, 'Times New Roman', serif;
+  font-weight:700;
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+}
+.cc-quote-mark--open{
+  top:14px; left:20px;
+  font-size:26px;
+  opacity:0.95;
+  z-index:1;
+}
+.cc-quote-mark--close{
+  bottom:-24px; right:10px;
+  font-size:150px;
+  opacity:0.08;
+  z-index:0;
+}
+
+.cc-quote-body{
+  position:relative;
+  z-index:1;
+  max-height:230px;
+  overflow-y:auto;
+  margin-top:20px;
+  padding-right:36px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:var(--purple) transparent;
+}
+.cc-quote-body::-webkit-scrollbar{ width:5px; }
+.cc-quote-body::-webkit-scrollbar-thumb{ background:var(--purple); border-radius:4px; }
+
+/* scroll hint arrows — hint that the box scrolls; fade out at each end */
+.cc-quote-scrollhint{
+  position:absolute;
+  right:12px;
+  z-index:2;
+  width:26px;
+  height:26px;
+  color:var(--purple);
+  opacity:0.9;
+  pointer-events:none;
+  transition:opacity 0.2s ease;
+}
+.cc-quote-scrollhint svg{ width:100%; height:100%; }
+.cc-quote-scrollhint--up{ top:20px; }
+.cc-quote-scrollhint--down{
+  bottom:12px;
+  animation:cc-bounce 1.6s ease-in-out infinite;
+}
+.cc-quote-scrollhint.cc-hint-hidden{ opacity:0; }
+@keyframes cc-bounce{
+  0%, 100%{ transform:translateY(0); }
+  50%{ transform:translateY(3px); }
+}
+@media (prefers-reduced-motion:reduce){
+  .cc-quote-scrollhint--down{ animation:none; }
+}
+
+.cc-quote-text{
+  margin:0 0 16px;
+  color:var(--text-hi);
+  font-size:15.5px;
+  line-height:1.7;
+}
+.cc-quote-text:last-child{ margin-bottom:0; }
+
+.cc-hl{ font-weight:600; }
+.cc-hl--purple{ color:var(--purple); }
+.cc-hl--green{ color:#4ADE80; }
+
+/* ---- capability cards ---- */
+.cc-cap-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  transition:opacity 0.25s ease, transform 0.25s ease;
+}
+/* [hidden] alone isn't enough once display:flex is set above — an
+   explicit author `display` rule beats the browser's built-in
+   [hidden]{display:none} rule, so without this the "hidden" list
+   stays visually rendered even though the attribute is set. */
+.cc-cap-list[hidden]{ display:none !important; }
+.cc-cap-list.cc-fade-out{
+  opacity:0;
+  transform:scale(0.97);
+  pointer-events:none;
+}
+
+.cc-cap-row{
+  all:unset;
+  box-sizing:border-box;
+  display:block;
+  position:relative;
+  width:100%;
+  cursor:pointer;
+  padding:22px 20px;
+  border-radius:22px;
+  background:var(--bg-alt);
+  border:1px solid var(--card-border);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* glass "sheen" overlay — only visible once a card is highlighted */
+.cc-cap-row::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  opacity:0;
+  pointer-events:none;
+  background:radial-gradient(120% 90% at 22% 0%, rgba(255,255,255,0.16), var(--cc-amber-trim-soft) 55%, transparent 78%);
+  transition:opacity 0.25s ease;
+}
+
+/* HOVER — accidental touch, mouse-over, or scroll-proximity default.
+   Border only, lighter amber, nothing else. */
+@media (hover:hover) and (pointer:fine){
+  .cc-cap-row:hover:not(.cc-cap-row--highlighted){
+    border-color:var(--cc-amber-trim);
+  }
+}
+.cc-cap-row:active:not(.cc-cap-row--highlighted){
+  border-color:var(--cc-amber-trim);
+}
+.cc-cap-row--hover:not(.cc-cap-row--highlighted){
+  border-color:var(--cc-amber-trim);
+}
+.cc-cap-row:focus-visible{
+  outline:2px solid var(--cc-amber-trim);
+  outline-offset:2px;
+}
+
+/* HIGHLIGHTED — the selected/clicked card. Full treatment. */
+.cc-cap-row--highlighted{
+  border-color:var(--cc-amber-trim);
+  box-shadow:0 0 0 1px var(--cc-amber-trim), 0 0 28px var(--cc-amber-trim-soft), var(--shadow-hover);
+}
+.cc-cap-row--highlighted::before{ opacity:1; }
+.cc-cap-row--highlighted .cc-cap-title{ color:#ffffff; }
+
+.cc-cap-title{
+  display:block;
+  margin-bottom:8px;
+  color:var(--text-mid);
+  font-size:19px;
+  font-weight:700;
+  line-height:1.3;
+  position:relative;
+  z-index:1;
+  transition:color 0.2s ease;
+}
+.cc-cap-line{
+  margin:0;
+  color:var(--text-mid);
+  font-size:14.5px;
+  line-height:1.6;
+  position:relative;
+  z-index:1;
+}
+
+/* ---- capability explorer ---- */
+.cc-explorer{
+  /* full-bleed: escapes the .cc-inner max-width to span the viewport edge-to-edge */
+  position:relative;
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  background:var(--bg-alt); /* matte black — was var(--purple-soft) */
+  border-top:1px solid var(--card-border);
+  border-bottom:1px solid var(--card-border);
+  color:#f3f0ff;
+  padding-bottom:88px;
+  transform-origin:top center;
+  animation:cc-explorer-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes cc-explorer-in{
+  from{ opacity:0; transform:scale(0.94) translateY(6px); }
+  to{ opacity:1; transform:scale(1) translateY(0); }
+}
+@keyframes cc-explorer-out{
+  from{ opacity:1; transform:scale(1) translateY(0); }
+  to{ opacity:0; transform:scale(0.96) translateY(4px); }
+}
+.cc-explorer.cc-explorer-exit{
+  animation:cc-explorer-out 0.25s ease both;
+}
+@media (prefers-reduced-motion:reduce){
+  .cc-explorer{ animation:none; }
+}
+
+.cc-explorer-inner{
+  max-width:520px;
+  margin:0 auto;
+  padding:20px 20px 8px;
+}
+
+.cc-explorer-topbar{
+  display:flex;
+  align-items:center;
+  margin-bottom:22px;
+}
+.cc-explorer-back{
+  all:unset;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#f3f0ff;
+  font-size:14px;
+  font-weight:600;
+  -webkit-tap-highlight-color:transparent;
+}
+.cc-back-arrow{ font-size:16px; }
+
+/* floating close button — position:fixed keeps it pinned to the same
+   screen spot the entire time the panel is open, regardless of scroll */
+.cc-explorer-close{
+  all:unset;
+  box-sizing:border-box;
+  cursor:pointer;
+  position:fixed;
+  top:18px;
+  right:18px;
+  z-index:50;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  color:#ffffff;
+  flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+  /* frosted glass — thinner/more transparent than the first pass */
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.3);
+  backdrop-filter:blur(10px) saturate(140%); /* safe fallback, always applies */
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  box-shadow:0 6px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+/* progressive enhancement: adds real refraction on top of the blur,
+   via the SVG filter defined at the top of the section. Browsers
+   that can't parse url() inside backdrop-filter drop this whole
+   declaration and silently keep the fallback above. */
+.cc-explorer-close{
+  backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%);
+}
+.cc-explorer-close:active{ transform:translateY(1px); }
+.cc-explorer-close svg{ width:15px; height:15px; }
+
+.cc-explorer-head{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:14px;
+}
+.cc-explorer-number{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#f3f0ff;
+  font-size:16px;
+  font-weight:700;
+}
+.cc-explorer-title{
+  margin:0;
+  padding-top:4px;
+  color:#ffffff;
+  font-size:26px;
+  font-weight:800;
+  line-height:1.2;
+}
+
+.cc-explorer-divider{
+  height:1px;
+  background:rgba(255,255,255,0.14);
+  margin:22px 0;
+}
+
+.cc-explorer-label{
+  display:block;
+  margin-bottom:18px;
+  color:#c3b8f7;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+/* timeline of "how I approach it" steps */
+.cc-steps{ display:flex; flex-direction:column; }
+.cc-step{
+  position:relative;
+  display:flex;
+  gap:16px;
+  padding-bottom:26px;
+}
+.cc-step:last-child{ padding-bottom:0; }
+.cc-step:not(:last-child)::before{
+  /* connecting line between icon circles */
+  content:'';
+  position:absolute;
+  left:23px;
+  top:48px;
+  bottom:0;
+  width:2px;
+  background:rgba(255,255,255,0.18);
+}
+.cc-step-icon{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#ffffff;
+  color:#6d4fd6;
+  box-shadow:0 6px 16px rgba(0,0,0,0.25);
+  z-index:1;
+}
+.cc-step-icon svg{ width:22px; height:22px; }
+.cc-step-body{ padding-top:8px; }
+.cc-step-title{
+  margin:0 0 5px;
+  color:#ffffff;
+  font-size:16px;
+  font-weight:700;
+}
+.cc-step-desc{
+  margin:0;
+  color:#cfc6f2;
+  font-size:14px;
+  line-height:1.55;
+}
+
+/* "what this creates" callout — frosted glass, matching the
+   floating buttons' treatment: a safe blur() fallback first, then
+   the SVG-distortion enhancement layered on top. Browsers that
+   can't parse the url() reference simply drop that declaration and
+   keep the fallback — nothing breaks either way. */
+.cc-creates-box{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.16);
+  backdrop-filter:blur(14px) saturate(150%); /* safe fallback */
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:0 10px 26px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.14);
+  margin-bottom:26px;
+}
+.cc-creates-box{
+  backdrop-filter:url(#cc-glass-distort-lg) blur(10px) saturate(150%); /* enhancement — see filter comment above */
+}
+.cc-creates-icon{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:var(--purple);
+  color:#ffffff;
+}
+.cc-creates-icon svg{ width:20px; height:20px; }
+.cc-creates-text{
+  color:#e9e4ff;
+  font-size:14.5px;
+  line-height:1.65;
+}
+.cc-creates-text p{ margin:0 0 10px; }
+.cc-creates-text p:last-child{ margin-bottom:0; }
+.cc-creates-text strong{ color:#ffffff; font-weight:700; }
+.cc-creates-list{
+  list-style:none;
+  margin:2px 0 10px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.cc-creates-list li{
+  position:relative;
+  padding-left:15px;
+  color:#e9e4ff;
+  font-size:14.5px;
+  line-height:1.5;
+}
+.cc-creates-list li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:7px;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--purple);
+}
+
+/* ---- "from X to Y" contrast moment (e.g. card 5's WHY DATA
+   MATTERS TO ME section) ---- */
+.cc-contrast{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:6px 0 14px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.cc-contrast-before{
+  color:#9b93c2;
+  font-size:14px;
+  font-style:italic;
+}
+.cc-contrast-arrow{
+  color:var(--purple);
+  font-size:15px;
+  font-weight:700;
+}
+.cc-contrast-after{
+  color:#ffffff;
+  font-size:14.5px;
+  font-weight:600;
+  font-style:italic;
+}
+
+/* ---- step circles that use a plain number instead of an icon
+   (used when a capability's steps don't need distinct icon glyphs) ---- */
+.cc-step-num{
+  color:#6d4fd6;
+  font-size:16px;
+  font-weight:800;
+}
+
+/* ---- MY VIEW optional relationship diagram (e.g. the Visibility /
+   Audience / Brand Identity triad) — thin connecting lines + plain
+   typography, deliberately not an icon-style illustration ---- */
+.cc-triad{
+  position:relative;
+  width:100%;
+  height:220px;
+  margin:22px 0 6px;
+}
+.cc-triad-svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.cc-triad-svg line{
+  stroke:rgba(255,255,255,0.22);
+  stroke-width:1.2;
+}
+.cc-triad-node{
+  position:absolute;
+  text-align:center;
+  width:150px;
+}
+.cc-triad-node--top{ top:0; left:50%; transform:translateX(-50%); }
+.cc-triad-node--left{ bottom:0; left:0; }
+.cc-triad-node--right{ bottom:0; right:0; }
+.cc-triad-label{
+  display:block;
+  color:#ffffff;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:0.06em;
+  margin-bottom:4px;
+}
+.cc-triad-sub{
+  display:block;
+  color:#b6adde;
+  font-size:12.5px;
+  line-height:1.4;
+}
+
+/* ---- reusable vertical "flow" diagram: a sequence of plain-text
+   steps connected by a thin line, with optional branch-off (e.g. an
+   alternate/negative outcome) and an optional loop indicator at the
+   end. Typography-led by design — no icons except the loop symbol,
+   which earns its place since a cycle is hard to convey in text alone. ---- */
+.cc-flow{
+  display:flex;
+  flex-direction:column;
+  margin:22px 0 4px;
+}
+.cc-flow-step{
+  position:relative;
+  padding:0 0 24px 20px;
+}
+.cc-flow-step:last-child{ padding-bottom:0; }
+.cc-flow-step::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:5px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--purple);
+}
+.cc-flow-step:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  left:3px;
+  top:16px;
+  bottom:0;
+  width:1.2px;
+  background:rgba(255,255,255,0.2);
+}
+.cc-flow-label{
+  display:block;
+  color:#ffffff;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.cc-flow-branch{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin:10px 0 0;
+  padding:7px 12px;
+  border-left:1.5px solid rgba(230,162,77,0.45);
+  background:rgba(230,162,77,0.06);
+  color:#e6a24d;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  border-radius:0 8px 8px 0;
+}
+.cc-flow-loop{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding-left:20px;
+  color:#8b8b93;
+  font-size:12px;
+  font-weight:600;
+}
+.cc-flow-loop svg{ width:14px; height:14px; flex-shrink:0; }
+
+/* ---- MY VIEW section ---- */
+.cc-explorer-myview p{
+  margin:0 0 14px;
+  color:#e9e4ff;
+  font-size:15.5px;
+  line-height:1.7;
+}
+.cc-explorer-myview p:last-child{ margin-bottom:0; }
+
+/* ---- examples list: now a title + description pair per item ---- */
+.cc-examples-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.cc-examples-list li{
+  position:relative;
+  padding-left:18px;
+  padding-top:14px;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.cc-examples-list li:first-child{ padding-top:0; }
+.cc-examples-list li:not(:first-child){
+  border-top:1px solid rgba(255,255,255,0.08); /* subtle separator between items */
+}
+.cc-examples-list li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:7px;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--purple);
+}
+.cc-examples-list li:not(:first-child)::before{
+  top:21px; /* accounts for the separator's padding-top pushing the title down */
+}
+.cc-example-title{
+  color:#ffffff;
+  font-size:15px;
+  font-weight:600;
+  line-height:1.4;
+}
+.cc-example-sub{
+  color:#b6adde;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* ---- WHEN THE PLAN MEETS REALITY (closing section) ---- */
+.cc-explorer-reality p{
+  margin:0 0 14px;
+  color:#e9e4ff;
+  font-size:15.5px;
+  line-height:1.7;
+}
+.cc-reality-list{
+  list-style:none;
+  margin:4px 0 18px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+.cc-reality-list li{
+  position:relative;
+  padding-left:16px;
+  color:#f3f0ff;
+  font-weight:600;
+  font-size:15px;
+  line-height:1.5;
+}
+.cc-reality-list li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:8px;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--purple);
+}
+.cc-reality-closing{
+  margin:4px 0 0;
+  color:var(--purple);
+  font-weight:700;
+  font-size:16px;
+  font-style:italic;
+}
+
+/* sticky floating footer inside the explorer */
+.cc-explorer .cc-explorer-footer{
+  position:sticky;
+  bottom:16px;
+  left:0; right:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  max-width:520px;
+  margin:26px auto 0;
+  padding:0 20px;
+}
+.cc-explorer .cc-nav{
+  all:unset;
+  box-sizing:border-box;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:14px;
+  font-weight:600;
+  padding:11px 18px;
+  border-radius:999px;
+  -webkit-tap-highlight-color:transparent;
+}
+/* Previous — clear frosted glass: real blur + saturation boost + a
+   thin bright border and an inset top highlight to fake the light
+   catching a curved glass edge, not just a translucent flat color.
+   Lighter/more transparent than the first pass. */
+.cc-explorer .cc-nav--prev{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.3);
+  backdrop-filter:blur(10px) saturate(140%); /* safe fallback */
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  box-shadow:0 6px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  color:#ffffff;
+}
+.cc-explorer .cc-nav--prev{
+  backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%); /* enhancement — see note above */
+}
+/* Next — the prominent action, so it's a brighter/more opaque "tinted"
+   glass rather than plain frosted, keeping it the visual anchor of
+   the three while still reading as the same glass material */
+.cc-explorer .cc-nav--next{
+  background:rgba(255,255,255,0.8);
+  border:1px solid rgba(255,255,255,0.6);
+  backdrop-filter:blur(10px) saturate(140%);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  box-shadow:0 6px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.7);
+  color:#111114;
+}
+.cc-explorer .cc-nav--next{
+  backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%);
+}
+.cc-explorer .cc-nav:active{ transform:translateY(1px); }
+.cc-explorer .cc-nav-counter{
+  color:#ffffff;
+  font-size:13px;
+  font-weight:600;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.25);
+  backdrop-filter:blur(10px) saturate(140%);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  box-shadow:0 4px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.18);
+  padding:8px 14px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.cc-explorer .cc-nav-counter{
+  backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%);
+}
+
+/* ---- larger screens ---- */
+@media (min-width:480px){
+  .cc-title{ font-size:38px; }
+  .cc-subheading{ font-size:18px; }
+}
+@media (min-width:820px){
+  .cc-title{ font-size:44px; }
+}
+
+/* ============ TABLET (768px–1023px) ============
+   Blends mobile's single-column, click-to-open-panel interaction
+   model with more generous sizing/spacing borrowed from the desktop
+   scale. NOT a scaled-down desktop split — a 30/70 column layout
+   would leave the cards column under ~230px wide at this range,
+   too cramped to be usable. Instead: bigger type, 2 cards per row
+   instead of one long stack, and the Explorer becomes a centered
+   rounded panel instead of a full-bleed edge-to-edge overlay (full-
+   bleed reads fine on a phone-width screen, less so stretched
+   across a wide tablet). */
+@media (min-width:768px) and (max-width:1023.98px){
+
+  .cc-section{ padding:56px 40px 76px; }
+  .cc-inner{ max-width:1200px; } /* effectively edge-to-edge within the tablet range — was 680px, which is narrower than the viewport itself and caused the dead space on both sides */
+
+  .cc-title{ font-size:46px; }
+  .cc-subheading{ font-size:19px; max-width:52ch; }
+
+  .cc-quote{ padding:30px 28px; }
+  .cc-quote-text{ font-size:16.5px; }
+
+  /* two cards per row instead of one long stacked column */
+  .cc-cap-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .cc-cap-row{ padding:24px 22px; }
+  .cc-cap-title{ font-size:19.5px; }
+  .cc-cap-line{ font-size:15px; }
+
+  /* Explorer: rounded panel matching the same edges as everything
+     else on the page (was capped at 680px, creating dead space on
+     both sides — same class of bug as the .cc-inner one above) */
+  .cc-explorer{
+    width:auto;
+    max-width:1200px; /* effectively edge-to-edge within the tablet range */
+    margin:0 auto;
+    border-top:none;
+    border-bottom:none;
+    border-radius:28px;
+    border:1px solid var(--card-border);
+  }
+  .cc-explorer-inner{ max-width:none; padding:32px 32px 12px; }
+  .cc-explorer-number{ width:48px; height:48px; font-size:17px; }
+  .cc-explorer-title{ font-size:30px; }
+  .cc-explorer-myview p{ font-size:16px; }
+  .cc-explorer-label{ font-size:12.5px; }
+  .cc-step-icon{ width:52px; height:52px; }
+  .cc-step-icon svg{ width:24px; height:24px; }
+  .cc-step-title{ font-size:17px; }
+  .cc-step-desc{ font-size:14.5px; }
+  .cc-creates-box{ padding:20px; }
+  .cc-creates-text{ font-size:15.5px; }
+  .cc-example-title{ font-size:16px; }
+  .cc-example-sub{ font-size:14.5px; }
+
+  .cc-explorer-footer{ max-width:none; padding:0 32px; }
+}
+
+@media (min-width:1024px){
+  .cc-section{ padding-left:clamp(28px, 6vw, 96px); padding-right:clamp(28px, 6vw, 96px); }
+  .cc-inner{ max-width:1800px; } /* effectively edge-to-edge on real desktop widths; only kicks in as a cap on ultra-wide monitors */
+
+  .cc-head-grid{
+    display:grid;
+    grid-template-columns:2fr 3fr; /* 40% left / 60% right */
+    align-items:stretch; /* makes both columns the same height, top-aligned */
+    gap:clamp(40px, 4vw, 72px);
+    margin-bottom:40px;
+  }
+
+  .cc-head-col--left{
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start; /* top-aligned, not vertically centered — that's what was pushing it down below the quote box's top edge */
+  }
+
+  /* three-line header on desktop again (matches mobile), just centered
+     within the left column instead of left-aligned.
+     text-transform:capitalize renders the existing sentence-case
+     markup ("My goal was never") as "My Goal Was Never" without
+     touching the underlying text. */
+  .cc-title{
+    text-align:center;
+    font-size:clamp(34px, 3vw, 50px);
+  }
+  .cc-title-line--hi{ text-transform:capitalize; }
+
+  .cc-subheading{
+    font-size:clamp(21px, 1.3vw, 25px);
+    margin-top:14px;
+    line-height:1.8;
+    text-align:left;
+    max-width:44ch;
+  }
+
+  .cc-head-col--right{ display:flex; }
+
+  .cc-quote{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    margin-bottom:0;
+    padding:clamp(22px, 2.4vw, 34px) clamp(22px, 2.6vw, 36px);
+  }
+  /* re-enabling the internal scroll on desktop too — showing all 3
+     paragraphs full-height made the box too tall next to the header.
+     Cuts off after the first 2 paragraphs, same behavior as mobile. */
+  .cc-quote-body{
+    max-height:260px;
+    overflow-y:auto;
+    padding-right:36px;
+  }
+  .cc-quote-text{ font-size:clamp(15.5px, 1.05vw, 17px); }
+
+  /* ---- Step 2: capability cards (30%) + always-visible Explorer (70%) ---- */
+  .cc-stage{
+    display:grid;
+    grid-template-columns:3fr 7fr; /* 30% left / 70% right */
+    align-items:start; /* cards column keeps its own natural height — see
+                           the JS below for how the explorer's height is
+                           actually matched to it */
+    gap:clamp(28px, 3vw, 48px);
+  }
+
+  .cc-cap-list{
+    /* always visible on desktop — never fades/hides when a card is
+       clicked, since the explorer sits beside it, not on top of it */
+    margin:0;
+  }
+
+  .cc-explorer{
+    /* undo the mobile full-bleed breakout — on desktop it's just the
+       right-hand grid column, not an edge-to-edge overlay */
+    width:auto;
+    margin-left:0;
+    margin-right:0;
+    border-top:none;
+    border-bottom:none;
+    border-radius:24px;
+    border:1px solid var(--card-border);
+    animation:none; /* no open/close animation needed — it's always on screen */
+
+    /* height is set inline via JS (matched to the cards column's
+       actual rendered height) — see syncExplorerHeight() */
+    display:flex;
+    flex-direction:column;
+    overflow:hidden; /* the panel itself doesn't scroll — its inner content area does, see below */
+    padding-bottom:0;
+  }
+
+  .cc-explorer-inner{
+    max-width:none;
+    padding:28px 28px 24px;
+    flex:1;
+    min-height:0;
+    overflow-y:auto; /* this is what actually scrolls */
+  }
+
+  /* footer is a fixed, non-scrolling part of the panel — always
+     reachable without scrolling to the end of the content above it.
+     Selector matches (rather than beats on specificity) the base
+     ".cc-explorer .cc-explorer-footer" rule so this override reliably
+     takes effect instead of silently losing to it. */
+  .cc-explorer .cc-explorer-footer{
+    position:static;
+    flex-shrink:0;
+    max-width:none;
+    margin:0;
+    padding:16px 28px 22px;
+    border-top:1px solid var(--card-border);
+  }
+
+  /* nothing to close/return to anymore — the panel can't hide on desktop */
+  .cc-explorer-topbar{ display:none; }
+  .cc-explorer-close{ display:none; } /* no wrapper anymore — hide the button itself */
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cc-quote-body, .cc-cap-row{ transition:none; }
+}
 
