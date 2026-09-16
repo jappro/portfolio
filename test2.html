@@ -6,7 +6,7 @@
 <title>Portfolio Sections — Preview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ============================================================
   PORTFOLIO SECTIONS — standalone test build
   Contains, in page order: CORE CAPABILITIES, then EXPERIENCE.
@@ -59,10 +59,242 @@
      "Request Desktop Website" + landscape. overflow-x:hidden clips
      that stray sliver so it can never become visible or scrollable. */
 
+  /* ===================== SHARED SCROLL-REVEAL SYSTEM =====================
+     One shared reveal engine for every section built so far (Core
+     Capabilities, Experience, Testimonials) — not a separate effect
+     per section, so it stays consistent as more sections get merged in.
+     An element marked [data-reveal] starts slightly lowered, scaled
+     down, and blurred, then settles into place the first time it
+     scrolls into view (via the IntersectionObserver set up at the very
+     end of the document, after every section's own script has already
+     populated its dynamic content). It only ever plays once per
+     element — this is an entrance effect, not a repeating/parallax one.
+     [data-reveal-list] marks a repeating group (a card grid, a row
+     list) whose direct [data-reveal] children should settle in one
+     after another rather than all at once; the nth-child rule below
+     staggers each one a little later than the last. */
+  [data-reveal]{
+    opacity:0;
+    transform:translateY(28px) scale(0.98);
+    filter:blur(6px);
+    transition:opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change:opacity, transform, filter;
+  }
+  [data-reveal].is-visible{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:blur(0);
+  }
+  [data-reveal-list] > [data-reveal]:nth-child(1){ transition-delay:0ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(2){ transition-delay:90ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(3){ transition-delay:180ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(4){ transition-delay:270ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(5){ transition-delay:360ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(6){ transition-delay:450ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(7){ transition-delay:540ms; }
+  [data-reveal-list] > [data-reveal]:nth-child(n+8){ transition-delay:600ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(1){ transition-delay:0ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(2){ transition-delay:90ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(3){ transition-delay:180ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(4){ transition-delay:270ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(5){ transition-delay:360ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(6){ transition-delay:450ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(7){ transition-delay:540ms; }
+  [data-reveal-list] > [data-reveal-soft]:nth-child(n+8){ transition-delay:600ms; }
+
+  /* a fade+blur-only variant of the reveal (no transform) for elements
+     that already have their own hover-driven transform transition at a
+     different speed (e.g. .tst-card's hover lift) — mixing a slow
+     reveal-transform and a fast hover-transform on the same property
+     of the same element isn't reliable across browsers, so those
+     elements skip the transform part of the reveal entirely rather
+     than fight over it. */
+  [data-reveal-soft]{
+    opacity:0;
+    filter:blur(6px);
+  }
+  [data-reveal-soft].is-visible{
+    opacity:1;
+    filter:blur(0);
+  }
+
+  /* a couple of one-off delays for paired (non-list) elements, e.g. a
+     header + the block beside/under it settling in just after it */
+  [data-reveal-delay="1"]{ transition-delay:120ms; }
+
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal], [data-reveal-soft]{
+      opacity:1 !important;
+      transform:none !important;
+      filter:none !important;
+      transition:none !important;
+    }
+  }
+
+  /* ===================== SHARED TYPOGRAPHY =====================
+     Two deliberate Google Fonts for the site:
+       - Space Grotesk — all headings and title text
+       - Inter — base body font: paragraph text, descriptions, general UI copy
+     Each section already sets 'Inter' as its own font-family (see the
+     .cc-section / .exp-section / .tst-section rules), so Inter remains
+     the inherited default everywhere and only the headings below are
+     switched over. This rule sets font-family ONLY — no weight, size,
+     color, spacing or line-height is touched, so every value already
+     tuned inside the sections stays exactly as it was. */
+  .cc-title,
+  .cc-explorer-title,
+  .cc-cap-title,
+  .cc-explorer-number,
+  .exp-title,
+  .exp-role,
+  .exp-timeline-role,
+  .tst-title,
+  .tst-label{
+    font-family:'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* ===================== SHARED DECORATIVE BLOB SYSTEM =====================
+     Every section starts and ends blended into the site's matte black,
+     so adjacent sections transition into each other smoothly rather
+     than butting up against a hard color change.
+
+     The fade profile (applied as a mask on the blob layer, so it fades
+     the DECORATION only — never the text or cards above it):
+       0%   -> pure matte black (no blob at all)
+       15%  -> blob fully introduced
+       85%  -> blob still full
+       100% -> faded completely back to matte black
+     i.e. matte black fades INTO the blobs across the top 15% of the
+     section, holds through the middle, then fades back OUT to matte
+     black across the bottom 15% — before the next section begins.
+
+     Structure: each section paints its own flat matte background as
+     normal; .section-blobs is a separate absolutely-positioned layer
+     sitting on top of that background but BEHIND all content (content
+     is lifted to z-index:1). Blobs are heavily-blurred radial
+     gradients — soft ambient color fields, not hard-edged shapes.
+     pointer-events:none so they never intercept a click or scroll. */
+  .has-blobs{
+    position:relative;
+    isolation:isolate; /* keeps this blob layer's stacking self-contained, so it can't interact with another section's layers */
+    overflow:hidden;   /* blobs are deliberately oversized/offset; this stops them spilling past the section and causing sideways scroll */
+  }
+  .section-blobs{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    /* the top/bottom blend back to matte black */
+    -webkit-mask-image:linear-gradient(to bottom,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,1) 15%,
+      rgba(0,0,0,1) 85%,
+      rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(to bottom,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,1) 15%,
+      rgba(0,0,0,1) 85%,
+      rgba(0,0,0,0) 100%);
+  }
+  /* Content sits above the blobs. Targeted explicitly at each section's
+     own content wrapper rather than as a blanket "every direct child"
+     rule — a blanket rule would out-specify and break utility elements
+     that depend on their own positioning (e.g. .cc-sr-only, which needs
+     position:absolute for its clip-based visual hiding to work). */
+  .cc-section > .cc-inner,
+  .exp-tst-group > .exp-section,
+  .exp-tst-group > .tst-section{
+    position:relative;
+    z-index:1;
+  }
+
+  .section-blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px); /* what turns a hard gradient circle into a soft ambient color field */
+    opacity:0.5;
+  }
+  /* the three placements, shared by both sections — only the COLORS
+     differ per section (set below), not the geometry */
+  .section-blob--left{
+    top:12%;
+    left:-8%;
+    width:46%;
+    height:46%;
+  }
+  .section-blob--right{
+    top:10%;
+    right:-8%;
+    width:44%;
+    height:44%;
+  }
+  .section-blob--mid{
+    top:46%;
+    left:50%;
+    transform:translateX(-50%);
+    width:52%;
+    height:38%;
+    opacity:0.42;
+  }
+
+  /* ---- Core Capabilities palette ---- */
+  .cc-section .section-blob--left{
+    background:radial-gradient(circle at 40% 40%, var(--purple), rgba(0,0,0,0) 70%),
+               radial-gradient(circle at 65% 62%, var(--teal), rgba(0,0,0,0) 70%);
+  }
+  .cc-section .section-blob--right{
+    background:radial-gradient(circle at 55% 40%, #4ADE80, rgba(0,0,0,0) 70%),
+               radial-gradient(circle at 38% 62%, var(--amber), rgba(0,0,0,0) 70%);
+  }
+  .cc-section .section-blob--mid{
+    background:radial-gradient(ellipse at 50% 50%, var(--blue), rgba(0,0,0,0) 72%);
+  }
+
+  /* ---- Experience + Testimonials palette (one shared group) ---- */
+  .exp-tst-group .section-blob--left{
+    background:radial-gradient(circle at 42% 40%, var(--amber), rgba(0,0,0,0) 70%),
+               radial-gradient(circle at 62% 62%, var(--blue), rgba(0,0,0,0) 70%);
+  }
+  .exp-tst-group .section-blob--right{
+    background:radial-gradient(circle at 56% 40%, var(--teal), rgba(0,0,0,0) 70%),
+               radial-gradient(circle at 38% 62%, #4ADE80, rgba(0,0,0,0) 70%);
+  }
+  .exp-tst-group .section-blob--mid{
+    background:radial-gradient(ellipse at 50% 50%, var(--purple), rgba(0,0,0,0) 72%);
+  }
+
+  /* the shared Experience+Testimonials wrapper carries the matte
+     background for both, so a single blob layer can span the pair;
+     the two sections inside therefore go transparent rather than each
+     painting their own opaque background back over the blobs */
+  .exp-tst-group{ background:var(--bg); }
+  .exp-tst-group > .exp-section,
+  .exp-tst-group > .tst-section{ background:transparent; }
+
+  @media (max-width:767.98px){
+    /* on a narrow viewport a 90px blur over a proportionally smaller
+       area reads as a flat wash rather than a distinct blob, so it
+       scales down alongside the section */
+    .section-blob{ filter:blur(60px); opacity:0.42; }
+    .section-blob--mid{ opacity:0.36; }
+  }
+
 </style>
 
 
-<section class="cc-section" data-theme="dark" id="capabilities">
+<section class="cc-section has-blobs" data-theme="dark" id="ethos">
+
+  <!-- decorative ambient color blobs — purely visual, behind all content.
+       Up/center: purple+teal (left), green+amber (right); middle: deep blue.
+       See the shared blob system in the top style block for the
+       matte-black blend-in/blend-out fade. -->
+  <div class="section-blobs" aria-hidden="true">
+    <span class="section-blob section-blob--left"></span>
+    <span class="section-blob section-blob--right"></span>
+    <span class="section-blob section-blob--mid"></span>
+  </div>
 
   <!-- Liquid-glass refraction filter — used as a progressive enhancement
        on top of backdrop-filter:blur() for the floating buttons below.
@@ -107,7 +339,7 @@
     <!-- Header + Quote: single column on mobile, 50/50 split on desktop -->
     <div class="cc-head-grid">
 
-      <div class="cc-head-col cc-head-col--left">
+      <div class="cc-head-col cc-head-col--left" data-reveal>
         <h2 class="cc-title">
           <span class="cc-title-line cc-title-line--hi">My goal was never</span>
           <span class="cc-title-line cc-title-line--purple">to do</span>
@@ -120,7 +352,7 @@
         </p>
       </div>
 
-      <div class="cc-head-col cc-head-col--right">
+      <div class="cc-head-col cc-head-col--right" data-reveal data-reveal-delay="1">
         <!-- Expandable boxed quote (scrolls inside the box on mobile; full text, no scroll, on desktop) -->
         <div class="cc-quote">
           <span class="cc-quote-mark cc-quote-mark--open" aria-hidden="true">&ldquo;</span>
@@ -158,7 +390,7 @@
 
     <!-- Five capability cards + explorer share this stage -->
     <div class="cc-stage">
-      <div class="cc-cap-list" role="list" id="ccCapList">
+      <div class="cc-cap-list" role="list" id="ccCapList" data-reveal-list>
         <!-- rows injected by JS -->
       </div>
 
@@ -1726,6 +1958,7 @@
     // the button keeps its own.
     var item = document.createElement('div');
     item.setAttribute('role', 'listitem');
+    item.setAttribute('data-reveal', '');
 
     var row = document.createElement('button');
     row.type = 'button';
@@ -1819,17 +2052,29 @@
 })();
 </script>
 
-<section class="exp-section" data-theme="dark" id="experience">
+<div id="experience" class="exp-tst-group has-blobs" data-theme="dark">
+
+  <!-- decorative ambient color blobs spanning the Experience +
+       Testimonials pair (they share one nav anchor, so they share one
+       continuous decorative treatment rather than two competing ones).
+       Up/center: amber+deep blue (left), teal+green (right); middle: purple. -->
+  <div class="section-blobs" aria-hidden="true">
+    <span class="section-blob section-blob--left"></span>
+    <span class="section-blob section-blob--right"></span>
+    <span class="section-blob section-blob--mid"></span>
+  </div>
+
+<section class="exp-section" data-theme="dark">
   <div class="exp-inner">
 
-    <h2 class="exp-title">EXPERIENCE</h2>
-    <p class="exp-subheading">The titles tell you where I started. The work usually took me further.</p>
+    <h2 class="exp-title" data-reveal>EXPERIENCE</h2>
+    <p class="exp-subheading" data-reveal data-reveal-delay="1">The titles tell you where I started. The work usually took me further.</p>
 
-    <div class="exp-list" id="expList">
+    <div class="exp-list" id="expList" data-reveal-list>
       <!-- mobile/tablet entries injected by JS -->
     </div>
 
-    <div class="exp-list-desktop" id="expListDesktop">
+    <div class="exp-list-desktop" id="expListDesktop" data-reveal-list>
       <!-- desktop rows injected by JS (logo replaces numbering; multi-role companies split into one row per role) -->
     </div>
 
@@ -1884,7 +2129,17 @@
   .exp-card{
     padding:22px 0;
     border-bottom:1px solid rgba(255,255,255,0.1);
-    transition:border-color 0.2s ease, background 0.2s ease;
+    /* merged with the shared [data-reveal] transition rather than left
+       to compete with it — both declare the `transition` shorthand on
+       this same element, and shorthand properties don't merge across
+       rules (whichever one wins the cascade applies in full), so the
+       reveal's opacity/transform/filter timing is included directly
+       here to guarantee it survives alongside this card's own existing
+       hover-driven border/background transition. */
+    transition:border-color 0.2s ease, background 0.2s ease,
+               opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     --exp-logo-offset:66px; /* logo width (52px) + head gap (14px) — single source of truth so desc/CTAs always line up with the header text, never with the logo */
   }
 
@@ -2364,7 +2619,7 @@
   }
 
   function renderSingle(exp){
-    return '<div class="exp-card">' +
+    return '<div class="exp-card" data-reveal>' +
       '<div class="exp-card-head">' +
         '<img class="exp-logo" src="' + exp.logo + '" alt="' + exp.company + ' logo" ' +
           'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
@@ -2391,7 +2646,7 @@
       '</div>';
     }).join('');
 
-    return '<div class="exp-card exp-card--multi">' +
+    return '<div class="exp-card exp-card--multi" data-reveal>' +
       '<div class="exp-card-head">' +
         '<img class="exp-logo" src="' + exp.logo + '" alt="' + exp.company + ' logo" ' +
           'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
@@ -2434,7 +2689,7 @@
   }
 
   function renderDesktopRow(row){
-    return '<div class="exp-card' + (row.noBorder ? ' exp-card--no-divider' : '') + '">' +
+    return '<div class="exp-card' + (row.noBorder ? ' exp-card--no-divider' : '') + '" data-reveal>' +
       renderDesktopHead(row) +
       '<div class="exp-desktop-left">' +
         '<h3 class="exp-role">' + row.role + '</h3>' +
@@ -2655,16 +2910,16 @@
 })();
 </script>
 
-<section class="tst-section" data-theme="dark" id="testimonials">
+<section class="tst-section" data-theme="dark">
   <div class="tst-inner">
 
-    <h2 class="tst-title">
+    <h2 class="tst-title" data-reveal>
       <span class="tst-title-line tst-title-line--light">Read reviews,</span>
       <span class="tst-title-line tst-title-line--heavy">work with confidence.</span>
     </h2>
 
     <div class="tst-body">
-      <div class="tst-left">
+      <div class="tst-left" data-reveal data-reveal-delay="1">
         <svg class="tst-quote-mark" viewBox="0 0 86 68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M38.0 2.2 Q38.0 0.0 33.8 0.4 L23.2 1.6 Q19.0 2.0 17.0 3.1 L12.0 5.9 Q10.0 7.0 8.7 8.5 L5.3 12.5 Q4.0 14.0 3.1 16.6 L0.9 23.4 Q0.0 26.0 0.0 34.6 L0.0 56.4 Q0.0 65.0 0.4 65.4 L1.6 66.6 Q2.0 67.0 8.8 67.0 L26.2 67.0 Q33.0 67.0 33.9 66.3 L36.1 64.7 Q37.0 64.0 37.2 55.9 L37.8 35.1 Q38.0 27.0 37.6 26.6 L36.4 25.4 Q36.0 25.0 32.7 25.0 L24.3 25.0 Q21.0 25.0 20.8 24.6 L20.2 23.4 Q20.0 23.0 20.7 21.7 L22.3 18.3 Q23.0 17.0 24.1 16.1 L26.9 13.9 Q28.0 13.0 30.2 12.3 L35.8 10.7 Q38.0 10.0 38.0 7.8 L38.0 2.2 Z M85.0 2.2 Q85.0 0.0 80.8 0.4 L70.2 1.6 Q66.0 2.0 64.0 3.1 L59.0 5.9 Q57.0 7.0 55.7 8.5 L52.3 12.5 Q51.0 14.0 50.1 16.6 L47.9 23.4 Q47.0 26.0 47.0 34.6 L47.0 56.4 Q47.0 65.0 47.4 65.4 L48.6 66.6 Q49.0 67.0 55.8 67.0 L73.2 67.0 Q80.0 67.0 80.9 66.3 L83.1 64.7 Q84.0 64.0 84.2 55.9 L84.8 35.1 Q85.0 27.0 84.6 26.6 L83.4 25.4 Q83.0 25.0 79.7 25.0 L71.3 25.0 Q68.0 25.0 67.8 24.6 L67.2 23.4 Q67.0 23.0 67.7 21.7 L69.3 18.3 Q70.0 17.0 71.1 16.1 L73.9 13.9 Q75.0 13.0 77.2 12.3 L82.8 10.7 Q85.0 10.0 85.0 7.8 L85.0 2.2 Z" fill="currentColor"/>
         </svg>
@@ -2681,7 +2936,7 @@
       </div>
 
       <div class="tst-viewport" id="tstViewport">
-        <div class="tst-cards" id="tstCards">
+        <div class="tst-cards" id="tstCards" data-reveal-list>
           <!-- cards injected by JS -->
         </div>
       </div>
@@ -2692,7 +2947,7 @@
          label, card carousel, and chevron+dot nav all sit inside it -->
     <div class="tst-mobile">
       <div class="tst-mobile-frame">
-        <div class="tst-mobile-head">
+        <div class="tst-mobile-head" data-reveal>
           <svg class="tst-quote-mark tst-quote-mark--mobile" viewBox="0 0 86 68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M38.0 2.2 Q38.0 0.0 33.8 0.4 L23.2 1.6 Q19.0 2.0 17.0 3.1 L12.0 5.9 Q10.0 7.0 8.7 8.5 L5.3 12.5 Q4.0 14.0 3.1 16.6 L0.9 23.4 Q0.0 26.0 0.0 34.6 L0.0 56.4 Q0.0 65.0 0.4 65.4 L1.6 66.6 Q2.0 67.0 8.8 67.0 L26.2 67.0 Q33.0 67.0 33.9 66.3 L36.1 64.7 Q37.0 64.0 37.2 55.9 L37.8 35.1 Q38.0 27.0 37.6 26.6 L36.4 25.4 Q36.0 25.0 32.7 25.0 L24.3 25.0 Q21.0 25.0 20.8 24.6 L20.2 23.4 Q20.0 23.0 20.7 21.7 L22.3 18.3 Q23.0 17.0 24.1 16.1 L26.9 13.9 Q28.0 13.0 30.2 12.3 L35.8 10.7 Q38.0 10.0 38.0 7.8 L38.0 2.2 Z M85.0 2.2 Q85.0 0.0 80.8 0.4 L70.2 1.6 Q66.0 2.0 64.0 3.1 L59.0 5.9 Q57.0 7.0 55.7 8.5 L52.3 12.5 Q51.0 14.0 50.1 16.6 L47.9 23.4 Q47.0 26.0 47.0 34.6 L47.0 56.4 Q47.0 65.0 47.4 65.4 L48.6 66.6 Q49.0 67.0 55.8 67.0 L73.2 67.0 Q80.0 67.0 80.9 66.3 L83.1 64.7 Q84.0 64.0 84.2 55.9 L84.8 35.1 Q85.0 27.0 84.6 26.6 L83.4 25.4 Q83.0 25.0 79.7 25.0 L71.3 25.0 Q68.0 25.0 67.8 24.6 L67.2 23.4 Q67.0 23.0 67.7 21.7 L69.3 18.3 Q70.0 17.0 71.1 16.1 L73.9 13.9 Q75.0 13.0 77.2 12.3 L82.8 10.7 Q85.0 10.0 85.0 7.8 L85.0 2.2 Z" fill="currentColor"/>
           </svg>
@@ -2700,7 +2955,7 @@
         </div>
 
         <div class="tst-mobile-viewport">
-          <div class="tst-mobile-cards" id="tstCardsMobile">
+          <div class="tst-mobile-cards" id="tstCardsMobile" data-reveal-list>
             <!-- cards injected by JS (same render function as desktop) -->
           </div>
         </div>
@@ -2721,13 +2976,21 @@
 
   </div>
 </section>
+</div>
 
 <style>
   /* ===================== TESTIMONIALS — SCOPED STYLES (desktop-first; mobile/tablet to follow) ===================== */
 
   .tst-section{
     background:var(--bg);
-    padding:32px clamp(28px, 6vw, 96px) 96px;
+    /* bottom padding trimmed from 96px to 72px — this section sits
+       directly before Projects in the real page (Home+Impact ->
+       Professional Philosophy -> Core Capabilities -> Experience +
+       Testimonials -> Projects + Tech Stack -> ...), and 96px was
+       already the largest bottom padding of any section built so far.
+       Stacked against whatever top padding Projects adds on its own
+       side, the old value risked an oversized gap between them. */
+    padding:32px clamp(28px, 6vw, 96px) 72px;
     font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
   .tst-inner{ max-width:1400px; margin:0 auto; }
@@ -2828,9 +3091,22 @@
        and below each card. Padding gives the shadow room to render
        before it hits that clip edge; the matching negative margin
        cancels the padding back out so the row's outer position and
-       width don't visibly shift. */
+       width don't visibly shift.
+       The bottom pairing is only a PARTIAL cancel (-40px against 64px
+       of padding, not -64px) rather than a full one, on purpose: a
+       full cancel would make this row always report the same fixed
+       height to whatever follows it, regardless of how tall its
+       content actually is — including when a card's quote is expanded
+       via "see more", which grows the row's real height a lot. With a
+       full cancel, that growth wouldn't reliably push Projects (the
+       next section in the real page) down; it would just extend
+       further into whatever space padding this section's ".tst-section"
+       already reserves below it, at real risk of visually running into
+       Projects instead. The 24px left uncancelled here is real,
+       normal, content-counted space, so it (and any extra height from
+       an expanded card) properly grows the page's natural flow. */
     padding:36px 44px 64px 36px;
-    margin:-36px -44px -64px -36px;
+    margin:-36px -44px -40px -36px;
   }
   .tst-cards::-webkit-scrollbar{ display:none; }
 
@@ -2846,7 +3122,13 @@
     scroll-snap-align:start;
     display:flex;
     flex-direction:column;
-    transition:transform 0.2s ease;
+    /* merged with the shared [data-reveal-soft] transition rather than
+       left to compete with it (see the .exp-card comment above for
+       why) — transform stays fast (0.2s, for the hover lift), while
+       opacity/filter get the slower reveal timing */
+    transition:transform 0.2s ease,
+               opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .tst-card:hover{
     transform:translateY(-8px) scale(1.02);
@@ -3167,7 +3449,7 @@
   // and the mobile single-card-at-a-time carousel, so the card's visual
   // style (bubble, tail, avatar row) only ever lives in one place
   function renderCardHtml(t){
-    return '<div class="tst-card' + (t.placeholder ? ' tst-card--placeholder' : '') + '">' +
+    return '<div class="tst-card' + (t.placeholder ? ' tst-card--placeholder' : '') + '" data-reveal-soft>' +
       '<div class="tst-bubble-wrap">' +
         '<svg class="tst-tail" viewBox="0 0 124 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 80 L48 48 L124 0 Z" fill="currentColor"/></svg>' +
         '<div class="tst-bubble">' +
@@ -3350,6 +3632,47 @@
   window.addEventListener('resize', updateMobileNavState);
   window.addEventListener('load', updateMobileNavState); // re-check after webfonts finish loading, which can shift card widths
   updateMobileNavState();
+})();
+</script>
+
+<script>
+(function(){
+  // ===================== SHARED SCROLL-REVEAL ENGINE =====================
+  // One IntersectionObserver for every [data-reveal] / [data-reveal-soft]
+  // element across all sections built so far. Placed at the very end of
+  // the document (after Core Capabilities', Experience's, and
+  // Testimonials' own scripts have already run and populated their
+  // dynamic content), so every element that needs to be observed
+  // already exists in the DOM by the time this runs.
+  //
+  // Each element reveals once, the first time it scrolls into view, and
+  // is then unobserved — this is a one-time entrance effect, not a
+  // repeating/parallax one, and it never re-hides an element that's
+  // already been revealed (e.g. scrolling back up).
+  if (!('IntersectionObserver' in window)){
+    // no IntersectionObserver support — just show everything immediately
+    // rather than leave it permanently invisible
+    document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
+  var revealObserver = new IntersectionObserver(function(entries, observer){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -8% 0px' // trigger a little before the element is fully in view
+  });
+
+  document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
+    revealObserver.observe(el);
+  });
 })();
 </script>
 
