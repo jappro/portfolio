@@ -18,8 +18,8 @@
   --blue-soft:rgba(47,95,224,0.1);
   --amber:#c9711a;
   --amber-soft:rgba(201,113,26,0.12);
-  --teal:#128f7c;
-  --teal-soft:rgba(18,143,124,0.12);
+  --teal:#0e7490;
+  --teal-soft:rgba(14,116,144,0.12);
 
   color-scheme:light;
 }
@@ -41,8 +41,8 @@
   --blue-soft:rgba(111,147,255,0.14);
   --amber:#e6a24d;
   --amber-soft:rgba(230,162,77,0.14);
-  --teal:#2dd4bf;
-  --teal-soft:rgba(45,212,191,0.14);
+  --teal:#22d3ee;
+  --teal-soft:rgba(34,211,238,0.14);
 
   color-scheme:dark;
 }
