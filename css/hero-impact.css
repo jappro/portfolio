@@ -1,9 +1,17 @@
 /* ============ HERO (NEW) ============ */
+/* overflow-x:hidden intentionally removed here — by CSS spec, setting
+   overflow-x alone (without overflow-y) forces the browser to compute
+   overflow-y as auto instead of visible, which was silently clipping
+   the mobile hero photo's intentional upward bleed above its own
+   container before z-index:150 (on .hero-wrap, mobile) ever got a
+   chance to let it render over the navbar. Same bug family as the
+   body{overflow-x:hidden} issue that broke the sticky nav earlier.
+   Horizontal overflow is still caught globally by html{overflow-x:hidden}
+   in base.css, so this section doesn't need its own copy. */
 .hero-new{
   position:relative;
   background:#050507;
   padding-bottom:0;
-  overflow-x:hidden;
 }
 
 .hero-glow{
@@ -890,4 +898,3 @@
   .mp-icon svg{ width:16px; height:16px; }
   .mp-pill{ font-size:9.5px; padding:8px 13px; }
 }
-
