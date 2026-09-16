@@ -206,4 +206,3 @@
 
   allEls.forEach(function(el){ observer.observe(el); });
 })();
-
