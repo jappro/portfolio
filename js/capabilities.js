@@ -2,24 +2,12 @@
    CORE CAPABILITIES — isolated script
    Pair with capability.html and capability.css.
 
-   NOTE — shared code duplicated here for standalone use:
-   The second IIFE below (the scroll-reveal engine) is shared
-   infrastructure also used by the Experience+Testimonials
-   bundle, duplicated here so this file works on its own. It
-   scans the WHOLE page for [data-reveal]/[data-reveal-soft]
-   elements, not just this section's — harmless if both bundles'
-   copies end up loaded on the same final page (each element just
-   gets observed by two observers instead of one), but once all
-   sections are actually merged, keep only ONE copy of this
-   engine site-wide rather than shipping it per-section.
-
-   Kept as two IIFEs in THIS file rather than split apart: the
-   reveal engine must run after this file's own card-generation
-   loop above it has populated the DOM, and since script tags run
-   top-to-bottom, keeping both here guarantees that order without
-   depending on where a future shared copy gets loaded relative to
-   this file. Revisit consolidation once Experience/Testimonials
-   (the next section using [data-reveal]) actually exists.
+   The shared scroll-reveal engine that used to be duplicated at the
+   end of this file now lives in its own file, js/shared-reveal.js,
+   loaded as the last <script> tag in index.html — consolidated once
+   Experience+Testimonials became a second section needing the same
+   engine. See shared-reveal.js for why it has to stay last in load
+   order rather than living in any one section's own file.
 ============================================================= */
 
 (function(){
@@ -591,44 +579,3 @@
   quoteBody.addEventListener('scroll', updateScrollHints);
   updateScrollHints();
 })();
-
-/* ===================== shared scroll-reveal engine (see note above) ===================== */
-(function(){
-  // ===================== SHARED SCROLL-REVEAL ENGINE =====================
-  // One IntersectionObserver for every [data-reveal] / [data-reveal-soft]
-  // element across all sections built so far. Placed at the very end of
-  // the document (after Core Capabilities', Experience's, and
-  // Testimonials' own scripts have already run and populated their
-  // dynamic content), so every element that needs to be observed
-  // already exists in the DOM by the time this runs.
-  //
-  // Each element reveals once, the first time it scrolls into view, and
-  // is then unobserved — this is a one-time entrance effect, not a
-  // repeating/parallax one, and it never re-hides an element that's
-  // already been revealed (e.g. scrolling back up).
-  if (!('IntersectionObserver' in window)){
-    // no IntersectionObserver support — just show everything immediately
-    // rather than leave it permanently invisible
-    document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
-      el.classList.add('is-visible');
-    });
-    return;
-  }
-
-  var revealObserver = new IntersectionObserver(function(entries, observer){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -8% 0px' // trigger a little before the element is fully in view
-  });
-
-  document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
-    revealObserver.observe(el);
-  });
-})();
-
