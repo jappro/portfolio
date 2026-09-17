@@ -1,3685 +1,455 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio Sections — Preview</title>
+<title>Contact + Footer — preview</title>
+
+<!-- Already loaded elsewhere in the real page — included here only so this file previews standalone -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ============================================================
+   SHARED SITE TOKENS + CONVENTIONS (already exist in the real file —
+   included here only so this section previews correctly on its own)
+   ============================================================ */
+[data-theme="dark"]{
+  --bg:#08080b;
+  --bg-alt:#0d0d12;
+  --card-bg:rgba(255,255,255,0.045);
+  --card-border:rgba(255,255,255,0.09);
+  --text-hi:#f5f5f7;
+  --text-mid:#b6b6bf;
+  --text-lo:#7c7c86;
+  --shadow:0 24px 60px rgba(0,0,0,0.5);
+  --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
+  --purple:#a48cff;      --purple-soft:rgba(164,140,255,0.14);
+  --blue:#6f93ff;        --blue-soft:rgba(111,147,255,0.14);
+  --amber:#e6a24d;       --amber-soft:rgba(230,162,77,0.14);
+  --teal:#2dd4bf;        --teal-soft:rgba(45,212,191,0.14);
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:'Inter', sans-serif;
+  background:var(--bg);
+  color:var(--text-hi);
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{ position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 32px; }
+section.section{ padding:110px 0; }
+
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in-view{ opacity:1; transform:translateY(0); }
+
+@media (max-width:640px){
+  section.section{ padding:80px 0; }
+  .wrap{ padding:0 22px; }
+}
+
+/* ============================================================
+   CONTACT SECTION — namespaced "cf-" to avoid clashing with the
+   rest of the page's classes when dropped in
+   ============================================================ */
+
+#contact.cf-section{
+  position:relative;
+  overflow:hidden;
+  background:var(--bg);
+  isolation:isolate;
+  text-align:center;
+}
+
+/* Ambient stage light — three soft blurred orbs breathing behind the content */
+.cf-atmosphere{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.cf-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(70px);
+  will-change:transform, opacity;
+}
+.cf-orb--amber{
+  width:52vw; height:52vw; max-width:620px; max-height:620px;
+  left:50%; top:-8%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle, var(--amber-soft), transparent 70%);
+  animation:cfOrbPulse 16s ease-in-out infinite;
+}
+.cf-orb--purple{
+  width:44vw; height:44vw; max-width:520px; max-height:520px;
+  left:8%; bottom:-12%;
+  background:radial-gradient(circle, var(--purple-soft), transparent 70%);
+  animation:cfOrbPulse 20s ease-in-out infinite -6s;
+}
+.cf-orb--blue{
+  width:38vw; height:38vw; max-width:460px; max-height:460px;
+  right:6%; bottom:0%;
+  background:radial-gradient(circle, var(--blue-soft), transparent 70%);
+  animation:cfOrbPulse 24s ease-in-out infinite -12s;
+}
+@keyframes cfOrbPulse{
+  0%,100%{ opacity:.55; transform:scale(1) translateX(var(--ox,0)); }
+  50%{ opacity:1; transform:scale(1.12) translateX(var(--ox,0)); }
+}
+.cf-orb--amber{ --ox:-50%; }
+
+/* Fine film grain, laid over everything at very low opacity */
+.cf-grain{
+  position:absolute; inset:0; z-index:1;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Vignette to keep focus in the center */
+.cf-vignette{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.55) 100%);
+}
+
+.cf-content{ position:relative; z-index:2; }
+
+/* Oversized ghost title card — a cinematic title-card treatment for the word "Contact",
+   instead of a small tracked eyebrow label */
+.cf-title-card{
+  position:relative;
+  height:0;
+  margin-bottom:-.35em;
+  pointer-events:none;
+  user-select:none;
+}
+.cf-title-card span{
+  position:absolute;
+  left:50%; top:0;
+  transform:translate(-50%,-58%);
+  white-space:nowrap;
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:clamp(4.5rem, 21vw, 11rem);
+  letter-spacing:0.01em;
+  line-height:1;
+  background:linear-gradient(180deg, rgba(245,245,247,0.10), rgba(245,245,247,0.015) 65%, transparent 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.cf-heading{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:clamp(2.3rem, 7.6vw, 4.3rem);
+  line-height:1.08;
+  letter-spacing:-0.015em;
+  color:var(--text-hi);
+  margin:0 0 22px;
+}
+
+.cf-sub{
+  font-family:'Inter', sans-serif;
+  font-weight:700;
+  font-size:clamp(1.1rem, 2.8vw, 1.32rem);
+  line-height:1.6;
+  color:var(--text-mid);
+  max-width:460px;
+  margin:0 auto 44px;
+}
+
+/* Staggered reveal for the pieces inside .cf-content — driven by the ancestor's
+   .reveal/.in-view state, so it plugs into the site's existing scroll observer */
+.cf-item{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.16,1,.3,1) var(--d,0s),
+             transform .8s cubic-bezier(.16,1,.3,1) var(--d,0s);
+}
+.cf-content.in-view .cf-item{ opacity:1; transform:translateY(0); }
+.cf-content.in-view .cf-item--cta{
+  transition:opacity .7s cubic-bezier(.34,1.56,.64,1) var(--d,0s),
+             transform .7s cubic-bezier(.34,1.56,.64,1) var(--d,0s);
+}
+.cf-content.in-view .cf-title-card span{
+  animation:cfGhostIn 1.4s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes cfGhostIn{
+  from{ opacity:0; transform:translate(-50%,-48%); }
+  to{ opacity:1; transform:translate(-50%,-58%); }
+}
+
+/* CTA — glossy sticky "Book a call" pill with a static mixed-color trim.
+   Structure: .cf-cta-ring (holds the static color trim) > .cf-cta (the glass pill itself,
+   split into two layers so the trim ring can sit outside the box while the glossy
+   reflection stays clipped inside it — the two effects need different overflow rules). */
+.cf-cta-wrap{
+  position:sticky;
+  bottom:22px;
+  z-index:6;
+  margin-bottom:46px;
+  display:flex;
+  justify-content:center;
+}
+.cf-cta-ring{
+  position:relative;
+  display:inline-block;
+  border-radius:999px;
+  padding:1.5px;
+  background:conic-gradient(from 160deg, var(--amber), var(--purple), var(--blue), var(--teal));
+  box-shadow:0 20px 55px rgba(0,0,0,.5);
+}
+.cf-cta{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:26px 52px;
+  border-radius:999px;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text-hi);
+  font-family:'Inter', sans-serif;
+  font-weight:700;
+  font-size:1.18rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+/* the glass "reflection" — a small, purely-white highlight sitting toward the top-left */
+.cf-cta::after{
+  content:"";
+  position:absolute;
+  top:-16%; left:-8%;
+  width:36%; height:44%;
+  background:radial-gradient(ellipse at center, rgba(255,255,255,.55), rgba(255,255,255,0) 72%);
+  filter:blur(3px);
+  pointer-events:none;
+}
+.cf-cta:active{ transform:scale(.96); }
+.cf-cta:hover, .cf-cta:focus-visible{ box-shadow:0 0 44px var(--amber-soft); }
+.cf-cta svg{ width:37px; height:37px; flex-shrink:0; }
+
+/* Contact bars — email + phone, each its own small bordered pill */
+.cf-bars{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:34px;
+}
+.cf-bar{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 22px;
+  border-radius:14px;
+  border:1px solid var(--card-border);
+  background:var(--card-bg);
+  color:var(--text-mid);
+  font-family:'Inter', sans-serif;
+  font-weight:900;
+  font-size:1.28rem;
+  letter-spacing:0.01em;
+  text-decoration:none;
+  transition:color .3s ease, background .3s ease;
+}
+.cf-bar svg, .cf-bar img{ width:22px; height:22px; flex-shrink:0; display:block; color:var(--text-lo); opacity:.85; transition:color .3s ease, opacity .3s ease; }
+.cf-bar:hover, .cf-bar:focus-visible{ color:var(--text-hi); background:rgba(255,255,255,0.07); }
+.cf-bar:hover svg, .cf-bar:focus-visible svg{ color:var(--teal); }
+.cf-bar:hover img, .cf-bar:focus-visible img{ opacity:1; }
+
+/* Minimal rule between the contact bars and the social row */
+.cf-divider{
+  width:120px;
+  height:1px;
+  margin:0 auto 34px;
+  background:var(--card-border);
+}
+
+.cf-socials{
+  display:flex;
+  justify-content:center;
+  gap:34px;
+  flex-wrap:wrap;
+}
+.cf-socials a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 20px;
+  border-radius:999px;
+  border:1px solid var(--card-border);
+  background:var(--card-bg);
+  font-family:'Inter', sans-serif;
+  font-weight:700;
+  font-size:1.2rem;
+  letter-spacing:0.01em;
+  color:var(--text-mid);
+  text-decoration:none;
+  transition:color .3s ease, background .3s ease;
+}
+.cf-socials svg, .cf-socials img{ width:26px; height:26px; flex-shrink:0; display:block; opacity:.85; transition:opacity .3s ease; }
+.cf-socials a:hover img, .cf-socials a:focus-visible img{ opacity:1; }
+.cf-socials a:hover, .cf-socials a:focus-visible{ color:var(--text-hi); background:rgba(255,255,255,0.07); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer.footer{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:32px 0 46px;
+  font-size:12px;
+  color:var(--text-lo);
+  background:var(--bg);
+  border-top:1px solid var(--card-border);
+}
+footer.footer p{ margin:0; letter-spacing:0.01em; }
+
+@media (prefers-reduced-motion: reduce){
+  .cf-orb, .cf-content.in-view .cf-title-card span{ animation:none !important; }
+  .reveal, .cf-item, .cf-content.in-view .cf-item--cta{ transition:none !important; }
+  .cf-cta-wrap{ position:relative; bottom:auto; }
+}
+
+@media (max-width:640px){
+  .cf-socials{ gap:14px; }
+  .cf-socials a{ font-size:1rem; padding:11px 16px; }
+  .cf-socials svg, .cf-socials img{ width:22px; height:22px; }
+  .cf-cta{ padding:22px 38px; font-size:1.02rem; }
+  .cf-cta svg{ width:32px; height:32px; }
+  .cf-bar{ padding:13px 18px; font-size:1.1rem; }
+  .cf-bar svg, .cf-bar img{ width:20px; height:20px; }
+}
+</style>
 </head>
 <body>
-<!-- ============================================================
-  PORTFOLIO SECTIONS — standalone test build
-  Contains, in page order: CORE CAPABILITIES, then EXPERIENCE.
-  Both sections share the same preview-only token block below
-  (delete it when plugging into the real site, which already has
-  these tokens defined once globally).
 
-  CORE CAPABILITIES: complete — all 5 explorer cards, mobile/tablet/
-  desktop responsive, accessibility pass done.
-
-  EXPERIENCE: entry 1 of 7 built (Kiooverse). Flat rows (no boxed
-  cards) separated by thin top/bottom borders, with scroll-based
-  hover tracking matching Core Capabilities' card pattern. Data-driven
-  (EXP_DATA array) so entries 2–7 slot in the same way.
-============================================================= -->
-
-<style>
-
-  :root{
-    --bg:#fafafa; --bg-alt:#f2f2f4;
-    --card-bg:rgba(255,255,255,0.72); --card-border:rgba(15,15,20,0.07);
-    --text-hi:#111114; --text-mid:#52525b; --text-lo:#8b8b93;
-    --shadow:0 24px 60px rgba(15,15,20,0.08); --shadow-hover:0 30px 70px rgba(15,15,20,0.14);
-    --purple:#7c5cff; --purple-soft:rgba(124,92,255,0.12);
-    --blue:#2f5fe0; --blue-soft:rgba(47,95,224,0.1);
-    --amber:#c9711a; --amber-soft:rgba(201,113,26,0.12);
-    --teal:#128f7c; --teal-soft:rgba(18,143,124,0.12);
-    color-scheme:light;
-  }
-  [data-theme="dark"]{
-    --bg:#08080b; --bg-alt:#0d0d12;
-    --card-bg:rgba(255,255,255,0.045); --card-border:rgba(255,255,255,0.09);
-    --text-hi:#f5f5f7; --text-mid:#b6b6bf; --text-lo:#7c7c86;
-    --shadow:0 24px 60px rgba(0,0,0,0.5); --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
-    --purple:#a48cff; --purple-soft:rgba(164,140,255,0.14);
-    --blue:#6f93ff; --blue-soft:rgba(111,147,255,0.14);
-    --amber:#e6a24d; --amber-soft:rgba(230,162,77,0.14);
-    --teal:#2dd4bf; --teal-soft:rgba(45,212,191,0.14);
-    color-scheme:dark;
-  }
-  html{ background:#08080b; }
-  body{ background:#08080b; margin:0; overflow-x:hidden; }
-  /* body's own dark color is hardcoded rather than var(--bg) — var(--bg)
-     only resolves to the dark value inside elements carrying
-     data-theme="dark", and body itself doesn't carry that attribute.
-     Left as var(--bg) it silently falls back to the light theme value,
-     which then shows through as a white sliver wherever a section's
-     100vw full-bleed breakout (see .cc-explorer) overflows the visible
-     viewport by a pixel or two — a known iOS Safari quirk, worse under
-     "Request Desktop Website" + landscape. overflow-x:hidden clips
-     that stray sliver so it can never become visible or scrollable. */
-
-  /* ===================== SHARED SCROLL-REVEAL SYSTEM =====================
-     One shared reveal engine for every section built so far (Core
-     Capabilities, Experience, Testimonials) — not a separate effect
-     per section, so it stays consistent as more sections get merged in.
-     An element marked [data-reveal] starts slightly lowered, scaled
-     down, and blurred, then settles into place the first time it
-     scrolls into view (via the IntersectionObserver set up at the very
-     end of the document, after every section's own script has already
-     populated its dynamic content). It only ever plays once per
-     element — this is an entrance effect, not a repeating/parallax one.
-     [data-reveal-list] marks a repeating group (a card grid, a row
-     list) whose direct [data-reveal] children should settle in one
-     after another rather than all at once; the nth-child rule below
-     staggers each one a little later than the last. */
-  [data-reveal]{
-    opacity:0;
-    transform:translateY(28px) scale(0.98);
-    filter:blur(6px);
-    transition:opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change:opacity, transform, filter;
-  }
-  [data-reveal].is-visible{
-    opacity:1;
-    transform:translateY(0) scale(1);
-    filter:blur(0);
-  }
-  /* Descendant combinator (not a direct-child >) on purpose: Experience's
-     "View all N+ experience" overflow cards sit one level deeper, inside
-     their own .exp-more-list wrapper, inside the [data-reveal-list]
-     container — a direct-child selector would silently skip staggering
-     those without breaking anything else, since nth-child always counts
-     relative to an element's own real parent regardless of how the
-     ancestor was matched. */
-  [data-reveal-list] [data-reveal]:nth-child(1){ transition-delay:0ms; }
-  [data-reveal-list] [data-reveal]:nth-child(2){ transition-delay:90ms; }
-  [data-reveal-list] [data-reveal]:nth-child(3){ transition-delay:180ms; }
-  [data-reveal-list] [data-reveal]:nth-child(4){ transition-delay:270ms; }
-  [data-reveal-list] [data-reveal]:nth-child(5){ transition-delay:360ms; }
-  [data-reveal-list] [data-reveal]:nth-child(6){ transition-delay:450ms; }
-  [data-reveal-list] [data-reveal]:nth-child(7){ transition-delay:540ms; }
-  [data-reveal-list] [data-reveal]:nth-child(n+8){ transition-delay:600ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(1){ transition-delay:0ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(2){ transition-delay:90ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(3){ transition-delay:180ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(4){ transition-delay:270ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(5){ transition-delay:360ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(6){ transition-delay:450ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(7){ transition-delay:540ms; }
-  [data-reveal-list] [data-reveal-soft]:nth-child(n+8){ transition-delay:600ms; }
-
-  /* a fade+blur-only variant of the reveal (no transform) for elements
-     that already have their own hover-driven transform transition at a
-     different speed (e.g. .tst-card's hover lift) — mixing a slow
-     reveal-transform and a fast hover-transform on the same property
-     of the same element isn't reliable across browsers, so those
-     elements skip the transform part of the reveal entirely rather
-     than fight over it. */
-  [data-reveal-soft]{
-    opacity:0;
-    filter:blur(6px);
-  }
-  [data-reveal-soft].is-visible{
-    opacity:1;
-    filter:blur(0);
-  }
-
-  /* a couple of one-off delays for paired (non-list) elements, e.g. a
-     header + the block beside/under it settling in just after it */
-  [data-reveal-delay="1"]{ transition-delay:120ms; }
-
-  @media (prefers-reduced-motion: reduce){
-    [data-reveal], [data-reveal-soft]{
-      opacity:1 !important;
-      transform:none !important;
-      filter:none !important;
-      transition:none !important;
-    }
-  }
-
-  /* ===================== SHARED TYPOGRAPHY =====================
-     Two deliberate Google Fonts for the site:
-       - Space Grotesk — all headings and title text
-       - Inter — base body font: paragraph text, descriptions, general UI copy
-     Each section already sets 'Inter' as its own font-family (see the
-     .cc-section / .exp-section / .tst-section rules), so Inter remains
-     the inherited default everywhere and only the headings below are
-     switched over. This rule sets font-family ONLY — no weight, size,
-     color, spacing or line-height is touched, so every value already
-     tuned inside the sections stays exactly as it was. */
-  .cc-title,
-  .cc-explorer-title,
-  .cc-cap-title,
-  .cc-explorer-number,
-  .exp-title,
-  .exp-role,
-  .exp-timeline-role,
-  .tst-title,
-  .tst-label{
-    font-family:'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
-
-  /* ===================== SHARED DECORATIVE BLOB SYSTEM =====================
-     Every section starts and ends blended into the site's matte black,
-     so adjacent sections transition into each other smoothly rather
-     than butting up against a hard color change.
-
-     The fade profile (applied as a mask on the blob layer, so it fades
-     the DECORATION only — never the text or cards above it):
-       0%   -> pure matte black (no blob at all)
-       15%  -> blob fully introduced
-       85%  -> blob still full
-       100% -> faded completely back to matte black
-     i.e. matte black fades INTO the blobs across the top 15% of the
-     section, holds through the middle, then fades back OUT to matte
-     black across the bottom 15% — before the next section begins.
-
-     Structure: each section paints its own flat matte background as
-     normal; .section-blobs is a separate absolutely-positioned layer
-     sitting on top of that background but BEHIND all content (content
-     is lifted to z-index:1). Blobs are heavily-blurred radial
-     gradients — soft ambient color fields, not hard-edged shapes.
-     pointer-events:none so they never intercept a click or scroll. */
-  .has-blobs{
-    position:relative;
-    isolation:isolate; /* keeps this blob layer's stacking self-contained, so it can't interact with another section's layers */
-    overflow:hidden;   /* blobs are deliberately oversized/offset; this stops them spilling past the section and causing sideways scroll */
-  }
-  .section-blobs{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    /* the top/bottom blend back to matte black */
-    -webkit-mask-image:linear-gradient(to bottom,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,1) 15%,
-      rgba(0,0,0,1) 85%,
-      rgba(0,0,0,0) 100%);
-    mask-image:linear-gradient(to bottom,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,1) 15%,
-      rgba(0,0,0,1) 85%,
-      rgba(0,0,0,0) 100%);
-  }
-  /* Content sits above the blobs. Targeted explicitly at each section's
-     own content wrapper rather than as a blanket "every direct child"
-     rule — a blanket rule would out-specify and break utility elements
-     that depend on their own positioning (e.g. .cc-sr-only, which needs
-     position:absolute for its clip-based visual hiding to work). */
-  .cc-section > .cc-inner,
-  .exp-tst-group > .exp-section,
-  .exp-tst-group > .tst-section{
-    position:relative;
-    z-index:1;
-  }
-
-  .section-blob{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(90px); /* what turns a hard gradient circle into a soft ambient color field */
-    opacity:0.5;
-  }
-  /* the three placements, shared by both sections — only the COLORS
-     differ per section (set below), not the geometry */
-  .section-blob--left{
-    top:12%;
-    left:-8%;
-    width:46%;
-    height:46%;
-  }
-  .section-blob--right{
-    top:10%;
-    right:-8%;
-    width:44%;
-    height:44%;
-  }
-  .section-blob--mid{
-    top:46%;
-    left:50%;
-    transform:translateX(-50%);
-    width:52%;
-    height:38%;
-    opacity:0.42;
-  }
-
-  /* ---- Core Capabilities palette ---- */
-  .cc-section .section-blob--left{
-    background:radial-gradient(circle at 40% 40%, var(--purple), rgba(0,0,0,0) 70%),
-               radial-gradient(circle at 65% 62%, var(--teal), rgba(0,0,0,0) 70%);
-  }
-  .cc-section .section-blob--right{
-    background:radial-gradient(circle at 55% 40%, #4ADE80, rgba(0,0,0,0) 70%),
-               radial-gradient(circle at 38% 62%, var(--amber), rgba(0,0,0,0) 70%);
-  }
-  .cc-section .section-blob--mid{
-    background:radial-gradient(ellipse at 50% 50%, var(--blue), rgba(0,0,0,0) 72%);
-  }
-
-  /* ---- Experience + Testimonials palette (one shared group) ---- */
-  .exp-tst-group .section-blob--left{
-    background:radial-gradient(circle at 42% 40%, var(--amber), rgba(0,0,0,0) 70%),
-               radial-gradient(circle at 62% 62%, var(--blue), rgba(0,0,0,0) 70%);
-  }
-  .exp-tst-group .section-blob--right{
-    background:radial-gradient(circle at 56% 40%, var(--teal), rgba(0,0,0,0) 70%),
-               radial-gradient(circle at 38% 62%, #4ADE80, rgba(0,0,0,0) 70%);
-  }
-  .exp-tst-group .section-blob--mid{
-    background:radial-gradient(ellipse at 50% 50%, var(--purple), rgba(0,0,0,0) 72%);
-  }
-
-  /* the shared Experience+Testimonials wrapper carries the matte
-     background for both, so a single blob layer can span the pair;
-     the two sections inside therefore go transparent rather than each
-     painting their own opaque background back over the blobs */
-  .exp-tst-group{ background:var(--bg); }
-  .exp-tst-group > .exp-section,
-  .exp-tst-group > .tst-section{ background:transparent; }
-
-  @media (max-width:767.98px){
-    /* on a narrow viewport a 90px blur over a proportionally smaller
-       area reads as a flat wash rather than a distinct blob, so it
-       scales down alongside the section */
-    .section-blob{ filter:blur(60px); opacity:0.42; }
-    .section-blob--mid{ opacity:0.36; }
-  }
-
-</style>
-
-
-<section class="cc-section has-blobs" data-theme="dark" id="ethos">
-
-  <!-- decorative ambient color blobs — purely visual, behind all content.
-       Up/center-left: purple+teal; middle: deep blue.
-       (The up/center-right green+amber blob was removed by design choice.)
-       See the shared blob system in the top style block for the
-       matte-black blend-in/blend-out fade. -->
-  <div class="section-blobs" aria-hidden="true">
-    <span class="section-blob section-blob--left"></span>
-    <span class="section-blob section-blob--mid"></span>
+<section class="section cf-section" id="contact">
+  <div class="cf-atmosphere" aria-hidden="true">
+    <div class="cf-orb cf-orb--amber"></div>
+    <div class="cf-orb cf-orb--purple"></div>
+    <div class="cf-orb cf-orb--blue"></div>
   </div>
+  <div class="cf-grain" aria-hidden="true"></div>
+  <div class="cf-vignette" aria-hidden="true"></div>
 
-  <!-- Liquid-glass refraction filter — used as a progressive enhancement
-       on top of backdrop-filter:blur() for the floating buttons below.
-       feTurbulence generates a noise pattern; feDisplacementMap uses
-       that noise to warp/bend the backdrop through each button's
-       shape, which is what actually reads as "glass" rather than
-       flat blur (blur alone can't bend/distort anything).
-       Browsers that don't support an SVG filter reference inside
-       backdrop-filter simply ignore that one declaration and keep
-       the plain blur() fallback set just before it — see the CSS. -->
-  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
-    <defs>
-      <filter id="cc-glass-distort" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.014" numOctaves="2" seed="7" result="cc-noise"/>
-        <feGaussianBlur in="cc-noise" stdDeviation="1.6" result="cc-noise-soft"/>
-        <feDisplacementMap in="SourceGraphic" in2="cc-noise-soft" scale="14" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-      <!-- Same technique, tuned for a much larger surface (the "What
-           this creates" callout card). baseFrequency is a spatial
-           frequency — reusing the button's value unchanged on a
-           surface several times bigger would pack in far more ripples
-           and look noisy rather than glass-like, so this uses a lower
-           frequency (longer wavelength) and a gentler displacement
-           scale to keep it a calm, subtle warp instead of visual noise
-           behind readable paragraph text. -->
-      <filter id="cc-glass-distort-lg" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.008" numOctaves="2" seed="11" result="cc-noise-lg"/>
-        <feGaussianBlur in="cc-noise-lg" stdDeviation="2.2" result="cc-noise-lg-soft"/>
-        <feDisplacementMap in="SourceGraphic" in2="cc-noise-lg-soft" scale="10" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-    </defs>
-  </svg>
+  <div class="wrap">
+    <div class="cf-content reveal">
 
-  <!-- visually-hidden live region: announces which capability is
-       showing whenever it changes (card click, Previous/Next), for
-       screen reader users who wouldn't otherwise know the Explorer's
-       content just changed -->
-  <div class="cc-sr-only" aria-live="polite" id="ccLiveRegion"></div>
+      <div class="cf-title-card" aria-hidden="true"><span>CONTACT</span></div>
 
-  <div class="cc-inner">
+      <h2 class="cf-heading cf-item" style="--d:.05s">Let's work on<br>something meaningful.</h2>
 
-    <!-- Header + Quote: single column on mobile, 50/50 split on desktop -->
-    <div class="cc-head-grid">
+      <p class="cf-sub cf-item" style="--d:.2s">Have a project, role, collaboration, or idea in mind? Let's talk.</p>
 
-      <div class="cc-head-col cc-head-col--left" data-reveal>
-        <h2 class="cc-title">
-          <span class="cc-title-line cc-title-line--hi">My goal was never</span>
-          <span class="cc-title-line cc-title-line--purple">to do</span>
-          <span class="cc-title-line cc-title-line--green">EVERYTHING.</span>
-        </h2>
-
-        <p class="cc-subheading">
-          Each of my core skills helps me understand how different functions
-          systematically contribute to improving a product.
-        </p>
+      <div class="cf-cta-wrap cf-item cf-item--cta" style="--d:.35s">
+        <span class="cf-cta-ring">
+          <a class="cf-cta" href="mailto:camzyxworld@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10.5V8.2c0-.94-.76-1.7-1.7-1.7H4.7C3.76 6.5 3 7.26 3 8.2v7.6c0 .94.76 1.7 1.7 1.7h8.6c.94 0 1.7-.76 1.7-1.7v-2.3l4 2.6V7.9l-4 2.6Z"/></svg>
+            Book a call
+          </a>
+        </span>
       </div>
 
-      <div class="cc-head-col cc-head-col--right" data-reveal data-reveal-delay="1">
-        <!-- Expandable boxed quote (scrolls inside the box on mobile; full text, no scroll, on desktop) -->
-        <div class="cc-quote">
-          <span class="cc-quote-mark cc-quote-mark--open" aria-hidden="true">&ldquo;</span>
-          <span class="cc-quote-mark cc-quote-mark--close" aria-hidden="true">&rdquo;</span>
+      <div class="cf-bars cf-item" style="--d:.5s">
+        <a class="cf-bar" href="mailto:camzyxworld@gmail.com">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/aws-res-amazon-simple-email-service-email/default.svg" alt="Amazon Simple Email Service Email" width="24" height="24">
+          camzyxworld@gmail.com
+        </a>
+        <a class="cf-bar" href="https://t.me/jappro" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/telegram/default.svg" alt="Telegram" width="24" height="24">
+          Telegram
+        </a>
+      </div>
 
-          <div class="cc-quote-scrollhint cc-quote-scrollhint--up" id="ccScrollUp" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="cc-quote-scrollhint cc-quote-scrollhint--down" id="ccScrollDown" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+      <div class="cf-divider cf-item" style="--d:.6s" aria-hidden="true"></div>
 
-          <div class="cc-quote-body" id="ccQuoteBody">
-            <p class="cc-quote-text">
-              These aren&rsquo;t five unrelated jobs to me.
-              They&rsquo;re five angles of the same system.
-            </p>
-            <p class="cc-quote-text">
-              My work is about <span class="cc-hl cc-hl--purple">reducing the gaps</span> between
-              people, information, and the decisions that shape a product, then using what I learn to
-              <span class="cc-hl cc-hl--purple">build better communities</span>,
-              <span class="cc-hl cc-hl--purple">improve experiences</span>,
-              <span class="cc-hl cc-hl--green">create structure</span>, and
-              <span class="cc-hl cc-hl--purple">support better decisions</span>.
-            </p>
-            <p class="cc-quote-text">
-              I don&rsquo;t need to own every part of the system.
-              <span class="cc-hl cc-hl--green">I help the parts work better together.</span>
-            </p>
-          </div>
-        </div>
+      <div class="cf-socials cf-item" style="--d:.7s">
+        <a href="https://linkedin.com/in/jappr0" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/linkedin/default.svg" alt="LinkedIn" width="24" height="24">
+          LinkedIn
+        </a>
+        <a href="https://x.com/jappr0?s=11" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/x-formerly-twitter/default.svg" alt="X (formerly Twitter)" width="24" height="24">
+          X(Twitter)
+        </a>
+        <a href="https://github.com/jappro" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/github/light.svg" alt="GitHub" width="24" height="24">
+          GitHub
+        </a>
       </div>
 
     </div>
-
-    <!-- Five capability cards + explorer share this stage -->
-    <div class="cc-stage">
-      <div class="cc-cap-list" role="list" id="ccCapList" data-reveal-list>
-        <!-- rows injected by JS -->
-      </div>
-
-      <!-- Capability Explorer (full-bleed panel, hidden until a card is clicked) -->
-      <div class="cc-explorer" id="ccExplorer" hidden>
-
-        <!-- Always floats in the same screen position while the panel is
-             open — position:fixed is used deliberately here instead of
-             sticky, since sticky only has "room" to stay stuck within
-             its own parent's height, and a zero-height parent (the
-             previous attempt) gave it nowhere to travel, causing it to
-             disengage/disappear on scroll. -->
-        <button type="button" class="cc-explorer-close" id="ccClose" aria-label="Close capability explorer">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-
-        <div class="cc-explorer-inner">
-
-          <div class="cc-explorer-topbar">
-            <button type="button" class="cc-explorer-back" id="ccBack">
-              <span class="cc-back-arrow" aria-hidden="true">&larr;</span> Back to Capabilities
-            </button>
-          </div>
-
-          <div class="cc-explorer-head">
-            <span class="cc-explorer-number" id="ccExplorerNumber">01</span>
-            <h3 class="cc-explorer-title" id="ccExplorerTitle" tabindex="-1"></h3>
-          </div>
-
-          <div class="cc-explorer-divider" aria-hidden="true"></div>
-
-          <span class="cc-explorer-label">MY VIEW</span>
-          <div class="cc-explorer-myview" id="ccMyView">
-            <!-- paragraphs injected by JS -->
-          </div>
-
-          <div class="cc-explorer-divider" aria-hidden="true"></div>
-
-          <span class="cc-explorer-label" id="ccStepsLabel">HOW I APPROACH IT</span>
-          <div class="cc-steps" id="ccSteps">
-            <!-- steps injected by JS -->
-          </div>
-
-          <div class="cc-explorer-divider" aria-hidden="true"></div>
-
-          <span class="cc-explorer-label" id="ccCreatesLabel">WHAT THIS CREATES</span>
-          <div class="cc-creates-box">
-            <span class="cc-creates-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 8l-9-5-9 5 9 5 9-5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 8v8l9 5 9-5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 13v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-            </span>
-            <div class="cc-creates-text" id="ccCreatesText"></div>
-          </div>
-
-          <span class="cc-explorer-label" id="ccExamplesLabel">EXAMPLES OF WHERE I&rsquo;VE USED THIS</span>
-          <ul class="cc-examples-list" id="ccExamplesList">
-            <!-- examples injected by JS -->
-          </ul>
-
-          <div class="cc-explorer-divider" aria-hidden="true"></div>
-
-          <span class="cc-explorer-label" id="ccRealityLabel">WHEN THE PLAN MEETS REALITY</span>
-          <div class="cc-explorer-reality" id="ccReality">
-            <!-- paragraphs + list + closing line injected by JS -->
-          </div>
-
-        </div>
-
-        <div class="cc-explorer-footer">
-          <button type="button" class="cc-nav cc-nav--prev" id="ccPrev" aria-label="Previous capability">
-            <span aria-hidden="true">&larr;</span> Previous
-          </button>
-          <span class="cc-nav-counter" id="ccCounter">1 / 5</span>
-          <button type="button" class="cc-nav cc-nav--next" id="ccNext" aria-label="Next capability">
-            Next <span aria-hidden="true">&rarr;</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<style>
-  /* ===================== CORE CAPABILITIES — SCOPED STYLES ===================== */
-
-  /* visually hides content from sighted users while keeping it
-     readable by screen readers — used for the live-region announcer */
-  .cc-sr-only{
-    position:absolute;
-    width:1px;
-    height:1px;
-    padding:0;
-    margin:-1px;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-    white-space:nowrap;
-    border:0;
-  }
-
-  .cc-section{
-    background:var(--bg);
-    padding:44px 20px 64px;
-    /* Explicit sans-serif stack — without this the browser falls back
-       to its default SERIF font, which is what made everything look
-       "wrong" before. Swap 'Inter' for your actual brand font if the
-       rest of the site uses a custom webfont. */
-    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --cc-amber-trim:#f2c98a; /* lighter than --amber, used only for card borders/glow */
-    --cc-amber-trim-soft:rgba(242,201,138,0.18);
-  }
-
-  .cc-inner{
-    max-width:640px;
-    margin:0 auto;
-  }
-
-  /* ---- header ---- */
-  .cc-title{
-    margin:0 0 26px;
-    text-align:center;
-    font-size:32px;
-    line-height:1.18;
-    font-weight:900;
-    letter-spacing:-0.01em;
-  }
-  .cc-title-line{ display:block; }
-  .cc-title-line--hi{ color:var(--text-hi); }
-  .cc-title-line--purple{ color:var(--purple); }
-  .cc-title-line--green{
-    color:#4ADE80;
-    font-size:1.18em; /* relative to .cc-title's size, so it scales correctly at every breakpoint without needing separate overrides */
-    font-weight:400;
-    letter-spacing:-0.005em;
-  }
-
-  .cc-subheading{
-    margin:0 0 32px;
-    color:var(--text-hi);
-    font-size:17px;
-    font-weight:600;
-    line-height:1.75;
-    text-align:left;
-    max-width:100%;
-  }
-
-  /* ---- expandable (internally scrollable) quote box ---- */
-  .cc-quote{
-    position:relative;
-    background:var(--purple-soft);
-    border:1px solid var(--card-border);
-    border-radius:24px;
-    padding:26px 22px 22px;
-    margin-bottom:28px;
-    overflow:hidden;
-  }
-
-  .cc-quote-mark{
-    position:absolute;
-    color:var(--teal);
-    font-family:Georgia, 'Times New Roman', serif;
-    font-weight:700;
-    line-height:1;
-    pointer-events:none;
-    user-select:none;
-  }
-  .cc-quote-mark--open{
-    top:14px; left:20px;
-    font-size:26px;
-    opacity:0.95;
-    z-index:1;
-  }
-  .cc-quote-mark--close{
-    bottom:-24px; right:10px;
-    font-size:150px;
-    opacity:0.08;
-    z-index:0;
-  }
-
-  .cc-quote-body{
-    position:relative;
-    z-index:1;
-    max-height:230px;
-    overflow-y:auto;
-    margin-top:20px;
-    padding-right:36px;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:thin;
-    scrollbar-color:var(--purple) transparent;
-  }
-  .cc-quote-body::-webkit-scrollbar{ width:5px; }
-  .cc-quote-body::-webkit-scrollbar-thumb{ background:var(--purple); border-radius:4px; }
-
-  /* scroll hint arrows — hint that the box scrolls; fade out at each end */
-  .cc-quote-scrollhint{
-    position:absolute;
-    right:12px;
-    z-index:2;
-    width:26px;
-    height:26px;
-    color:var(--purple);
-    opacity:0.9;
-    pointer-events:none;
-    transition:opacity 0.2s ease;
-  }
-  .cc-quote-scrollhint svg{ width:100%; height:100%; }
-  .cc-quote-scrollhint--up{ top:20px; }
-  .cc-quote-scrollhint--down{
-    bottom:12px;
-    animation:cc-bounce 1.6s ease-in-out infinite;
-  }
-  .cc-quote-scrollhint.cc-hint-hidden{ opacity:0; }
-  @keyframes cc-bounce{
-    0%, 100%{ transform:translateY(0); }
-    50%{ transform:translateY(3px); }
-  }
-  @media (prefers-reduced-motion:reduce){
-    .cc-quote-scrollhint--down{ animation:none; }
-  }
-
-  .cc-quote-text{
-    margin:0 0 16px;
-    color:var(--text-hi);
-    font-size:15.5px;
-    line-height:1.7;
-  }
-  .cc-quote-text:last-child{ margin-bottom:0; }
-
-  .cc-hl{ font-weight:600; }
-  .cc-hl--purple{ color:var(--purple); }
-  .cc-hl--green{ color:#4ADE80; }
-
-  /* ---- capability cards ---- */
-  .cc-cap-list{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    transition:opacity 0.25s ease, transform 0.25s ease;
-  }
-  /* [hidden] alone isn't enough once display:flex is set above — an
-     explicit author `display` rule beats the browser's built-in
-     [hidden]{display:none} rule, so without this the "hidden" list
-     stays visually rendered even though the attribute is set. */
-  .cc-cap-list[hidden]{ display:none !important; }
-  .cc-cap-list.cc-fade-out{
-    opacity:0;
-    transform:scale(0.97);
-    pointer-events:none;
-  }
-
-  .cc-cap-row{
-    all:unset;
-    box-sizing:border-box;
-    display:block;
-    position:relative;
-    width:100%;
-    cursor:pointer;
-    padding:22px 20px;
-    border-radius:22px;
-    background:var(--bg-alt);
-    border:1px solid var(--card-border);
-    box-shadow:var(--shadow);
-    overflow:hidden;
-    -webkit-tap-highlight-color:transparent;
-    transition:border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  /* glass "sheen" overlay — only visible once a card is highlighted */
-  .cc-cap-row::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    border-radius:inherit;
-    opacity:0;
-    pointer-events:none;
-    background:radial-gradient(120% 90% at 22% 0%, rgba(255,255,255,0.16), var(--cc-amber-trim-soft) 55%, transparent 78%);
-    transition:opacity 0.25s ease;
-  }
-
-  /* HOVER — accidental touch, mouse-over, or scroll-proximity default.
-     Border only, lighter amber, nothing else. */
-  @media (hover:hover) and (pointer:fine){
-    .cc-cap-row:hover:not(.cc-cap-row--highlighted){
-      border-color:var(--cc-amber-trim);
-    }
-  }
-  .cc-cap-row:active:not(.cc-cap-row--highlighted){
-    border-color:var(--cc-amber-trim);
-  }
-  .cc-cap-row--hover:not(.cc-cap-row--highlighted){
-    border-color:var(--cc-amber-trim);
-  }
-  .cc-cap-row:focus-visible{
-    outline:2px solid var(--cc-amber-trim);
-    outline-offset:2px;
-  }
-
-  /* HIGHLIGHTED — the selected/clicked card. Full treatment. */
-  .cc-cap-row--highlighted{
-    border-color:var(--cc-amber-trim);
-    box-shadow:0 0 0 1px var(--cc-amber-trim), 0 0 28px var(--cc-amber-trim-soft), var(--shadow-hover);
-  }
-  .cc-cap-row--highlighted::before{ opacity:1; }
-  .cc-cap-row--highlighted .cc-cap-title{ color:#ffffff; }
-
-  .cc-cap-title{
-    display:block;
-    margin-bottom:8px;
-    color:var(--text-mid);
-    font-size:19px;
-    font-weight:700;
-    line-height:1.3;
-    position:relative;
-    z-index:1;
-    transition:color 0.2s ease;
-  }
-  .cc-cap-line{
-    margin:0;
-    color:var(--text-mid);
-    font-size:14.5px;
-    line-height:1.6;
-    position:relative;
-    z-index:1;
-  }
-
-  /* ---- capability explorer ---- */
-  .cc-explorer{
-    /* full-bleed: escapes the .cc-inner max-width to span the viewport edge-to-edge */
-    position:relative;
-    width:100vw;
-    margin-left:calc(50% - 50vw);
-    margin-right:calc(50% - 50vw);
-    background:var(--bg-alt); /* matte black — was var(--purple-soft) */
-    border-top:1px solid var(--card-border);
-    border-bottom:1px solid var(--card-border);
-    color:#f3f0ff;
-    padding-bottom:88px;
-    transform-origin:top center;
-    animation:cc-explorer-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-  @keyframes cc-explorer-in{
-    from{ opacity:0; transform:scale(0.94) translateY(6px); }
-    to{ opacity:1; transform:scale(1) translateY(0); }
-  }
-  @keyframes cc-explorer-out{
-    from{ opacity:1; transform:scale(1) translateY(0); }
-    to{ opacity:0; transform:scale(0.96) translateY(4px); }
-  }
-  .cc-explorer.cc-explorer-exit{
-    animation:cc-explorer-out 0.25s ease both;
-  }
-  @media (prefers-reduced-motion:reduce){
-    .cc-explorer{ animation:none; }
-  }
-
-  .cc-explorer-inner{
-    max-width:520px;
-    margin:0 auto;
-    padding:20px 20px 8px;
-  }
-
-  .cc-explorer-topbar{
-    display:flex;
-    align-items:center;
-    margin-bottom:22px;
-  }
-  .cc-explorer-back{
-    all:unset;
-    cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    color:#f3f0ff;
-    font-size:14px;
-    font-weight:600;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .cc-back-arrow{ font-size:16px; }
-
-  /* floating close button — position:fixed keeps it pinned to the same
-     screen spot the entire time the panel is open, regardless of scroll */
-  .cc-explorer-close{
-    all:unset;
-    box-sizing:border-box;
-    cursor:pointer;
-    position:fixed;
-    top:18px;
-    right:18px;
-    z-index:50;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    color:#ffffff;
-    flex-shrink:0;
-    -webkit-tap-highlight-color:transparent;
-    /* frosted glass — thinner/more transparent than the first pass */
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.3);
-    backdrop-filter:blur(10px) saturate(140%); /* safe fallback, always applies */
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-    box-shadow:0 6px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-  /* progressive enhancement: adds real refraction on top of the blur,
-     via the SVG filter defined at the top of the section. Browsers
-     that can't parse url() inside backdrop-filter drop this whole
-     declaration and silently keep the fallback above. */
-  .cc-explorer-close{
-    backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%);
-  }
-  .cc-explorer-close:active{ transform:translateY(1px); }
-  .cc-explorer-close svg{ width:15px; height:15px; }
-
-  .cc-explorer-head{
-    display:flex;
-    align-items:flex-start;
-    gap:14px;
-    margin-bottom:14px;
-  }
-  .cc-explorer-number{
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:44px;
-    height:44px;
-    border-radius:12px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.2);
-    color:#f3f0ff;
-    font-size:16px;
-    font-weight:700;
-  }
-  .cc-explorer-title{
-    margin:0;
-    padding-top:4px;
-    color:#ffffff;
-    font-size:26px;
-    font-weight:800;
-    line-height:1.2;
-  }
-
-  .cc-explorer-divider{
-    height:1px;
-    background:rgba(255,255,255,0.14);
-    margin:22px 0;
-  }
-
-  .cc-explorer-label{
-    display:block;
-    margin-bottom:18px;
-    color:#c3b8f7;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-  }
-
-  /* timeline of "how I approach it" steps */
-  .cc-steps{ display:flex; flex-direction:column; }
-  .cc-step{
-    position:relative;
-    display:flex;
-    gap:16px;
-    padding-bottom:26px;
-  }
-  .cc-step:last-child{ padding-bottom:0; }
-  .cc-step:not(:last-child)::before{
-    /* connecting line between icon circles */
-    content:'';
-    position:absolute;
-    left:23px;
-    top:48px;
-    bottom:0;
-    width:2px;
-    background:rgba(255,255,255,0.18);
-  }
-  .cc-step-icon{
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:48px;
-    height:48px;
-    border-radius:50%;
-    background:#ffffff;
-    color:#6d4fd6;
-    box-shadow:0 6px 16px rgba(0,0,0,0.25);
-    z-index:1;
-  }
-  .cc-step-icon svg{ width:22px; height:22px; }
-  .cc-step-body{ padding-top:8px; }
-  .cc-step-title{
-    margin:0 0 5px;
-    color:#ffffff;
-    font-size:16px;
-    font-weight:700;
-  }
-  .cc-step-desc{
-    margin:0;
-    color:#cfc6f2;
-    font-size:14px;
-    line-height:1.55;
-  }
-
-  /* "what this creates" callout — frosted glass, matching the
-     floating buttons' treatment: a safe blur() fallback first, then
-     the SVG-distortion enhancement layered on top. Browsers that
-     can't parse the url() reference simply drop that declaration and
-     keep the fallback — nothing breaks either way. */
-  .cc-creates-box{
-    display:flex;
-    align-items:flex-start;
-    gap:14px;
-    padding:18px;
-    border-radius:18px;
-    background:rgba(255,255,255,0.07);
-    border:1px solid rgba(255,255,255,0.16);
-    backdrop-filter:blur(14px) saturate(150%); /* safe fallback */
-    -webkit-backdrop-filter:blur(14px) saturate(150%);
-    box-shadow:0 10px 26px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.14);
-    margin-bottom:26px;
-  }
-  .cc-creates-box{
-    backdrop-filter:url(#cc-glass-distort-lg) blur(10px) saturate(150%); /* enhancement — see filter comment above */
-  }
-  .cc-creates-icon{
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:var(--purple);
-    color:#ffffff;
-  }
-  .cc-creates-icon svg{ width:20px; height:20px; }
-  .cc-creates-text{
-    color:#e9e4ff;
-    font-size:14.5px;
-    line-height:1.65;
-  }
-  .cc-creates-text p{ margin:0 0 10px; }
-  .cc-creates-text p:last-child{ margin-bottom:0; }
-  .cc-creates-text strong{ color:#ffffff; font-weight:700; }
-  .cc-creates-list{
-    list-style:none;
-    margin:2px 0 10px;
-    padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-  }
-  .cc-creates-list li{
-    position:relative;
-    padding-left:15px;
-    color:#e9e4ff;
-    font-size:14.5px;
-    line-height:1.5;
-  }
-  .cc-creates-list li::before{
-    content:'';
-    position:absolute;
-    left:0;
-    top:7px;
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background:var(--purple);
-  }
-
-  /* ---- "from X to Y" contrast moment (e.g. card 5's WHY DATA
-     MATTERS TO ME section) ---- */
-  .cc-contrast{
-    display:flex;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin:6px 0 14px;
-    padding:14px 16px;
-    border-radius:14px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.1);
-  }
-  .cc-contrast-before{
-    color:#9b93c2;
-    font-size:14px;
-    font-style:italic;
-  }
-  .cc-contrast-arrow{
-    color:var(--purple);
-    font-size:15px;
-    font-weight:700;
-  }
-  .cc-contrast-after{
-    color:#ffffff;
-    font-size:14.5px;
-    font-weight:600;
-    font-style:italic;
-  }
-
-  /* ---- step circles that use a plain number instead of an icon
-     (used when a capability's steps don't need distinct icon glyphs) ---- */
-  .cc-step-num{
-    color:#6d4fd6;
-    font-size:16px;
-    font-weight:800;
-  }
-
-  /* ---- MY VIEW optional relationship diagram (e.g. the Visibility /
-     Audience / Brand Identity triad) — thin connecting lines + plain
-     typography, deliberately not an icon-style illustration ---- */
-  .cc-triad{
-    position:relative;
-    width:100%;
-    height:220px;
-    margin:22px 0 6px;
-  }
-  .cc-triad-svg{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-  }
-  .cc-triad-svg line{
-    stroke:rgba(255,255,255,0.22);
-    stroke-width:1.2;
-  }
-  .cc-triad-node{
-    position:absolute;
-    text-align:center;
-    width:150px;
-  }
-  .cc-triad-node--top{ top:0; left:50%; transform:translateX(-50%); }
-  .cc-triad-node--left{ bottom:0; left:0; }
-  .cc-triad-node--right{ bottom:0; right:0; }
-  .cc-triad-label{
-    display:block;
-    color:#ffffff;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:0.06em;
-    margin-bottom:4px;
-  }
-  .cc-triad-sub{
-    display:block;
-    color:#b6adde;
-    font-size:12.5px;
-    line-height:1.4;
-  }
-
-  /* ---- reusable vertical "flow" diagram: a sequence of plain-text
-     steps connected by a thin line, with optional branch-off (e.g. an
-     alternate/negative outcome) and an optional loop indicator at the
-     end. Typography-led by design — no icons except the loop symbol,
-     which earns its place since a cycle is hard to convey in text alone. ---- */
-  .cc-flow{
-    display:flex;
-    flex-direction:column;
-    margin:22px 0 4px;
-  }
-  .cc-flow-step{
-    position:relative;
-    padding:0 0 24px 20px;
-  }
-  .cc-flow-step:last-child{ padding-bottom:0; }
-  .cc-flow-step::before{
-    content:'';
-    position:absolute;
-    left:0;
-    top:5px;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--purple);
-  }
-  .cc-flow-step:not(:last-child)::after{
-    content:'';
-    position:absolute;
-    left:3px;
-    top:16px;
-    bottom:0;
-    width:1.2px;
-    background:rgba(255,255,255,0.2);
-  }
-  .cc-flow-label{
-    display:block;
-    color:#ffffff;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-  }
-  .cc-flow-branch{
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    margin:10px 0 0;
-    padding:7px 12px;
-    border-left:1.5px solid rgba(230,162,77,0.45);
-    background:rgba(230,162,77,0.06);
-    color:#e6a24d;
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:0.04em;
-    text-transform:uppercase;
-    border-radius:0 8px 8px 0;
-  }
-  .cc-flow-loop{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding-left:20px;
-    color:#8b8b93;
-    font-size:12px;
-    font-weight:600;
-  }
-  .cc-flow-loop svg{ width:14px; height:14px; flex-shrink:0; }
-
-  /* examples list */
-  /* ---- MY VIEW section ---- */
-  .cc-explorer-myview p{
-    margin:0 0 14px;
-    color:#e9e4ff;
-    font-size:15.5px;
-    line-height:1.7;
-  }
-  .cc-explorer-myview p:last-child{ margin-bottom:0; }
-
-  /* ---- examples list: now a title + description pair per item ---- */
-  .cc-examples-list{
-    list-style:none;
-    margin:0;
-    padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-  }
-  .cc-examples-list li{
-    position:relative;
-    padding-left:18px;
-    padding-top:14px;
-    display:flex;
-    flex-direction:column;
-    gap:3px;
-  }
-  .cc-examples-list li:first-child{ padding-top:0; }
-  .cc-examples-list li:not(:first-child){
-    border-top:1px solid rgba(255,255,255,0.08); /* subtle separator between items */
-  }
-  .cc-examples-list li::before{
-    content:'';
-    position:absolute;
-    left:0;
-    top:7px;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:var(--purple);
-  }
-  .cc-examples-list li:not(:first-child)::before{
-    top:21px; /* accounts for the separator's padding-top pushing the title down */
-  }
-  .cc-example-title{
-    color:#ffffff;
-    font-size:15px;
-    font-weight:600;
-    line-height:1.4;
-  }
-  .cc-example-sub{
-    color:#b6adde;
-    font-size:14px;
-    line-height:1.5;
-  }
-
-  /* ---- WHEN THE PLAN MEETS REALITY (closing section) ---- */
-  .cc-explorer-reality p{
-    margin:0 0 14px;
-    color:#e9e4ff;
-    font-size:15.5px;
-    line-height:1.7;
-  }
-  .cc-reality-list{
-    list-style:none;
-    margin:4px 0 18px;
-    padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-  }
-  .cc-reality-list li{
-    position:relative;
-    padding-left:16px;
-    color:#f3f0ff;
-    font-weight:600;
-    font-size:15px;
-    line-height:1.5;
-  }
-  .cc-reality-list li::before{
-    content:'';
-    position:absolute;
-    left:0;
-    top:8px;
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background:var(--purple);
-  }
-  .cc-reality-closing{
-    margin:4px 0 0;
-    color:var(--purple);
-    font-weight:700;
-    font-size:16px;
-    font-style:italic;
-  }
-
-  /* sticky floating footer inside the explorer */
-  .cc-explorer .cc-explorer-footer{
-    position:sticky;
-    bottom:16px;
-    left:0; right:0;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    max-width:520px;
-    margin:26px auto 0;
-    padding:0 20px;
-  }
-  .cc-explorer .cc-nav{
-    all:unset;
-    box-sizing:border-box;
-    cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:14px;
-    font-weight:600;
-    padding:11px 18px;
-    border-radius:999px;
-    -webkit-tap-highlight-color:transparent;
-  }
-  /* Previous — clear frosted glass: real blur + saturation boost + a
-     thin bright border and an inset top highlight to fake the light
-     catching a curved glass edge, not just a translucent flat color.
-     Lighter/more transparent than the first pass. */
-  .cc-explorer .cc-nav--prev{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.3);
-    backdrop-filter:blur(10px) saturate(140%); /* safe fallback */
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-    box-shadow:0 6px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-    color:#ffffff;
-  }
-  .cc-explorer .cc-nav--prev{
-    backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%); /* enhancement — see note above */
-  }
-  /* Next — the prominent action, so it's a brighter/more opaque "tinted"
-     glass rather than plain frosted, keeping it the visual anchor of
-     the three while still reading as the same glass material */
-  .cc-explorer .cc-nav--next{
-    background:rgba(255,255,255,0.8);
-    border:1px solid rgba(255,255,255,0.6);
-    backdrop-filter:blur(10px) saturate(140%);
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-    box-shadow:0 6px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.7);
-    color:#111114;
-  }
-  .cc-explorer .cc-nav--next{
-    backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%);
-  }
-  .cc-explorer .cc-nav:active{ transform:translateY(1px); }
-  .cc-explorer .cc-nav-counter{
-    color:#ffffff;
-    font-size:13px;
-    font-weight:600;
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.25);
-    backdrop-filter:blur(10px) saturate(140%);
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-    box-shadow:0 4px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.18);
-    padding:8px 14px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-  .cc-explorer .cc-nav-counter{
-    backdrop-filter:url(#cc-glass-distort) blur(6px) saturate(140%);
-  }
-
-  /* ---- larger screens ---- */
-  @media (min-width:480px){
-    .cc-title{ font-size:38px; }
-    .cc-subheading{ font-size:18px; }
-  }
-  @media (min-width:820px){
-    .cc-title{ font-size:44px; }
-  }
-
-  /* ============ DESKTOP: Step 1 — header + quote split ============
-     Starts at 1024px (large tablet / small laptop) instead of 900px,
-     and uses clamp()-based sizing above that so it keeps scaling
-     gracefully on large monitors instead of capping out. */
-  /* ============ TABLET (768px–1023px) ============
-     Blends mobile's single-column, click-to-open-panel interaction
-     model with more generous sizing/spacing borrowed from the desktop
-     scale. NOT a scaled-down desktop split — a 30/70 column layout
-     would leave the cards column under ~230px wide at this range,
-     too cramped to be usable. Instead: bigger type, 2 cards per row
-     instead of one long stack, and the Explorer becomes a centered
-     rounded panel instead of a full-bleed edge-to-edge overlay (full-
-     bleed reads fine on a phone-width screen, less so stretched
-     across a wide tablet). */
-  @media (min-width:768px) and (max-width:1023.98px){
-
-    .cc-section{ padding:56px 40px 76px; }
-    .cc-inner{ max-width:1200px; } /* effectively edge-to-edge within the tablet range — was 680px, which is narrower than the viewport itself and caused the dead space on both sides */
-
-    .cc-title{ font-size:46px; }
-    .cc-subheading{ font-size:19px; max-width:52ch; }
-
-    .cc-quote{ padding:30px 28px; }
-    .cc-quote-text{ font-size:16.5px; }
-
-    /* two cards per row instead of one long stacked column */
-    .cc-cap-list{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-    }
-    .cc-cap-row{ padding:24px 22px; }
-    .cc-cap-title{ font-size:19.5px; }
-    .cc-cap-line{ font-size:15px; }
-
-    /* Explorer: rounded panel matching the same edges as everything
-       else on the page (was capped at 680px, creating dead space on
-       both sides — same class of bug as the .cc-inner one above) */
-    .cc-explorer{
-      width:auto;
-      max-width:1200px; /* effectively edge-to-edge within the tablet range */
-      margin:0 auto;
-      border-top:none;
-      border-bottom:none;
-      border-radius:28px;
-      border:1px solid var(--card-border);
-    }
-    .cc-explorer-inner{ max-width:none; padding:32px 32px 12px; }
-    .cc-explorer-number{ width:48px; height:48px; font-size:17px; }
-    .cc-explorer-title{ font-size:30px; }
-    .cc-explorer-myview p{ font-size:16px; }
-    .cc-explorer-label{ font-size:12.5px; }
-    .cc-step-icon{ width:52px; height:52px; }
-    .cc-step-icon svg{ width:24px; height:24px; }
-    .cc-step-title{ font-size:17px; }
-    .cc-step-desc{ font-size:14.5px; }
-    .cc-creates-box{ padding:20px; }
-    .cc-creates-text{ font-size:15.5px; }
-    .cc-example-title{ font-size:16px; }
-    .cc-example-sub{ font-size:14.5px; }
-
-    .cc-explorer-footer{ max-width:none; padding:0 32px; }
-  }
-
-  @media (min-width:1024px){
-    .cc-section{ padding-left:clamp(28px, 6vw, 96px); padding-right:clamp(28px, 6vw, 96px); }
-    .cc-inner{ max-width:1800px; } /* effectively edge-to-edge on real desktop widths; only kicks in as a cap on ultra-wide monitors */
-
-    .cc-head-grid{
-      display:grid;
-      grid-template-columns:2fr 3fr; /* 40% left / 60% right */
-      align-items:stretch; /* makes both columns the same height, top-aligned */
-      gap:clamp(40px, 4vw, 72px);
-      margin-bottom:40px;
-    }
-
-    .cc-head-col--left{
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start; /* top-aligned, not vertically centered — that's what was pushing it down below the quote box's top edge */
-    }
-
-    /* three-line header on desktop again (matches mobile), just centered
-       within the left column instead of left-aligned.
-       text-transform:capitalize renders the existing sentence-case
-       markup ("My goal was never") as "My Goal Was Never" without
-       touching the underlying text. */
-    .cc-title{
-      text-align:center;
-      font-size:clamp(34px, 3vw, 50px);
-    }
-    .cc-title-line--hi{ text-transform:capitalize; }
-
-    .cc-subheading{
-      font-size:clamp(21px, 1.3vw, 25px);
-      margin-top:14px;
-      line-height:1.8;
-      text-align:left;
-      max-width:44ch;
-    }
-
-    .cc-head-col--right{ display:flex; }
-
-    .cc-quote{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      margin-bottom:0;
-      padding:clamp(22px, 2.4vw, 34px) clamp(22px, 2.6vw, 36px);
-    }
-    /* re-enabling the internal scroll on desktop too — showing all 3
-       paragraphs full-height made the box too tall next to the header.
-       Cuts off after the first 2 paragraphs, same behavior as mobile. */
-    .cc-quote-body{
-      max-height:260px;
-      overflow-y:auto;
-      padding-right:36px;
-    }
-    .cc-quote-text{ font-size:clamp(15.5px, 1.05vw, 17px); }
-
-    /* ---- Step 2: capability cards (30%) + always-visible Explorer (70%) ---- */
-    .cc-stage{
-      display:grid;
-      grid-template-columns:3fr 7fr; /* 30% left / 70% right */
-      align-items:start; /* cards column keeps its own natural height — see
-                             the JS below for how the explorer's height is
-                             actually matched to it */
-      gap:clamp(28px, 3vw, 48px);
-    }
-
-    .cc-cap-list{
-      /* always visible on desktop — never fades/hides when a card is
-         clicked, since the explorer sits beside it, not on top of it */
-      margin:0;
-    }
-
-    .cc-explorer{
-      /* undo the mobile full-bleed breakout — on desktop it's just the
-         right-hand grid column, not an edge-to-edge overlay */
-      width:auto;
-      margin-left:0;
-      margin-right:0;
-      border-top:none;
-      border-bottom:none;
-      border-radius:24px;
-      border:1px solid var(--card-border);
-      animation:none; /* no open/close animation needed — it's always on screen */
-
-      /* height is set inline via JS (matched to the cards column's
-         actual rendered height) — see syncExplorerHeight() */
-      display:flex;
-      flex-direction:column;
-      overflow:hidden; /* the panel itself doesn't scroll — its inner content area does, see below */
-      padding-bottom:0;
-    }
-
-    .cc-explorer-inner{
-      max-width:none;
-      padding:28px 28px 24px;
-      flex:1;
-      min-height:0;
-      overflow-y:auto; /* this is what actually scrolls */
-    }
-
-    /* footer is a fixed, non-scrolling part of the panel — always
-       reachable without scrolling to the end of the content above it.
-       Selector matches (rather than beats on specificity) the base
-       ".cc-explorer .cc-explorer-footer" rule so this override reliably
-       takes effect instead of silently losing to it. */
-    .cc-explorer .cc-explorer-footer{
-      position:static;
-      flex-shrink:0;
-      max-width:none;
-      margin:0;
-      padding:16px 28px 22px;
-      border-top:1px solid var(--card-border);
-    }
-
-    /* nothing to close/return to anymore — the panel can't hide on desktop */
-    .cc-explorer-topbar{ display:none; }
-    .cc-explorer-close{ display:none; } /* no wrapper anymore — hide the button itself */
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    .cc-quote-body, .cc-cap-row{ transition:none; }
-  }
-</style>
+<footer class="footer">
+  <p id="cf-footer-text">&copy; 2026 Uche Japheth — Resume Series</p>
+</footer>
 
 <script>
 (function(){
-  var CC_DATA = [
-    {
-      title: "Community Development",
-      line: "Every community is different. The way it\u2019d be built should also be different.",
-      myView: [
-        "Every community is different. The way it\u2019s built should also be different.",
-        "There is no single system that can be copied into every community and expected to work.",
-        "So before thinking about growth, I first try to understand who is already there, why they are there, and what can make the relationship meaningful."
-      ],
-      steps: [
-        { title: "Build Trust", desc: "Create a safe space where people feel seen and heard.", icon: "users" },
-        { title: "Understand People", desc: "Listen closely to conversations, behaviors, and needs.", icon: "search" },
-        { title: "Create Engagement", desc: "Design interactions and experiences that bring people in.", icon: "usersPlus" },
-        { title: "Read the Signals", desc: "Identify patterns, feedback, and what the community is really telling us.", icon: "chart" },
-        { title: "Feed It Back", desc: "Use insights to improve the product and the community experience.", icon: "refresh" }
-      ],
-      creates: ["Communities that don\u2019t just grow in numbers, but continuously provide <strong>meaningful signals</strong> that help shape <strong>better products and experiences</strong>."],
-      examples: [
-        { title: "Web3 Communities", sub: "Discord & Telegram" },
-        { title: "Gaming Communities", sub: "Community engagement & support" },
-        { title: "Community Campaigns", sub: "Zealy quests, participation & engagement systems" },
-        { title: "Social Communities", sub: "Audience conversations, feedback & interaction" }
-      ],
-      reality: {
-        blocks: [
-          { type: "p", text: "A community built from a rigid template is liable to break." },
-          { type: "p", text: "I don\u2019t copy a playbook just because it worked somewhere else. I find what works for that specific community." },
-          { type: "p", text: "If something breaks, I go back to the signals." },
-          { type: "list", items: ["Reinforce what is working.", "Understand what isn\u2019t.", "Iterate."] }
-        ],
-        closing: "That is my approach!"
-      }
-    },
-    {
-      title: "Social Media Management & Brand Growth",
-      line: "Content should do more than fill a calendar.",
-      myView: [
-        "Content should do more than fill a calendar.",
-        "Visibility without identity can attract attention without building an audience.",
-        "Identity without visibility can have something meaningful to say, but too few people get to hear it.",
-        "My approach is to build visibility and audience without losing what makes the brand recognizable."
-      ],
-      myViewDiagram:
-        '<div class="cc-triad">' +
-          '<svg class="cc-triad-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
-            '<line x1="50" y1="14" x2="15" y2="86"/>' +
-            '<line x1="50" y1="14" x2="85" y2="86"/>' +
-            '<line x1="15" y1="86" x2="85" y2="86"/>' +
-          '</svg>' +
-          '<div class="cc-triad-node cc-triad-node--top">' +
-            '<span class="cc-triad-label">VISIBILITY</span>' +
-            '<span class="cc-triad-sub">People see you</span>' +
-          '</div>' +
-          '<div class="cc-triad-node cc-triad-node--left">' +
-            '<span class="cc-triad-label">AUDIENCE</span>' +
-            '<span class="cc-triad-sub">People choose to stay</span>' +
-          '</div>' +
-          '<div class="cc-triad-node cc-triad-node--right">' +
-            '<span class="cc-triad-label">BRAND IDENTITY</span>' +
-            '<span class="cc-triad-sub">People understand who you are</span>' +
-          '</div>' +
-        '</div>',
-      steps: [
-        { title: "Understand the Brand", desc: "Understand what the brand is building, what it stands for, and how it should communicate.", icon: "number" },
-        { title: "Understand the Audience", desc: "Look at who we are speaking to, what they care about, and what they respond to.", icon: "number" },
-        { title: "Find the Message", desc: "Turn what the brand is building into messages people can understand and connect with.", icon: "number" },
-        { title: "Create & Distribute", desc: "Create purposeful content and get it in front of people through the right formats, channels, and timing.", icon: "number" },
-        { title: "Learn & Improve", desc: "Observe what people respond to, identify what is working, and use that to improve the next cycle.", icon: "number" }
-      ],
-      creates: [
-        "A social presence that works toward more than activity.",
-        "Content becomes a way to build visibility, strengthen brand identity, understand the audience, and gradually turn attention into a relationship."
-      ],
-      examples: [
-        { title: "Web3 Projects", sub: "Social media, community communication & growth" },
-        { title: "Gaming Communities", sub: "Content, announcements & audience engagement" },
-        { title: "Technology & Business", sub: "Brand communication & content planning" },
-        { title: "Personal Brand", sub: "X & LinkedIn content, audience learning & experimentation" }
-      ],
-      reality: {
-        blocks: [
-          { type: "p", text: "Social media is unpredictable. Visibility can change overnight." },
-          { type: "p", text: "A strategy that reached thousands yesterday can reach a fraction of that tomorrow." },
-          { type: "p", text: "When that happens, I don\u2019t abandon the brand identity just to chase numbers." },
-          { type: "p", text: "I explore different ways to regain visibility, observe what the audience is responding to, pay attention to relevant trends, and iterate." }
-        ],
-        closing: "Get what we don\u2019t have yet without losing what we already have."
-      }
-    },
-    {
-      title: "Customer Experience",
-      line: "The experience after attention matters just as much as getting attention.",
-      myView: [
-        "The experience after attention matters just as much as getting attention.",
-        "Getting someone to choose a product is one thing. What happens after they arrive can determine whether they understand it, trust it, return, or decide to leave.",
-        "The job is not just to resolve the customer\u2019s problem. It is to understand why the problem keeps reaching the customer."
-      ],
-      myViewDiagram:
-        '<div class="cc-flow">' +
-          '<div class="cc-flow-step"><span class="cc-flow-label">Attention</span></div>' +
-          '<div class="cc-flow-step"><span class="cc-flow-label">Arrival</span></div>' +
-          '<div class="cc-flow-step">' +
-            '<span class="cc-flow-label">Experience</span>' +
-            '<div class="cc-flow-branch">Friction &rarr; Leave</div>' +
-          '</div>' +
-          '<div class="cc-flow-step"><span class="cc-flow-label">Return</span></div>' +
-        '</div>',
-      steps: [
-        { title: "Understand the Journey", desc: "Look at what the customer is trying to do and the steps they take to get there.", icon: "number" },
-        { title: "Listen to the Experience", desc: "Pay attention to questions, complaints, frustrations, and moments where people struggle.", icon: "number" },
-        { title: "Find the Friction", desc: "Identify where time, clarity, trust, or effort is being unnecessarily lost.", icon: "number" },
-        { title: "Resolve & Connect", desc: "Help resolve the immediate problem and ensure useful feedback doesn\u2019t stop at the interaction.", icon: "number" },
-        { title: "Improve the Experience", desc: "Use recurring feedback and patterns to improve the process, communication, or product behind the experience.", icon: "number" }
-      ],
-      creates: [
-        "An experience that doesn\u2019t only react when something goes wrong.",
-        "It learns from the people experiencing the product and uses what they reveal to make the next experience better."
-      ],
-      examples: [
-        { title: "Community Support", sub: "Questions, complaints, guidance & issue resolution" },
-        { title: "Web3 Communities", sub: "Member support, feedback & experience monitoring" },
-        { title: "Social Communities", sub: "Audience conversations, concerns & relationship management" },
-        { title: "Operational Environments", sub: "Recurring issues, information flow & process improvement" }
-      ],
-      reality: {
-        blocks: [
-          { type: "p", text: "Solving the same problem repeatedly is a signal. Sometimes the customer isn\u2019t the problem." },
-          { type: "list", items: ["The process may be unclear.", "The information may be missing.", "Or the system behind the experience may need attention."] },
-          { type: "p", text: "When resolving an issue isn\u2019t improving the experience, I go back to the journey." },
-          { type: "list", items: ["Where is the friction?", "What keeps repeating?", "What is missing?"] }
-        ],
-        closing: "Then use what I find to improve the experience beyond that single interaction.",
-        diagram:
-          '<div class="cc-flow" style="margin-top:18px;">' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">Repeated Issue</span></div>' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">Find the Pattern</span></div>' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">Improve the System</span></div>' +
-          '</div>' +
-          '<div class="cc-flow-loop">' +
-            '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12a9 9 0 1 1-2.64-6.36" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-            'Repeat the process' +
-          '</div>'
-      }
-    },
-    {
-      title: "Operations & Systems",
-      line: "Good work becomes more valuable when it doesn\u2019t have to be reinvented.",
-      myView: [
-        "Good work becomes more valuable when it doesn\u2019t have to be reinvented. A good result is useful.",
-        "But when getting that same result depends entirely on someone remembering how they did it last time, the work becomes difficult to repeat.",
-        "My goal is not to create more systems. I aim to remove unnecessary friction from the work that already exists."
-      ],
-      steps: [
-        { title: "Understand the Work", desc: "Look at how the work is currently being done before trying to improve it.", icon: "number" },
-        { title: "Find the Friction", desc: "Identify repeated confusion, unnecessary steps, bottlenecks, and work that keeps being done from scratch.", icon: "number" },
-        { title: "Create Structure", desc: "Organize the work into clearer workflows, documentation, tools, or simple systems.", icon: "number" },
-        { title: "Make It Repeatable", desc: "Make useful processes easier to follow without depending entirely on memory.", icon: "number" },
-        { title: "Improve the System", desc: "Observe how the workflow performs and adjust it as the work changes.", icon: "number" }
-      ],
-      creates: [
-        "Work that becomes easier to continue, improve, and hand over.",
-        "Instead of solving the same operational problem repeatedly, the team can build on what already works."
-      ],
-      examples: [
-        { title: "Engineering Office Operations", sub: "Documentation, coordination & structured workflows" },
-        { title: "Community Operations", sub: "Moderation systems, engagement workflows & campaign coordination" },
-        { title: "Content Operations", sub: "Content planning, calendars & publishing workflows" },
-        { title: "Project Work", sub: "Process organization, documentation & workflow design" }
-      ],
-      reality: {
-        blocks: [
-          { type: "p", text: "A system that looks good but doesn\u2019t fit the work will eventually be ignored. Sometimes the problem isn\u2019t that people refuse to follow a process. The process itself may be creating more work than it removes." },
-          { type: "p", text: "When that happens, I go back to the workflow." },
-          { type: "list", items: ["What is actually being used?", "Where are people creating workarounds?", "What can be simplified?"] },
-          { type: "p", text: "Then adjust the system around how the work actually happens." }
-        ],
-        closing: "The system should support the work and not become more work.",
-        diagram:
-          '<div class="cc-flow" style="margin-top:18px;">' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">System</span></div>' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">Real Work</span></div>' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">Friction</span></div>' +
-            '<div class="cc-flow-step"><span class="cc-flow-label">Simplify</span></div>' +
-          '</div>' +
-          '<div class="cc-flow-loop">' +
-            '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12a9 9 0 1 1-2.64-6.36" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-            'Repeat the process' +
-          '</div>'
-      }
-    },
-    {
-      title: "Data & Reporting",
-      line: "Information becomes useful when it helps someone make a better decision.",
-      myView: [
-        "Information becomes useful when it helps someone make a better decision.",
-        "Insights don\u2019t come from the air.",
-        "They come from information that has been captured, documented, organized, and understood.",
-        "During my approach to community, customer experience, and social media, I\u2019ve constantly mentioned things like read the signals and go back to the insight.",
-        "Data is how I keep those insights.",
-        "I use data to keep track of what is happening, make information easier to understand, identify patterns, and turn what has been recorded into something useful.",
-        "Because if we want to go back to the signals, we first need to make sure the signals were captured."
-      ],
-      stepsLabel: "THE INFORMATION CYCLE",
-      steps: [
-        { title: "Capture", desc: "Identify and collect the information worth keeping.", icon: "number" },
-        { title: "Document", desc: "Record it properly so useful information doesn\u2019t disappear.", icon: "number" },
-        { title: "Organize", desc: "Structure the information so it can be easily accessed and understood.", icon: "number" },
-        { title: "Report", desc: "Make what is happening visible through clear records, summaries, and reports.", icon: "number" },
-        { title: "Analyze", desc: "Look beyond individual information to identify patterns, changes, and useful insights.", icon: "number" },
-        { title: "Use", desc: "Turn what was learned into something that can support a better decision or improvement.", icon: "number" }
-      ],
-      createsLabel: "WHAT THIS MAKES POSSIBLE",
-      creates: [
-        "Something to go back to.",
-        "Instead of relying on memory, assumptions, or scattered information, there is a record.",
-        "A record of:",
-        { type: "list", items: ["What happened.", "What changed.", "What keeps repeating.", "And what we can learn from it."] },
-        "That makes it easier to go back to the signals, understand what they are telling us, and use them to improve what happens next."
-      ],
-      examplesLabel: "WHERE I USE IT",
-      examples: [
-        { title: "Community & Customer Insights", sub: "Tracking feedback, complaints, questions, and patterns." },
-        { title: "Operations & Documentation", sub: "Keeping records and organizing information." },
-        { title: "Reporting & Analysis", sub: "Turning information into reports and insights." },
-        { title: "Campaigns & Performance", sub: "Tracking activity, engagement, and outcomes." },
-        { title: "Product Learning", sub: "Using patterns to support improvement." }
-      ],
-      realityLabel: "WHY DATA MATTERS TO ME",
-      reality: {
-        blocks: [
-          { type: "p", text: "You can\u2019t improve what you don\u2019t understand." },
-          { type: "p", text: "Product can be learning from different departments\u2019 information worth using to scale. But if what is happening isn\u2019t captured, documented, and examined, useful information can disappear as quickly as it appeared." },
-          { type: "p", text: "Data gives us something to return to." },
-          { type: "p", text: "It helps move the conversation from:" },
-          { type: "contrast", before: "I think this is happening.", after: "This is what we\u2019ve been seeing." }
-        ],
-        closing: "And that difference can change how a decision is made."
-      }
-    }
-  ];
-
-  // minimal icon set reused across step timelines
-  var CC_ICONS = {
-    users: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    search: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    usersPlus: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    chart: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20V10M12 20V4M20 20v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    refresh: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12a9 9 0 1 1-2.64-6.36" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-  };
-
-  var listEl = document.querySelector('.cc-cap-list');
-  var stageEl = document.querySelector('.cc-stage');
-  var bubbleEl = document.getElementById('ccCapList');
-  var explorerEl = document.getElementById('ccExplorer');
-  var backBtn = document.getElementById('ccBack');
-  var closeBtn = document.getElementById('ccClose');
-  var prevBtn = document.getElementById('ccPrev');
-  var nextBtn = document.getElementById('ccNext');
-  var counterEl = document.getElementById('ccCounter');
-  var numberEl = document.getElementById('ccExplorerNumber');
-  var titleEl = document.getElementById('ccExplorerTitle');
-  var stepsEl = document.getElementById('ccSteps');
-  var createsEl = document.getElementById('ccCreatesText');
-  var examplesEl = document.getElementById('ccExamplesList');
-  var myViewEl = document.getElementById('ccMyView');
-  var realityEl = document.getElementById('ccReality');
-  var stepsLabelEl = document.getElementById('ccStepsLabel');
-  var liveRegionEl = document.getElementById('ccLiveRegion');
-  var createsLabelEl = document.getElementById('ccCreatesLabel');
-  var examplesLabelEl = document.getElementById('ccExamplesLabel');
-  var realityLabelEl = document.getElementById('ccRealityLabel');
-
-  var explorerIndex = 0;
-  var rows = [];
-  var highlightedIndex = -1; // none highlighted until a real click happens
-  var hoverIndex = 0;        // card 1 defaults to the hover affordance
-
-  function applyStates(){
-    rows.forEach(function(r, i){
-      r.classList.toggle('cc-cap-row--highlighted', i === highlightedIndex);
-      r.classList.toggle('cc-cap-row--hover', i === hoverIndex && i !== highlightedIndex);
-    });
-  }
-
-  function isDesktopSplit(){
-    return window.matchMedia('(min-width:1024px)').matches;
-  }
-
-  function renderExplorer(i){
-    var cap = CC_DATA[i];
-    numberEl.textContent = String(i + 1).padStart(2, '0');
-    titleEl.textContent = cap.title;
-    counterEl.textContent = (i + 1) + ' / ' + CC_DATA.length;
-    liveRegionEl.textContent = 'Now showing: ' + cap.title;
-
-    // labels are data-driven — most cards use the default names, but
-    // a card can rename any of the four sections (e.g. card 5 uses
-    // "THE INFORMATION CYCLE" / "WHERE I USE IT" / "WHAT THIS MAKES
-    // POSSIBLE" / "WHY DATA MATTERS TO ME" instead of the usual set)
-    stepsLabelEl.textContent = cap.stepsLabel || 'HOW I APPROACH IT';
-    createsLabelEl.textContent = cap.createsLabel || 'WHAT THIS CREATES';
-    examplesLabelEl.textContent = cap.examplesLabel || 'EXAMPLES OF WHERE I\u2019VE USED THIS';
-    realityLabelEl.textContent = cap.realityLabel || 'WHEN THE PLAN MEETS REALITY';
-
-    myViewEl.innerHTML =
-      cap.myView.map(function(p){ return '<p>' + p + '</p>'; }).join('') +
-      (cap.myViewDiagram || ''); // optional relationship diagram, e.g. card 2's Visibility/Audience/Brand Identity triad
-
-    stepsEl.innerHTML = cap.steps.map(function(step, idx){
-      var iconMarkup = (step.icon === 'number' || !step.icon)
-        ? '<span class="cc-step-num">' + String(idx + 1).padStart(2, '0') + '</span>'
-        : (CC_ICONS[step.icon] || CC_ICONS.users);
-      return '<div class="cc-step">' +
-        '<span class="cc-step-icon">' + iconMarkup + '</span>' +
-        '<div class="cc-step-body">' +
-          '<p class="cc-step-title">' + step.title + '</p>' +
-          '<p class="cc-step-desc">' + step.desc + '</p>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    // each item in `creates` is either a plain string (renders as a
-    // paragraph) or a { type:'list', items:[...] } block — lets a
-    // "what this creates"-type card carry an embedded list (card 5)
-    // while every existing card's plain-string arrays keep working
-    // unchanged
-    createsEl.innerHTML = cap.creates.map(function(block){
-      if (typeof block === 'object' && block.type === 'list'){
-        return '<ul class="cc-creates-list">' + block.items.map(function(li){ return '<li>' + li + '</li>'; }).join('') + '</ul>';
-      }
-      return '<p>' + block + '</p>';
-    }).join('');
-
-    examplesEl.innerHTML = cap.examples.map(function(ex){
-      return '<li><span class="cc-example-title">' + ex.title + '</span><span class="cc-example-sub">' + ex.sub + '</span></li>';
-    }).join('');
-
-    realityEl.innerHTML =
-      (cap.reality.blocks || []).map(function(b){
-        if (b.type === 'list'){
-          return '<ul class="cc-reality-list">' + b.items.map(function(li){ return '<li>' + li + '</li>'; }).join('') + '</ul>';
+  // Minimal drop-in reveal observer — the real page already runs one of these
+  // globally for every ".reveal" element, so this is redundant-but-harmless
+  // once merged in, and makes this section work correctly on its own here.
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
         }
-        if (b.type === 'contrast'){
-          return '<div class="cc-contrast">' +
-            '<span class="cc-contrast-before">&ldquo;' + b.before + '&rdquo;</span>' +
-            '<span class="cc-contrast-arrow">&rarr;</span>' +
-            '<span class="cc-contrast-after">&ldquo;' + b.after + '&rdquo;</span>' +
-          '</div>';
-        }
-        return '<p>' + b.text + '</p>';
-      }).join('') +
-      (cap.reality.closing ? '<p class="cc-reality-closing">' + cap.reality.closing + '</p>' : '') +
-      (cap.reality.diagram || '');
-  }
-
-  function selectCard(index){
-    highlightedIndex = index;
-    lastFocusedTrigger = rows[index]; // remember which card opened this, to restore focus on close
-    applyStates();
-    openExplorer(index);
-  }
-
-  var FADE_MS = 260; // must roughly match the CSS transition/animation durations above
-  var lastFocusedTrigger = null; // the card button that opened the panel — focus returns here on close (mobile only)
-
-  function openExplorer(i){
-    // already open — either mid-browse via Prev/Next on mobile, or the
-    // permanently-visible desktop panel — just crossfade the content
-    // in place instead of running the full open/close sequence
-    if (!explorerEl.hidden){
-      var innerEl = explorerEl.querySelector('.cc-explorer-inner');
-      innerEl.style.transition = 'opacity 0.18s ease';
-      innerEl.style.opacity = '0';
-      window.setTimeout(function(){
-        explorerIndex = i;
-        renderExplorer(i);
-        innerEl.style.opacity = '1';
-      }, 180);
-      return;
-    }
-
-    bubbleEl.classList.add('cc-fade-out');
-    window.setTimeout(function(){
-      bubbleEl.hidden = true;
-      bubbleEl.classList.remove('cc-fade-out');
-
-      explorerIndex = i;
-      renderExplorer(i);
-      explorerEl.hidden = false;
-      explorerEl.classList.remove('cc-explorer-exit');
-      // restart the entrance animation every time it opens
-      explorerEl.style.animation = 'none';
-      void explorerEl.offsetWidth; // force reflow
-      explorerEl.style.animation = '';
-
-      stageEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // move focus into the panel — a screen reader / keyboard user who
-      // just activated a card would otherwise have no indication that
-      // new content appeared, or where it is
-      if (!isDesktopSplit()){
-        titleEl.focus();
-      }
-    }, FADE_MS);
-  }
-
-  function closeExplorer(){
-    explorerEl.classList.add('cc-explorer-exit');
-    window.setTimeout(function(){
-      explorerEl.hidden = true;
-      explorerEl.classList.remove('cc-explorer-exit');
-
-      bubbleEl.hidden = false;
-      bubbleEl.classList.add('cc-fade-out');
-      void bubbleEl.offsetWidth; // force reflow so the fade-in actually plays
-      bubbleEl.classList.remove('cc-fade-out');
-
-      stageEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // return focus to whichever card opened the panel, rather than
-      // dropping it back to the top of the page
-      if (lastFocusedTrigger){ lastFocusedTrigger.focus(); }
-    }, FADE_MS);
-  }
-
-  // Escape closes the panel — only meaningful on mobile, where it's a
-  // true overlay; on desktop it's a permanently-visible column, so
-  // there's nothing to "close"
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && !explorerEl.hidden && !isDesktopSplit()){
-      closeExplorer();
-    }
-  });
-
-  // Basic focus trap while the mobile overlay is open — keeps Tab /
-  // Shift+Tab cycling within the panel instead of escaping to
-  // whatever's underneath it, since visually it covers the page
-  document.addEventListener('keydown', function(e){
-    if (e.key !== 'Tab' || explorerEl.hidden || isDesktopSplit()) return;
-    var focusable = explorerEl.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
-    if (!focusable.length) return;
-    var first = focusable[0];
-    var last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first){
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last){
-      e.preventDefault();
-      first.focus();
-    }
-  });
-
-  backBtn.addEventListener('click', closeExplorer);
-  closeBtn.addEventListener('click', closeExplorer);
-  prevBtn.addEventListener('click', function(){
-    var i = (explorerIndex - 1 + CC_DATA.length) % CC_DATA.length;
-    highlightedIndex = i;
-    applyStates();
-    openExplorer(i);
-  });
-  nextBtn.addEventListener('click', function(){
-    var i = (explorerIndex + 1) % CC_DATA.length; // wraps 5 -> 1
-    highlightedIndex = i;
-    applyStates();
-    openExplorer(i);
-  });
-
-  CC_DATA.forEach(function(cap, i){
-    // Wrapping the button in a role="listitem" container instead of
-    // putting that role directly on the button — role="listitem" on
-    // a <button> overrides its implicit button role, so a screen
-    // reader would announce it as a plain list item instead of
-    // something clickable. The wrapper carries the list semantics;
-    // the button keeps its own.
-    var item = document.createElement('div');
-    item.setAttribute('role', 'listitem');
-    item.setAttribute('data-reveal', '');
-
-    var row = document.createElement('button');
-    row.type = 'button';
-    row.className = 'cc-cap-row';
-    row.setAttribute('aria-label', 'View details for ' + cap.title);
-    row.innerHTML =
-      '<span class="cc-cap-title">' + cap.title + '</span>' +
-      '<p class="cc-cap-line">' + cap.line + '</p>';
-    row.addEventListener('click', function(){ selectCard(i); });
-
-    item.appendChild(row);
-    listEl.appendChild(item);
-    rows.push(row);
-  });
-
-  applyStates(); // card 1 starts on hover; nothing starts highlighted (mobile default)
-
-  // Desktop: the Explorer is permanently visible and card 1 is
-  // highlighted by default, instead of mobile's hover-only default.
-  function syncDesktopDefault(){
-    if (isDesktopSplit() && explorerEl.hidden){
-      explorerIndex = 0;
-      renderExplorer(0);
-      explorerEl.hidden = false;
-      highlightedIndex = 0;
-      applyStates();
-    }
-  }
-  syncDesktopDefault();
-  window.addEventListener('resize', syncDesktopDefault);
-
-  // Match the Explorer panel's total height to the cards column's real
-  // rendered height (CSS alone can't reliably do this in a grid with
-  // auto-sized rows — see the note above the .cc-stage rule). Runs on
-  // load, on any resize, and whenever the cards column's own size
-  // changes (e.g. text reflow at a new width).
-  function syncExplorerHeight(){
-    if (isDesktopSplit()){
-      var h = bubbleEl.getBoundingClientRect().height;
-      explorerEl.style.height = h + 'px';
-    } else {
-      explorerEl.style.height = '';
-    }
-  }
-  if (window.ResizeObserver){
-    new ResizeObserver(syncExplorerHeight).observe(bubbleEl);
-  }
-  window.addEventListener('resize', syncExplorerHeight);
-  syncExplorerHeight();
-
-  // as the visitor scrolls, the hover affordance follows whichever card
-  // sits nearest the top of the viewport — stops mattering once a card
-  // has actually been clicked/highlighted, but keeps updating underneath
-  var scrollTicking = false;
-  function updateHoverByScroll(){
-    scrollTicking = false;
-    var refLine = window.innerHeight * 0.35; // reference line near upper third of screen
-    var closestIndex = null;
-    var closestDist = Infinity;
-    rows.forEach(function(r, i){
-      var rect = r.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) return; // not on screen
-      var dist = Math.abs(rect.top - refLine);
-      if (dist < closestDist){ closestDist = dist; closestIndex = i; }
-    });
-    if (closestIndex !== null){
-      hoverIndex = closestIndex;
-      applyStates();
-    }
-  }
-  window.addEventListener('scroll', function(){
-    if (!scrollTicking){
-      window.requestAnimationFrame(updateHoverByScroll);
-      scrollTicking = true;
-    }
-  }, { passive: true });
-
-  // quote box scroll hints — hide the up arrow at the top,
-  // hide the down arrow once fully scrolled to the bottom
-  var quoteBody = document.getElementById('ccQuoteBody');
-  var scrollUp = document.getElementById('ccScrollUp');
-  var scrollDown = document.getElementById('ccScrollDown');
-  function updateScrollHints(){
-    var atTop = quoteBody.scrollTop <= 2;
-    var atBottom = quoteBody.scrollTop + quoteBody.clientHeight >= quoteBody.scrollHeight - 2;
-    scrollUp.classList.toggle('cc-hint-hidden', atTop);
-    scrollDown.classList.toggle('cc-hint-hidden', atBottom);
-  }
-  quoteBody.addEventListener('scroll', updateScrollHints);
-  updateScrollHints();
-})();
-</script>
-
-<div id="experience" class="exp-tst-group has-blobs" data-theme="dark">
-
-  <!-- decorative ambient color blobs spanning the Experience +
-       Testimonials pair (they share one nav anchor, so they share one
-       continuous decorative treatment rather than two competing ones).
-       Up/center-right: teal+green; middle: purple.
-       (The up/center-left amber+deep blue blob was removed by design choice.) -->
-  <div class="section-blobs" aria-hidden="true">
-    <span class="section-blob section-blob--right"></span>
-    <span class="section-blob section-blob--mid"></span>
-  </div>
-
-<section class="exp-section" data-theme="dark">
-  <div class="exp-inner">
-
-    <h2 class="exp-title" data-reveal>EXPERIENCE</h2>
-    <p class="exp-subheading" data-reveal data-reveal-delay="1">The titles tell you where I started. The work usually took me further.</p>
-
-    <div class="exp-list" id="expList" data-reveal-list>
-      <!-- mobile/tablet entries injected by JS -->
-    </div>
-
-    <div class="exp-list-desktop" id="expListDesktop" data-reveal-list>
-      <!-- desktop rows injected by JS (logo replaces numbering; multi-role companies split into one row per role) -->
-    </div>
-
-  </div>
-</section>
-
-<style>
-  /* ===================== EXPERIENCE — SCOPED STYLES ===================== */
-
-  .exp-section{
-    background:var(--bg); /* matte black */
-    padding:44px 20px 56px;
-    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
-
-  .exp-inner{
-    /* stays at 640px on true phones (90vw never exceeds 640px below
-       ~711px viewport width), then grows smoothly with the viewport
-       from there up to the 960px desktop cutoff (90vw of 960px ≈
-       864px) — no fixed tablet number, no jump at a breakpoint, and
-       the 960px+ media query below still takes over for desktop */
-    max-width:clamp(640px, 90vw, 880px);
-    margin:0 auto;
-  }
-
-  .exp-title{
-    margin:0 0 10px;
-    background:linear-gradient(90deg, var(--teal), #4ADE80);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    -webkit-text-fill-color:transparent;
-    font-size:28px;
-    font-weight:800;
-    letter-spacing:-0.01em;
-  }
-  .exp-subheading{
-    margin:0 0 32px;
-    color:var(--text-mid);
-    font-size:15.5px;
-    font-weight:600;
-    line-height:1.6;
-  }
-
-  .exp-list{
-    display:flex;
-    flex-direction:column;
-    border-top:1px solid rgba(255,255,255,0.1);
-  }
-
-  /* ---- single-role entry ---- */
-  .exp-card{
-    padding:22px 0;
-    border-bottom:1px solid rgba(255,255,255,0.1);
-    /* merged with the shared [data-reveal] transition rather than left
-       to compete with it — both declare the `transition` shorthand on
-       this same element, and shorthand properties don't merge across
-       rules (whichever one wins the cascade applies in full), so the
-       reveal's opacity/transform/filter timing is included directly
-       here to guarantee it survives alongside this card's own existing
-       hover-driven border/background transition. */
-    transition:border-color 0.2s ease, background 0.2s ease,
-               opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-    --exp-logo-offset:66px; /* logo width (52px) + head gap (14px) — single source of truth so desc/CTAs always line up with the header text, never with the logo */
-  }
-
-  /* hover-on-scroll: mirrors the Core Capabilities card pattern —
-     real :hover on pointer devices, plus a scroll-tracking JS class
-     for touch, so whichever entry is nearest the top of the screen
-     gets a subtle highlight as you scroll */
-  @media (hover:hover) and (pointer:fine){
-    .exp-card:hover{
-      border-color:rgba(255,255,255,0.22);
-      background:rgba(255,255,255,0.02);
-    }
-  }
-  .exp-card--hover{
-    border-color:rgba(255,255,255,0.22);
-    background:rgba(255,255,255,0.02);
-  }
-
-  .exp-card-head{
-    display:flex;
-    gap:14px;
-    margin-bottom:14px;
-  }
-
-  .exp-logo{
-    flex-shrink:0;
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    object-fit:cover;
-    background:linear-gradient(135deg, var(--purple), var(--blue));
-  }
-  .exp-logo-fallback{
-    display:none;
-    flex-shrink:0;
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    background:linear-gradient(135deg, var(--purple), var(--blue));
-    color:#fff;
-    align-items:center;
-    justify-content:center;
-    font-size:16px;
-    font-weight:800;
-  }
-
-  .exp-card-headtext{ min-width:0; }
-  .exp-role{
-    margin:0 0 3px;
-    color:var(--text-hi);
-    font-size:16.5px;
-    font-weight:700;
-    line-height:1.3;
-  }
-  .exp-company{
-    margin:0 0 2px;
-    color:var(--text-mid);
-    font-size:14px;
-    font-weight:500;
-  }
-  .exp-period{
-    margin:0;
-    color:var(--text-lo);
-    font-size:13px;
-  }
-  .exp-location{
-    margin:0;
-    color:var(--text-lo);
-    font-size:13px;
-  }
-
-  .exp-desc{
-    margin-bottom:16px;
-    margin-left:var(--exp-logo-offset);
-    color:var(--text-mid);
-    font-size:14.5px;
-    line-height:1.6;
-  }
-  .exp-desc-full{ white-space:pre-line; }
-  .exp-more-btn{
-    all:unset;
-    cursor:pointer;
-    color:var(--teal);
-    font-size:14.5px;
-    font-weight:600;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .exp-more-btn:hover,
-  .exp-more-btn:focus-visible{ text-decoration:underline; }
-
-  .exp-cta-row{
-    display:flex;
-    gap:10px;
-    margin-left:var(--exp-logo-offset);
-  }
-  .exp-cta{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:8px 14px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,0.14);
-    background:rgba(255,255,255,0.04);
-    color:var(--text-hi);
-    font-size:13px;
-    font-weight:600;
-    text-decoration:none;
-    -webkit-tap-highlight-color:transparent;
-    transition:border-color 0.2s ease, background 0.2s ease;
-  }
-  .exp-cta:hover,
-  .exp-cta:focus-visible{
-    border-color:rgba(255,255,255,0.3);
-    background:rgba(255,255,255,0.07);
-  }
-  .exp-cta svg{ width:14px; height:14px; flex-shrink:0; }
-
-  /* ---- desktop row list: hidden until 960px, mobile/tablet list hides then ---- */
-  .exp-list-desktop{ display:none; }
-
-  @media (min-width:960px){
-    .exp-section{ padding:64px clamp(28px, 6vw, 96px) 88px; }
-    .exp-inner{ max-width:1400px; }
-    .exp-title{ font-size:40px; }
-    .exp-subheading{ font-size:17px; max-width:60ch; }
-
-    .exp-list{ display:none; }
-    .exp-list-desktop{
-      display:flex;
-      flex-direction:column;
-      border-top:1px solid rgba(255,255,255,0.1);
-    }
-
-    /* each row: logo | role/company/period/location | description + CTAs —
-       reuses the same .exp-card class (and its hover treatment) as mobile,
-       just reflowed into a 3-column grid instead of a stacked block */
-    .exp-list-desktop .exp-card{
-      position:relative;
-      display:grid;
-      grid-template-columns:56px 260px 1fr;
-      column-gap:36px;
-      align-items:start;
-      padding:32px 0;
-      border-bottom:1px solid rgba(255,255,255,0.1);
-    }
-    /* grouped multi-role rows (Racine, Pecunity): no hairline between a
-       company's own roles — only after the group's last role, so it
-       still reads as one continuous block, same as mobile */
-    .exp-list-desktop .exp-card.exp-card--no-divider{ border-bottom:none; }
-
-    .exp-list-desktop .exp-card-head{ margin-bottom:0; }
-    .exp-list-desktop .exp-logo,
-    .exp-list-desktop .exp-logo-fallback{ width:56px; height:56px; }
-
-    /* connecting line + dot: only the first role of a company keeps the
-       real logo; every following role shows a small dot in that same
-       column instead, linked to the row above by a thin vertical line —
-       both pieces are confined to their own row's box and meet exactly
-       at the shared row boundary, so together they read as one
-       continuous line running through the group */
-    .exp-line-down{
-      position:absolute;
-      left:27.25px;
-      top:88px; /* 32px row padding-top + 56px logo height */
-      bottom:0;
-      width:1.5px;
-      background:rgba(255,255,255,0.18);
-    }
-    .exp-line-up{
-      position:absolute;
-      left:27.25px;
-      top:0;
-      height:38px;
-      width:1.5px;
-      background:rgba(255,255,255,0.18);
-    }
-    .exp-line-down-mid{
-      position:absolute;
-      left:27.25px;
-      top:38px;
-      bottom:0;
-      width:1.5px;
-      background:rgba(255,255,255,0.18);
-    }
-    .exp-group-dot{
-      position:absolute;
-      left:24px;
-      top:38px;
-      transform:translateY(-50%);
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:var(--text-lo);
-    }
-
-    .exp-desktop-left{ padding-top:2px; }
-    .exp-desktop-left .exp-role{ font-size:18px; }
-
-    .exp-desktop-right .exp-desc{
-      margin-left:0;
-      margin-bottom:14px;
-      font-size:15px;
-    }
-    .exp-desktop-right .exp-cta-row{ margin-left:0; }
-
-    /* smart truncation: full text renders untouched by default; a row is
-       only clamped (and only then does the "more" button appear) once JS
-       measures that it actually overflows the clamp — see the script
-       below. Nothing here decides that on its own. */
-    .exp-desktop-right .exp-desc-full{
-      display:-webkit-box;
-      -webkit-box-orient:vertical;
-      -webkit-line-clamp:4;
-      overflow:hidden;
-    }
-    .exp-desc[data-state="expanded"] .exp-desc-full{
-      display:block;
-      -webkit-line-clamp:unset;
-      overflow:visible;
-    }
-  }
-
-  /* ---- "View all 7+ experience" toggle ---- */
-  .exp-toggle-btn{
-    all:unset;
-    box-sizing:border-box;
-    display:block;
-    width:fit-content;
-    margin:24px auto;
-    padding:16px 32px;
-    text-align:center;
-    background:linear-gradient(180deg, #a48cff 0%, var(--purple) 55%, #6b46e0 100%);
-    color:#141414;
-    font-size:15.5px;
-    font-weight:800;
-    letter-spacing:0.01em;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,0.18);
-    cursor:pointer;
-    box-shadow:
-      0 12px 28px rgba(124,92,255,0.35),
-      inset 0 1px 0 rgba(255,255,255,0.4),
-      inset 0 -3px 6px rgba(0,0,0,0.22);
-    -webkit-tap-highlight-color:transparent;
-    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-  }
-  .exp-toggle-btn:hover,
-  .exp-toggle-btn:focus-visible{ filter:brightness(1.08); }
-  .exp-toggle-btn:active{
-    transform:translateY(1px);
-    box-shadow:
-      0 6px 16px rgba(124,92,255,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.3),
-      inset 0 -2px 4px rgba(0,0,0,0.22);
-  }
-
-  /* ---- multi-role entry: company header + mini vertical timeline of roles ---- */
-  .exp-timeline{
-    margin-left:var(--exp-logo-offset);
-    margin-bottom:16px;
-    display:flex;
-    flex-direction:column;
-  }
-  .exp-timeline-item{
-    position:relative;
-    padding-left:22px;
-    padding-bottom:22px;
-  }
-  .exp-timeline-item:last-child{ padding-bottom:0; }
-  .exp-timeline-item::before{
-    /* the round dot marking each role */
-    content:'';
-    position:absolute;
-    left:0;
-    top:6px;
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--text-lo);
-  }
-  .exp-timeline-item:not(:last-child)::after{
-    /* connecting line between dots */
-    content:'';
-    position:absolute;
-    left:3.5px;
-    top:17px;
-    bottom:0;
-    width:1.2px;
-    background:rgba(255,255,255,0.14);
-  }
-  .exp-timeline-role{
-    margin:0 0 3px;
-    color:var(--text-hi);
-    font-size:16px;
-    font-weight:700;
-    line-height:1.3;
-  }
-  .exp-timeline-period{
-    margin:0;
-    color:var(--text-lo);
-    font-size:13px;
-  }
-  .exp-timeline-location{
-    margin:0 0 10px;
-    color:var(--text-lo);
-    font-size:13px;
-  }
-  /* descriptions nested inside the timeline are already indented by
-     the timeline's own left margin, so cancel the single-entry
-     offset instead of stacking both */
-  .exp-timeline .exp-desc{
-    margin-left:0;
-    margin-bottom:0;
-  }
-</style>
-
-<script>
-(function(){
-  var EXP_ICONS = {
-    website: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    x: '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.3l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20z"/></svg>',
-    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1 4.98 2.12 4.98 3.5zM.5 8h4v13h-4V8zm7 0h3.83v1.78h.05c.53-1 1.85-2.05 3.8-2.05 4.07 0 4.82 2.68 4.82 6.16V21h-4v-6.28c0-1.5-.03-3.42-2.08-3.42-2.09 0-2.41 1.63-2.41 3.31V21h-4V8z"/></svg>'
-  };
-
-  var EXP_DATA = [
-    {
-      type: "single",
-      logo: "/src/kiooverse-logo.jpg",
-      logoInitial: "K",
-      role: "Social Media Manager & Community Lead",
-      company: "Kiooverse",
-      employment: "Part-time",
-      period: "Mar 2026 \u2013 Present",
-      location: "France \u00b7 Remote",
-      descShort: "Support Kiooverse\u2019s community and social media operations by managing engagement initiatives,",
-      descFull: "Support Kiooverse\u2019s community and social media operations by managing engagement initiatives, publishing ecosystem updates, and strengthening relationships with community members across gaming channels.\n\nCollaborate with the team on marketing campaigns, community events, and content planning while helping maintain an active and welcoming environment for players.",
-      ctas: [
-        { type: "website", label: "Website", url: "https://kiooverse.xyz" },
-        { type: "x", label: "X", url: "https://x.com/kiooverse?s=11" }
-      ]
-    },
-    {
-      type: "multi",
-      logo: "src/racine-logo.jpg",
-      logoInitial: "R",
-      company: "Racine Technologies Limited",
-      employment: "Part-time",
-      roles: [
-        {
-          role: "Social Media Manager",
-          period: "Aug 2026 \u2013 Present",
-          location: "Lagos \u00b7 Remote",
-          descShort: "Lead Racine Technologies Limited\u2019s social media strategy and digital positioning across LinkedIn,",
-          descFull: "Lead Racine Technologies Limited\u2019s social media strategy and digital positioning across LinkedIn, Instagram, Facebook, and YouTube.\n\n\u2022 Develop platform-specific content aligned with the company\u2019s engineering, technology, procurement, and infrastructure positioning.\n\u2022 Build structured content systems that connect brand positioning, content, and audience engagement.\n\u2022 Manage the company\u2019s social presence and maintain a consistent voice across platforms.\n\u2022 Develop automated workflows for X and TikTok to improve content distribution and consistency.\n\u2022 Monitor audience response and content performance to refine messaging and identify growth opportunities."
-        },
-        {
-          role: "Executive Assistant (Procurement & Junior Data Analyst)",
-          period: "Sep 2025 \u2013 Present",
-          location: "Lagos \u00b7 On-site",
-          descShort: "As an Executive Assistant, I support procurement operations while contributing to data analysis",
-          descFull: "As an Executive Assistant, I support procurement operations while contributing to data analysis and administrative workflows. My responsibilities include organizing procurement records, maintaining operational documentation, preparing reports, and using Excel to improve data accuracy and support decision-making.\n\nWorking in a fast-paced business environment has strengthened my organizational skills, attention to detail, and ability to improve internal processes."
-        }
-      ],
-      ctas: [
-        { type: "website", label: "Website", url: "https://racinetechnologies.com" },
-        { type: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/company/racine-technologies-limited/" }
-      ]
-    },
-    {
-      type: "multi",
-      logo: "src/pecunity-logo.jpg",
-      logoInitial: "P",
-      company: "Pecunity",
-      employment: "Part-time",
-      roles: [
-        {
-          role: "Community Manager & Social Media Manager",
-          period: "Feb 2026 \u2013 Present",
-          location: "Germany \u00b7 Remote",
-          descShort: "Rejoined the Pecunity team after being invited back to lead community operations and social media",
-          descFull: "Rejoined the Pecunity team after being invited back to lead community operations and social media efforts.\n\nFocused on strengthening community engagement, coordinating communications, and maintaining the project\u2019s online presence while collaborating with the core team on ecosystem growth initiatives.\n\n\u2022 Managed daily community operations across Discord and Telegram.\n\u2022 Planned and published social media content on X.\n\u2022 Coordinated announcements and ecosystem updates.\n\u2022 Developed engagement initiatives to improve community participation.\n\u2022 Worked directly with the leadership team on communication strategy.\n\u2022 Monitored community sentiment and reported feedback to the team."
-        },
-        {
-          role: "Community Moderator & Campaign Manager",
-          period: "Jun 2025 \u2013 Dec 2025",
-          location: "Germany \u00b7 Remote",
-          descShort: "Started as a Community Moderator supporting members across Discord and Telegram before expanding",
-          descFull: "Started as a Community Moderator supporting members across Discord and Telegram, then expanded into campaign management during the project\u2019s growth phase \u2014 contributing through the transition from OctoDeFi to Pecunity, from presale through the PEC token launch.\n\n\u2022 Moderated Discord and Telegram communities while maintaining a welcoming environment.\n\u2022 Answered community questions and escalated technical issues when necessary.\n\u2022 Planned and coordinated community campaigns and engagement initiatives.\n\u2022 Assisted with ecosystem announcements and launch communications.\n\u2022 Supported the project\u2019s rebranding from OctoDeFi to Pecunity."
-        }
-      ],
-      ctas: [
-        { type: "website", label: "Website", url: "https://pecunity.io" },
-        { type: "x", label: "X", url: "https://x.com/pecunity_app?s=11" }
-      ]
-    },
-    {
-      type: "single",
-      logo: "src/perspective-logo.jpg",
-      logoInitial: "P",
-      role: "Ambassador",
-      company: "Perspective AI",
-      employment: "Contract",
-      period: "May 2025 \u2013 Aug 2025",
-      location: "Spain \u00b7 Remote",
-      descShort: "Contributed to ecosystem awareness through content creation, community advocacy, and research.",
-      descFull: "Contributed to ecosystem awareness through content creation, community advocacy, and research. Supported brand visibility by creating educational and promotional content on X while participating in ambassador-led engagement initiatives.",
-      ctas: [
-        { type: "website", label: "Website", url: "https://perspectivelabs.org/" },
-        { type: "x", label: "X", url: "https://x.com/perspective_ai_?s=11" }
-      ]
-    },
-    {
-      type: "single",
-      logo: "src/biga-logo.jpg",
-      logoInitial: "B",
-      role: "Biga Master \u00b7 Community Support",
-      company: "BIGA ARCADE",
-      employment: "Contract",
-      period: "Sep 2024 \u2013 Dec 2024",
-      location: "Australia \u00b7 Remote",
-      descShort: "Served as a Biga Master, supporting community engagement across Discord and X while helping organize and promote ecosystem activities.",
-      descFull: "Served as a Biga Master, supporting community engagement across Discord and X while helping organize and promote ecosystem activities.\n\nCo-facilitated weekly game nights, contributed to increased player participation, streamed gameplay sessions on YouTube, and promoted community events to strengthen ecosystem visibility and long-term engagement.",
-      ctas: [
-        { type: "website", label: "Website", url: "https://bigarcade.org/register" },
-        { type: "x", label: "X", url: "https://x.com/bigaarcade?s=11" }
-      ]
-    },
-    {
-      type: "single",
-      logo: "src/vexor-logo.jpg",
-      logoInitial: "V",
-      role: "Ambassador & Community Support",
-      company: "Vexor",
-      employment: "Contract",
-      period: "Sep 2024 \u2013 Dec 2024",
-      location: "Remote",
-      descShort: "Selected as a paid Ambassador to support community growth and engagement within a Web3 gaming ecosystem.",
-      descFull: "Selected as a paid Ambassador to support community growth and engagement within a Web3 gaming ecosystem.\n\nProvided daily community support, organized game nights, encouraged participation in ecosystem campaigns, and consistently ranked among the top-performing ambassadors through reliable contributions and community advocacy.",
-      ctas: [
-        { type: "website", label: "Website", url: "https://vexor.gg/" },
-        { type: "x", label: "X", url: "https://x.com/vexor_gg?s=11" }
-      ]
-    },
-    {
-      type: "single",
-      logo: "src/cyber-logo.jpg",
-      logoInitial: "C",
-      role: "Junior Community Moderator (Volunteer)",
-      company: "Cyber Boxing League (CBL)",
-      employment: "Internship",
-      period: "May 2024 \u2013 Sep 2024",
-      location: "Aruba \u00b7 Remote",
-      descShort: "Began my Web3 community management journey by supporting members, onboarding newcomers, and helping maintain a welcoming Discord environment after being trusted by the community to assist with moderation.",
-      descFull: "Began my Web3 community management journey by supporting members, onboarding newcomers, and helping maintain a welcoming Discord environment after being trusted by the community to assist with moderation.\n\nThis experience introduced me to Discord moderation, community communication, and the foundations of community operations.",
-      ctas: [
-        { type: "website", label: "Website", url: "https://www.cyberboxingleague.com/" },
-        { type: "x", label: "X", url: "https://x.com/cyberboxleague?s=11" }
-      ]
-    }
-  ];
-
-  var listEl = document.getElementById('expList');
-
-  function renderCtas(ctas){
-    return ctas.map(function(cta){
-      return '<a class="exp-cta" href="' + cta.url + '" target="_blank" rel="noopener">' +
-        (EXP_ICONS[cta.type] || '') + '<span>' + cta.label + '</span></a>';
-    }).join('');
-  }
-
-  function renderDesc(exp){
-    return '<p class="exp-desc" data-state="collapsed">' +
-        '<span class="exp-desc-short">' + exp.descShort + '</span>' +
-        '<span class="exp-desc-full" hidden>' + exp.descFull + '</span>' +
-        ' <button type="button" class="exp-more-btn">more</button>' +
-      '</p>';
-  }
-
-  function renderSingle(exp){
-    return '<div class="exp-card" data-reveal>' +
-      '<div class="exp-card-head">' +
-        '<img class="exp-logo" src="' + exp.logo + '" alt="' + exp.company + ' logo" ' +
-          'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-        '<div class="exp-logo-fallback">' + exp.logoInitial + '</div>' +
-        '<div class="exp-card-headtext">' +
-          '<h3 class="exp-role">' + exp.role + '</h3>' +
-          '<p class="exp-company">' + exp.company + ' \u00b7 ' + exp.employment + '</p>' +
-          '<p class="exp-period">' + exp.period + '</p>' +
-          '<p class="exp-location">' + exp.location + '</p>' +
-        '</div>' +
-      '</div>' +
-      renderDesc(exp) +
-      '<div class="exp-cta-row">' + renderCtas(exp.ctas) + '</div>' +
-    '</div>';
-  }
-
-  function renderMulti(exp){
-    var rolesHtml = exp.roles.map(function(role){
-      return '<div class="exp-timeline-item">' +
-        '<h4 class="exp-timeline-role">' + role.role + '</h4>' +
-        '<p class="exp-timeline-period">' + role.period + '</p>' +
-        '<p class="exp-timeline-location">' + role.location + '</p>' +
-        renderDesc(role) +
-      '</div>';
-    }).join('');
-
-    return '<div class="exp-card exp-card--multi" data-reveal>' +
-      '<div class="exp-card-head">' +
-        '<img class="exp-logo" src="' + exp.logo + '" alt="' + exp.company + ' logo" ' +
-          'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-        '<div class="exp-logo-fallback">' + exp.logoInitial + '</div>' +
-        '<div class="exp-card-headtext">' +
-          '<h3 class="exp-role">' + exp.company + '</h3>' +
-          '<p class="exp-company">' + exp.employment + '</p>' +
-        '</div>' +
-      '</div>' +
-      '<div class="exp-timeline">' + rolesHtml + '</div>' +
-      '<div class="exp-cta-row">' + renderCtas(exp.ctas) + '</div>' +
-    '</div>';
-  }
-
-  // ---- desktop row rendering: logo replaces the numbering, description
-  // shows in full by default (no pre-cut short text) — a "more" button
-  // only appears if JS later measures that the text actually overflows
-  // its clamp (see checkDesktopClamps below)
-  function renderDesktopDesc(descFull){
-    return '<p class="exp-desc" data-state="collapsed">' +
-        '<span class="exp-desc-full">' + descFull + '</span>' +
-        ' <button type="button" class="exp-more-btn" hidden>more</button>' +
-      '</p>';
-  }
-
-  function renderDesktopHead(row){
-    if (row.headType === 'dot'){
-      return '<div class="exp-card-head exp-card-head--dot">' +
-        (row.lineUp ? '<span class="exp-line-up" aria-hidden="true"></span>' : '') +
-        '<span class="exp-group-dot" aria-hidden="true"></span>' +
-        (row.lineDown ? '<span class="exp-line-down-mid" aria-hidden="true"></span>' : '') +
-      '</div>';
-    }
-    return '<div class="exp-card-head">' +
-      '<img class="exp-logo" src="' + row.logo + '" alt="' + row.company + ' logo" ' +
-        'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-      '<div class="exp-logo-fallback">' + row.logoInitial + '</div>' +
-      (row.lineDown ? '<span class="exp-line-down" aria-hidden="true"></span>' : '') +
-    '</div>';
-  }
-
-  function renderDesktopRow(row){
-    return '<div class="exp-card' + (row.noBorder ? ' exp-card--no-divider' : '') + '" data-reveal>' +
-      renderDesktopHead(row) +
-      '<div class="exp-desktop-left">' +
-        '<h3 class="exp-role">' + row.role + '</h3>' +
-        '<p class="exp-company">' + row.company + ' \u00b7 ' + row.employment + '</p>' +
-        '<p class="exp-period">' + row.period + '</p>' +
-        '<p class="exp-location">' + row.location + '</p>' +
-      '</div>' +
-      '<div class="exp-desktop-right">' +
-        renderDesktopDesc(row.descFull) +
-        (row.showCtas ? '<div class="exp-cta-row">' + renderCtas(row.ctas) + '</div>' : '') +
-      '</div>' +
-    '</div>';
-  }
-
-  var VISIBLE_COUNT = 3;
-  var moreWrap = document.createElement('div');
-  moreWrap.className = 'exp-more-list';
-  moreWrap.hidden = true;
-
-  EXP_DATA.forEach(function(exp, i){
-    var html = exp.type === 'multi' ? renderMulti(exp) : renderSingle(exp);
-    if (i < VISIBLE_COUNT){
-      listEl.insertAdjacentHTML('beforeend', html);
-    } else {
-      moreWrap.insertAdjacentHTML('beforeend', html);
-    }
-  });
-
-  var toggleBtn = null;
-  if (EXP_DATA.length > VISIBLE_COUNT){
-    toggleBtn = document.createElement('button');
-    toggleBtn.type = 'button';
-    toggleBtn.className = 'exp-toggle-btn';
-    toggleBtn.textContent = 'View all ' + EXP_DATA.length + '+ experience';
-    listEl.appendChild(toggleBtn);
-    listEl.appendChild(moreWrap);
-
-    var expExpanded = false;
-    toggleBtn.addEventListener('click', function(){
-      expExpanded = !expExpanded;
-      moreWrap.hidden = !expExpanded;
-      toggleBtn.textContent = expExpanded ? 'Show less' : ('View all ' + EXP_DATA.length + '+ experience');
-    });
-  }
-
-  // ---- desktop: same 3-visible / toggle pattern, but multi-role companies
-  // are flattened into one row per role (sharing that company's logo),
-  // and each row's CTAs only render on the last role of the group so the
-  // Website/Social row doesn't repeat under every role
-  var listElDesktop = document.getElementById('expListDesktop');
-  var desktopRows = [];
-  EXP_DATA.forEach(function(exp, i){
-    var visible = i < VISIBLE_COUNT;
-    if (exp.type === 'multi'){
-      exp.roles.forEach(function(role, idx, arr){
-        var isFirst = idx === 0;
-        var isLast = idx === arr.length - 1;
-        desktopRows.push({
-          visible: visible,
-          logo: exp.logo, logoInitial: exp.logoInitial,
-          role: role.role, company: exp.company, employment: exp.employment,
-          period: role.period, location: role.location, descFull: role.descFull,
-          ctas: exp.ctas, showCtas: isLast,
-          headType: isFirst ? 'logo' : 'dot',
-          lineUp: !isFirst,
-          lineDown: !isLast,
-          noBorder: !isLast
-        });
       });
-    } else {
-      desktopRows.push({
-        visible: visible,
-        logo: exp.logo, logoInitial: exp.logoInitial,
-        role: exp.role, company: exp.company, employment: exp.employment,
-        period: exp.period, location: exp.location, descFull: exp.descFull,
-        ctas: exp.ctas, showCtas: true,
-        headType: 'logo',
-        lineUp: false,
-        lineDown: false,
-        noBorder: false
-      });
+    }, { threshold:0.25 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // Footer year, kept live
+  var footerText = document.getElementById('cf-footer-text');
+  if(footerText){
+    footerText.innerHTML = '&copy; ' + new Date().getFullYear() + ' Uche Japheth — Resume Series';
+  }
+
+  // Subtle scroll-linked parallax on the whole ambient layer (skipped for reduced motion).
+  // Applied to the wrapper — not the individual orbs — so it doesn't fight with
+  // each orb's own pulse animation on the same "transform" property.
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var section = document.getElementById('contact');
+  var atmosphere = document.querySelector('.cf-atmosphere');
+  if(section && atmosphere && !prefersReduced){
+    var ticking = false;
+    function updateParallax(){
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight || 1;
+      var progress = 1 - Math.min(Math.max(rect.top / vh, 0), 1); // 0 → 1 as section enters
+      atmosphere.style.transform = 'translateY(' + (progress * 22) + 'px)';
+      ticking = false;
     }
-  });
-
-  var moreWrapDesktop = document.createElement('div');
-  moreWrapDesktop.className = 'exp-more-list';
-  moreWrapDesktop.hidden = true;
-
-  desktopRows.forEach(function(row){
-    var html = renderDesktopRow(row);
-    if (row.visible){
-      listElDesktop.insertAdjacentHTML('beforeend', html);
-    } else {
-      moreWrapDesktop.insertAdjacentHTML('beforeend', html);
-    }
-  });
-
-  var toggleBtnDesktop = null;
-  if (desktopRows.some(function(r){ return !r.visible; })){
-    toggleBtnDesktop = document.createElement('button');
-    toggleBtnDesktop.type = 'button';
-    toggleBtnDesktop.className = 'exp-toggle-btn';
-    toggleBtnDesktop.textContent = 'View all ' + EXP_DATA.length + '+ experience';
-    listElDesktop.appendChild(toggleBtnDesktop);
-    listElDesktop.appendChild(moreWrapDesktop);
-
-    var expExpandedDesktop = false;
-    toggleBtnDesktop.addEventListener('click', function(){
-      expExpandedDesktop = !expExpandedDesktop;
-      moreWrapDesktop.hidden = !expExpandedDesktop;
-      toggleBtnDesktop.textContent = expExpandedDesktop ? 'Show less' : ('View all ' + EXP_DATA.length + '+ experience');
-    });
+    window.addEventListener('scroll', function(){
+      if(!ticking){ window.requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive:true });
+    updateParallax();
   }
-
-  // desktop "more"/"less" just toggles the clamp (full text is already
-  // in the DOM) — distinct from the mobile handler below, which swaps
-  // between a separate pre-cut short span and the full span
-  listElDesktop.addEventListener('click', function(e){
-    var btn = e.target.closest('.exp-more-btn');
-    if (!btn) return;
-    var descEl = btn.closest('.exp-desc');
-    var expanded = descEl.getAttribute('data-state') === 'expanded';
-    descEl.setAttribute('data-state', expanded ? 'collapsed' : 'expanded');
-    btn.textContent = expanded ? 'more' : 'less';
-  });
-
-  // smart truncation: a description's "more" button only appears once
-  // layout confirms the text actually overflows its 4-line clamp —
-  // short descriptions just render in full with no button at all
-  function checkDesktopClamps(){
-    if (!window.matchMedia('(min-width:960px)').matches) return;
-    listElDesktop.querySelectorAll('.exp-desc').forEach(function(descEl){
-      if (descEl.getAttribute('data-state') === 'expanded') return;
-      var fullEl = descEl.querySelector('.exp-desc-full');
-      var btn = descEl.querySelector('.exp-more-btn');
-      btn.hidden = !(fullEl.scrollHeight > fullEl.clientHeight + 1);
-    });
-  }
-  checkDesktopClamps();
-  window.addEventListener('load', checkDesktopClamps);
-  var expClampTimer;
-  window.addEventListener('resize', function(){
-    window.clearTimeout(expClampTimer);
-    expClampTimer = window.setTimeout(checkDesktopClamps, 150);
-  });
-
-  // expand/collapse — delegated so it scales to however many entries get added later
-  listEl.addEventListener('click', function(e){
-    var btn = e.target.closest('.exp-more-btn');
-    if (!btn) return;
-    var descEl = btn.closest('.exp-desc');
-    var shortEl = descEl.querySelector('.exp-desc-short');
-    var fullEl = descEl.querySelector('.exp-desc-full');
-    var expanded = descEl.getAttribute('data-state') === 'expanded';
-
-    if (expanded){
-      shortEl.hidden = false;
-      fullEl.hidden = true;
-      btn.textContent = 'more';
-      descEl.setAttribute('data-state', 'collapsed');
-    } else {
-      shortEl.hidden = true;
-      fullEl.hidden = false;
-      btn.textContent = 'less';
-      descEl.setAttribute('data-state', 'expanded');
-    }
-  });
-
-  // hover-on-scroll: whichever entry sits nearest the top of the
-  // screen gets the highlight class, same technique used for the
-  // Core Capabilities cards — real :hover (CSS) handles pointer
-  // devices, this handles touch/scroll
-  var expCards = document.querySelectorAll('#expList .exp-card, #expListDesktop .exp-card');
-  var expScrollTicking = false;
-  var expPointerActive = false; // true while a mouse/finger is actively resting on a card — scroll tracking backs off so it doesn't fight the direct interaction
-  function updateExpHover(){
-    expScrollTicking = false;
-    if (expPointerActive) return;
-    var refLine = window.innerHeight * 0.35;
-    var closest = null;
-    var closestDist = Infinity;
-    expCards.forEach(function(card){
-      if (card.offsetParent === null) return; // hidden behind the "View all" toggle — not eligible
-      var rect = card.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      var dist = Math.abs(rect.top - refLine);
-      if (dist < closestDist){ closestDist = dist; closest = card; }
-    });
-    expCards.forEach(function(card){
-      card.classList.toggle('exp-card--hover', card === closest);
-    });
-  }
-  window.addEventListener('scroll', function(){
-    if (!expScrollTicking){
-      window.requestAnimationFrame(updateExpHover);
-      expScrollTicking = true;
-    }
-  }, { passive: true });
-
-  // Direct hover: mouse resting on a card, or a finger held down on one,
-  // both drive the same highlight the scroll-tracking uses. Pointer
-  // Events unify mouse/touch/pen — pointerenter fires the moment a
-  // finger touches down (touch has no hover state otherwise), and
-  // pointerleave fires on lift or drag-away, so "hold a finger on it"
-  // and "hover with a mouse" both just work through one handler.
-  expCards.forEach(function(card){
-    card.addEventListener('pointerenter', function(){
-      expPointerActive = true;
-      expCards.forEach(function(c){ c.classList.remove('exp-card--hover'); });
-      card.classList.add('exp-card--hover');
-    });
-    card.addEventListener('pointerleave', function(){
-      expPointerActive = false;
-      card.classList.remove('exp-card--hover');
-      updateExpHover(); // hand control back to whichever card scroll position says should be highlighted
-    });
-  });
-})();
-</script>
-
-<section class="tst-section" data-theme="dark">
-  <div class="tst-inner">
-
-    <h2 class="tst-title" data-reveal>
-      <span class="tst-title-line tst-title-line--light">Read reviews,</span>
-      <span class="tst-title-line tst-title-line--heavy">work with confidence.</span>
-    </h2>
-
-    <div class="tst-body">
-      <div class="tst-left" data-reveal data-reveal-delay="1">
-        <svg class="tst-quote-mark" viewBox="0 0 86 68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M38.0 2.2 Q38.0 0.0 33.8 0.4 L23.2 1.6 Q19.0 2.0 17.0 3.1 L12.0 5.9 Q10.0 7.0 8.7 8.5 L5.3 12.5 Q4.0 14.0 3.1 16.6 L0.9 23.4 Q0.0 26.0 0.0 34.6 L0.0 56.4 Q0.0 65.0 0.4 65.4 L1.6 66.6 Q2.0 67.0 8.8 67.0 L26.2 67.0 Q33.0 67.0 33.9 66.3 L36.1 64.7 Q37.0 64.0 37.2 55.9 L37.8 35.1 Q38.0 27.0 37.6 26.6 L36.4 25.4 Q36.0 25.0 32.7 25.0 L24.3 25.0 Q21.0 25.0 20.8 24.6 L20.2 23.4 Q20.0 23.0 20.7 21.7 L22.3 18.3 Q23.0 17.0 24.1 16.1 L26.9 13.9 Q28.0 13.0 30.2 12.3 L35.8 10.7 Q38.0 10.0 38.0 7.8 L38.0 2.2 Z M85.0 2.2 Q85.0 0.0 80.8 0.4 L70.2 1.6 Q66.0 2.0 64.0 3.1 L59.0 5.9 Q57.0 7.0 55.7 8.5 L52.3 12.5 Q51.0 14.0 50.1 16.6 L47.9 23.4 Q47.0 26.0 47.0 34.6 L47.0 56.4 Q47.0 65.0 47.4 65.4 L48.6 66.6 Q49.0 67.0 55.8 67.0 L73.2 67.0 Q80.0 67.0 80.9 66.3 L83.1 64.7 Q84.0 64.0 84.2 55.9 L84.8 35.1 Q85.0 27.0 84.6 26.6 L83.4 25.4 Q83.0 25.0 79.7 25.0 L71.3 25.0 Q68.0 25.0 67.8 24.6 L67.2 23.4 Q67.0 23.0 67.7 21.7 L69.3 18.3 Q70.0 17.0 71.1 16.1 L73.9 13.9 Q75.0 13.0 77.2 12.3 L82.8 10.7 Q85.0 10.0 85.0 7.8 L85.0 2.2 Z" fill="currentColor"/>
-        </svg>
-        <p class="tst-label">From the<br>people I&rsquo;ve<br>worked with, in<br>their words.</p>
-        <div class="tst-nav">
-          <button type="button" class="tst-nav-btn tst-nav-btn--prev" id="tstPrev" aria-label="Previous testimonials">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="tst-track-bar" aria-hidden="true"><div class="tst-track-thumb" id="tstThumb"></div></div>
-          <button type="button" class="tst-nav-btn tst-nav-btn--next" id="tstNext" aria-label="Next testimonials">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="tst-viewport" id="tstViewport">
-        <div class="tst-cards" id="tstCards" data-reveal-list>
-          <!-- cards injected by JS -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile: entire section content boxed in one slim-bordered frame,
-         matching the reference's phone-card outline — header, quote-mark/
-         label, card carousel, and chevron+dot nav all sit inside it -->
-    <div class="tst-mobile">
-      <div class="tst-mobile-frame">
-        <div class="tst-mobile-head" data-reveal>
-          <svg class="tst-quote-mark tst-quote-mark--mobile" viewBox="0 0 86 68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M38.0 2.2 Q38.0 0.0 33.8 0.4 L23.2 1.6 Q19.0 2.0 17.0 3.1 L12.0 5.9 Q10.0 7.0 8.7 8.5 L5.3 12.5 Q4.0 14.0 3.1 16.6 L0.9 23.4 Q0.0 26.0 0.0 34.6 L0.0 56.4 Q0.0 65.0 0.4 65.4 L1.6 66.6 Q2.0 67.0 8.8 67.0 L26.2 67.0 Q33.0 67.0 33.9 66.3 L36.1 64.7 Q37.0 64.0 37.2 55.9 L37.8 35.1 Q38.0 27.0 37.6 26.6 L36.4 25.4 Q36.0 25.0 32.7 25.0 L24.3 25.0 Q21.0 25.0 20.8 24.6 L20.2 23.4 Q20.0 23.0 20.7 21.7 L22.3 18.3 Q23.0 17.0 24.1 16.1 L26.9 13.9 Q28.0 13.0 30.2 12.3 L35.8 10.7 Q38.0 10.0 38.0 7.8 L38.0 2.2 Z M85.0 2.2 Q85.0 0.0 80.8 0.4 L70.2 1.6 Q66.0 2.0 64.0 3.1 L59.0 5.9 Q57.0 7.0 55.7 8.5 L52.3 12.5 Q51.0 14.0 50.1 16.6 L47.9 23.4 Q47.0 26.0 47.0 34.6 L47.0 56.4 Q47.0 65.0 47.4 65.4 L48.6 66.6 Q49.0 67.0 55.8 67.0 L73.2 67.0 Q80.0 67.0 80.9 66.3 L83.1 64.7 Q84.0 64.0 84.2 55.9 L84.8 35.1 Q85.0 27.0 84.6 26.6 L83.4 25.4 Q83.0 25.0 79.7 25.0 L71.3 25.0 Q68.0 25.0 67.8 24.6 L67.2 23.4 Q67.0 23.0 67.7 21.7 L69.3 18.3 Q70.0 17.0 71.1 16.1 L73.9 13.9 Q75.0 13.0 77.2 12.3 L82.8 10.7 Q85.0 10.0 85.0 7.8 L85.0 2.2 Z" fill="currentColor"/>
-          </svg>
-          <p class="tst-label tst-label--mobile">From the<br>people I&rsquo;ve<br>worked with, in<br>their words.</p>
-        </div>
-
-        <div class="tst-mobile-viewport">
-          <div class="tst-mobile-cards" id="tstCardsMobile" data-reveal-list>
-            <!-- cards injected by JS (same render function as desktop) -->
-          </div>
-        </div>
-
-        <div class="tst-mobile-nav">
-          <button type="button" class="tst-nav-btn tst-nav-btn--prev" id="tstPrevMobile" aria-label="Previous testimonial">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="tst-mobile-tracker" id="tstTrackerMobile" aria-hidden="true">
-            <!-- dots injected by JS -->
-          </div>
-          <button type="button" class="tst-nav-btn tst-nav-btn--next" id="tstNextMobile" aria-label="Next testimonial">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-</div>
-
-<style>
-  /* ===================== TESTIMONIALS — SCOPED STYLES (desktop-first; mobile/tablet to follow) ===================== */
-
-  .tst-section{
-    background:var(--bg);
-    /* bottom padding trimmed from 96px to 72px — this section sits
-       directly before Projects in the real page (Home+Impact ->
-       Professional Philosophy -> Core Capabilities -> Experience +
-       Testimonials -> Projects + Tech Stack -> ...), and 96px was
-       already the largest bottom padding of any section built so far.
-       Stacked against whatever top padding Projects adds on its own
-       side, the old value risked an oversized gap between them. */
-    padding:32px clamp(28px, 6vw, 96px) 72px;
-    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
-  .tst-inner{ max-width:1400px; margin:0 auto; }
-
-  .tst-title{
-    margin:0 0 56px;
-    text-align:center;
-    font-size:54px;
-    line-height:1.25;
-    letter-spacing:-0.01em;
-  }
-  .tst-title-line{ display:block; color:var(--text-hi); }
-  .tst-title-line--light{ font-weight:400; }
-  .tst-title-line--heavy{ font-weight:800; }
-
-  .tst-body{
-    display:grid;
-    grid-template-columns:260px 1fr;
-    gap:48px;
-    align-items:start;
-  }
-
-  .tst-left{ padding-top:8px; }
-  .tst-quote-mark{
-    display:block;
-    width:64px;
-    height:auto;
-    color:var(--text-lo);
-    margin-bottom:16px;
-  }
-  .tst-label{
-    margin:0 0 28px;
-    color:var(--text-hi);
-    font-size:26px;
-    font-weight:700;
-    line-height:1.35;
-    max-width:260px; /* wide enough that none of the manually-broken <br> lines re-wrap on their own */
-  }
-
-  .tst-nav{ display:flex; align-items:center; gap:14px; }
-  .tst-nav-btn{
-    all:unset;
-    box-sizing:border-box;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,0.16);
-    color:var(--text-hi);
-    cursor:pointer;
-    flex-shrink:0;
-    -webkit-tap-highlight-color:transparent;
-    transition:border-color 0.2s ease, background 0.2s ease;
-  }
-  .tst-nav-btn:hover,
-  .tst-nav-btn:focus-visible{
-    border-color:rgba(255,255,255,0.35);
-    background:rgba(255,255,255,0.04);
-  }
-  .tst-nav-btn:disabled{ opacity:0.35; cursor:default; }
-  .tst-nav-btn svg{ width:16px; height:16px; }
-
-  .tst-track-bar{
-    position:relative;
-    flex:1;
-    height:2px;
-    background:rgba(255,255,255,0.14);
-    border-radius:999px;
-    overflow:hidden;
-  }
-  .tst-track-thumb{
-    position:absolute;
-    top:0;
-    left:0;
-    height:100%;
-    width:30%;
-    background:var(--text-hi);
-    border-radius:999px;
-    transition:left 0.2s ease, width 0.2s ease;
-  }
-
-  .tst-viewport{
-    overflow:visible;
-    min-width:0; /* grid items default to min-width:auto, which refuses to shrink below content size unless overflow is non-visible — since we need overflow:visible for the shadow, min-width:0 does the shrink-to-track-size job instead. Without this, the grid track expanded to fit all 7 cards, leaving nothing for .tst-cards to actually scroll — this was the real cause of the nav buttons doing nothing. */
-  }
-  .tst-cards{
-    display:flex;
-    align-items:flex-start;
-    gap:20px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    scrollbar-width:none;
-    -ms-overflow-style:none;
-    /* overflow-x:auto forces overflow-y to compute as auto too (a CSS
-       overflow-module rule), which was clipping the box-shadow above
-       and below each card. Padding gives the shadow room to render
-       before it hits that clip edge; the matching negative margin
-       cancels the padding back out so the row's outer position and
-       width don't visibly shift.
-       The bottom pairing is only a PARTIAL cancel (-40px against 64px
-       of padding, not -64px) rather than a full one, on purpose: a
-       full cancel would make this row always report the same fixed
-       height to whatever follows it, regardless of how tall its
-       content actually is — including when a card's quote is expanded
-       via "see more", which grows the row's real height a lot. With a
-       full cancel, that growth wouldn't reliably push Projects (the
-       next section in the real page) down; it would just extend
-       further into whatever space padding this section's ".tst-section"
-       already reserves below it, at real risk of visually running into
-       Projects instead. The 24px left uncancelled here is real,
-       normal, content-counted space, so it (and any extra height from
-       an expanded card) properly grows the page's natural flow. */
-    padding:36px 44px 64px 36px;
-    margin:-36px -44px -40px -36px;
-  }
-  .tst-cards::-webkit-scrollbar{ display:none; }
-
-  .tst-card{
-    position:relative;
-    /* sized so exactly 3.25 cards fill the container's real width: subtract
-       the 3 gaps between the 4 partially-visible cards, then divide by 3.25.
-       This grows with the available desktop space instead of the old
-       fixed 260px + a capped viewport. max-width guards against the card
-       ballooning on very wide monitors. */
-    flex:0 0 calc((100% - 60px) / 3.25);
-    max-width:340px;
-    scroll-snap-align:start;
-    display:flex;
-    flex-direction:column;
-    /* merged with the shared [data-reveal-soft] transition rather than
-       left to compete with it (see the .exp-card comment above for
-       why) — transform stays fast (0.2s, for the hover lift), while
-       opacity/filter get the slower reveal timing */
-    transition:transform 0.2s ease,
-               opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-               filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .tst-card:hover{
-    transform:translateY(-8px) scale(1.02);
-  }
-
-  .tst-bubble-wrap{
-    position:relative;
-    /* ONE shadow for the combined bubble+tail shape — this is what
-       actually fixes the seam. Giving each piece its own shadow meant
-       the bubble's box-shadow (which paints as part of the bubble's own
-       box, after the tail) would wash back over the tail's top edge
-       with a DIFFERENT shadow than the tail's own, creating a visible
-       mismatch right where they meet. filter:drop-shadow here follows
-       the real combined alpha shape of everything inside this wrapper,
-       so there's only ever one shadow, correctly shaped, with nothing
-       to mismatch.
-       The same principle is used for the thin trim line: four tightly
-       offset, zero-blur drop-shadows layered alongside the blurred one
-       outline the real painted shape (rounded bubble + tail point
-       together) as a single continuous line, instead of styling the
-       bubble's border and the tail's SVG stroke separately (which
-       produced two disconnected outlines). Applies to desktop and
-       mobile alike — the mobile card only overrides sizing, not this. */
-    filter:
-      drop-shadow(6px 6px 24px rgba(255,255,255,0.09))
-      drop-shadow(1px 0 0 rgba(255,255,255,0.3))
-      drop-shadow(-1px 0 0 rgba(255,255,255,0.3))
-      drop-shadow(0 1px 0 rgba(255,255,255,0.3))
-      drop-shadow(0 -1px 0 rgba(255,255,255,0.3));
-    transition:filter 0.2s ease;
-  }
-  .tst-card:hover .tst-bubble-wrap{
-    filter:
-      drop-shadow(8px 16px 32px rgba(255,255,255,0.13))
-      drop-shadow(1px 0 0 rgba(255,255,255,0.3))
-      drop-shadow(-1px 0 0 rgba(255,255,255,0.3))
-      drop-shadow(0 1px 0 rgba(255,255,255,0.3))
-      drop-shadow(0 -1px 0 rgba(255,255,255,0.3));
-  }
-
-  .tst-bubble{
-    position:relative;
-    min-height:184px; /* scaled up from 150px alongside the card's ~22% width increase */
-    background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
-    border-radius:16px; /* slightly rounded, chat-bubble style — not sharp, not fully pill-rounded */
-    padding:24px 27px; /* scaled up from 20px 22px */
-    display:flex;
-    flex-direction:column;
-  }
-  /* the small triangular tail pointing down toward the avatar below —
-     positioned near the avatar's horizontal position, not centered */
-  /* tail is a real inline SVG (see the JS render), not a pseudo-element —
-     clip-path attempts on ::after rendered incorrectly, and SVG gives
-     precise, reliable control over this irregular shape */
-  .tst-tail{
-    position:absolute;
-    left:0; /* flush with the bubble's own left edge */
-    /* 'top' is set dynamically by JS (positionTails()) as
-       bubble.offsetHeight - overlap — the bubble's height varies with
-       quote length and with "see more" expansion, so this can't be a
-       fixed CSS value. Being a DOM sibling that comes BEFORE the bubble
-       (see the render function) is what actually hides the overlap:
-       the bubble is opaque and paints afterward, naturally covering
-       whatever part of the tail sits underneath it. */
-    width:124px; /* scaled up from 102px alongside the card's width increase */
-    height:80px; /* scaled up from 66px */
-    color:var(--bg-alt); /* the <path> uses fill="currentColor" */
-    pointer-events:none;
-  }
-
-  .tst-quote-text{
-    flex:1;
-    margin:0 0 14px;
-    color:var(--text-hi);
-    font-size:16px;
-    font-weight:500;
-    line-height:1.6;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:5;
-    overflow:hidden;
-  }
-  .tst-quote-text[data-expanded="true"]{
-    -webkit-line-clamp:unset;
-    overflow:visible;
-  }
-
-  /* "see more" only appears once JS measures actual overflow — same
-     smart-truncation approach used for Experience's desktop descriptions */
-  .tst-see-more{
-    all:unset;
-    cursor:pointer;
-    align-self:flex-start;
-    margin-bottom:16px;
-    color:var(--teal);
-    font-size:13.5px;
-    font-weight:600;
-  }
-  .tst-see-more:hover,
-  .tst-see-more:focus-visible{ text-decoration:underline; }
-  .tst-see-more[hidden]{ display:none; }
-
-  .tst-person{
-    display:flex;
-    align-items:center;
-    gap:14px; /* scaled up from 12px */
-    margin-top:12px; /* scaled up from 10px */
-    padding-left:78px; /* scaled up from 64px, keeping it past the tail's deep-hanging zone at the new size */
-  }
-  .tst-avatar{
-    width:54px; /* scaled up from 44px */
-    height:54px;
-    border-radius:50%;
-    object-fit:cover;
-    flex-shrink:0;
-    background:linear-gradient(135deg, var(--purple), var(--blue));
-  }
-  .tst-avatar-fallback{
-    display:none;
-    width:54px;
-    height:54px;
-    border-radius:50%;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg, var(--purple), var(--blue));
-    color:#ffffff;
-    font-size:17px;
-    font-weight:700;
-    flex-shrink:0;
-  }
-  .tst-person-text{ min-width:0; }
-  .tst-name{ margin:0 0 2px; color:var(--text-hi); font-size:16px; font-weight:700; }
-  .tst-role{ margin:0 0 1px; color:var(--text-lo); font-size:14px; font-weight:500; }
-  .tst-company-line{ margin:0; color:var(--text-lo); font-size:14px; font-weight:400; }
-
-  /* ---- mobile: hidden by default (this file is desktop-first) ---- */
-  .tst-mobile{ display:none; }
-
-  @media (max-width:767.98px){
-    .tst-section{ padding:32px 20px 64px; }
-
-    .tst-title{ font-size:32px; margin-bottom:8px; line-height:1.22; }
-
-    /* the desktop/tablet split layout (left column + peeking-card
-       viewport) is replaced entirely below 768px */
-    .tst-body{ display:none; }
-    .tst-mobile{ display:block; }
-
-    /* the whole section's mobile content — header block, quote-mark/
-       label, card carousel, and chevron+dot nav — sits inside one
-       slim-bordered box, matching the reference image's outline.
-       Slim + white-on-dark: a thin, low-opacity light stroke rather
-       than a heavy or filled border. */
-    .tst-mobile-frame{
-      border:1.5px solid rgba(255,255,255,0.22);
-      border-radius:28px;
-      padding:28px 20px 22px;
-    }
-
-    .tst-mobile-head{
-      /* left-aligned, matching the desktop .tst-left treatment —
-         the reference image's own composition, just with our copy.
-         No top margin here — the frame's own top padding already
-         provides the gap left by removing the rating/review-count line. */
-      margin:0 0 26px;
-    }
-    .tst-quote-mark--mobile{
-      display:block;
-      width:44px;
-      height:auto;
-      color:var(--text-lo);
-      margin-bottom:14px;
-    }
-    .tst-label--mobile{
-      margin:0;
-      color:var(--text-hi);
-      font-size:22px;
-      font-weight:700;
-      line-height:1.35;
-      max-width:220px;
-    }
-
-    /* single full-width card per view — the section's own side padding
-       (20px, set above) is what creates the visible space on both
-       sides of the card, matching the reference image's framing */
-    .tst-mobile-viewport{ overflow:visible; }
-    .tst-mobile-cards{
-      display:flex;
-      gap:16px; /* space between cards — they were snapped edge-to-edge before */
-      overflow-x:auto;
-      scroll-snap-type:x mandatory;
-      scrollbar-width:none;
-      -ms-overflow-style:none;
-      /* same shadow-clipping fix as the desktop cards row: overflow-x:auto
-         forces overflow-y:auto too, which would clip the card's own
-         drop-shadow — padding gives it room, the negative margin cancels
-         the padding back out so nothing shifts visually. Kept small
-         (unlike desktop's 24/48px) since the mobile card itself is much
-         smaller now and its shadow needs far less clearance — a bigger
-         buffer here was also sitting close enough to the nav row below
-         to risk overlapping it. */
-      padding:10px 8px 14px;
-      margin:-10px -8px -14px;
-    }
-    .tst-mobile-cards::-webkit-scrollbar{ display:none; }
-
-    /* reuses the exact same .tst-card / .tst-bubble-wrap / .tst-bubble /
-       .tst-tail / .tst-quote-text / .tst-person markup and styles as
-       desktop — only the sizing/flex-basis changes here, so the card
-       itself never needs its own separate visual rules */
-    .tst-mobile-cards .tst-card{
-      flex:0 0 calc(100% - 24px);
-      max-width:calc(100% - 24px);
-      scroll-snap-align:start;
-    }
-    .tst-mobile-cards .tst-bubble{
-      min-height:170px;
-      padding:18px 20px;
-    }
-    .tst-mobile-cards .tst-quote-text{ font-size:15px; }
-    .tst-mobile-cards .tst-tail{ width:90px; height:58px; }
-    /* trim no longer set here — it now lives on the base .tst-bubble-wrap
-       rule, shared by desktop and mobile alike */
-
-    .tst-mobile-cards .tst-person{ padding-left:62px; margin-top:10px; }
-    .tst-mobile-cards .tst-avatar,
-    .tst-mobile-cards .tst-avatar-fallback{ width:44px; height:44px; font-size:15px; }
-
-    .tst-mobile-nav{
-      position:relative;
-      z-index:2;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:16px;
-      margin-top:8px;
-    }
-    .tst-mobile-tracker{
-      display:flex;
-      align-items:center;
-      gap:7px;
-    }
-    .tst-tracker-dot{
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:var(--text-lo);
-      transition:background 0.2s ease, transform 0.2s ease;
-    }
-    .tst-tracker-dot--active{
-      background:var(--text-hi);
-      transform:scale(1.3);
-    }
-  }
-
-  /* ============ TABLET (768px–1023.98px) ============
-     Mirrors desktop exactly — same left column, same grid, same type
-     sizes, same nav — this is NOT a redesign like Core Capabilities'
-     tablet treatment. The only thing tuned here is the card's own
-     width: desktop's card formula (~3.25 cards peeking) was sized for
-     a full desktop viewport and shrinks cards down uncomfortably small
-     at tablet widths. This divisor instead targets ~1.5–2 cards visible
-     by default, and — since it's expressed as a fraction of the actual
-     rendered row width rather than a fixed px value — scales fluidly
-     across the whole tablet range instead of jumping at a breakpoint. */
-  @media (min-width:768px) and (max-width:1023.98px){
-    .tst-card{
-      flex:0 0 calc((100% - 20px) / 1.75);
-      max-width:320px;
-    }
-  }
-</style>
-
-<script>
-(function(){
-  // testimony text is reproduced exactly as given — including Saad's
-  // "geniunly" typo, left untouched since it's someone else's real quote,
-  // not copy Claude is free to silently correct
-  // placeholder entries use generic template testimony text (clearly
-  // not real quotes) varying in length on purpose, so the layout and
-  // "see more" truncation both work correctly the moment real quotes
-  // are swapped in — just replace the `quote` string and drop the
-  // `placeholder: true` flag once the real words arrive
-  var TST_DATA = [
-    { name: "Saad", role: "Admin", company: "Vexor Network", avatar: "src/saad pfp.jpg",
-      quote: "Japheth one of our dependable supporters, he shows up consistently and geniunly care about the community." },
-    { name: "Vincent", role: "CEO/Founder", company: "Vinceslink", avatar: "src/vincent pfp.jpg",
-      quote: "Japheth took the vision behind Vinceslink and turned it into a polished digital experience without needing every detail spelled out. He took ownership from concept to execution, bringing creativity, attention to detail, and strong problem-solving throughout. I\u2019m pleased with what he delivered and would confidently recommend him to anyone looking for someone who can take an idea and bring it to life." },
-    { name: "Christian", role: "Founder", company: "Kiooverse", avatar: "src/christian pfp.jpg",
-      quote: "Japheth brings a thoughtful, consistent approach to community work. Easy to collaborate with, and always delivers.",
-      placeholder: true },
-    { name: "Lars", role: "Co-Founder (COO)", company: "Pecunity", avatar: "src/lars pfp.jpg",
-      quote: "@Japheth did a great job I highly recommend him for his passionate and modest community work" },
-    { name: "Christopher", role: "Managing Director", company: "Racine Technologies Limited", avatar: "src/christopher pfp.jpg",
-      quote: "It has been an absolute pleasure working alongside Uche at Racine Technologies. He consistently demonstrates exceptional dedication, strong operational discipline, and a remarkably proactive approach to problem-solving. Whether handling complex procurement tasks, driving corporate engagements, or executing day-to-day operations, Uche approaches every project with complete ownership and reliability. He is a key contributor to our team\u2019s success, and any organization would be fortunate to have his competence and work ethic on their team." },
-    { name: "Mr Konsole", role: "Community Admin", company: "BIGA Arcade", avatar: "src/mrkonsole pfp.jpg",
-      quote: "GG Japheth, thanks for the support..\nKeep the vibe on that's the BIGA way." },
-    { name: "fenicks", role: "Admin", company: "Kiooverse", avatar: "src/fenicks pfp.jpg",
-      quote: "Japheth has been a dependable presence in the Kiooverse community. Always shows up, always delivers.",
-      placeholder: true }
-  ];
-
-  var cardsEl = document.getElementById('tstCards');
-  var prevBtn = document.getElementById('tstPrev');
-  var nextBtn = document.getElementById('tstNext');
-  var thumbEl = document.getElementById('tstThumb');
-
-  var cardsElMobile = document.getElementById('tstCardsMobile');
-  var prevBtnMobile = document.getElementById('tstPrevMobile');
-  var nextBtnMobile = document.getElementById('tstNextMobile');
-  var trackerElMobile = document.getElementById('tstTrackerMobile');
-
-  function initials(name){ return name.trim().charAt(0).toUpperCase(); }
-
-  // shared markup builder — used for both the desktop peeking-row cards
-  // and the mobile single-card-at-a-time carousel, so the card's visual
-  // style (bubble, tail, avatar row) only ever lives in one place
-  function renderCardHtml(t){
-    return '<div class="tst-card' + (t.placeholder ? ' tst-card--placeholder' : '') + '" data-reveal-soft>' +
-      '<div class="tst-bubble-wrap">' +
-        '<svg class="tst-tail" viewBox="0 0 124 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 0 L0 80 L48 48 L124 0 Z" fill="currentColor"/></svg>' +
-        '<div class="tst-bubble">' +
-          '<p class="tst-quote-text" data-expanded="false">' + t.quote.replace(/\n/g, '<br>') + '</p>' +
-          '<button type="button" class="tst-see-more" hidden>see more</button>' +
-        '</div>' +
-      '</div>' +
-      '<div class="tst-person">' +
-        '<img class="tst-avatar" src="' + t.avatar + '" alt="' + t.name + '" ' +
-          'onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-        '<div class="tst-avatar-fallback">' + initials(t.name) + '</div>' +
-        '<div class="tst-person-text">' +
-          '<p class="tst-name">' + t.name + '</p>' +
-          '<p class="tst-role">' + t.role + '</p>' +
-          '<p class="tst-company-line">' + t.company + '</p>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }
-
-  TST_DATA.forEach(function(t){
-    cardsEl.insertAdjacentHTML('beforeend', renderCardHtml(t));
-    cardsElMobile.insertAdjacentHTML('beforeend', renderCardHtml(t));
-  });
-
-  var TAIL_OVERLAP = 22; // scaled up from 18px; how far the tail tucks up behind the bubble's bottom edge
-  var TAIL_OVERLAP_MOBILE = 16; // mobile tail is drawn smaller (90x58 vs 124x80) — scaled down to keep the same exposed-tip proportion
-
-  // the tail's vertical position depends on the bubble's actual rendered
-  // height, which varies with quote length and with "see more"
-  // expansion — so it can't be a fixed CSS value, it has to be measured.
-  // Runs against both containers so the desktop row and the mobile
-  // carousel each get correctly positioned tails independently.
-  function positionTails(){
-    document.querySelectorAll('#tstCards .tst-card, #tstCardsMobile .tst-card').forEach(function(card){
-      var bubble = card.querySelector('.tst-bubble');
-      var tail = card.querySelector('.tst-tail');
-      if (!bubble || !tail) return;
-      var overlap = card.closest('#tstCardsMobile') ? TAIL_OVERLAP_MOBILE : TAIL_OVERLAP;
-      tail.style.top = (bubble.offsetHeight - overlap) + 'px';
-    });
-  }
-  positionTails();
-
-  // "see more"/"see less" toggle — delegated from a shared ancestor so
-  // one listener covers both the desktop and mobile card sets
-  document.querySelector('.tst-section').addEventListener('click', function(e){
-    var btn = e.target.closest('.tst-see-more');
-    if (!btn) return;
-    var card = btn.closest('.tst-card');
-    var quoteEl = card.querySelector('.tst-quote-text');
-    var expanded = quoteEl.getAttribute('data-expanded') === 'true';
-    quoteEl.setAttribute('data-expanded', expanded ? 'false' : 'true');
-    btn.textContent = expanded ? 'see more' : 'see less';
-    positionTails(); // bubble height just changed — recalculate
-  });
-
-  // smart truncation — a card's "see more" only appears once layout
-  // confirms its quote actually overflows the clamp, same approach
-  // used for Experience's desktop descriptions. Checked against both
-  // containers since the mobile card's taller min-height changes
-  // whether a given quote actually overflows.
-  function checkTstClamps(){
-    document.querySelectorAll('#tstCards .tst-card, #tstCardsMobile .tst-card').forEach(function(card){
-      var quoteEl = card.querySelector('.tst-quote-text');
-      var btn = card.querySelector('.tst-see-more');
-      if (quoteEl.getAttribute('data-expanded') === 'true') return;
-      btn.hidden = !(quoteEl.scrollHeight > quoteEl.clientHeight + 1);
-    });
-  }
-  checkTstClamps();
-  window.addEventListener('load', checkTstClamps);
-  window.addEventListener('load', positionTails);
-  var tstClampTimer;
-  window.addEventListener('resize', function(){
-    window.clearTimeout(tstClampTimer);
-    tstClampTimer = window.setTimeout(function(){
-      checkTstClamps();
-      positionTails(); // card width can change on resize, which can rewrap text and change bubble height
-    }, 150);
-  });
-
-  // ---- desktop/tablet manual carousel: prev/next scroll by one card
-  // width, progress bar reflects how far through the full card set the
-  // viewport has scrolled
-  function cardStep(){
-    var card = cardsEl.querySelector('.tst-card');
-    if (!card) return 0;
-    var style = window.getComputedStyle(cardsEl);
-    var gap = parseFloat(style.columnGap || style.gap) || 20;
-    return card.getBoundingClientRect().width + gap;
-  }
-
-  function updateNavState(){
-    var maxScroll = cardsEl.scrollWidth - cardsEl.clientWidth;
-    prevBtn.disabled = cardsEl.scrollLeft <= 2;
-    nextBtn.disabled = maxScroll <= 2 || cardsEl.scrollLeft >= maxScroll - 2;
-
-    var thumbWidthPct = Math.max(15, Math.min(100, (cardsEl.clientWidth / cardsEl.scrollWidth) * 100));
-    var trackSpacePct = 100 - thumbWidthPct;
-    var progress = maxScroll > 0 ? (cardsEl.scrollLeft / maxScroll) : 0;
-    thumbEl.style.width = thumbWidthPct + '%';
-    thumbEl.style.left = (progress * trackSpacePct) + '%';
-  }
-
-  prevBtn.addEventListener('click', function(){
-    cardsEl.scrollBy({ left: -cardStep(), behavior: 'smooth' });
-  });
-  nextBtn.addEventListener('click', function(){
-    cardsEl.scrollBy({ left: cardStep(), behavior: 'smooth' });
-  });
-  cardsEl.addEventListener('scroll', function(){
-    window.requestAnimationFrame(updateNavState);
-  }, { passive: true });
-  window.addEventListener('resize', updateNavState);
-  updateNavState();
-
-  // ---- mobile: single-card swipeable carousel + minimal dot tracker
-  // (a small visual indicator only — not tappable; only the chevrons
-  // navigate). Supports both direct touch-swipe (native scroll-snap)
-  // and the prev/next buttons.
-  //
-  // Rewritten to track the current card with an explicit index instead
-  // of deriving the next scroll position from scrollBy() + a
-  // computed-style gap lookup at click time — that computed-style gap
-  // read isn't reliable across browsers for a flex `gap`, and any
-  // mismatch there meant a chevron tap could scroll short of a full
-  // card and get pulled back by scroll-snap, reading as "the button
-  // doesn't do anything." Using scrollTo() with an index-based target
-  // (index * step) sidesteps that: each tap always targets an exact,
-  // correct snap point.
-  function renderTrackerMobile(activeIndex){
-    // minimal dot indicator (e.g. "• • •") — visual only, not tappable
-    trackerElMobile.innerHTML = TST_DATA.map(function(t, i){
-      return '<span class="tst-tracker-dot' + (i === activeIndex ? ' tst-tracker-dot--active' : '') + '"></span>';
-    }).join('');
-  }
-  renderTrackerMobile(0);
-
-  var MOBILE_GAP = 16; // must match .tst-mobile-cards' CSS `gap` value
-  var mobileIndex = 0;
-
-  function mobileStep(){
-    var card = cardsElMobile.querySelector('.tst-card');
-    return card ? card.getBoundingClientRect().width + MOBILE_GAP : 0;
-  }
-
-  function goToMobileIndex(i){
-    mobileIndex = Math.max(0, Math.min(TST_DATA.length - 1, i));
-    cardsElMobile.scrollTo({ left: mobileIndex * mobileStep(), behavior: 'smooth' });
-    updateMobileNavState();
-  }
-
-  function updateMobileNavState(){
-    var maxScroll = cardsElMobile.scrollWidth - cardsElMobile.clientWidth;
-    prevBtnMobile.disabled = mobileIndex <= 0;
-    nextBtnMobile.disabled = mobileIndex >= TST_DATA.length - 1 || maxScroll <= 2;
-    renderTrackerMobile(mobileIndex);
-  }
-
-  prevBtnMobile.addEventListener('click', function(){ goToMobileIndex(mobileIndex - 1); });
-  nextBtnMobile.addEventListener('click', function(){ goToMobileIndex(mobileIndex + 1); });
-
-  // keeps the index (and therefore the dots/button disabled-state) in
-  // sync when the person swipes by hand instead of using the chevrons
-  var mobileScrollTicking = false;
-  cardsElMobile.addEventListener('scroll', function(){
-    if (mobileScrollTicking) return;
-    mobileScrollTicking = true;
-    window.requestAnimationFrame(function(){
-      mobileScrollTicking = false;
-      var step = mobileStep();
-      if (step > 0){
-        mobileIndex = Math.max(0, Math.min(TST_DATA.length - 1, Math.round(cardsElMobile.scrollLeft / step)));
-      }
-      updateMobileNavState();
-    });
-  }, { passive: true });
-
-  window.addEventListener('resize', updateMobileNavState);
-  window.addEventListener('load', updateMobileNavState); // re-check after webfonts finish loading, which can shift card widths
-  updateMobileNavState();
-})();
-</script>
-
-<script>
-(function(){
-  // ===================== SHARED SCROLL-REVEAL ENGINE =====================
-  // One IntersectionObserver for every [data-reveal] / [data-reveal-soft]
-  // element across all sections built so far. Placed at the very end of
-  // the document (after Core Capabilities', Experience's, and
-  // Testimonials' own scripts have already run and populated their
-  // dynamic content), so every element that needs to be observed
-  // already exists in the DOM by the time this runs.
-  //
-  // Each element reveals once, the first time it scrolls into view, and
-  // is then unobserved — this is a one-time entrance effect, not a
-  // repeating/parallax one, and it never re-hides an element that's
-  // already been revealed (e.g. scrolling back up).
-  if (!('IntersectionObserver' in window)){
-    // no IntersectionObserver support — just show everything immediately
-    // rather than leave it permanently invisible
-    document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
-      el.classList.add('is-visible');
-    });
-    return;
-  }
-
-  var revealObserver = new IntersectionObserver(function(entries, observer){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -8% 0px' // trigger a little before the element is fully in view
-  });
-
-  document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
-    revealObserver.observe(el);
-  });
 })();
 </script>
 
