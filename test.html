@@ -1393,13 +1393,12 @@
   .proj-cards-row::-webkit-scrollbar-thumb{ background:var(--card-border); border-radius:3px; }
 
   .proj-card{
-    flex:1 1 422px;
-    min-width:342px;
-    height:430px;
+    flex:0 0 calc((100% - 56px)/3);
+    height:460px;
     scroll-snap-align:start;
     display:flex;
     flex-direction:column;
-    padding:30px;
+    padding:26px;
     border-radius:24px;
     background:var(--card-bg);
     border:1px solid var(--card-border);
@@ -1441,17 +1440,17 @@
 
   .proj-shot{
     position:relative;
-    flex:0 0 55%;
+    flex:0 0 63%;
     border-radius:14px;
     overflow:hidden;
-    margin:-24px -24px 14px -24px;
+    margin:-20px -20px 20px -20px;
     background:#0a0a10;
   }
 
   .proj-shot img{ width:100%; height:100%; object-fit:cover; display:block; }
 
   .proj-body{
-    flex:0 0 45%;
+    flex:0 0 37%;
     min-height:0;
     overflow:hidden;
     display:flex;
@@ -1463,14 +1462,14 @@
     font-size:19px;
     font-weight:700;
     color:var(--text-hi);
-    margin-bottom:4px;
+    margin-bottom:6px;
   }
 
   .proj-desc{
     font-size:14px;
-    line-height:1.42;
+    line-height:1.45;
     color:var(--text-mid);
-    margin-bottom:8px;
+    margin-bottom:10px;
     min-height:0;
     overflow:hidden;
     display:-webkit-box;
@@ -1540,10 +1539,33 @@
   .proj-card--muted .proj-title{ color:var(--text-mid); }
   .proj-card--muted .proj-desc{ color:var(--text-lo); }
 
-  /* Card 1 currently has separate mobile/desktop copy — desktop shown
-     by default, mobile swaps in below 640px. Desktop wording still
-     pending a future pass. */
-  .proj-desc--mobile{ display:none; }
+  /* ============ PROJECT CARDS — TABLET (640–1023px) ============
+     2 cards visible by default, exact-fit via calc() so there's never
+     leftover dead space at any width in this range — the 3rd card
+     sits just past the edge, reachable by the same scroll/snap
+     already on the row. Same 63/37 split as mobile and desktop.
+     Sizing verified by render at both 640px and 1023px since it's a
+     wide range. */
+  @media (min-width:640px) and (max-width:1023px){
+    .proj-card{
+      flex:0 0 calc((100% - 28px)/2);
+      height:420px;
+      padding:24px;
+    }
+    .proj-shot{ flex:0 0 63%; margin:-18px -18px 18px -18px; }
+    .proj-body{ flex:0 0 37%; }
+
+    .proj-title{ font-size:18px; margin-bottom:6px; }
+
+    .proj-desc{
+      font-size:13.5px;
+      line-height:1.42;
+      margin-bottom:9px;
+    }
+
+    .proj-cta-btn{ padding:10px 20px; font-size:13.5px; }
+    .proj-link-ic{ width:37px; height:37px; }
+  }
 
   /* ============ PROJECT CARDS — MOBILE-ONLY (≤639px) ============
      Scoped to phones only. Desktop/tablet card sizing, split, and
@@ -1586,9 +1608,6 @@
     .proj-cta-btn svg{ width:13px; height:13px; }
     .proj-link-ic{ width:34px; height:34px; }
     .proj-link-ic svg{ width:15px; height:15px; }
-
-    .proj-desc--desktop{ display:none; }
-    .proj-desc--mobile{ display:-webkit-box; }
   }
 
   .ts-title{ margin-top:12px; }
@@ -1953,8 +1972,7 @@
         <div class="proj-shot"><div class="proj-status proj-status--active"><span class="proj-status-dot"></span>Active</div><img src="src/vinceslink-project.jpg" alt="VincesLink preview" loading="lazy"></div>
         <div class="proj-body">
         <h3 class="proj-title">VincesLink</h3>
-        <p class="proj-desc proj-desc--desktop">A 4-in-1 platform spanning real estate listings, a smart gadget hub, and a full online superstore — all built and shipped under one brand.</p>
-        <p class="proj-desc proj-desc--mobile">Designed and built the official business website for VINCESlink using modern AI-assisted development workflows.</p>
+        <p class="proj-desc">Designed and built the official business website for VINCESlink using modern AI-assisted development workflows.</p>
         <div class="proj-cta-row">
           <a class="proj-cta-btn" href="https://www.vinceslink.com" target="_blank" rel="noopener">View Stack <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
           <a class="proj-link-ic" href="https://www.vinceslink.com" target="_blank" rel="noopener" aria-label="Open VincesLink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 5.5"/><path d="M14 10a5 5 0 0 0-7.07 0L4.1 12.83a5 5 0 0 0 7.07 7.07L12.5 18.5"/></svg></a>
