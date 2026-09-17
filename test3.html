@@ -76,11 +76,24 @@
     max-width:var(--container-max);
     margin:0 auto;
     padding:0 var(--container-pad);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* On mobile these wrappers are invisible to layout (their
+     children become direct flex items of .about-container, ordered
+     below) — this exists purely so desktop can turn each wrapper
+     into its own independent column without changing a single
+     thing about mobile's structure or order. */
+  .about-col-left,
+  .about-col-right{
+    display:contents;
   }
 
   .about-content{
     position:relative;
     z-index:1;
+    order:1;
   }
 
   .about-eyebrow{
@@ -126,6 +139,13 @@
     color:var(--text-mid);
     max-width:52ch;
     margin:0 0 24px;
+    /* smart clamp: shows as many full lines as fit up to 6 lines,
+       so more of the story is visible before "See more" without
+       ever overflowing on narrow screens */
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:6;
+    overflow:hidden;
   }
 
   .see-more-btn{
@@ -163,6 +183,7 @@
     margin:4px auto 0;
     transform:translate(-14px, -10px);
     transition:opacity .55s ease, filter .55s ease, transform .55s ease;
+    order:2;
   }
 
   .about-photo-blob{
@@ -479,6 +500,7 @@
     border:1px solid var(--card-border);
     border-radius:18px;
     padding:4px 20px;
+    order:3;
   }
 
   .about-metric-row{
@@ -516,6 +538,7 @@
     margin-top:28px;
     display:flex;
     justify-content:flex-start;
+    order:4;
   }
 
   .about-cta-btn{
@@ -562,6 +585,133 @@
     color:var(--purple);
   }
 
+  /* Desktop-only clothesline metrics: hidden on mobile, mobile
+     keeps the bordered card list (.about-metrics) instead. */
+  .metrics-clothesline{
+    display:none;
+    order:5;
+  }
+
+  /* ============================================================
+     DESKTOP (≥900px)
+     Mobile layout above is untouched by anything in this block.
+     ============================================================ */
+  @media (min-width:900px){
+
+    .about-container{
+      display:grid;
+      grid-template-columns:1.15fr 0.85fr;
+      column-gap:72px;
+      align-items:start;
+      padding:0 48px;
+    }
+
+    .about-col-left,
+    .about-col-right{
+      display:flex;
+      flex-direction:column;
+    }
+    .about-col-left{ grid-column:1; }
+    .about-col-right{ grid-column:2; }
+
+    /* On mobile, the photo is taken out of flow (position:absolute)
+       when expanded, so nothing is left holding a gap in that
+       single shared column. On desktop the photo and the metrics
+       are in their OWN column, independent of the story's height,
+       so that trick isn't needed — undo it here, so the photo just
+       fades in place and the clothesline metrics stay anchored
+       right below it instead of jumping up to the top. */
+    .about-container.is-expanded .about-photo-wrap{
+      position:relative;
+      inset:auto;
+    }
+
+    /* let each column stack its own children in plain DOM order —
+       the mobile `order` values still apply but are harmless here
+       since within each column they're already in ascending order */
+
+    .about-body{
+      display:block;
+      -webkit-line-clamp:unset;
+      overflow:visible;
+      font-size:17.5px;
+    }
+
+    .about-photo-wrap{
+      max-width:380px;
+      margin:12px 0 0;
+    }
+
+    .about-metrics{
+      display:none;
+    }
+
+    .metrics-clothesline{
+      display:block;
+      margin-top:56px;
+    }
+
+    .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+    }
+
+    /* ===== Clothesline metrics ===== */
+
+    .clothesline-rope{
+      height:5px;
+      border-top:1.5px solid var(--card-border);
+      border-bottom:1.5px solid var(--card-border);
+    }
+
+    .clothesline-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      padding:0 2px;
+    }
+
+    .clothesline-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      flex:1 1 0;
+      min-width:0;
+    }
+
+    .clothesline-wire{
+      width:0;
+      height:var(--wire-h, 40px);
+      border-left:1.5px dashed var(--card-border);
+    }
+
+    .clothesline-tag{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      padding:0 6px;
+    }
+
+    .tag-num{
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:700;
+      font-size:19px;
+      letter-spacing:-0.01em;
+      color:var(--text-hi);
+      white-space:nowrap;
+    }
+
+    .tag-label{
+      font-size:12px;
+      font-weight:500;
+      color:var(--text-mid);
+      margin-top:4px;
+      line-height:1.3;
+      max-width:100px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -569,6 +719,7 @@
 <section id="about">
   <div class="about-container" id="aboutContainer">
 
+    <div class="about-col-left">
     <div class="about-content">
 
       <div class="about-expanded-bg" aria-hidden="true"></div>
@@ -578,7 +729,7 @@
       <h2 class="about-title">A foundation built through <span class="accent">curiosity.</span></h2>
 
       <p class="about-body">
-        I've always been curious about how things work, how people respond, and why some systems work better than others.
+        I've always been curious about how things work, how people respond, and why some systems work better than others. I started out studying Petroleum Engineering, but curiosity kept pulling me toward Web3, social media, operations, data, and digital products.
       </p>
 
       <button class="see-more-btn" id="seeMoreBtn" aria-expanded="false" aria-controls="aboutExpanded">
@@ -588,8 +739,6 @@
 
       <div class="about-expanded" id="aboutExpanded">
         <div class="about-expanded-inner">
-
-          <p>I started out studying Petroleum Engineering, but curiosity kept pulling me toward Web3, social media, operations, data, and digital products.</p>
 
           <p>What looked like different directions gradually became one way of learning: getting involved, figuring things out, taking responsibility, and finding ways to make things better.</p>
 
@@ -629,7 +778,7 @@
 
             <div class="mini-card mini-card--teal">
               <div class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="4"/><polyline points="5 11 12 4 19 11"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
               </div>
               <h4>Growth</h4>
               <p>There's always another layer to understand, another skill to build, or a better way to do something.</p>
@@ -648,6 +797,26 @@
 
     </div>
 
+    <div class="about-cta-wrap">
+      <a href="cv.html" class="about-cta-btn">
+        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
+          <path d="M14 2v6h6"/>
+          <line x1="8" y1="13" x2="16" y2="13"/>
+          <line x1="8" y1="17" x2="16" y2="17"/>
+          <line x1="8" y1="9" x2="10" y2="9"/>
+        </svg>
+        <span>View CV</span>
+        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="7 7 17 7 17 17"/>
+        </svg>
+      </a>
+    </div>
+
+    </div>
+
+    <div class="about-col-right">
     <div class="about-photo-wrap" id="aboutPhotoWrap">
       <div class="about-photo-blob"></div>
       <div
@@ -684,21 +853,47 @@
       </div>
     </div>
 
-    <div class="about-cta-wrap">
-      <a href="cv.html" class="about-cta-btn">
-        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
-          <path d="M14 2v6h6"/>
-          <line x1="8" y1="13" x2="16" y2="13"/>
-          <line x1="8" y1="17" x2="16" y2="17"/>
-          <line x1="8" y1="9" x2="10" y2="9"/>
-        </svg>
-        <span>View CV</span>
-        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="7" y1="17" x2="17" y2="7"/>
-          <polyline points="7 7 17 7 17 17"/>
-        </svg>
-      </a>
+    <div class="metrics-clothesline" aria-hidden="false">
+      <div class="clothesline-rope"></div>
+      <div class="clothesline-row">
+        <div class="clothesline-item" style="--wire-h:58px;">
+          <div class="clothesline-wire"></div>
+          <div class="clothesline-tag">
+            <span class="tag-num">4+</span>
+            <span class="tag-label">Years</span>
+          </div>
+        </div>
+        <div class="clothesline-item" style="--wire-h:38px;">
+          <div class="clothesline-wire"></div>
+          <div class="clothesline-tag">
+            <span class="tag-num">5+</span>
+            <span class="tag-label">Core capabilities</span>
+          </div>
+        </div>
+        <div class="clothesline-item" style="--wire-h:46px;">
+          <div class="clothesline-wire"></div>
+          <div class="clothesline-tag">
+            <span class="tag-num">10+</span>
+            <span class="tag-label">Projects &amp; collaborations</span>
+          </div>
+        </div>
+        <div class="clothesline-item" style="--wire-h:26px;">
+          <div class="clothesline-wire"></div>
+          <div class="clothesline-tag">
+            <span class="tag-num">8K+</span>
+            <span class="tag-label">Web3 community audience</span>
+          </div>
+        </div>
+        <div class="clothesline-item" style="--wire-h:34px;">
+          <div class="clothesline-wire"></div>
+          <div class="clothesline-tag">
+            <span class="tag-num">200+</span>
+            <span class="tag-label">Non-Web3 social audience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     </div>
 
   </div>
