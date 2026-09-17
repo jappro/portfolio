@@ -1384,7 +1384,7 @@
     display:flex;
     gap:28px;
     overflow-x:auto;
-    scroll-snap-type:x proximity;
+    scroll-snap-type:x mandatory;
     padding-bottom:10px;
     margin-bottom:76px;
   }
@@ -1554,6 +1554,20 @@
      and the CTA row pack with small, even gaps — no leftover dead
      space, nothing touching. Verified by rendering, not by hand. */
   @media (max-width:639px){
+    /* Free-scrolling carousel: break the row out of the page's
+       centered .wrap so its scroll/clip boundary is the true screen
+       edge, not the wrap's inner padding. 22px padding here only
+       gives the resting first/last card a matching inset — every
+       card in between bleeds edge-to-edge and slides fully past the
+       real screen edges as you swipe, instead of being clipped by an
+       inner box. */
+    .proj-cards-row{
+      margin-left:calc(50% - 50vw);
+      margin-right:calc(50% - 50vw);
+      padding-left:2px;
+      padding-right:22px;
+    }
+
     .proj-card{ height:400px; padding:22px; }
     .proj-shot{ flex:0 0 63%; margin:-16px -16px 16px -16px; }
     .proj-body{ flex:0 0 37%; }
