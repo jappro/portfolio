@@ -1,1 +1,860 @@
+/* ============================================================
+   EXPERIENCE + TESTIMONIALS — scoped stylesheet
+   The shared infrastructure this pair depends on (design tokens, the
+   [data-reveal] scroll-reveal engine, the .has-blobs/.section-blob
+   decorative mechanism, and the Space-Grotesk heading rule) lives in
+   base.css — see the chat explanation for why each piece moved, same
+   reasoning as Core Capabilities.
+
+   Removed from the original delivery, and why:
+   - :root / [data-theme="dark"] token block — duplicated base.css's
+     tokens. Its --teal value (#128f7c/#2dd4bf) matches Capabilities'
+     original value but not Philosophy's (#0e7490/#22d3ee), which
+     base.css uses globally since Philosophy's teal usage (badges,
+     heading gradient) was already shipped and tested. Rather than
+     flip the global value again, this section gets its own originally-
+     intended teal back via a scoped override below, on .exp-tst-group
+     only — Philosophy and Capabilities keep rendering exactly as
+     already confirmed.
+   - html{background} / body{background; overflow-x:hidden} — same
+     bug as before: the body-level overflow-x:hidden would break the
+     sticky nav again. base.css's html{overflow-x:hidden} already
+     covers the same class of issue this was guarding against.
+
+   Depends on the Space Grotesk + Inter Google Fonts link in
+   index.html's <head> (already present).
+============================================================= */
+
+/* ---- Experience+Testimonials' own teal, scoped locally (see note above) ---- */
+.exp-tst-group{
+  --teal:#128f7c;
+  --teal-soft:rgba(18,143,124,0.12);
+}
+[data-theme="dark"] .exp-tst-group{
+  --teal:#2dd4bf;
+  --teal-soft:rgba(45,212,191,0.14);
+}
+
+/* ---- Experience+Testimonials' own blob palette (mechanism is in base.css) ---- */
+.exp-tst-group .section-blob--left{
+  background:radial-gradient(circle at 42% 40%, var(--amber), rgba(0,0,0,0) 70%),
+             radial-gradient(circle at 62% 62%, var(--blue), rgba(0,0,0,0) 70%);
+}
+.exp-tst-group .section-blob--right{
+  background:radial-gradient(circle at 56% 40%, var(--teal), rgba(0,0,0,0) 70%),
+             radial-gradient(circle at 38% 62%, #4ADE80, rgba(0,0,0,0) 70%);
+}
+.exp-tst-group .section-blob--mid{
+  background:radial-gradient(ellipse at 50% 50%, var(--purple), rgba(0,0,0,0) 72%);
+}
+
+/* the shared wrapper carries the matte background for both sections,
+   so a single blob layer can span the pair; the two sections inside
+   go transparent rather than each painting their own opaque
+   background back over the blobs */
+.exp-tst-group{ background:var(--bg); }
+.exp-tst-group > .exp-section,
+.exp-tst-group > .tst-section{ background:transparent; }
+
+/* content sits above the blob layer */
+.exp-tst-group > .exp-section,
+.exp-tst-group > .tst-section{
+  position:relative;
+  z-index:1;
+}
+
+/* ===================== EXPERIENCE — SCOPED STYLES ===================== */
+
+.exp-section{
+  background:var(--bg); /* matte black */
+  padding:44px 20px 56px;
+  font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.exp-inner{
+  /* stays at 640px on true phones (90vw never exceeds 640px below
+     ~711px viewport width), then grows smoothly with the viewport
+     from there up to the 960px desktop cutoff (90vw of 960px ≈
+     864px) — no fixed tablet number, no jump at a breakpoint, and
+     the 960px+ media query below still takes over for desktop */
+  max-width:clamp(640px, 90vw, 880px);
+  margin:0 auto;
+}
+
+.exp-title{
+  margin:0 0 10px;
+  background:linear-gradient(90deg, var(--teal), #4ADE80);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-0.01em;
+}
+.exp-subheading{
+  margin:0 0 32px;
+  color:var(--text-mid);
+  font-size:15.5px;
+  font-weight:600;
+  line-height:1.6;
+}
+
+.exp-list{
+  display:flex;
+  flex-direction:column;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+
+/* ---- single-role entry ---- */
+.exp-card{
+  padding:22px 0;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  /* merged with the shared [data-reveal] transition rather than left
+     to compete with it — both declare the `transition` shorthand on
+     this same element, and shorthand properties don't merge across
+     rules (whichever one wins the cascade applies in full), so the
+     reveal's opacity/transform/filter timing is included directly
+     here to guarantee it survives alongside this card's own existing
+     hover-driven border/background transition. */
+  transition:border-color 0.2s ease, background 0.2s ease,
+             opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+             transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+             filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  --exp-logo-offset:66px; /* logo width (52px) + head gap (14px) — single source of truth so desc/CTAs always line up with the header text, never with the logo */
+}
+
+/* hover-on-scroll: mirrors the Core Capabilities card pattern —
+   real :hover on pointer devices, plus a scroll-tracking JS class
+   for touch, so whichever entry is nearest the top of the screen
+   gets a subtle highlight as you scroll */
+@media (hover:hover) and (pointer:fine){
+  .exp-card:hover{
+    border-color:rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.02);
+  }
+}
+.exp-card--hover{
+  border-color:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.02);
+}
+
+.exp-card-head{
+  display:flex;
+  gap:14px;
+  margin-bottom:14px;
+}
+
+.exp-logo{
+  flex-shrink:0;
+  width:52px;
+  height:52px;
+  border-radius:12px;
+  object-fit:cover;
+  background:linear-gradient(135deg, var(--purple), var(--blue));
+}
+.exp-logo-fallback{
+  display:none;
+  flex-shrink:0;
+  width:52px;
+  height:52px;
+  border-radius:12px;
+  background:linear-gradient(135deg, var(--purple), var(--blue));
+  color:#fff;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:800;
+}
+
+.exp-card-headtext{ min-width:0; }
+.exp-role{
+  margin:0 0 3px;
+  color:var(--text-hi);
+  font-size:16.5px;
+  font-weight:700;
+  line-height:1.3;
+}
+.exp-company{
+  margin:0 0 2px;
+  color:var(--text-mid);
+  font-size:14px;
+  font-weight:500;
+}
+.exp-period{
+  margin:0;
+  color:var(--text-lo);
+  font-size:13px;
+}
+.exp-location{
+  margin:0;
+  color:var(--text-lo);
+  font-size:13px;
+}
+
+.exp-desc{
+  margin-bottom:16px;
+  margin-left:var(--exp-logo-offset);
+  color:var(--text-mid);
+  font-size:14.5px;
+  line-height:1.6;
+}
+.exp-desc-full{ white-space:pre-line; }
+.exp-more-btn{
+  all:unset;
+  cursor:pointer;
+  color:var(--teal);
+  font-size:14.5px;
+  font-weight:600;
+  -webkit-tap-highlight-color:transparent;
+}
+.exp-more-btn:hover,
+.exp-more-btn:focus-visible{ text-decoration:underline; }
+
+.exp-cta-row{
+  display:flex;
+  gap:10px;
+  margin-left:var(--exp-logo-offset);
+}
+.exp-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.04);
+  color:var(--text-hi);
+  font-size:13px;
+  font-weight:600;
+  text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:border-color 0.2s ease, background 0.2s ease;
+}
+.exp-cta:hover,
+.exp-cta:focus-visible{
+  border-color:rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.07);
+}
+.exp-cta svg{ width:14px; height:14px; flex-shrink:0; }
+
+/* ---- desktop row list: hidden until 960px, mobile/tablet list hides then ---- */
+.exp-list-desktop{ display:none; }
+
+@media (min-width:960px){
+  .exp-section{ padding:64px clamp(28px, 6vw, 96px) 88px; }
+  .exp-inner{ max-width:1400px; }
+  .exp-title{ font-size:40px; }
+  .exp-subheading{ font-size:17px; max-width:60ch; }
+
+  .exp-list{ display:none; }
+  .exp-list-desktop{
+    display:flex;
+    flex-direction:column;
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
+
+  /* each row: logo | role/company/period/location | description + CTAs —
+     reuses the same .exp-card class (and its hover treatment) as mobile,
+     just reflowed into a 3-column grid instead of a stacked block */
+  .exp-list-desktop .exp-card{
+    position:relative;
+    display:grid;
+    grid-template-columns:56px 260px 1fr;
+    column-gap:36px;
+    align-items:start;
+    padding:32px 0;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  /* grouped multi-role rows (Racine, Pecunity): no hairline between a
+     company's own roles — only after the group's last role, so it
+     still reads as one continuous block, same as mobile */
+  .exp-list-desktop .exp-card.exp-card--no-divider{ border-bottom:none; }
+
+  .exp-list-desktop .exp-card-head{ margin-bottom:0; }
+  .exp-list-desktop .exp-logo,
+  .exp-list-desktop .exp-logo-fallback{ width:56px; height:56px; }
+
+  /* connecting line + dot: only the first role of a company keeps the
+     real logo; every following role shows a small dot in that same
+     column instead, linked to the row above by a thin vertical line —
+     both pieces are confined to their own row's box and meet exactly
+     at the shared row boundary, so together they read as one
+     continuous line running through the group */
+  .exp-line-down{
+    position:absolute;
+    left:27.25px;
+    top:88px; /* 32px row padding-top + 56px logo height */
+    bottom:0;
+    width:1.5px;
+    background:rgba(255,255,255,0.18);
+  }
+  .exp-line-up{
+    position:absolute;
+    left:27.25px;
+    top:0;
+    height:38px;
+    width:1.5px;
+    background:rgba(255,255,255,0.18);
+  }
+  .exp-line-down-mid{
+    position:absolute;
+    left:27.25px;
+    top:38px;
+    bottom:0;
+    width:1.5px;
+    background:rgba(255,255,255,0.18);
+  }
+  .exp-group-dot{
+    position:absolute;
+    left:24px;
+    top:38px;
+    transform:translateY(-50%);
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--text-lo);
+  }
+
+  .exp-desktop-left{ padding-top:2px; }
+  .exp-desktop-left .exp-role{ font-size:18px; }
+
+  .exp-desktop-right .exp-desc{
+    margin-left:0;
+    margin-bottom:14px;
+    font-size:15px;
+  }
+  .exp-desktop-right .exp-cta-row{ margin-left:0; }
+
+  /* smart truncation: full text renders untouched by default; a row is
+     only clamped (and only then does the "more" button appear) once JS
+     measures that it actually overflows the clamp — see the script
+     below. Nothing here decides that on its own. */
+  .exp-desktop-right .exp-desc-full{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:4;
+    overflow:hidden;
+  }
+  .exp-desc[data-state="expanded"] .exp-desc-full{
+    display:block;
+    -webkit-line-clamp:unset;
+    overflow:visible;
+  }
+}
+
+/* ---- "View all 7+ experience" toggle ---- */
+.exp-toggle-btn{
+  all:unset;
+  box-sizing:border-box;
+  display:block;
+  width:fit-content;
+  margin:24px auto;
+  padding:16px 32px;
+  text-align:center;
+  background:linear-gradient(180deg, #a48cff 0%, var(--purple) 55%, #6b46e0 100%);
+  color:#141414;
+  font-size:15.5px;
+  font-weight:800;
+  letter-spacing:0.01em;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.18);
+  cursor:pointer;
+  box-shadow:
+    0 12px 28px rgba(124,92,255,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    inset 0 -3px 6px rgba(0,0,0,0.22);
+  -webkit-tap-highlight-color:transparent;
+  transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+}
+.exp-toggle-btn:hover,
+.exp-toggle-btn:focus-visible{ filter:brightness(1.08); }
+.exp-toggle-btn:active{
+  transform:translateY(1px);
+  box-shadow:
+    0 6px 16px rgba(124,92,255,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 -2px 4px rgba(0,0,0,0.22);
+}
+
+/* ---- multi-role entry: company header + mini vertical timeline of roles ---- */
+.exp-timeline{
+  margin-left:var(--exp-logo-offset);
+  margin-bottom:16px;
+  display:flex;
+  flex-direction:column;
+}
+.exp-timeline-item{
+  position:relative;
+  padding-left:22px;
+  padding-bottom:22px;
+}
+.exp-timeline-item:last-child{ padding-bottom:0; }
+.exp-timeline-item::before{
+  /* the round dot marking each role */
+  content:'';
+  position:absolute;
+  left:0;
+  top:6px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--text-lo);
+}
+.exp-timeline-item:not(:last-child)::after{
+  /* connecting line between dots */
+  content:'';
+  position:absolute;
+  left:3.5px;
+  top:17px;
+  bottom:0;
+  width:1.2px;
+  background:rgba(255,255,255,0.14);
+}
+.exp-timeline-role{
+  margin:0 0 3px;
+  color:var(--text-hi);
+  font-size:16px;
+  font-weight:700;
+  line-height:1.3;
+}
+.exp-timeline-period{
+  margin:0;
+  color:var(--text-lo);
+  font-size:13px;
+}
+.exp-timeline-location{
+  margin:0 0 10px;
+  color:var(--text-lo);
+  font-size:13px;
+}
+/* descriptions nested inside the timeline are already indented by
+   the timeline's own left margin, so cancel the single-entry
+   offset instead of stacking both */
+.exp-timeline .exp-desc{
+  margin-left:0;
+  margin-bottom:0;
+}
+
+/* ===================== TESTIMONIALS — SCOPED STYLES (desktop-first; mobile/tablet to follow) ===================== */
+
+.tst-section{
+  background:var(--bg);
+  /* bottom padding trimmed from 96px to 72px — this section sits
+     directly before Projects in the real page (Home+Impact ->
+     Professional Philosophy -> Core Capabilities -> Experience +
+     Testimonials -> Projects + Tech Stack -> ...), and 96px was
+     already the largest bottom padding of any section built so far.
+     Stacked against whatever top padding Projects adds on its own
+     side, the old value risked an oversized gap between them. */
+  padding:32px clamp(28px, 6vw, 96px) 72px;
+  font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+.tst-inner{ max-width:1400px; margin:0 auto; }
+
+.tst-title{
+  margin:0 0 56px;
+  text-align:center;
+  font-size:54px;
+  line-height:1.25;
+  letter-spacing:-0.01em;
+}
+.tst-title-line{ display:block; color:var(--text-hi); }
+.tst-title-line--light{ font-weight:400; }
+.tst-title-line--heavy{ font-weight:800; }
+
+.tst-body{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:48px;
+  align-items:start;
+}
+
+.tst-left{ padding-top:8px; }
+.tst-quote-mark{
+  display:block;
+  width:64px;
+  height:auto;
+  color:var(--text-lo);
+  margin-bottom:16px;
+}
+.tst-label{
+  margin:0 0 28px;
+  color:var(--text-hi);
+  font-size:26px;
+  font-weight:700;
+  line-height:1.35;
+  max-width:260px; /* wide enough that none of the manually-broken <br> lines re-wrap on their own */
+}
+
+.tst-nav{ display:flex; align-items:center; gap:14px; }
+.tst-nav-btn{
+  all:unset;
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.16);
+  color:var(--text-hi);
+  cursor:pointer;
+  flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+  transition:border-color 0.2s ease, background 0.2s ease;
+}
+.tst-nav-btn:hover,
+.tst-nav-btn:focus-visible{
+  border-color:rgba(255,255,255,0.35);
+  background:rgba(255,255,255,0.04);
+}
+.tst-nav-btn:disabled{ opacity:0.35; cursor:default; }
+.tst-nav-btn svg{ width:16px; height:16px; }
+
+.tst-track-bar{
+  position:relative;
+  flex:1;
+  height:2px;
+  background:rgba(255,255,255,0.14);
+  border-radius:999px;
+  overflow:hidden;
+}
+.tst-track-thumb{
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:30%;
+  background:var(--text-hi);
+  border-radius:999px;
+  transition:left 0.2s ease, width 0.2s ease;
+}
+
+.tst-viewport{
+  overflow:visible;
+  min-width:0; /* grid items default to min-width:auto, which refuses to shrink below content size unless overflow is non-visible — since we need overflow:visible for the shadow, min-width:0 does the shrink-to-track-size job instead. Without this, the grid track expanded to fit all 7 cards, leaving nothing for .tst-cards to actually scroll — this was the real cause of the nav buttons doing nothing. */
+}
+.tst-cards{
+  display:flex;
+  align-items:flex-start;
+  gap:20px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  /* overflow-x:auto forces overflow-y to compute as auto too (a CSS
+     overflow-module rule), which was clipping the box-shadow above
+     and below each card. Padding gives the shadow room to render
+     before it hits that clip edge; the matching negative margin
+     cancels the padding back out so the row's outer position and
+     width don't visibly shift.
+     The bottom pairing is only a PARTIAL cancel (-40px against 64px
+     of padding, not -64px) rather than a full one, on purpose: a
+     full cancel would make this row always report the same fixed
+     height to whatever follows it, regardless of how tall its
+     content actually is — including when a card's quote is expanded
+     via "see more", which grows the row's real height a lot. With a
+     full cancel, that growth wouldn't reliably push Projects (the
+     next section in the real page) down; it would just extend
+     further into whatever space padding this section's ".tst-section"
+     already reserves below it, at real risk of visually running into
+     Projects instead. The 24px left uncancelled here is real,
+     normal, content-counted space, so it (and any extra height from
+     an expanded card) properly grows the page's natural flow. */
+  padding:36px 44px 64px 36px;
+  margin:-36px -44px -40px -36px;
+}
+.tst-cards::-webkit-scrollbar{ display:none; }
+
+.tst-card{
+  position:relative;
+  /* sized so exactly 3.25 cards fill the container's real width: subtract
+     the 3 gaps between the 4 partially-visible cards, then divide by 3.25.
+     This grows with the available desktop space instead of the old
+     fixed 260px + a capped viewport. max-width guards against the card
+     ballooning on very wide monitors. */
+  flex:0 0 calc((100% - 60px) / 3.25);
+  max-width:340px;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  /* merged with the shared [data-reveal-soft] transition rather than
+     left to compete with it (see the .exp-card comment above for
+     why) — transform stays fast (0.2s, for the hover lift), while
+     opacity/filter get the slower reveal timing */
+  transition:transform 0.2s ease,
+             opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+             filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tst-card:hover{
+  transform:translateY(-8px) scale(1.02);
+}
+
+.tst-bubble-wrap{
+  position:relative;
+  /* ONE shadow for the combined bubble+tail shape — this is what
+     actually fixes the seam. Giving each piece its own shadow meant
+     the bubble's box-shadow (which paints as part of the bubble's own
+     box, after the tail) would wash back over the tail's top edge
+     with a DIFFERENT shadow than the tail's own, creating a visible
+     mismatch right where they meet. filter:drop-shadow here follows
+     the real combined alpha shape of everything inside this wrapper,
+     so there's only ever one shadow, correctly shaped, with nothing
+     to mismatch.
+     The same principle is used for the thin trim line: four tightly
+     offset, zero-blur drop-shadows layered alongside the blurred one
+     outline the real painted shape (rounded bubble + tail point
+     together) as a single continuous line, instead of styling the
+     bubble's border and the tail's SVG stroke separately (which
+     produced two disconnected outlines). Applies to desktop and
+     mobile alike — the mobile card only overrides sizing, not this. */
+  filter:
+    drop-shadow(6px 6px 24px rgba(255,255,255,0.09))
+    drop-shadow(1px 0 0 rgba(255,255,255,0.3))
+    drop-shadow(-1px 0 0 rgba(255,255,255,0.3))
+    drop-shadow(0 1px 0 rgba(255,255,255,0.3))
+    drop-shadow(0 -1px 0 rgba(255,255,255,0.3));
+  transition:filter 0.2s ease;
+}
+.tst-card:hover .tst-bubble-wrap{
+  filter:
+    drop-shadow(8px 16px 32px rgba(255,255,255,0.13))
+    drop-shadow(1px 0 0 rgba(255,255,255,0.3))
+    drop-shadow(-1px 0 0 rgba(255,255,255,0.3))
+    drop-shadow(0 1px 0 rgba(255,255,255,0.3))
+    drop-shadow(0 -1px 0 rgba(255,255,255,0.3));
+}
+
+.tst-bubble{
+  position:relative;
+  min-height:184px; /* scaled up from 150px alongside the card's ~22% width increase */
+  background:var(--bg-alt); /* slightly lighter than the page background, not an exact match */
+  border-radius:16px; /* slightly rounded, chat-bubble style — not sharp, not fully pill-rounded */
+  padding:24px 27px; /* scaled up from 20px 22px */
+  display:flex;
+  flex-direction:column;
+}
+/* the small triangular tail pointing down toward the avatar below —
+   positioned near the avatar's horizontal position, not centered */
+/* tail is a real inline SVG (see the JS render), not a pseudo-element —
+   clip-path attempts on ::after rendered incorrectly, and SVG gives
+   precise, reliable control over this irregular shape */
+.tst-tail{
+  position:absolute;
+  left:0; /* flush with the bubble's own left edge */
+  /* 'top' is set dynamically by JS (positionTails()) as
+     bubble.offsetHeight - overlap — the bubble's height varies with
+     quote length and with "see more" expansion, so this can't be a
+     fixed CSS value. Being a DOM sibling that comes BEFORE the bubble
+     (see the render function) is what actually hides the overlap:
+     the bubble is opaque and paints afterward, naturally covering
+     whatever part of the tail sits underneath it. */
+  width:124px; /* scaled up from 102px alongside the card's width increase */
+  height:80px; /* scaled up from 66px */
+  color:var(--bg-alt); /* the <path> uses fill="currentColor" */
+  pointer-events:none;
+}
+
+.tst-quote-text{
+  flex:1;
+  margin:0 0 14px;
+  color:var(--text-hi);
+  font-size:16px;
+  font-weight:500;
+  line-height:1.6;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:5;
+  overflow:hidden;
+}
+.tst-quote-text[data-expanded="true"]{
+  -webkit-line-clamp:unset;
+  overflow:visible;
+}
+
+/* "see more" only appears once JS measures actual overflow — same
+   smart-truncation approach used for Experience's desktop descriptions */
+.tst-see-more{
+  all:unset;
+  cursor:pointer;
+  align-self:flex-start;
+  margin-bottom:16px;
+  color:var(--teal);
+  font-size:13.5px;
+  font-weight:600;
+}
+.tst-see-more:hover,
+.tst-see-more:focus-visible{ text-decoration:underline; }
+.tst-see-more[hidden]{ display:none; }
+
+.tst-person{
+  display:flex;
+  align-items:center;
+  gap:14px; /* scaled up from 12px */
+  margin-top:12px; /* scaled up from 10px */
+  padding-left:78px; /* scaled up from 64px, keeping it past the tail's deep-hanging zone at the new size */
+}
+.tst-avatar{
+  width:54px; /* scaled up from 44px */
+  height:54px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+  background:linear-gradient(135deg, var(--purple), var(--blue));
+}
+.tst-avatar-fallback{
+  display:none;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg, var(--purple), var(--blue));
+  color:#ffffff;
+  font-size:17px;
+  font-weight:700;
+  flex-shrink:0;
+}
+.tst-person-text{ min-width:0; }
+.tst-name{ margin:0 0 2px; color:var(--text-hi); font-size:16px; font-weight:700; }
+.tst-role{ margin:0 0 1px; color:var(--text-lo); font-size:14px; font-weight:500; }
+.tst-company-line{ margin:0; color:var(--text-lo); font-size:14px; font-weight:400; }
+
+/* ---- mobile: hidden by default (this file is desktop-first) ---- */
+.tst-mobile{ display:none; }
+
+@media (max-width:767.98px){
+  .tst-section{ padding:32px 20px 64px; }
+
+  .tst-title{ font-size:32px; margin-bottom:8px; line-height:1.22; }
+
+  /* the desktop/tablet split layout (left column + peeking-card
+     viewport) is replaced entirely below 768px */
+  .tst-body{ display:none; }
+  .tst-mobile{ display:block; }
+
+  /* the whole section's mobile content — header block, quote-mark/
+     label, card carousel, and chevron+dot nav — sits inside one
+     slim-bordered box, matching the reference image's outline.
+     Slim + white-on-dark: a thin, low-opacity light stroke rather
+     than a heavy or filled border. */
+  .tst-mobile-frame{
+    border:1.5px solid rgba(255,255,255,0.22);
+    border-radius:28px;
+    padding:28px 20px 22px;
+  }
+
+  .tst-mobile-head{
+    /* left-aligned, matching the desktop .tst-left treatment —
+       the reference image's own composition, just with our copy.
+       No top margin here — the frame's own top padding already
+       provides the gap left by removing the rating/review-count line. */
+    margin:0 0 26px;
+  }
+  .tst-quote-mark--mobile{
+    display:block;
+    width:44px;
+    height:auto;
+    color:var(--text-lo);
+    margin-bottom:14px;
+  }
+  .tst-label--mobile{
+    margin:0;
+    color:var(--text-hi);
+    font-size:22px;
+    font-weight:700;
+    line-height:1.35;
+    max-width:220px;
+  }
+
+  /* single full-width card per view — the section's own side padding
+     (20px, set above) is what creates the visible space on both
+     sides of the card, matching the reference image's framing */
+  .tst-mobile-viewport{ overflow:visible; }
+  .tst-mobile-cards{
+    display:flex;
+    gap:16px; /* space between cards — they were snapped edge-to-edge before */
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    /* same shadow-clipping fix as the desktop cards row: overflow-x:auto
+       forces overflow-y:auto too, which would clip the card's own
+       drop-shadow — padding gives it room, the negative margin cancels
+       the padding back out so nothing shifts visually. Kept small
+       (unlike desktop's 24/48px) since the mobile card itself is much
+       smaller now and its shadow needs far less clearance — a bigger
+       buffer here was also sitting close enough to the nav row below
+       to risk overlapping it. */
+    padding:10px 8px 14px;
+    margin:-10px -8px -14px;
+  }
+  .tst-mobile-cards::-webkit-scrollbar{ display:none; }
+
+  /* reuses the exact same .tst-card / .tst-bubble-wrap / .tst-bubble /
+     .tst-tail / .tst-quote-text / .tst-person markup and styles as
+     desktop — only the sizing/flex-basis changes here, so the card
+     itself never needs its own separate visual rules */
+  .tst-mobile-cards .tst-card{
+    flex:0 0 calc(100% - 24px);
+    max-width:calc(100% - 24px);
+    scroll-snap-align:start;
+  }
+  .tst-mobile-cards .tst-bubble{
+    min-height:170px;
+    padding:18px 20px;
+  }
+  .tst-mobile-cards .tst-quote-text{ font-size:15px; }
+  .tst-mobile-cards .tst-tail{ width:90px; height:58px; }
+  /* trim no longer set here — it now lives on the base .tst-bubble-wrap
+     rule, shared by desktop and mobile alike */
+
+  .tst-mobile-cards .tst-person{ padding-left:62px; margin-top:10px; }
+  .tst-mobile-cards .tst-avatar,
+  .tst-mobile-cards .tst-avatar-fallback{ width:44px; height:44px; font-size:15px; }
+
+  .tst-mobile-nav{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-top:8px;
+  }
+  .tst-mobile-tracker{
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .tst-tracker-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--text-lo);
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .tst-tracker-dot--active{
+    background:var(--text-hi);
+    transform:scale(1.3);
+  }
+}
+
+/* ============ TABLET (768px–1023.98px) ============
+   Mirrors desktop exactly — same left column, same grid, same type
+   sizes, same nav — this is NOT a redesign like Core Capabilities'
+   tablet treatment. The only thing tuned here is the card's own
+   width: desktop's card formula (~3.25 cards peeking) was sized for
+   a full desktop viewport and shrinks cards down uncomfortably small
+   at tablet widths. This divisor instead targets ~1.5–2 cards visible
+   by default, and — since it's expressed as a fraction of the actual
+   rendered row width rather than a fixed px value — scales fluidly
+   across the whole tablet range instead of jumping at a breakpoint. */
+@media (min-width:768px) and (max-width:1023.98px){
+  .tst-card{
+    flex:0 0 calc((100% - 20px) / 1.75);
+    max-width:320px;
+  }
+}
 
