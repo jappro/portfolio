@@ -536,14 +536,16 @@ section.section{ padding:110px 0; }
 }
 
 /* Shared heading font-family. Extend this selector list (don't add a
-   duplicate rule) when a future section's heading classes are known —
-   e.g. Experience/Testimonials' .exp-title/.exp-role/.tst-title etc.
-   are intentionally left off for now since that section hasn't been
-   built yet and its exact class names aren't confirmed. */
+   duplicate rule) when a future section's heading classes are known. */
 .cc-title,
 .cc-explorer-title,
 .cc-cap-title,
-.cc-explorer-number{
+.cc-explorer-number,
+.exp-title,
+.exp-role,
+.exp-timeline-role,
+.tst-title,
+.tst-label{
   font-family:'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
