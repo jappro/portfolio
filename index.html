@@ -979,21 +979,7 @@
 </section>
 <!-- /#ethos -->
 
-<!-- ============================================================
-     EXPERIENCE + TESTIMONIALS — isolated section markup
-     Pair with experience-testimonials.css and
-     experience-testimonials.js.
-
-     These two sections are wrapped together in one shared
-     <div id="experience">: they share a single navbar anchor
-     (no separate Testimonials nav entry) and one continuous
-     decorative blob treatment across both — keep them together
-     rather than splitting the wrapper apart.
-
-     Depends on the "Space Grotesk" + "Inter" Google Fonts being
-     linked in the page <head> — see the note in
-     experience-testimonials.css.
-============================================================= -->
+<!-- ============ EXPERIENCE + TESTIMONIALS ============ -->
 <div id="experience" class="exp-tst-group has-blobs" data-theme="dark">
 
   <!-- decorative ambient color blobs spanning the Experience +
@@ -1090,13 +1076,17 @@
 </section>
 </div>
 
-<!-- Sections below this point (Experience, Projects, About, Contact)
-     will be added incrementally as their HTML/CSS/JS comes in. -->
+<!-- Sections below this point (Projects, About, Contact) will be
+     added incrementally as their HTML/CSS/JS comes in. -->
 
 <script src="js/main.js"></script>
 <script src="js/hero-impact.js"></script>
 <script src="js/philosophy.js"></script>
 <script src="js/capabilities.js"></script>
 <script src="js/experience-testimonial.js"></script>
+<!-- shared-reveal.js MUST stay the last script tag — see its own
+     header comment for why. Add future sections' scripts above this
+     line, never below it. -->
+<script src="js/shared-reveal.js"></script>
 </body>
 </html>
