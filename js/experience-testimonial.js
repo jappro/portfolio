@@ -3,16 +3,18 @@
    Pair with experience-testimonials.html and
    experience-testimonials.css.
 
-   NOTE — shared code duplicated here for standalone use:
-   The final IIFE below (the scroll-reveal engine) is shared
-   infrastructure also used by the Core Capabilities bundle,
-   duplicated here so this file works on its own. It scans the
-   WHOLE page for [data-reveal]/[data-reveal-soft] elements, not
-   just these sections' — harmless if both bundles' copies end up
-   loaded on the same final page (each element just gets observed
-   by two observers instead of one), but once all sections are
-   actually merged, keep only ONE copy of this engine site-wide
-   rather than shipping it per-section.
+   The shared scroll-reveal engine that used to be duplicated at the
+   end of this file now lives in its own file, js/shared-reveal.js,
+   loaded as the last <script> tag in index.html. See that file for
+   why it has to stay last in load order.
+
+   Fixed from the original delivery: EXP_DATA's first logo path was
+   "/src/kiooverse-logo.jpg" (leading slash — root-absolute) while
+   every other logo/avatar path here is relative ("src/..."). Left
+   as-is, it would silently break if this site is ever hosted from a
+   subpath (e.g. a GitHub Pages project site at username.github.io/
+   reponame/) since a root-absolute path ignores that prefix. Changed
+   to match the rest.
 ============================================================= */
 
 (function(){
@@ -25,7 +27,7 @@
   var EXP_DATA = [
     {
       type: "single",
-      logo: "/src/kiooverse-logo.jpg",
+      logo: "src/kiooverse-logo.jpg",
       logoInitial: "K",
       role: "Social Media Manager & Community Lead",
       company: "Kiooverse",
@@ -694,44 +696,4 @@
   window.addEventListener('resize', updateMobileNavState);
   window.addEventListener('load', updateMobileNavState); // re-check after webfonts finish loading, which can shift card widths
   updateMobileNavState();
-})();
-
-/* ===================== shared scroll-reveal engine (see note above) ===================== */
-(function(){
-  // ===================== SHARED SCROLL-REVEAL ENGINE =====================
-  // One IntersectionObserver for every [data-reveal] / [data-reveal-soft]
-  // element across all sections built so far. Placed at the very end of
-  // the document (after Core Capabilities', Experience's, and
-  // Testimonials' own scripts have already run and populated their
-  // dynamic content), so every element that needs to be observed
-  // already exists in the DOM by the time this runs.
-  //
-  // Each element reveals once, the first time it scrolls into view, and
-  // is then unobserved — this is a one-time entrance effect, not a
-  // repeating/parallax one, and it never re-hides an element that's
-  // already been revealed (e.g. scrolling back up).
-  if (!('IntersectionObserver' in window)){
-    // no IntersectionObserver support — just show everything immediately
-    // rather than leave it permanently invisible
-    document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
-      el.classList.add('is-visible');
-    });
-    return;
-  }
-
-  var revealObserver = new IntersectionObserver(function(entries, observer){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -8% 0px' // trigger a little before the element is fully in view
-  });
-
-  document.querySelectorAll('[data-reveal], [data-reveal-soft]').forEach(function(el){
-    revealObserver.observe(el);
-  });
 })();
