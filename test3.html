@@ -378,6 +378,30 @@
 
   /* ===== Expanded story ===== */
 
+  .about-content{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .about-body{ order:1; }
+  .about-story-extra{ order:3; }
+  .see-more-btn{ order:2; }
+  .about-expanded{ order:4; }
+
+  .about-story-extra{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .6s ease, opacity .5s ease;
+  }
+  .about-story-extra.is-open{
+    opacity:1;
+    margin-top:4px;
+  }
+  .about-story-extra-inner{
+    padding-top:4px;
+  }
+
   .about-expanded{
     max-height:0;
     opacity:0;
@@ -393,7 +417,8 @@
     padding-top:4px;
   }
 
-  .about-expanded p{
+  .about-expanded p,
+  .about-story-extra p{
     font-size:16px;
     font-weight:500;
     line-height:1.8;
@@ -402,7 +427,8 @@
     margin:0 0 18px;
   }
 
-  .about-expanded .emphasis{
+  .about-expanded .emphasis,
+  .about-story-extra .emphasis{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
     font-size:17.5px;
@@ -596,14 +622,15 @@
      DESKTOP (≥900px)
      Mobile layout above is untouched by anything in this block.
      ============================================================ */
-  @media (min-width:900px){
+  @media (min-width:1024px){
 
     .about-container{
       display:grid;
       grid-template-columns:1.15fr 0.85fr;
       column-gap:72px;
       align-items:start;
-      padding:0 48px;
+      max-width:1440px;
+      padding:0 64px;
     }
 
     .about-col-left,
@@ -637,9 +664,31 @@
       font-size:17.5px;
     }
 
+    /* On desktop the story is shown in full by default — only
+       the mini-cards + "Where I'm headed" (.about-expanded) stay
+       gated behind "See more". Re-order so the story sits between
+       the intro and the button (mobile has it AFTER the button,
+       revealed together with the cards on toggle), and force it
+       open regardless of the JS-driven inline max-height/is-open
+       state — the !important here is deliberate: it overrides the
+       toggle so this part is simply never collapsible on desktop. */
+    .about-story-extra{
+      order:2;
+      max-height:none !important;
+      opacity:1 !important;
+      overflow:visible !important;
+      margin:0 0 8px !important;
+    }
+    .about-story-extra-inner{
+      padding-top:0;
+    }
+    .see-more-btn{ order:3; }
+    .about-expanded{ order:4; }
+
     .about-photo-wrap{
-      max-width:380px;
-      margin:12px 0 0;
+      max-width:480px;
+      margin:0 0 0 auto;
+      transform:none;
     }
 
     .about-metrics{
@@ -658,9 +707,9 @@
     /* ===== Clothesline metrics ===== */
 
     .clothesline-rope{
-      height:5px;
-      border-top:1.5px solid var(--card-border);
-      border-bottom:1.5px solid var(--card-border);
+      height:6px;
+      border-top:2px solid rgba(255,255,255,0.32);
+      border-bottom:2px solid rgba(255,255,255,0.32);
     }
 
     .clothesline-row{
@@ -681,7 +730,7 @@
     .clothesline-wire{
       width:0;
       height:var(--wire-h, 40px);
-      border-left:1.5px dashed var(--card-border);
+      border-left:2px dashed rgba(255,255,255,0.32);
     }
 
     .clothesline-tag{
@@ -732,6 +781,15 @@
         I've always been curious about how things work, how people respond, and why some systems work better than others. I started out studying Petroleum Engineering, but curiosity kept pulling me toward Web3, social media, operations, data, and digital products.
       </p>
 
+      <div class="about-story-extra" id="aboutStoryExtra">
+        <div class="about-story-extra-inner">
+          <p>What looked like different directions gradually became one way of learning: getting involved, figuring things out, taking responsibility, and finding ways to make things better.</p>
+          <p class="emphasis">I like to learn by doing.</p>
+          <p>Learning gives me the foundation.<br>Experience shows me how to apply it.</p>
+          <p>I learn by testing what I know, seeing what happens, and improving from there.</p>
+        </div>
+      </div>
+
       <button class="see-more-btn" id="seeMoreBtn" aria-expanded="false" aria-controls="aboutExpanded">
         <span class="btn-label">See more</span>
         <span class="arrow" aria-hidden="true">→</span>
@@ -739,14 +797,6 @@
 
       <div class="about-expanded" id="aboutExpanded">
         <div class="about-expanded-inner">
-
-          <p>What looked like different directions gradually became one way of learning: getting involved, figuring things out, taking responsibility, and finding ways to make things better.</p>
-
-          <p class="emphasis">I like to learn by doing.</p>
-
-          <p>Learning gives me the foundation.<br>Experience shows me how to apply it.</p>
-
-          <p>I learn by testing what I know, seeing what happens, and improving from there.</p>
 
           <h3 class="section-label">What keeps me moving</h3>
 
@@ -903,6 +953,8 @@
   (function(){
     var btn = document.getElementById('seeMoreBtn');
     var panel = document.getElementById('aboutExpanded');
+    var storyExtra = document.getElementById('aboutStoryExtra');
+    var panels = [panel, storyExtra];
     var container = document.getElementById('aboutContainer');
     var label = btn.querySelector('.btn-label');
 
@@ -910,18 +962,24 @@
       var isOpen = panel.classList.contains('is-open');
 
       if(isOpen){
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-        requestAnimationFrame(function(){
-          panel.style.maxHeight = '0px';
+        panels.forEach(function(p){
+          p.style.maxHeight = p.scrollHeight + 'px';
         });
-        panel.classList.remove('is-open');
+        requestAnimationFrame(function(){
+          panels.forEach(function(p){
+            p.style.maxHeight = '0px';
+          });
+        });
+        panels.forEach(function(p){ p.classList.remove('is-open'); });
         container.classList.remove('is-expanded');
         btn.setAttribute('aria-expanded', 'false');
         label.textContent = 'See more';
       } else {
-        panel.classList.add('is-open');
+        panels.forEach(function(p){
+          p.classList.add('is-open');
+          p.style.maxHeight = p.scrollHeight + 'px';
+        });
         container.classList.add('is-expanded');
-        panel.style.maxHeight = panel.scrollHeight + 'px';
         btn.setAttribute('aria-expanded', 'true');
         label.textContent = 'See less';
       }
@@ -930,7 +988,9 @@
     // keep max-height correct if fonts/images shift layout after open
     window.addEventListener('resize', function(){
       if(panel.classList.contains('is-open')){
-        panel.style.maxHeight = panel.scrollHeight + 'px';
+        panels.forEach(function(p){
+          p.style.maxHeight = p.scrollHeight + 'px';
+        });
       }
     });
 
