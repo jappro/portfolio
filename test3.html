@@ -645,12 +645,18 @@
        when expanded, so nothing is left holding a gap in that
        single shared column. On desktop the photo and the metrics
        are in their OWN column, independent of the story's height,
-       so that trick isn't needed — undo it here, so the photo just
-       fades in place and the clothesline metrics stay anchored
-       right below it instead of jumping up to the top. */
+       so that trick isn't needed — undo it here.
+
+       Updated: the photo and blob should now stay fully visible
+       and unchanged on desktop regardless of toggle state (per
+       explicit request), not fade at all — so this also cancels
+       the opacity fade, not just the position trick. */
     .about-container.is-expanded .about-photo-wrap{
       position:relative;
       inset:auto;
+      opacity:1 !important;
+      pointer-events:auto !important;
+      filter:none !important;
     }
 
     /* let each column stack its own children in plain DOM order —
@@ -767,6 +773,51 @@
       margin-top:4px;
       line-height:1.3;
       max-width:100px;
+    }
+
+    /* Desktop-only expanded background disabled per request — the
+       faint image-behind-text effect stays mobile-only. Plain
+       matte black on desktop regardless of toggle state. */
+    .about-expanded-bg{
+      display:none;
+    }
+
+    /* ============================================================
+       Desktop "See more" — full-width breakout row.
+       When expanded, JS physically relocates #aboutExpanded,
+       .about-cta-wrap and .metrics-clothesline to become direct
+       children of .about-container (see the script below), because
+       CSS alone can't reach into a nested flex column and place its
+       child into a grandparent grid row. These rules only match
+       them in that relocated position (direct-child selector) — in
+       the default/nested position they're unaffected.
+       ============================================================ */
+    .about-container.is-expanded > #aboutExpanded{
+      grid-column:1 / -1;
+      grid-row:2;
+      max-height:none !important;
+      opacity:1 !important;
+      overflow:visible !important;
+      margin-top:8px !important;
+    }
+    .about-container.is-expanded > #aboutExpanded .about-expanded-inner{
+      padding-top:0;
+    }
+    .about-container.is-expanded > #aboutExpanded .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+    }
+
+    .about-container.is-expanded > .about-cta-wrap{
+      grid-column:1;
+      grid-row:3;
+      margin-top:28px;
+    }
+
+    .about-container.is-expanded > .metrics-clothesline{
+      grid-column:2;
+      grid-row:3;
+      margin-top:0;
+      align-self:start;
     }
   }
 
@@ -1004,7 +1055,47 @@
           p.style.maxHeight = p.scrollHeight + 'px';
         });
       }
+      syncDesktopLayout();
     });
+
+    // ===== Desktop-only "See more" full-width breakout =====
+    // On desktop, when expanded, #aboutExpanded / .about-cta-wrap /
+    // .metrics-clothesline move OUT of their nested columns to
+    // become direct children of .about-container, so CSS grid can
+    // place them in a new full-width row below both columns. CSS
+    // can't reach into a nested flex child to do this, so it's done
+    // here. Mobile is untouched — guarded by the matchMedia check,
+    // this never runs below the desktop breakpoint.
+    var ctaWrap = document.querySelector('.about-cta-wrap');
+    var clothesline = document.querySelector('.metrics-clothesline');
+    var contentEl = document.querySelector('.about-content');
+    var colLeftEl = document.querySelector('.about-col-left');
+    var colRightEl = document.querySelector('.about-col-right');
+    var desktopMq = window.matchMedia('(min-width:1024px)');
+
+    function relocateForDesktopExpand(){
+      container.appendChild(panel);
+      container.appendChild(ctaWrap);
+      container.appendChild(clothesline);
+    }
+    function restoreOriginalPositions(){
+      contentEl.appendChild(panel);
+      colLeftEl.appendChild(ctaWrap);
+      colRightEl.appendChild(clothesline);
+    }
+    function syncDesktopLayout(){
+      var isOpen = panel.classList.contains('is-open');
+      var shouldBeRelocated = isOpen && desktopMq.matches;
+      var isRelocated = panel.parentElement === container;
+      if(shouldBeRelocated && !isRelocated){
+        relocateForDesktopExpand();
+      } else if(!shouldBeRelocated && isRelocated){
+        restoreOriginalPositions();
+      }
+    }
+    // run once after every toggle, and once on load
+    btn.addEventListener('click', syncDesktopLayout);
+    syncDesktopLayout();
 
     // graceful fallback if the photo file isn't present yet, and a
     // signal for when it's safe to reveal the shade (see the
