@@ -363,19 +363,70 @@ section.section{ padding:110px 0; }
 }
 
 /* ============================================================
-   FOOTER
+   FOOTER — a quiet close after the CTA's big moment: a short personal
+   statement, a small practical contact row, then fine-print copyright
+   last and smallest, like credits after the main scene.
    ============================================================ */
 footer.footer{
   position:relative;
   z-index:1;
-  text-align:center;
-  padding:32px 0 46px;
-  font-size:12px;
-  color:var(--text-lo);
+  padding:58px 0 46px;
   background:var(--bg);
   border-top:1px solid var(--card-border);
 }
-footer.footer p{ margin:0; letter-spacing:0.01em; }
+.cf-footer-inner{ text-align:center; }
+
+.cf-footer-tagline{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:500;
+  font-size:clamp(1.02rem, 2.6vw, 1.2rem);
+  line-height:1.5;
+  color:var(--text-mid);
+  letter-spacing:0.005em;
+  margin:0 0 30px;
+}
+
+.cf-footer-divider{
+  width:64px;
+  height:1px;
+  margin:0 auto 26px;
+  background:var(--card-border);
+}
+
+.cf-footer-contact{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:26px;
+  margin-bottom:34px;
+}
+.cf-footer-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text-mid);
+  font-family:'Inter', sans-serif;
+  font-weight:600;
+  font-size:.85rem;
+  letter-spacing:0.02em;
+  text-decoration:none;
+  transition:color .3s ease;
+}
+.cf-footer-link svg{ width:15px; height:15px; flex-shrink:0; color:var(--text-lo); transition:color .3s ease; }
+.cf-footer-link:hover, .cf-footer-link:focus-visible{ color:var(--text-hi); }
+.cf-footer-link:hover svg, .cf-footer-link:focus-visible svg{ color:var(--teal); }
+
+.cf-footer-copyright{
+  margin:0;
+  font-size:12px;
+  letter-spacing:0.01em;
+  color:var(--text-lo);
+}
+
+@media (max-width:640px){
+  footer.footer{ padding:48px 0 40px; }
+  .cf-footer-contact{ gap:18px; }
+}
 
 @media (prefers-reduced-motion: reduce){
   .cf-orb, .cf-content.in-view .cf-title-card span{ animation:none !important; }
@@ -479,7 +530,24 @@ footer.footer p{ margin:0; letter-spacing:0.01em; }
 </a>
 
 <footer class="footer">
-  <p id="cf-footer-text">&copy; 2026 Uche Japheth — Resume Series</p>
+  <div class="wrap cf-footer-inner">
+    <p class="cf-footer-tagline">People first.<br>Better systems, better results.</p>
+
+    <div class="cf-footer-divider" aria-hidden="true"></div>
+
+    <div class="cf-footer-contact">
+      <a class="cf-footer-link" href="tel:+2349153661595">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3.5h3.4l1.6 4.2-2 1.6a12.3 12.3 0 0 0 5.2 5.2l1.6-2 4.2 1.6v3.4c0 1-.9 1.8-1.9 1.6C9.9 18.3 5.7 14.1 3 7.4c-.2-1 .6-1.9 1.5-1.9Z"/></svg>
+        Call
+      </a>
+      <a class="cf-footer-link" href="https://wa.me/message/ACT6Q47INKJ3E1" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.4L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.5c.3 2 3 4.7 5 5 .8.1 1.5-.4 1.7-1.1"/></svg>
+        WhatsApp
+      </a>
+    </div>
+
+    <p class="cf-footer-copyright" id="cf-footer-text">&copy; 2026 Uche Japheth &bull; Professional Portfolio. All rights reserved.</p>
+  </div>
 </footer>
 
 <script>
@@ -505,7 +573,7 @@ footer.footer p{ margin:0; letter-spacing:0.01em; }
   // Footer year, kept live
   var footerText = document.getElementById('cf-footer-text');
   if(footerText){
-    footerText.innerHTML = '&copy; ' + new Date().getFullYear() + ' Uche Japheth — Resume Series';
+    footerText.innerHTML = '&copy; ' + new Date().getFullYear() + ' Uche Japheth &bull; Professional Portfolio. All rights reserved.';
   }
 
   // Subtle scroll-linked parallax on the whole ambient layer (skipped for reduced motion).
