@@ -658,6 +658,14 @@
       pointer-events:auto !important;
       filter:none !important;
     }
+    /* The shade is its own element with its own independent
+       display:none-when-expanded rule (base CSS, written for
+       mobile). The photo-wrap fix above doesn't touch it — undo it
+       separately so the matte-black blend at the portrait's bottom
+       edge stays exactly as it is on desktop, toggle or not. */
+    .about-container.is-expanded .about-photo-shade{
+      display:block;
+    }
 
     /* let each column stack its own children in plain DOM order —
        the mobile `order` values still apply but are harmless here
