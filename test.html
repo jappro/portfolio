@@ -1512,12 +1512,113 @@
     flex-shrink:0;
     border-radius:50%;
     border:1px solid var(--card-border);
+    background:none;
+    padding:0;
+    margin:0;
+    font-family:inherit;
+    cursor:pointer;
+    -webkit-appearance:none;
+    appearance:none;
     color:var(--text-mid);
     transition:border-color .25s ease, color .25s ease;
+    position:relative;
   }
 
   .proj-link-ic svg{ width:17px; height:17px; }
   .proj-link-ic:hover{ border-color:var(--purple); color:var(--purple); }
+
+  /* Hover tooltip — desktop only (a touch device has no hover state to
+     trigger this, which is intentional; mobile gets the long-press
+     menu instead). */
+  .proj-link-ic[data-tooltip]::after{
+    content:attr(data-tooltip);
+    position:absolute;
+    bottom:calc(100% + 10px);
+    left:50%;
+    transform:translateX(-50%) translateY(4px);
+    white-space:nowrap;
+    padding:6px 12px;
+    border-radius:8px;
+    background:rgba(10,10,16,.92);
+    border:1px solid var(--card-border);
+    color:#f5f5f7;
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .18s ease, transform .18s ease;
+    z-index:5;
+  }
+  @media (hover:hover){
+    .proj-link-ic[data-tooltip]:hover::after{ opacity:1; transform:translateX(-50%) translateY(0); }
+  }
+
+  /* ============ FLOATING LINK MENU + TOAST ============
+     Shared by: the VincesLink repo icon (right-click / long-press)
+     and the Alfalf AI multi-link icon (click). Positioned via JS
+     using position:fixed so it always renders correctly regardless
+     of the card sitting inside a scrolling/clipping row. */
+  .proj-float-menu{
+    position:fixed;
+    z-index:9999;
+    min-width:196px;
+    padding:6px;
+    border-radius:14px;
+    background:rgba(14,14,20,.97);
+    border:1px solid var(--card-border);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+    opacity:0;
+    transform:translateY(4px) scale(.98);
+    transition:opacity .15s ease, transform .15s ease;
+    pointer-events:none;
+  }
+  .proj-float-menu.is-open{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+
+  .proj-float-menu-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    padding:10px 12px;
+    border-radius:9px;
+    background:none;
+    border:none;
+    font-family:'Inter', sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    color:#f0f0f2;
+    text-align:left;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .proj-float-menu-item:hover,
+  .proj-float-menu-item:focus-visible{ background:rgba(255,255,255,.08); outline:none; }
+  .proj-float-menu-item svg{ width:16px; height:16px; flex-shrink:0; color:var(--text-mid); }
+
+  .proj-toast{
+    position:fixed;
+    z-index:9999;
+    padding:10px 18px;
+    border-radius:999px;
+    background:rgba(10,20,14,.94);
+    border:1px solid rgba(74,222,128,.4);
+    color:#8fe3ac;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:13px;
+    font-weight:700;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .2s ease, transform .2s ease;
+    pointer-events:none;
+  }
+  .proj-toast.is-show{ opacity:1; transform:translateY(0); }
 
   .proj-soon-pill{
     display:inline-flex;
@@ -1590,7 +1691,7 @@
       padding-right:22px;
     }
 
-    .proj-card{ height:400px; padding:22px; }
+    .proj-card{ flex:0 0 88vw; height:400px; padding:22px; }
     .proj-shot{ flex:0 0 63%; margin:-16px -16px 16px -16px; }
     .proj-body{ flex:0 0 37%; }
 
@@ -1975,7 +2076,7 @@
         <p class="proj-desc">Designed and built the official business website for VINCESlink using modern AI-assisted development workflows.</p>
         <div class="proj-cta-row">
           <a class="proj-cta-btn" href="https://www.vinceslink.com" target="_blank" rel="noopener">View Stack <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-          <a class="proj-link-ic" href="https://www.vinceslink.com" target="_blank" rel="noopener" aria-label="Open VincesLink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 5.5"/><path d="M14 10a5 5 0 0 0-7.07 0L4.1 12.83a5 5 0 0 0 7.07 7.07L12.5 18.5"/></svg></a>
+          <a class="proj-link-ic proj-link-ic--repo" href="https://github.com/jappro/vinceslink" target="_blank" rel="noopener" aria-label="VincesLink GitHub repository" data-tooltip="Visit Repository" data-repo-url="https://github.com/jappro/vinceslink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 5.5"/><path d="M14 10a5 5 0 0 0-7.07 0L4.1 12.83a5 5 0 0 0 7.07 7.07L12.5 18.5"/></svg></a>
         </div>
         </div>
       </div>
@@ -1986,8 +2087,8 @@
         <h3 class="proj-title">Alfalf AI</h3>
         <p class="proj-desc">An AI-powered operations platform helping Web3 projects design structured, retention-driven community campaigns.</p>
         <div class="proj-cta-row">
-          <a class="proj-cta-btn" href="https://github.com/jappro/alfalf-bot/blob/7c4dae4cdc7ec86e11bb789640700b67f6c5bdc2/trim_BB67EF15-4FCE-4AED-9A5C-3EF23473CF4B.mp4" target="_blank" rel="noopener">See Demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-          <a class="proj-link-ic" href="https://github.com/jappro/alfalf-bot/blob/7c4dae4cdc7ec86e11bb789640700b67f6c5bdc2/trim_BB67EF15-4FCE-4AED-9A5C-3EF23473CF4B.mp4" target="_blank" rel="noopener" aria-label="Watch Alfalf AI demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>
+          <a class="proj-cta-btn" href="src/trim_BB67EF15-4FCE-4AED-9A5C-3EF23473CF4B.mp4" target="_blank" rel="noopener">See Demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <button type="button" class="proj-link-ic proj-link-ic--multi" aria-label="More Alfalf AI links" data-tooltip="More Links" data-github-url="https://github.com/jappro/alfalf-audit" data-telegram-url="https://t.me/AlfalfAI_bot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></button>
         </div>
         </div>
       </div>
@@ -2444,6 +2545,192 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     items.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ============ PROJECT CARD LINK MENUS ============
+     Two triggers share this:
+     - .proj-link-ic--repo (VincesLink): right-click on desktop,
+       long-press on touch devices, opens a menu with "Visit
+       Repository" / "Copy Repository Link". A plain tap/click still
+       navigates normally via the element's own href — nothing here
+       intercepts that.
+     - .proj-link-ic--multi (Alfalf AI): a plain click opens a menu
+       to choose between the GitHub repo and the Telegram bot, since
+       there's no single default destination for it.
+     Menu is a single shared floating element, positioned with
+     position:fixed via JS so it always renders correctly regardless
+     of the card sitting inside a scrolling row. */
+  (function(){
+    var LONG_PRESS_MS = 550;
+    var MOVE_CANCEL_PX = 10;
+
+    var menuEl = null;
+    var toastEl = null;
+    var toastTimer = null;
+
+    function ensureMenu(){
+      if (menuEl) return menuEl;
+      menuEl = document.createElement('div');
+      menuEl.className = 'proj-float-menu';
+      menuEl.setAttribute('role', 'menu');
+      document.body.appendChild(menuEl);
+      return menuEl;
+    }
+
+    function ensureToast(){
+      if (toastEl) return toastEl;
+      toastEl = document.createElement('div');
+      toastEl.className = 'proj-toast';
+      toastEl.setAttribute('role', 'status');
+      document.body.appendChild(toastEl);
+      return toastEl;
+    }
+
+    function closeMenu(){
+      if (menuEl) menuEl.classList.remove('is-open');
+    }
+
+    function openMenu(x, y, items){
+      var menu = ensureMenu();
+      menu.innerHTML = '';
+      items.forEach(function(item){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'proj-float-menu-item';
+        btn.setAttribute('role', 'menuitem');
+        btn.textContent = item.label;
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          closeMenu();
+          item.onSelect();
+        });
+        menu.appendChild(btn);
+      });
+
+      menu.style.left = x + 'px';
+      menu.style.top = y + 'px';
+      menu.classList.add('is-open');
+
+      requestAnimationFrame(function(){
+        var rect = menu.getBoundingClientRect();
+        var left = x, top = y;
+        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
+        if (top + rect.height > window.innerHeight - 8) top = y - rect.height - 8;
+        if (left < 8) left = 8;
+        if (top < 8) top = 8;
+        menu.style.left = left + 'px';
+        menu.style.top = top + 'px';
+      });
+    }
+
+    function showToast(message, x, y){
+      var toast = ensureToast();
+      toast.textContent = message;
+      toast.style.left = x + 'px';
+      toast.style.top = y + 'px';
+      toast.classList.add('is-show');
+
+      requestAnimationFrame(function(){
+        var rect = toast.getBoundingClientRect();
+        var left = x - rect.width / 2;
+        var top = y - rect.height - 14;
+        if (left < 8) left = 8;
+        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
+        if (top < 8) top = y + 14;
+        toast.style.left = left + 'px';
+        toast.style.top = top + 'px';
+      });
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toast.classList.remove('is-show'); }, 1600);
+    }
+
+    function copyLink(url, x, y){
+      function done(ok){ showToast(ok ? 'Link copied' : 'Could not copy link', x, y); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = url;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done(true);
+        } catch (err) { done(false); }
+      }
+    }
+
+    document.addEventListener('click', function(e){
+      if (menuEl && menuEl.classList.contains('is-open') && !menuEl.contains(e.target)) closeMenu();
+    });
+    document.addEventListener('scroll', closeMenu, true);
+    window.addEventListener('resize', closeMenu);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+
+    // ---- VincesLink repo icon: right-click (desktop) + long-press (touch) ----
+    document.querySelectorAll('.proj-link-ic--repo').forEach(function(el){
+      var repoUrl = el.getAttribute('data-repo-url');
+
+      el.addEventListener('contextmenu', function(e){
+        e.preventDefault();
+        openMenu(e.clientX, e.clientY, [
+          { label: 'Visit Repository', onSelect: function(){ window.open(repoUrl, '_blank', 'noopener'); } },
+          { label: 'Copy Repository Link', onSelect: function(){ copyLink(repoUrl, e.clientX, e.clientY); } }
+        ]);
+      });
+
+      var pressTimer = null, longPressed = false, startX = 0, startY = 0;
+
+      el.addEventListener('touchstart', function(e){
+        longPressed = false;
+        var t = e.touches[0];
+        startX = t.clientX; startY = t.clientY;
+        pressTimer = setTimeout(function(){
+          longPressed = true;
+          openMenu(startX, startY, [
+            { label: 'Visit Repository', onSelect: function(){ window.open(repoUrl, '_blank', 'noopener'); } },
+            { label: 'Copy Repository Link', onSelect: function(){ copyLink(repoUrl, startX, startY); } }
+          ]);
+          if (navigator.vibrate) navigator.vibrate(10);
+        }, LONG_PRESS_MS);
+      }, { passive: true });
+
+      el.addEventListener('touchmove', function(e){
+        var t = e.touches[0];
+        if (Math.abs(t.clientX - startX) > MOVE_CANCEL_PX || Math.abs(t.clientY - startY) > MOVE_CANCEL_PX) {
+          clearTimeout(pressTimer);
+        }
+      }, { passive: true });
+
+      el.addEventListener('touchend', function(e){
+        clearTimeout(pressTimer);
+        if (longPressed) {
+          e.preventDefault(); // this was a long-press, not a tap — don't navigate
+          e.stopPropagation();
+        }
+      });
+
+      el.addEventListener('touchcancel', function(){ clearTimeout(pressTimer); });
+    });
+
+    // ---- Alfalf AI multi-link icon: plain click opens the choice ----
+    document.querySelectorAll('.proj-link-ic--multi').forEach(function(el){
+      var githubUrl = el.getAttribute('data-github-url');
+      var telegramUrl = el.getAttribute('data-telegram-url');
+
+      el.addEventListener('click', function(e){
+        e.stopPropagation();
+        var rect = el.getBoundingClientRect();
+        openMenu(rect.left, rect.bottom + 8, [
+          { label: 'GitHub Repo', onSelect: function(){ window.open(githubUrl, '_blank', 'noopener'); } },
+          { label: 'Telegram Bot', onSelect: function(){ window.open(telegramUrl, '_blank', 'noopener'); } }
+        ]);
+      });
+    });
   })();
 </script>
 </body>
