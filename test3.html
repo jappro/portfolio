@@ -662,6 +662,15 @@
       -webkit-line-clamp:unset;
       overflow:visible;
       font-size:17.5px;
+      /* the first sentence of .about-story-extra continues this
+         same paragraph visually on desktop (per spec, no blank
+         line between them) — remove the trailing gap so the two
+         separate elements read as one flowing paragraph */
+      margin-bottom:0;
+    }
+
+    .about-story-extra .tight-follow{
+      margin-top:0;
     }
 
     /* On desktop the story is shown in full by default — only
@@ -778,15 +787,14 @@
       <h2 class="about-title">A foundation built through <span class="accent">curiosity.</span></h2>
 
       <p class="about-body">
-        I've always been curious about how things work, how people respond, and why some systems work better than others. I started out studying Petroleum Engineering, but curiosity kept pulling me toward Web3, social media, operations, data, and digital products.
+        I've always been curious about how things work, how people respond, and why some systems work better than others.
       </p>
 
       <div class="about-story-extra" id="aboutStoryExtra">
         <div class="about-story-extra-inner">
+          <p class="tight-follow">I started out studying Petroleum Engineering, but curiosity kept pulling me toward Web3, social media, operations, data, and digital products.</p>
           <p>What looked like different directions gradually became one way of learning: getting involved, figuring things out, taking responsibility, and finding ways to make things better.</p>
           <p class="emphasis">I like to learn by doing.</p>
-          <p>Learning gives me the foundation.<br>Experience shows me how to apply it.</p>
-          <p>I learn by testing what I know, seeing what happens, and improving from there.</p>
         </div>
       </div>
 
@@ -797,6 +805,10 @@
 
       <div class="about-expanded" id="aboutExpanded">
         <div class="about-expanded-inner">
+
+          <p>Learning gives me the foundation.<br>Experience shows me how to apply it.</p>
+
+          <p>I learn by testing what I know, seeing what happens, and improving from there.</p>
 
           <h3 class="section-label">What keeps me moving</h3>
 
