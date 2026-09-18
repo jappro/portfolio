@@ -391,7 +391,7 @@ footer.footer p{ margin:0; letter-spacing:0.01em; }
   .cf-socials svg, .cf-socials img{ width:22px; height:22px; }
   .cf-cta{ padding:22px 38px; font-size:1.02rem; }
   .cf-cta svg{ width:32px; height:32px; }
-  .cf-bar{ padding:14px 20px; font-size:1.32rem; }
+  .cf-bar{ padding:14px 20px; font-size:1.32rem; font-weight:700; }
   .cf-bar svg, .cf-bar img{ width:24px; height:24px; }
 }
 </style>
@@ -529,34 +529,26 @@ footer.footer p{ margin:0; letter-spacing:0.01em; }
     updateParallax();
   }
 
-  // Floating "back to top" button — active only while #contact is genuinely
-  // the thing on screen, never once the footer starts showing alongside it.
+  // Floating "back to top" button. It activates the moment #contact is reached,
+  // and — since it's position:fixed, meaning it's already pinned to the same
+  // viewport spot no matter what's scrolling behind it — it just stays on through
+  // the footer too, rather than switching off and on again at that boundary.
+  // It only turns off again if you scroll back up above #contact entirely.
   var topBtn = document.getElementById('cfTopBtn');
-  var footerEl = document.querySelector('footer.footer');
   if(topBtn && section){
     if('IntersectionObserver' in window){
-      var contactVisible = false;
-      var footerVisible = false;
-      function refreshTopBtn(){
-        topBtn.classList.toggle('is-visible', contactVisible && !footerVisible);
-      }
       var contactObserver = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          contactVisible = entry.isIntersecting;
-          refreshTopBtn();
+          if(entry.isIntersecting){
+            topBtn.classList.add('is-visible'); // contact is on screen right now
+          } else if(entry.boundingClientRect.top < 0){
+            topBtn.classList.add('is-visible'); // scrolled past contact — into/through the footer
+          } else {
+            topBtn.classList.remove('is-visible'); // haven't reached contact yet
+          }
         });
-      }, { threshold: 0.12 });
+      }, { threshold: 0 });
       contactObserver.observe(section);
-
-      if(footerEl){
-        var footerObserver = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){
-            footerVisible = entry.isIntersecting;
-            refreshTopBtn();
-          });
-        }, { threshold: 0 }); // even a sliver of footer showing switches the button off
-        footerObserver.observe(footerEl);
-      }
     } else {
       topBtn.classList.add('is-visible'); // no IO support — fail visible rather than unreachable
     }
