@@ -324,8 +324,16 @@
   .about-photo-wrap.photo-ready .about-photo-shade{
     opacity:1;
   }
-  .about-container.is-expanded .about-photo-shade{
-    display:none;
+  /* Mobile-only: the whole photo fades out when expanded there, so
+     the shade goes with it. Scoped to below the desktop breakpoint
+     so this never touches the shade on desktop at all — toggling
+     display on a masked element turned out to be unreliable in
+     real browsers even when "overridden" back, so the fix is to
+     never apply it there in the first place, not fight it after. */
+  @media (max-width:1023px){
+    .about-container.is-expanded .about-photo-shade{
+      display:none;
+    }
   }
 
   .about-photo-note{
@@ -658,14 +666,9 @@
       pointer-events:auto !important;
       filter:none !important;
     }
-    /* The shade is its own element with its own independent
-       display:none-when-expanded rule (base CSS, written for
-       mobile). The photo-wrap fix above doesn't touch it — undo it
-       separately so the matte-black blend at the portrait's bottom
-       edge stays exactly as it is on desktop, toggle or not. */
-    .about-container.is-expanded .about-photo-shade{
-      display:block;
-    }
+    /* No shade override needed here anymore — the mobile-only hide
+       rule above is now scoped so it never reaches desktop in the
+       first place, so there's nothing to undo. */
 
     /* let each column stack its own children in plain DOM order —
        the mobile `order` values still apply but are harmless here
