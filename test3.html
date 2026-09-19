@@ -678,7 +678,8 @@
       display:block;
       -webkit-line-clamp:unset;
       overflow:visible;
-      font-size:17.5px;
+      font-size:19px;
+      font-weight:600;
       /* the first sentence of .about-story-extra continues this
          same paragraph visually on desktop (per spec, no blank
          line between them) — remove the trailing gap so the two
@@ -688,6 +689,15 @@
 
     .about-story-extra .tight-follow{
       margin-top:0;
+    }
+
+    /* Bumped up for desktop readability — larger and heavier than
+       the mobile values (16px/500), matching .about-body's own
+       desktop increase above. */
+    .about-expanded p,
+    .about-story-extra p{
+      font-size:18px;
+      font-weight:600;
     }
 
     /* On desktop the story is shown in full by default — only
