@@ -2,2737 +2,688 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<title>Uche Japheth — Professional Profile</title>
-<meta name="title" content="Uche Japheth — Professional Profile">
-<meta name="description" content="Community operations, brand growth, business operations, and data analysis — explore the full resume collection of Uche Japheth.">
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://resume-pied-five.vercel.app/">
-<meta property="og:title" content="Uche Japheth — Professional Profile">
-<meta property="og:description" content="Community operations, brand growth, business operations, and data analysis — explore the full resume collection of Uche Japheth.">
-<meta property="og:site_name" content="Uche Japheth">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Uche Japheth — Professional Profile">
-<meta name="twitter:description" content="Community operations, brand growth, business operations, and data analysis — explore the full resume collection of Uche Japheth.">
-
-<link rel="canonical" href="https://resume-pied-five.vercel.app/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact + Footer — preview</title>
+
+<!-- Already loaded elsewhere in the real page — included here only so this file previews standalone -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --container-max:1280px;
-    --container-pad:32px;
 
-    --bg:#fafafa;
-    --bg-alt:#f2f2f4;
-    --card-bg:rgba(255,255,255,0.72);
-    --card-border:rgba(15,15,20,0.07);
-    --text-hi:#111114;
-    --text-mid:#52525b;
-    --text-lo:#8b8b93;
-    --shadow:0 24px 60px rgba(15,15,20,0.08);
-    --shadow-hover:0 30px 70px rgba(15,15,20,0.14);
+/* ============================================================
+   SHARED SITE TOKENS + CONVENTIONS (already exist in the real file —
+   included here only so this section previews correctly on its own)
+   ============================================================ */
+[data-theme="dark"]{
+  --bg:#08080b;
+  --bg-alt:#0d0d12;
+  --card-bg:rgba(255,255,255,0.045);
+  --card-border:rgba(255,255,255,0.09);
+  --text-hi:#f5f5f7;
+  --text-mid:#b6b6bf;
+  --text-lo:#7c7c86;
+  --shadow:0 24px 60px rgba(0,0,0,0.5);
+  --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
+  --purple:#a48cff;      --purple-soft:rgba(164,140,255,0.14);
+  --blue:#6f93ff;        --blue-soft:rgba(111,147,255,0.14);
+  --amber:#e6a24d;       --amber-soft:rgba(230,162,77,0.14);
+  --teal:#2dd4bf;        --teal-soft:rgba(45,212,191,0.14);
+}
 
-    --purple:#7c5cff;
-    --purple-soft:rgba(124,92,255,0.12);
-    --blue:#2f5fe0;
-    --blue-soft:rgba(47,95,224,0.1);
-    --amber:#c9711a;
-    --amber-soft:rgba(201,113,26,0.12);
-    --teal:#128f7c;
-    --teal-soft:rgba(18,143,124,0.12);
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:'Inter', sans-serif;
+  background:var(--bg);
+  color:var(--text-hi);
+  -webkit-font-smoothing:antialiased;
+}
 
-    color-scheme:light;
-  }
+.wrap{ position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 32px; }
+section.section{ padding:110px 0; }
 
-  [data-theme="dark"]{
-    --bg:#08080b;
-    --bg-alt:#0d0d12;
-    --card-bg:rgba(255,255,255,0.045);
-    --card-border:rgba(255,255,255,0.09);
-    --text-hi:#f5f5f7;
-    --text-mid:#b6b6bf;
-    --text-lo:#7c7c86;
-    --shadow:0 24px 60px rgba(0,0,0,0.5);
-    --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in-view{ opacity:1; transform:translateY(0); }
 
-    --purple:#a48cff;
-    --purple-soft:rgba(164,140,255,0.14);
-    --blue:#6f93ff;
-    --blue-soft:rgba(111,147,255,0.14);
-    --amber:#e6a24d;
-    --amber-soft:rgba(230,162,77,0.14);
-    --teal:#2dd4bf;
-    --teal-soft:rgba(45,212,191,0.14);
+@media (max-width:640px){
+  section.section{ padding:80px 0; }
+  .wrap{ padding:0 22px; }
+}
 
-    color-scheme:dark;
-  }
+/* ============================================================
+   CONTACT SECTION — namespaced "cf-" to avoid clashing with the
+   rest of the page's classes when dropped in
+   ============================================================ */
 
-  /* Desktop container fluid sizing: scales with viewport between a
-     floor (1024px, the breakpoint itself) and a ceiling (1680px, so
-     it doesn't stretch too thin on ultra-wide monitors). Only kicks
-     in at native desktop widths so it can never force overflow on
-     mobile/tablet, which keep the flat fallback above. */
-  @media (min-width:1024px){
-    :root{
-      --container-max:clamp(1024px, 94vw, 1680px);
-      --container-pad:clamp(14px, 1.6vw, 40px);
-    }
-  }
+#contact.cf-section{
+  position:relative;
+  overflow:hidden;
+  background:var(--bg);
+  isolation:isolate;
+  text-align:center;
+}
 
-  *{ box-sizing:border-box; margin:0; padding:0; }
+/* Ambient stage light — three soft blurred orbs breathing behind the content */
+.cf-atmosphere{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.cf-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(70px);
+  will-change:transform, opacity;
+}
+.cf-orb--amber{
+  width:52vw; height:52vw; max-width:620px; max-height:620px;
+  left:50%; top:-8%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle, var(--amber-soft), transparent 70%);
+  animation:cfOrbPulse 16s ease-in-out infinite;
+}
+.cf-orb--purple{
+  width:44vw; height:44vw; max-width:520px; max-height:520px;
+  left:8%; bottom:-12%;
+  background:radial-gradient(circle, var(--purple-soft), transparent 70%);
+  animation:cfOrbPulse 20s ease-in-out infinite -6s;
+}
+.cf-orb--blue{
+  width:38vw; height:38vw; max-width:460px; max-height:460px;
+  right:6%; bottom:0%;
+  background:radial-gradient(circle, var(--blue-soft), transparent 70%);
+  animation:cfOrbPulse 24s ease-in-out infinite -12s;
+}
+@keyframes cfOrbPulse{
+  0%,100%{ opacity:.55; transform:scale(1) translateX(var(--ox,0)); }
+  50%{ opacity:1; transform:scale(1.12) translateX(var(--ox,0)); }
+}
+.cf-orb--amber{ --ox:-50%; }
 
-  html{ scroll-behavior:smooth; overflow-x:hidden; }
+/* Fine film grain, laid over everything at very low opacity */
+.cf-grain{
+  position:absolute; inset:0; z-index:1;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-  body{
-    background:var(--bg);
-    color:var(--text-hi);
-    font-family:'Inter', sans-serif;
-    -webkit-font-smoothing:antialiased;
-    transition:background .4s ease, color .4s ease;
-  }
+/* Vignette to keep focus in the center */
+.cf-vignette{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.55) 100%);
+}
 
-  ::selection{ background:var(--purple-soft); }
+.cf-content{ position:relative; z-index:2; }
 
-  @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior:auto; }
-  }
+/* Oversized ghost title card — a cinematic title-card treatment for the word "Contact",
+   instead of a small tracked eyebrow label */
+.cf-title-card{
+  position:relative;
+  height:0;
+  margin-bottom:-.35em;
+  pointer-events:none;
+  user-select:none;
+}
+.cf-title-card span{
+  position:absolute;
+  left:50%; top:0;
+  transform:translate(-50%,-58%);
+  white-space:nowrap;
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:clamp(4.5rem, 21vw, 11rem);
+  letter-spacing:0.01em;
+  line-height:1;
+  background:linear-gradient(180deg, rgba(245,245,247,0.10), rgba(245,245,247,0.015) 65%, transparent 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
 
-  /* ============ LAYOUT ============ */
-  .wrap{
-    position:relative;
-    z-index:1;
-    max-width:1180px;
-    margin:0 auto;
-    padding:0 32px;
-  }
+.cf-heading{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:clamp(2.3rem, 7.6vw, 4.3rem);
+  line-height:1.08;
+  letter-spacing:-0.015em;
+  color:var(--text-hi);
+  margin:0 0 22px;
+}
 
-  section.section{ padding:110px 0; }
+.cf-sub{
+  font-family:'Inter', sans-serif;
+  font-weight:700;
+  font-size:clamp(1.1rem, 2.8vw, 1.32rem);
+  line-height:1.6;
+  color:var(--text-mid);
+  max-width:460px;
+  margin:0 auto 44px;
+}
 
-  .section-kicker{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:15px;
-    font-weight:600;
-    text-align:center;
-    color:var(--text-mid);
-    margin-bottom:52px;
-  }
+/* Staggered reveal for the pieces inside .cf-content — driven by the ancestor's
+   .reveal/.in-view state, so it plugs into the site's existing scroll observer */
+.cf-item{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.16,1,.3,1) var(--d,0s),
+             transform .8s cubic-bezier(.16,1,.3,1) var(--d,0s);
+}
+.cf-content.in-view .cf-item{ opacity:1; transform:translateY(0); }
+.cf-content.in-view .cf-item--cta{
+  transition:opacity .7s cubic-bezier(.34,1.56,.64,1) var(--d,0s),
+             transform .7s cubic-bezier(.34,1.56,.64,1) var(--d,0s);
+}
+.cf-content.in-view .cf-title-card span{
+  animation:cfGhostIn 1.4s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes cfGhostIn{
+  from{ opacity:0; transform:translate(-50%,-48%); }
+  to{ opacity:1; transform:translate(-50%,-58%); }
+}
 
-  .section-title{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:32px;
-    font-weight:700;
-    text-align:center;
-    margin-bottom:52px;
-    letter-spacing:-0.01em;
-  }
+/* CTA — glossy sticky "Book a call" pill with a static mixed-color trim.
+   Structure: .cf-cta-ring (holds the static color trim) > .cf-cta (the glass pill itself,
+   split into two layers so the trim ring can sit outside the box while the glossy
+   reflection stays clipped inside it — the two effects need different overflow rules). */
+.cf-cta-wrap{
+  position:sticky;
+  bottom:22px;
+  z-index:6;
+  margin-bottom:46px;
+  display:flex;
+  justify-content:center;
+}
+.cf-cta-ring{
+  position:relative;
+  display:inline-block;
+  border-radius:999px;
+  padding:1.5px;
+  background:conic-gradient(from 160deg, var(--amber), var(--purple), var(--blue), var(--teal));
+  box-shadow:0 20px 55px rgba(0,0,0,.5);
+}
+.cf-cta{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:26px 52px;
+  border-radius:999px;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text-hi);
+  font-family:'Inter', sans-serif;
+  font-weight:700;
+  font-size:1.18rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+/* the glass "reflection" — a small, purely-white highlight sitting toward the top-left */
+.cf-cta::after{
+  content:"";
+  position:absolute;
+  top:-16%; left:-8%;
+  width:36%; height:44%;
+  background:radial-gradient(ellipse at center, rgba(255,255,255,.55), rgba(255,255,255,0) 72%);
+  filter:blur(3px);
+  pointer-events:none;
+}
+.cf-cta:active{ transform:scale(.96); }
+.cf-cta:hover, .cf-cta:focus-visible{ box-shadow:0 0 44px var(--amber-soft); }
+.cf-cta svg{ width:37px; height:37px; flex-shrink:0; }
 
-  /* reveal-on-scroll */
-  .reveal{
-    opacity:0;
-    transform:translateY(28px);
-    transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
-  }
-  .reveal.in-view{ opacity:1; transform:translateY(0); }
+/* Contact bars — email + phone, each its own small bordered pill */
+.cf-bars{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:34px;
+}
+.cf-bar{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 26px;
+  border-radius:14px;
+  border:1px solid var(--card-border);
+  background:var(--card-bg);
+  color:var(--text-mid);
+  font-family:'Inter', sans-serif;
+  font-weight:900;
+  font-size:1.55rem;
+  letter-spacing:0.01em;
+  text-decoration:none;
+  transition:color .3s ease, background .3s ease;
+}
+.cf-bar svg, .cf-bar img{ width:24px; height:24px; flex-shrink:0; display:block; color:var(--text-lo); opacity:.85; transition:color .3s ease, opacity .3s ease; }
+.cf-bar:hover, .cf-bar:focus-visible{ color:var(--text-hi); background:rgba(255,255,255,0.07); }
+.cf-bar:hover svg, .cf-bar:focus-visible svg{ color:var(--teal); }
+.cf-bar:hover img, .cf-bar:focus-visible img{ opacity:1; }
 
-  /* ============ SITE NAV ============ */
-  .site-nav{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(5,5,8,.72);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.07);
-  }
+/* Minimal rule between the contact bars and the social row */
+.cf-divider{
+  width:120px;
+  height:1px;
+  margin:0 auto 34px;
+  background:var(--card-border);
+}
 
-  .nav-inner{
-    max-width:var(--container-max);
-    margin:0 auto;
-    padding:16px var(--container-pad);
-    display:flex;
+.cf-socials{
+  display:flex;
+  justify-content:center;
+  gap:34px;
+  flex-wrap:wrap;
+}
+.cf-socials a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 20px;
+  border-radius:999px;
+  border:1px solid var(--card-border);
+  background:var(--card-bg);
+  font-family:'Inter', sans-serif;
+  font-weight:700;
+  font-size:1.2rem;
+  letter-spacing:0.01em;
+  color:var(--text-mid);
+  text-decoration:none;
+  transition:color .3s ease, background .3s ease;
+}
+.cf-socials svg, .cf-socials img{ width:26px; height:26px; flex-shrink:0; display:block; opacity:.85; transition:opacity .3s ease; }
+.cf-socials a:hover img, .cf-socials a:focus-visible img{ opacity:1; }
+.cf-socials a:hover, .cf-socials a:focus-visible{ color:var(--text-hi); background:rgba(255,255,255,0.07); }
+
+/* ============================================================
+   FLOATING "BACK TO TOP" BUTTON
+   Fixed to the viewport, hidden by default — JS below reveals it only
+   while #contact is in view, and hides it again once the visitor
+   scrolls back up past it. Sits above-right of the sticky CTA so the
+   two never overlap.
+   ============================================================ */
+.cf-top-btn{
+  position:fixed;
+  right:18px;
+  bottom:132px;
+  z-index:50;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text-hi);
+  text-decoration:none;
+  opacity:0;
+  transform:translateY(14px) scale(.9);
+  pointer-events:none;
+  transition:opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
+}
+.cf-top-btn.is-visible{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+/* Tucks lower once the footer is reached — the resting offset above is
+   tuned to clear the sticky CTA inside #contact, which would otherwise
+   land the button right on the footer's right-aligned Call/WhatsApp links. */
+.cf-top-btn.is-in-footer{ bottom:14px; }
+/* the glass surface is a separate layer behind the icon so the SVG liquid-distortion
+   filter warps only the glass, never the icon glyph riding on top of it */
+.cf-top-btn-glass{
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.24), rgba(255,255,255,.04) 45%, transparent 72%),
+    rgba(255,255,255,0.06);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 14px 36px rgba(0,0,0,.55), inset 0 1px 1px rgba(255,255,255,.3);
+  filter:url(#cfLiquidGlass);
+  transition:transform .25s cubic-bezier(.16,1,.3,1);
+}
+.cf-top-btn:active .cf-top-btn-glass{ transform:scale(.92); }
+.cf-top-btn:focus-visible .cf-top-btn-glass{ box-shadow:0 14px 36px rgba(0,0,0,.55), 0 0 0 3px var(--teal-soft); }
+.cf-top-btn-icon{ position:relative; width:22px; height:22px; z-index:1; }
+
+@media (max-width:640px){
+  .cf-top-btn{ right:10px; bottom:90px; width:48px; height:48px; }
+  .cf-top-btn-icon{ width:19px; height:19px; }
+  /* On phones the copyright line wraps to 2 lines, which reaches into the
+     14px-tucked spot used on wider screens — so here the button sits just
+     above the whole footer instead, in the contact section's clear tail
+     space, rather than fighting for room inside a footer this narrow. */
+  .cf-top-btn.is-in-footer{ bottom:190px; }
+}
+
+/* ============================================================
+   FOOTER — a quiet close after the CTA's big moment. Laid out as a
+   grid so it stays short: on phones, the tagline and the two contact
+   links share one row (tagline left, contacts right), with the
+   copyright line below; from tablet up, all three pieces fit on a
+   single compact row since there's enough width for it.
+   ============================================================ */
+footer.footer{
+  position:relative;
+  z-index:1;
+  padding:40px 0 34px;
+  background:var(--bg);
+  border-top:1px solid var(--card-border);
+}
+
+.cf-footer-inner{
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-areas:
+    "tagline  contacts"
+    "copyright copyright";
+  align-items:start;
+  column-gap:18px;
+  row-gap:22px;
+}
+
+.cf-footer-tagline{
+  grid-area:tagline;
+  text-align:left;
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:500;
+  font-size:clamp(1rem, 2.6vw, 1.2rem);
+  line-height:1.5;
+  color:var(--text-mid);
+  letter-spacing:0.005em;
+  margin:0;
+}
+
+.cf-footer-contact{
+  grid-area:contacts;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+}
+.cf-footer-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text-mid);
+  font-family:'Inter', sans-serif;
+  font-weight:600;
+  font-size:.85rem;
+  letter-spacing:0.02em;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color .3s ease;
+}
+.cf-footer-link svg{ width:15px; height:15px; flex-shrink:0; color:var(--text-lo); transition:color .3s ease; }
+.cf-footer-link:hover, .cf-footer-link:focus-visible{ color:var(--text-hi); }
+.cf-footer-link:hover svg, .cf-footer-link:focus-visible svg{ color:var(--teal); }
+
+.cf-footer-copyright{
+  grid-area:copyright;
+  text-align:center;
+  margin:0;
+  font-size:12px;
+  letter-spacing:0.01em;
+  color:var(--text-lo);
+}
+
+/* True desktop widths: everything fits on one compact row — tagline left,
+   copyright centered between, contacts right. Tablet keeps the phone's
+   2-row layout below since a tablet-width row is too tight to fit a
+   full sentence of copyright text between the other two without
+   squeezing them — auto/1fr/auto lets tagline and contacts keep their
+   natural width and gives the copyright line whatever's left over. */
+@media (min-width:1024px){
+  .cf-footer-inner{
+    grid-template-columns:auto 1fr auto;
+    grid-template-areas:"tagline copyright contacts";
     align-items:center;
-    justify-content:space-between;
-    gap:24px;
-  }
-
-  .nav-brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    text-decoration:none;
-    flex-shrink:0;
-  }
-
-  .logo-text{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:900;
-    font-size:18px;
-    color:#fff;
-    white-space:pre;
-    display:inline-flex;
-  }
-
-  @media (min-width:1024px){
-    .logo-text{ font-size:24px; }
-  }
-
-  .logo-char{
-    display:inline-block;
-    transform-origin:50% 100%;
-    transition:transform .2s cubic-bezier(.34,1.56,.64,1), color .2s ease;
-  }
-
-  .logo-char.enlarge{
-    transform:scale(1.4) translateY(-2px);
-    color:#a48cff;
-  }
-
-  .logo-cursor{
-    display:inline-block;
-    width:2px;
-    height:15px;
-    margin-left:2px;
-    vertical-align:-2px;
-    background:#a48cff;
-    box-shadow:0 0 6px rgba(164,140,255,.7);
-    opacity:1;
-    transition:opacity .08s linear;
-  }
-
-  .nav-links{
-    display:flex;
-    align-items:center;
-    gap:30px;
-  }
-
-  .nav-link{
-    position:relative;
-    font-size:14.5px;
-    font-weight:500;
-    color:rgba(255,255,255,.68);
-    text-decoration:none;
-    padding-bottom:6px;
-    transition:color .2s ease;
-    white-space:nowrap;
-  }
-
-  @media (min-width:1024px){
-    .nav-link{ font-size:15.5px; font-weight:600; }
-  }
-
-  .nav-link:hover{ color:#fff; }
-
-  .nav-link.active{ color:#a48cff; }
-
-  .nav-link.active::after{
-    content:'';
-    position:absolute;
-    left:50%; bottom:-2px;
-    width:5px; height:5px;
-    border-radius:50%;
-    background:#a48cff;
-    transform:translateX(-50%);
-    box-shadow:0 0 8px rgba(164,140,255,.8);
-  }
-
-  .nav-cta{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:11px 20px;
-    border-radius:999px;
-    background:linear-gradient(180deg, #26262c 0%, #16161a 100%);
-    color:#fff;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:0.04em;
-    text-transform:uppercase;
-    text-decoration:none;
-    white-space:nowrap;
-    border:1px solid rgba(255,255,255,0.14);
-    box-shadow:
-      0 8px 18px rgba(0,0,0,0.45),
-      inset 0 1px 0 rgba(255,255,255,0.14),
-      inset 0 -2px 5px rgba(0,0,0,0.35);
-    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-  }
-
-  .nav-cta svg{ width:15px; height:15px; }
-
-  .nav-cta:hover,
-  .nav-cta:focus-visible{ filter:brightness(1.2); }
-  .nav-cta:active{
-    transform:translateY(1px);
-    box-shadow:
-      0 4px 10px rgba(0,0,0,0.45),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      inset 0 -2px 3px rgba(0,0,0,0.4);
-  }
-
-  .nav-glass-lens{ display:none; }
-
-  @media (max-width:960px){
-    .site-nav{
-      background:transparent;
-      backdrop-filter:none;
-      -webkit-backdrop-filter:none;
-      border-bottom:none;
-      padding:12px 12px 0;
-    }
-    .nav-inner{
-      position:relative;
-      overflow:hidden;
-      padding:11px 16px;
-      background:transparent;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:999px;
-      box-shadow:none;
-      transition:
-        border-color .45s cubic-bezier(.16,1,.3,1),
-        box-shadow .45s cubic-bezier(.16,1,.3,1);
-    }
-    .site-nav.nav-visible{
-      z-index:200;
-    }
-    .site-nav:has(.nav-mobile-menu.open){
-      z-index:200;
-    }
-    .site-nav.nav-visible .nav-inner{
-      border-color:rgba(255,255,255,.18);
-      box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,.6),
-        inset 0 -14px 22px -10px rgba(255,255,255,.08),
-        inset 0 0 0 1px rgba(255,255,255,.03),
-        0 14px 34px rgba(0,0,0,.4);
-    }
-    .nav-glass-lens{
-      display:block;
-      position:absolute;
-      inset:0;
-      border-radius:999px;
-      z-index:-1;
-      pointer-events:none;
-      background:transparent;
-      backdrop-filter:none;
-      -webkit-backdrop-filter:none;
-      transition:background .45s cubic-bezier(.16,1,.3,1);
-    }
-    .site-nav.nav-visible .nav-glass-lens{
-      background:rgba(255,255,255,.035);
-    }
-    .nav-inner::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      border-radius:inherit;
-      background:linear-gradient(115deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.12) 22%, transparent 46%);
-      pointer-events:none;
-      z-index:0;
-      opacity:0;
-      transition:opacity .45s ease;
-    }
-    .nav-inner::after{
-      content:'';
-      position:absolute;
-      top:9%; left:14%;
-      width:26%;
-      height:22%;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.55), transparent 70%);
-      filter:blur(2px);
-      pointer-events:none;
-      z-index:0;
-      opacity:0;
-      transition:opacity .45s ease;
-    }
-    .site-nav.nav-visible .nav-inner::before,
-    .site-nav.nav-visible .nav-inner::after{
-      opacity:1;
-    }
-    .nav-brand, .nav-hamburger{
-      position:relative;
-      z-index:1;
-    }
-    .nav-mobile-menu{
-      margin:8px 12px 0;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.13);
-      background:transparent;
-      box-shadow:0 14px 34px rgba(0,0,0,.4);
-      overflow:hidden;
-    }
-    .nav-glass-lens-drawer{
-      inset:5px;
-      border-radius:18px;
-      background:rgba(18,18,24,.28);
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-    }
-  }
-
-  .nav-hamburger{
-    display:none;
-    width:40px; height:40px;
-    border-radius:50%;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.16);
-    color:#fff;
-    cursor:pointer;
-    flex-shrink:0;
-  }
-
-  .nav-hamburger svg{ width:18px; height:18px; }
-  .nav-hamburger .icon-close{ display:none; }
-  .nav-hamburger.is-open .icon-menu{ display:none; }
-  .nav-hamburger.is-open .icon-close{ display:block; }
-
-  .nav-hamburger-static{ display:none; }
-
-  @media (max-width:960px){
-    .nav-hamburger-static{
-      display:flex;
-      position:fixed;
-      top:24px;
-      right:29px;
-      width:40px; height:40px;
-      border-radius:50%;
-      align-items:center;
-      justify-content:center;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.16);
-      color:#fff;
-      cursor:pointer;
-      z-index:160;
-    }
-    .nav-hamburger-static svg{ width:18px; height:18px; }
-    .nav-hamburger-static .icon-close{ display:none; }
-    .nav-hamburger-static.is-open .icon-menu{ display:none; }
-    .nav-hamburger-static.is-open .icon-close{ display:block; }
-
-    #siteNav.nav-visible + .nav-hamburger-static,
-    #siteNav:has(.nav-mobile-menu.open) + .nav-hamburger-static{
-      display:none;
-    }
-  }
-
-  .nav-mobile-menu{
-    display:none;
-    position:absolute;
-    top:100%;
-    left:0;
-    right:0;
-    flex-direction:column;
-    gap:2px;
-    padding:8px 24px 22px;
-    background:transparent;
-    z-index:1;
-  }
-
-  .nav-mobile-menu.open{ display:flex; }
-
-  .nav-mobile-link{
-    padding:13px 2px;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    font-size:15.5px;
-    text-shadow:0 2px 10px rgba(0,0,0,.7);
-  }
-
-  .nav-mobile-cta{
-    margin-top:14px;
-    text-align:center;
-    padding:14px;
-    border-radius:999px;
-    background:linear-gradient(180deg, #2a2a30 0%, #08080b 55%, #000000 100%);
-    border:1px solid rgba(255,255,255,0.18);
-    box-shadow:
-      0 12px 28px rgba(0,0,0,0.45),
-      inset 0 1px 0 rgba(255,255,255,0.12),
-      inset 0 -3px 6px rgba(0,0,0,0.35);
-    color:#fff;
-    font-weight:700;
-    font-size:14.5px;
-    text-decoration:none;
-    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-  }
-  .nav-mobile-cta:active{
-    transform:translateY(1px);
-    box-shadow:
-      0 6px 16px rgba(0,0,0,0.4),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      inset 0 -2px 4px rgba(0,0,0,0.3);
-  }
-
-  @media (max-width:960px){
-    .nav-cta{ display:none; }
-    .nav-hamburger{ display:flex; }
-  }
-
-  @media (max-width:960px){
-    .nav-links{ display:none; }
-    .nav-cta span{ display:none; }
-  }
-
-  /* ============ HERO (NEW) ============ */
-  .hero-new{
-    position:relative;
-    background:#050507;
-    padding-bottom:0;
-    overflow-x:hidden;
-  }
-
-  .hero-glow{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    background:
-      radial-gradient(620px 520px at 82% 38%, rgba(124,92,255,.30), transparent 62%),
-      radial-gradient(520px 460px at 88% 55%, rgba(47,95,224,.22), transparent 60%),
-      radial-gradient(680px 560px at -6% -10%, rgba(10,10,14,.95), transparent 55%),
-      radial-gradient(680px 560px at 106% -8%, rgba(10,10,14,.95), transparent 55%),
-      radial-gradient(760px 620px at 46% 46%, rgba(6,6,9,.85), transparent 60%);
-  }
-
-  .hero-wrap{
-    position:relative;
-    z-index:1;
-    max-width:clamp(1024px, 90vw, 1680px);
-    margin:0 auto;
-    padding:28px clamp(24px, 3vw, 56px) 16px;
-    display:grid;
-    grid-template-columns:1.05fr 1fr;
-    gap:40px;
-    align-items:center;
-  }
-
-  .hero-badge-dot{
-    width:7px; height:7px;
-    border-radius:50%;
-    background:#4ADE80;
-    box-shadow:0 0 8px rgba(74,222,128,.8);
-  }
-
-  .hero-headline{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:clamp(42px,5.4vw,68px);
-    line-height:1.02;
-    letter-spacing:-0.01em;
-    margin-bottom:24px;
-  }
-
-  .hero-headline .line{ display:block; }
-  .line-white{ color:#fff; }
-  .line-violet{ color:#8B8FFF; }
-  .line-green{ color:#4ADE80; }
-
-  .hero-accent-line{
-    width:64px; height:3px;
-    border-radius:2px;
-    background:linear-gradient(90deg,#7c5cff,#5b8dff);
-    margin-bottom:22px;
-  }
-
-  .hero-sub{
-    font-size:21px;
-    font-weight:600;
-    line-height:1.55;
-    color:rgba(255,255,255,.82);
-    max-width:520px;
-    margin-bottom:16px;
-  }
-
-  .tint-violet{ color:#a48cff; font-weight:600; }
-  .tint-blue{ color:#6f93ff; font-weight:600; }
-  .tint-green{ color:#4ADE80; font-weight:600; }
-
-  .hero-desc{
-    font-size:17px;
-    font-weight:600;
-    line-height:1.7;
-    color:rgba(255,255,255,.55);
-    max-width:500px;
-    margin-bottom:34px;
-  }
-
-  .hero-btn-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-  }
-
-  .hero-btn-primary{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:17px 34px;
-    border-radius:999px;
-    background:linear-gradient(180deg, #a48cff 0%, #7c5cff 55%, #6b46e0 100%);
-    color:#141414;
-    font-weight:800;
-    font-size:15.5px;
-    letter-spacing:0.01em;
-    text-decoration:none;
-    border:1px solid rgba(255,255,255,0.18);
-    box-shadow:
-      0 12px 28px rgba(124,92,255,0.35),
-      inset 0 1px 0 rgba(255,255,255,0.4),
-      inset 0 -3px 6px rgba(0,0,0,0.22);
-    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-  }
-
-  .hero-btn-primary svg{ width:16px; height:16px; }
-  .hero-btn-primary:hover,
-  .hero-btn-primary:focus-visible{ filter:brightness(1.08); }
-  .hero-btn-primary:active{
-    transform:translateY(1px);
-    box-shadow:
-      0 6px 16px rgba(124,92,255,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.3),
-      inset 0 -2px 4px rgba(0,0,0,0.22);
-  }
-
-  .hero-btn-secondary{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:15px 27px;
-    border-radius:999px;
-    background:linear-gradient(180deg, #4a4a56 0%, #2c2c35 55%, #1c1c22 100%);
-    color:#fff;
-    font-weight:700;
-    font-size:14.5px;
-    letter-spacing:0.01em;
-    text-decoration:none;
-    border:1px solid rgba(255,255,255,0.16);
-    box-shadow:
-      0 10px 24px rgba(0,0,0,0.4),
-      inset 0 1px 0 rgba(255,255,255,0.22),
-      inset 0 -3px 6px rgba(0,0,0,0.3);
-    transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-  }
-
-  .hero-btn-secondary svg{ width:16px; height:16px; }
-  .hero-btn-secondary:hover,
-  .hero-btn-secondary:focus-visible{ filter:brightness(1.15); }
-  .hero-btn-secondary:active{
-    transform:translateY(1px);
-    box-shadow:
-      0 5px 14px rgba(0,0,0,0.4),
-      inset 0 1px 0 rgba(255,255,255,0.16),
-      inset 0 -2px 4px rgba(0,0,0,0.32);
-  }
-
-  .hero-mobile-photo{
-    display:none;
-    position:relative;
-    width:100%;
-    aspect-ratio:1/1.05;
-    margin-bottom:30px;
-  }
-
-  .mp-clip{
-    position:absolute;
-    inset:0;
-    border-radius:26px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.14);
-    background:#0a0a10;
-    z-index:1;
-  }
-
-  .mp-glow{
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(60% 55% at 20% 15%, rgba(124,92,255,.55), transparent 60%),
-      radial-gradient(55% 60% at 55% 45%, rgba(56,189,248,.4), transparent 65%),
-      radial-gradient(50% 55% at 85% 80%, rgba(74,222,128,.35), transparent 60%),
-      radial-gradient(45% 50% at 90% 25%, rgba(250,204,21,.22), transparent 60%);
-  }
-
-  .mp-orbit{
-    position:absolute;
-    top:9%; left:9%; right:9%; bottom:9%;
-    border:1px solid rgba(255,255,255,.22);
-    border-radius:50%;
-  }
-
-  .mp-orbit-dot{ position:absolute; border-radius:50%; }
-  .mp-dot-1{ width:8px; height:8px; background:#a48cff; top:20%; left:10%; box-shadow:0 0 10px rgba(164,140,255,.9); }
-  .mp-dot-2{ width:6px; height:6px; background:#6f93ff; top:46%; right:4%; box-shadow:0 0 8px rgba(111,147,255,.8); }
-
-  .mp-photo{
-    position:absolute;
-    left:0; right:0; bottom:0;
-    width:100%;
-    height:auto;
-    aspect-ratio:898/1122;
-    object-fit:cover;
-    object-position:bottom;
-    border-radius:0 0 26px 26px;
-    z-index:2;
-  }
-
-  .mp-icon{
-    position:absolute;
-    width:42px; height:42px;
-    border-radius:13px;
-    display:flex; align-items:center; justify-content:center;
-    z-index:3;
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-    border:1px solid rgba(255,255,255,.16);
-  }
-
-  .mp-icon svg{ width:19px; height:19px; }
-
-  .mp-icon-community{ top:9%; right:8%; background:rgba(124,92,255,.3); color:#c9bfff; }
-  .mp-icon-systems{ top:46%; left:6%; background:rgba(47,95,224,.32); color:#a9c1ff; }
-  .mp-icon-growth{ top:60%; right:6%; background:rgba(74,222,128,.3); color:#a8f0c0; }
-
-  .mp-pill{
-    position:absolute;
-    left:6%; bottom:6%;
-    z-index:4;
-    display:flex;
-    align-items:center;
-    gap:9px;
-    padding:9px 16px;
-    border-radius:999px;
-    background:rgba(10,10,16,.78);
-    border:1px solid rgba(74,222,128,.4);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    font-size:10.5px;
-    font-weight:700;
-    letter-spacing:.07em;
-    text-transform:uppercase;
-    color:#eafff0;
-    max-width:88%;
-  }
-
-  .mp-pill-dot{
-    width:7px; height:7px;
-    border-radius:50%;
-    background:#4ADE80;
-    box-shadow:0 0 8px rgba(74,222,128,.8);
-    flex-shrink:0;
-  }
-
-  .hero-col-photo{
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:520px;
-  }
-
-  .hero-orbit{
-    position:absolute;
-    width:520px; height:520px;
-    border:1px dashed rgba(255,255,255,.14);
-    border-radius:50%;
-    z-index:0;
-  }
-
-  .orbit-dot{
-    position:absolute;
-    border-radius:50%;
-  }
-  .orbit-dot-1{ width:9px; height:9px; background:#8B8FFF; top:8%; right:14%; box-shadow:0 0 10px rgba(139,143,255,.8); }
-  .orbit-dot-2{ width:7px; height:7px; background:#4ADE80; top:38%; right:-2%; box-shadow:0 0 10px rgba(74,222,128,.8); }
-  .orbit-dot-3{ width:6px; height:6px; background:rgba(255,255,255,.5); bottom:10%; left:22%; }
-
-  .hero-photo-frame{
-    position:relative;
-    width:460px; height:600px;
-    z-index:1;
-  }
-
-  .hero-photo-glow{
-    position:absolute;
-    inset:-70px;
-    z-index:0;
-    pointer-events:none;
-    background:
-      radial-gradient(46% 42% at 62% 32%, rgba(124,92,255,.55), transparent 68%),
-      radial-gradient(42% 46% at 78% 60%, rgba(47,95,224,.5), transparent 70%),
-      radial-gradient(36% 36% at 40% 75%, rgba(45,212,191,.22), transparent 70%);
-    filter:blur(40px);
-  }
-
-  .hero-photo-img{
-    position:relative;
-    z-index:1;
-    width:100%; height:100%;
-    background-image:url('src/hero-photo.png');
-    background-size:contain;
-    background-position:bottom center;
-    background-repeat:no-repeat;
-    transform:translateY(-24px);
-    -webkit-user-select:none;
-    user-select:none;
-    -webkit-user-drag:none;
-    user-drag:none;
-    pointer-events:none;
-
-    /* fade the hard left/right/bottom photo-crop edges to transparent
-       so they dissolve into whatever sits behind (glow/bg) instead of
-       showing a straight cut line at the shoulders/chest */
-    mask-image:
-      linear-gradient(to right, transparent 0%, #000 9%),
-      linear-gradient(to left,  transparent 0%, #000 9%),
-      linear-gradient(to top,   transparent 0%, #000 16%);
-    mask-repeat:no-repeat;
-    mask-size:100% 100%;
-    mask-composite:intersect;
-    -webkit-mask-image:
-      linear-gradient(to right, transparent 0%, #000 9%),
-      linear-gradient(to left,  transparent 0%, #000 9%),
-      linear-gradient(to top,   transparent 0%, #000 16%);
-    -webkit-mask-repeat:no-repeat;
-    -webkit-mask-size:100% 100%;
-    -webkit-mask-composite:source-in, source-in;
-  }
-
-  .hero-photo-badge{
-    position:absolute;
-    z-index:2;
-    bottom:12%;
-    right:-4%;
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:8px 16px;
-    border-radius:999px;
-    border:1px solid rgba(74,222,128,.28);
-    background:rgba(10,10,16,.72);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    font-size:11.5px;
-    font-weight:700;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:#8fe3ac;
-    white-space:nowrap;
-  }
-
-  .hero-float-card{
-    position:absolute;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    width:186px;
-    padding:16px 16px 15px;
-    border-radius:16px;
-    background:rgba(20,20,28,.72);
-    border:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    box-shadow:0 20px 46px rgba(0,0,0,.35);
-  }
-
-  .float-ic{
-    width:30px; height:30px;
-    border-radius:9px;
-    display:flex; align-items:center; justify-content:center;
-    margin-bottom:6px;
-  }
-  .float-ic svg{ width:15px; height:15px; }
-
-  .card-community{ top:6%; left:-2%; }
-  .card-community .float-ic{ background:rgba(164,140,255,.14); color:#a48cff; }
-
-  .card-systems{ top:50%; left:-6%; }
-  .card-systems .float-ic{ background:rgba(111,147,255,.14); color:#6f93ff; }
-
-  .card-growth{ top:26%; right:-14%; }
-  .card-growth .float-ic{ background:rgba(74,222,128,.14); color:#4ADE80; }
-
-  .float-label{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:11.5px;
-    font-weight:700;
-    letter-spacing:.04em;
-    color:#fff;
-  }
-
-  .float-desc{
-    font-size:12px;
-    line-height:1.4;
-    color:rgba(255,255,255,.6);
-  }
-
-  /* ============ IMPACT SECTION (orbital diagram + message) ============ */
-  .impact-heading{
-    position:relative;
-    z-index:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:20px;
-    max-width:1280px;
-    margin:0 auto;
-    padding:0 32px;
-  }
-
-  .impact-heading-line{
-    flex:1;
-    max-width:220px;
-    height:1px;
-    background:linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
-  }
-
-  .impact-heading span:not(.impact-heading-line){
-    font-family:'Space Grotesk', sans-serif;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:rgba(190,180,255,.85);
-    white-space:nowrap;
-  }
-
-  .impact-kicker{
-    display:none;
-    text-align:left;
-    margin-left:80px;
-    font-family:'Space Grotesk', sans-serif;
-    font-size:15px;
-    font-weight:800;
-    letter-spacing:.2em;
-    text-transform:uppercase;
-    color:rgba(190,180,255,.85);
-    white-space:nowrap;
-    margin-bottom:46px;
-  }
-
-  .impact-diagram-col{
-    display:flex;
-    flex-direction:column;
-    padding-top:6px;
-    min-width:0;
-  }
-
-  /* Desktop swaps the centered mobile/tablet heading (with the two
-     side lines) for the smaller left-aligned kicker sitting above
-     just the diagram column. */
-  @media (min-width:1024px){
-    .impact-heading{ display:none; }
-    .impact-kicker{ display:block; }
-  }
-
-  .impact-section{
-    position:relative;
-    z-index:1;
-    max-width:var(--container-max);
-    margin:0 auto;
-    padding:0 var(--container-pad) 60px;
-    display:grid;
-    grid-template-columns:1fr 1.1fr;
-    gap:48px;
-    align-items:start;
-    overflow:visible;
-  }
-
-  .impact-diagram{
-    position:relative;
-    width:100%;
-    max-width:clamp(494px, 33vw, 610px);
-    aspect-ratio:1/1;
-    margin:14px 0 0;
-    align-self:flex-start;
-  }
-
-  .impact-ring{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:76%;
-    height:76%;
-    z-index:1;
-    filter:drop-shadow(0 0 14px rgba(139,143,255,.35));
-  }
-
-  .impact-connectors{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:1;
-    pointer-events:none;
-  }
-
-  .impact-dot{
-    position:absolute;
-    top:50%; left:50%;
-    width:7px; height:7px;
-    margin:-3.5px 0 0 -3.5px;
-    border-radius:50%;
-    offset-path:circle(38% at 50% 50%);
-    animation:orbitLoop 14s linear infinite;
-    box-shadow:0 0 10px currentColor;
-    z-index:1;
-  }
-
-  .dot-1{ background:#a48cff; color:#a48cff; animation-delay:0s; }
-  .dot-2{ background:#6f93ff; color:#6f93ff; animation-delay:-2.8s; }
-  .dot-3{ background:#4ADE80; color:#4ADE80; animation-delay:-5.6s; }
-  .dot-4{ background:#e6a24d; color:#e6a24d; animation-delay:-8.4s; }
-  .dot-5{ background:#38bdf8; color:#38bdf8; animation-delay:-11.2s; }
-
-  @keyframes orbitLoop{
-    0%{ offset-distance:0%; }
-    100%{ offset-distance:100%; }
-  }
-
-  .impact-center{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:30%;
-    aspect-ratio:1/1;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, rgba(124,92,255,.35), rgba(10,10,16,.92));
-    border:1px solid rgba(164,140,255,.4);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:5px;
-    z-index:2;
-    box-shadow:0 0 40px rgba(124,92,255,.25);
-  }
-
-  .impact-cube{
-    width:30%;
-    color:#8B8FFF;
-    filter:drop-shadow(0 0 10px rgba(139,143,255,.6));
-  }
-
-  .impact-cube svg{ width:100%; height:100%; display:block; }
-
-  .impact-center-label{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:clamp(9px,1.2vw,11.5px);
-    letter-spacing:.08em;
-    color:#fff;
-  }
-
-  .impact-card{
-    position:absolute;
-    width:38%;
-    padding:clamp(9px, 0.8vw, 13px) clamp(11px, 1vw, 15px);
-    border-radius:14px;
-    border:1px solid;
-    background:rgba(14,14,20,.8);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    box-shadow:0 14px 28px rgba(0,0,0,.35);
-    z-index:3;
-  }
-
-  .card-pos-1{ top:-4%; left:50%; transform:translateX(-50%); }
-  .card-pos-2{ top:28%; right:-6%; }
-  .card-pos-3{ bottom:3%; right:2%; }
-  .card-pos-4{ bottom:3%; left:2%; }
-  .card-pos-5{ top:28%; left:-6%; }
-
-  .impact-violet{ border-color:rgba(164,140,255,.35); }
-  .impact-violet .impact-ic{ background:rgba(164,140,255,.15); color:#a48cff; }
-
-  .impact-blue{ border-color:rgba(111,147,255,.35); }
-  .impact-blue .impact-ic{ background:rgba(111,147,255,.15); color:#6f93ff; }
-
-  .impact-green{ border-color:rgba(74,222,128,.35); }
-  .impact-green .impact-ic{ background:rgba(74,222,128,.15); color:#4ADE80; }
-
-  .impact-amber{ border-color:rgba(230,162,77,.35); }
-  .impact-amber .impact-ic{ background:rgba(230,162,77,.15); color:#e6a24d; }
-
-  .impact-blue2{ border-color:rgba(56,189,248,.35); }
-  .impact-blue2 .impact-ic{ background:rgba(56,189,248,.15); color:#38bdf8; }
-
-  .impact-card-row{
-    display:flex;
-    align-items:center;
-    gap:9px;
-  }
-
-  .impact-card-text{
-    min-width:0;
-  }
-
-  .impact-ic{
-    width:clamp(24px, 2.2vw, 30px);
-    height:clamp(24px, 2.2vw, 30px);
-    border-radius:7px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-  }
-
-  .impact-ic svg{ width:clamp(12px, 1.1vw, 15px); height:clamp(12px, 1.1vw, 15px); }
-
-  .impact-card h4{
-    font-size:clamp(11.5px, 1.05vw, 14.5px);
-    font-weight:700;
-    color:#fff;
-    margin-bottom:2px;
-    line-height:1.22;
-  }
-
-  .impact-card p{
-    font-size:clamp(9.8px, 0.9vw, 12.5px);
-    line-height:1.35;
-    color:rgba(255,255,255,.55);
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-  }
-
-  .impact-card p.marquee-mode{
-    display:block;
-    -webkit-line-clamp:unset;
-    white-space:nowrap;
-    overflow:hidden;
-    -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-    mask-image:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-  }
-
-  .impact-desc-track{
-    display:inline-flex;
-    gap:26px;
-    animation:descMarquee 6.5s linear infinite;
-  }
-
-  @keyframes descMarquee{
-    0%{ transform:translateX(0); }
-    100%{ transform:translateX(-50%); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .impact-desc-track{ animation:none; }
-  }
-
-  /* ============ FROM SIGNALS TO IMPACT (before/after stack) ============ */
-  .signals-panel{
-    display:flex;
-    flex-direction:column;
-    position:relative;
-    overflow:visible;
-    margin-top:-42px;
-    min-width:0;
-  }
-
-  .signals-top{
-    position:relative;
-    top:38px;
-    left:22px;
-    margin-bottom:12px;
-  }
-
-  .signals-heading{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:27px;
-    letter-spacing:-0.01em;
-    color:#fff;
-    margin-bottom:10px;
-  }
-
-  .signals-sub{
-    font-size:17px;
-    font-weight:600;
-    line-height:1.55;
-    color:rgba(255,255,255,.6);
-    max-width:380px;
-    margin-bottom:0;
-  }
-
-  .ba-toggle-row{
-    display:flex;
-    justify-content:flex-end;
-    margin-bottom:8px;
-  }
-
-  .ba-toggle{
-    display:flex;
-    gap:10px;
-  }
-
-  .ba-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 17px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.03);
-    color:rgba(255,255,255,.6);
-    font-family:'Space Grotesk', sans-serif;
-    font-size:12.5px;
-    font-weight:700;
-    letter-spacing:.02em;
-    cursor:pointer;
-    transition:border-color .25s ease, background .25s ease, color .25s ease;
-  }
-
-  .ba-dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-  .ba-dot-red{ background:#ef4444; box-shadow:0 0 8px rgba(239,68,68,.7); }
-  .ba-dot-green{ background:#4ADE80; box-shadow:0 0 8px rgba(74,222,128,.7); }
-
-  .ba-btn.ba-before.active{ border-color:rgba(239,68,68,.45); background:rgba(239,68,68,.12); color:#fecaca; }
-  .ba-btn.ba-after.active{ border-color:rgba(74,222,128,.45); background:rgba(74,222,128,.12); color:#bbf7d0; }
-
-  .ba-stack{
-    position:relative;
-    width:100%;
-    max-width:820px;
-    aspect-ratio:1440/1024;
-    margin-left:auto;
-  }
-
-  .ba-shot{
-    position:absolute;
-    inset:0;
-    border-radius:14px;
-    background-size:cover;
-    background-position:top center;
-    background-repeat:no-repeat;
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 30px 70px rgba(0,0,0,.5);
-    transition:transform .5s cubic-bezier(.16,1,.3,1), opacity .5s ease;
-    -webkit-user-select:none;
-    user-select:none;
-    -webkit-user-drag:none;
-    user-drag:none;
-    pointer-events:none;
-  }
-
-  .ba-shot-before{ background-image:url('src/IMG_2673.png'); }
-  .ba-shot-after{ background-image:url('src/IMG_2674.png'); }
-
-  .ba-stack[data-active="after"] .ba-shot-after{
-    transform:translate(0,0) scale(1);
-    opacity:1;
-    z-index:2;
-  }
-  .ba-stack[data-active="after"] .ba-shot-before{
-    transform:translate(-7%,9%) scale(.93);
-    opacity:.85;
-    z-index:1;
-  }
-
-  .ba-stack[data-active="before"] .ba-shot-before{
-    transform:translate(0,0) scale(1);
-    opacity:1;
-    z-index:2;
-  }
-  .ba-stack[data-active="before"] .ba-shot-after{
-    transform:translate(-7%,9%) scale(.93);
-    opacity:.85;
-    z-index:1;
-  }
-
-  /* Signals panel (before/after) is desktop/large-tablet only —
-     mobile keeps the diagram-only impact view untouched. */
-  @media (max-width:1023px){
-    .signals-panel{ display:none !important; }
-  }
-
-  @media (max-width:1023px){
-    .impact-heading{ padding:0 20px; }
-    .impact-heading-line{ max-width:60px; }
-    .impact-heading span:not(.impact-heading-line){ font-size:10.5px; }
-    .impact-section{ grid-template-columns:1fr; padding:24px 20px 44px; gap:0; }
-    .impact-diagram-col{ align-items:center; }
-    .impact-diagram{ max-width:340px; margin:0 auto; align-self:center; }
-    .impact-card p{ -webkit-line-clamp:1; }
-    .card-pos-2, .card-pos-5{ top:31%; }
-  }
-
-  /* Tablet gets a bigger diagram than phones — there's the extra width
-     to spare and a 340px cap would look lost in the middle of the
-     screen. Placed after the rule above so it wins in the 640–1023
-     overlap; phones (<640, where this query doesn't match) keep 340px. */
-  @media (min-width:640px) and (max-width:1023px){
-    .impact-diagram{ max-width:clamp(360px, 46vw, 480px); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .impact-dot{ animation:none; offset-distance:0%; }
-  }
-
-  @media (max-width:639px){
-    .hero-wrap{ max-width:100%; grid-template-columns:1fr; padding:28px 20px 36px; text-align:left; z-index:150; }
-    .hero-col-photo{ display:none; }
-    .hero-sub{ font-size:19px; font-weight:400; }
-    .hero-desc{ font-size:15px; font-weight:400; }
-    .hero-headline{ margin-top:-60px; }
-    .hero-mobile-photo{ display:block; }
-    .hero-btn-row{ flex-direction:column; width:100%; }
-    .hero-btn-primary, .hero-btn-secondary{ width:100%; justify-content:center; }
-
-    /* glossy-pill treatment, phone only */
-    .hero-btn-primary{
-      background:linear-gradient(180deg, #a48cff 0%, #7c5cff 55%, #6b46e0 100%);
-      border:1px solid rgba(255,255,255,0.18);
-      box-shadow:
-        0 12px 28px rgba(124,92,255,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.4),
-        inset 0 -3px 6px rgba(0,0,0,0.22);
-      transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-    }
-    .hero-btn-primary:active{
-      transform:translateY(1px);
-      box-shadow:
-        0 6px 16px rgba(124,92,255,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.3),
-        inset 0 -2px 4px rgba(0,0,0,0.22);
-    }
-
-    .hero-btn-secondary{
-      background:linear-gradient(180deg, #2a2a30 0%, #08080b 55%, #000000 100%);
-      border:1px solid rgba(255,255,255,0.18);
-      box-shadow:
-        0 12px 28px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.12),
-        inset 0 -3px 6px rgba(0,0,0,0.35);
-      transition:filter 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-    }
-    .hero-btn-secondary:active{
-      transform:translateY(1px);
-      box-shadow:
-        0 6px 16px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.1),
-        inset 0 -2px 4px rgba(0,0,0,0.3);
-    }
-  }
-
-  /* ============ TABLET (640–1023px) ============
-     Inherits desktop's two-column structure (photo beside text, not
-     stacked like phone) so the portrait photo never dominates the
-     screen the way the phone layout would if simply stretched wider.
-     Everything below is desktop's approach at reduced scale, not a
-     copy of the phone layout. */
-  @media (min-width:640px) and (max-width:1023px){
-    .hero-wrap{ gap:clamp(20px, 4vw, 40px); }
-    .hero-sub{ font-size:18px; }
-    .hero-desc{ font-size:15px; }
-
-    .hero-col-photo{ min-height:clamp(320px, 46vw, 460px); }
-
-    .hero-orbit{ width:clamp(260px, 40vw, 380px); height:clamp(260px, 40vw, 380px); }
-
-    .hero-photo-frame{
-      width:clamp(240px, 32vw, 340px);
-      height:clamp(310px, 42vw, 440px);
-    }
-    .hero-photo-glow{ inset:-40px; filter:blur(26px); }
-
-    .hero-float-card{
-      width:clamp(140px, 20vw, 168px);
-      padding:12px 12px 11px;
-      gap:3px;
-    }
-    .float-ic{ width:24px; height:24px; margin-bottom:4px; }
-    .float-ic svg{ width:12px; height:12px; }
-    .float-label{ font-size:10.5px; }
-    .float-desc{ font-size:11px; line-height:1.35; }
-
-    .hero-btn-primary{ padding:clamp(13px, 2vw, 17px) clamp(22px, 4vw, 34px); }
-    .hero-btn-secondary{ padding:clamp(12px, 1.8vw, 15px) clamp(18px, 3vw, 27px); }
-  }
-
-  @media (max-width:420px){
-    .mp-icon{ width:36px; height:36px; border-radius:11px; }
-    .mp-icon svg{ width:16px; height:16px; }
-    .mp-pill{ font-size:9.5px; padding:8px 13px; }
-  }
-
-  /* ============ FEATURED PROJECTS ============ */
-  .projects-new{ position:relative; background:#050507; overflow:hidden; }
-  .projects-new .wrap{ max-width:var(--container-max); }
-
-  .projects-glow{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    background:
-      linear-gradient(180deg, #050507 0%, #050507 6%, rgba(5,5,7,0) 22%),
-      radial-gradient(560px 460px at 90% 4%, rgba(230,162,77,.22), transparent 60%),
-      radial-gradient(520px 420px at 96% 16%, rgba(74,222,128,.16), transparent 60%),
-      radial-gradient(560px 460px at 6% 2%, rgba(45,212,191,.18), transparent 60%),
-      radial-gradient(520px 420px at 2% 14%, rgba(124,92,255,.2), transparent 60%),
-      radial-gradient(900px 700px at 50% 20%, rgba(124,92,255,.3), transparent 65%);
-  }
-
-  .proj-cards-row{
-    position:relative;
-    z-index:1;
-    display:flex;
-    gap:28px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    padding-bottom:10px;
-    margin-bottom:76px;
-  }
-
-  .proj-cards-row::-webkit-scrollbar{ height:6px; }
-  .proj-cards-row::-webkit-scrollbar-thumb{ background:var(--card-border); border-radius:3px; }
-
-  .proj-card{
-    flex:0 0 calc((100% - 56px)/3);
-    height:460px;
-    scroll-snap-align:start;
-    display:flex;
-    flex-direction:column;
-    padding:26px;
-    border-radius:24px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-    box-shadow:0 30px 70px rgba(0,0,0,.55), 0 10px 24px rgba(0,0,0,.4);
-    transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
-  }
-
-  .proj-card:hover{ transform:translateY(-6px); box-shadow:0 36px 84px rgba(0,0,0,.6), 0 14px 30px rgba(0,0,0,.45); }
-
-  .proj-status{
-    position:absolute;
-    z-index:2;
-    top:14px;
-    left:14px;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:7px 15px;
-    border-radius:999px;
-    font-family:'Space Grotesk', sans-serif;
-    font-size:12px;
-    font-weight:700;
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    box-shadow:0 8px 20px rgba(0,0,0,.35);
-  }
-
-  .proj-status-dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-
-  .proj-status--active{ background:rgba(10,20,14,.72); color:#8fe3ac; border:1px solid rgba(74,222,128,.4); }
-  .proj-status--active .proj-status-dot{ background:#4ADE80; box-shadow:0 0 8px rgba(74,222,128,.8); }
-
-  .proj-status--progress{ background:rgba(24,18,8,.72); color:#f3c98a; border:1px solid rgba(230,162,77,.45); }
-  .proj-status--progress .proj-status-dot{ background:#e6a24d; box-shadow:0 0 8px rgba(230,162,77,.7); }
-
-  .proj-status--soon{ background:rgba(10,10,16,.72); color:#e2e2e6; border:1px solid rgba(255,255,255,.18); }
-
-  .proj-shot{
-    position:relative;
-    flex:0 0 63%;
-    border-radius:14px;
-    overflow:hidden;
-    margin:-20px -20px 20px -20px;
-    background:#0a0a10;
-  }
-
-  .proj-shot img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-  .proj-body{
-    flex:0 0 37%;
-    min-height:0;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
-
-  .proj-title{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:19px;
-    font-weight:700;
-    color:var(--text-hi);
-    margin-bottom:6px;
-  }
-
-  .proj-desc{
-    font-size:14px;
-    line-height:1.45;
-    color:var(--text-mid);
-    margin-bottom:10px;
-    min-height:0;
-    overflow:hidden;
-    display:-webkit-box;
-    -webkit-line-clamp:3;
-    -webkit-box-orient:vertical;
-  }
-
-  .proj-cta-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    margin-top:auto;
-    flex-shrink:0;
-  }
-
-  .proj-cta-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:11px 22px;
-    border-radius:999px;
-    border:1.5px solid var(--purple);
-    color:var(--purple);
-    font-family:'Space Grotesk', sans-serif;
-    font-size:14px;
-    font-weight:700;
-    text-decoration:none;
-    transition:background .25s ease, transform .25s ease;
-  }
-
-  .proj-cta-btn svg{ width:15px; height:15px; }
-  .proj-cta-btn:hover{ background:var(--purple-soft); transform:translateY(-2px); }
-
-  .proj-link-ic{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:40px; height:40px;
-    flex-shrink:0;
-    border-radius:50%;
-    border:1px solid var(--card-border);
-    background:none;
-    padding:0;
-    margin:0;
-    font-family:inherit;
-    cursor:pointer;
-    -webkit-appearance:none;
-    appearance:none;
-    color:var(--text-mid);
-    transition:border-color .25s ease, color .25s ease;
-    position:relative;
-  }
-
-  .proj-link-ic svg{ width:17px; height:17px; }
-  .proj-link-ic:hover{ border-color:var(--purple); color:var(--purple); }
-
-  /* Hover tooltip — desktop only (a touch device has no hover state to
-     trigger this, which is intentional; mobile gets the long-press
-     menu instead). */
-  .proj-link-ic[data-tooltip]::after{
-    content:attr(data-tooltip);
-    position:absolute;
-    bottom:calc(100% + 10px);
-    left:50%;
-    transform:translateX(-50%) translateY(4px);
-    white-space:nowrap;
-    padding:6px 12px;
-    border-radius:8px;
-    background:rgba(10,10,16,.92);
-    border:1px solid var(--card-border);
-    color:#f5f5f7;
-    font-family:'Inter', sans-serif;
-    font-size:11.5px;
-    font-weight:600;
-    pointer-events:none;
-    opacity:0;
-    transition:opacity .18s ease, transform .18s ease;
-    z-index:5;
-  }
-  @media (hover:hover){
-    .proj-link-ic[data-tooltip]:hover::after{ opacity:1; transform:translateX(-50%) translateY(0); }
-  }
-
-  /* ============ FLOATING LINK MENU + TOAST ============
-     Shared by: the VincesLink repo icon (right-click / long-press)
-     and the Alfalf AI multi-link icon (click). Positioned via JS
-     using position:fixed so it always renders correctly regardless
-     of the card sitting inside a scrolling/clipping row. */
-  .proj-float-menu{
-    position:fixed;
-    z-index:9999;
-    min-width:196px;
-    padding:6px;
-    border-radius:14px;
-    background:rgba(14,14,20,.97);
-    border:1px solid var(--card-border);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-    box-shadow:0 20px 50px rgba(0,0,0,.5);
-    opacity:0;
-    transform:translateY(4px) scale(.98);
-    transition:opacity .15s ease, transform .15s ease;
-    pointer-events:none;
-  }
-  .proj-float-menu.is-open{
-    opacity:1;
-    transform:translateY(0) scale(1);
-    pointer-events:auto;
-  }
-
-  .proj-float-menu-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    width:100%;
-    padding:10px 12px;
-    border-radius:9px;
-    background:none;
-    border:none;
-    font-family:'Inter', sans-serif;
-    font-size:13.5px;
-    font-weight:600;
-    color:#f0f0f2;
-    text-align:left;
-    cursor:pointer;
-    transition:background .15s ease;
-  }
-  .proj-float-menu-item:hover,
-  .proj-float-menu-item:focus-visible{ background:rgba(255,255,255,.08); outline:none; }
-  .proj-float-menu-item svg{ width:16px; height:16px; flex-shrink:0; color:var(--text-mid); }
-
-  .proj-toast{
-    position:fixed;
-    z-index:9999;
-    padding:10px 18px;
-    border-radius:999px;
-    background:rgba(10,20,14,.94);
-    border:1px solid rgba(74,222,128,.4);
-    color:#8fe3ac;
-    font-family:'Space Grotesk', sans-serif;
-    font-size:13px;
-    font-weight:700;
-    opacity:0;
-    transform:translateY(6px);
-    transition:opacity .2s ease, transform .2s ease;
-    pointer-events:none;
-  }
-  .proj-toast.is-show{ opacity:1; transform:translateY(0); }
-
-  .proj-soon-pill{
-    display:inline-flex;
-    align-items:center;
-    padding:13px 24px;
-    border-radius:999px;
-    border:1px solid var(--card-border);
-    color:var(--text-lo);
-    font-family:'Space Grotesk', sans-serif;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-  }
-
-  .proj-card--muted{ box-shadow:0 20px 50px rgba(0,0,0,.4); }
-  .proj-card--muted:hover{ transform:none; box-shadow:0 20px 50px rgba(0,0,0,.4); }
-  .proj-card--muted .proj-shot img{ filter:grayscale(.5) brightness(.75); }
-  .proj-card--muted .proj-title{ color:var(--text-mid); }
-  .proj-card--muted .proj-desc{ color:var(--text-lo); }
-
-  /* ============ PROJECT CARDS — TABLET (640–1023px) ============
-     2 cards visible by default, exact-fit via calc() so there's never
-     leftover dead space at any width in this range — the 3rd card
-     sits just past the edge, reachable by the same scroll/snap
-     already on the row. Same 63/37 split as mobile and desktop.
-     Sizing verified by render at both 640px and 1023px since it's a
-     wide range. */
-  @media (min-width:640px) and (max-width:1023px){
-    .proj-card{
-      flex:0 0 calc((100% - 28px)/2);
-      height:420px;
-      padding:24px;
-    }
-    .proj-shot{ flex:0 0 63%; margin:-18px -18px 18px -18px; }
-    .proj-body{ flex:0 0 37%; }
-
-    .proj-title{ font-size:18px; margin-bottom:6px; }
-
-    .proj-desc{
-      font-size:13.5px;
-      line-height:1.42;
-      margin-bottom:9px;
-    }
-
-    .proj-cta-btn{ padding:10px 20px; font-size:13.5px; }
-    .proj-link-ic{ width:37px; height:37px; }
-  }
-
-  /* ============ PROJECT CARDS — MOBILE-ONLY (≤639px) ============
-     Scoped to phones only. Desktop/tablet card sizing, split, and
-     spacing are untouched here on purpose — mobile-only, desktop
-     gets its own pass later.
-     Height locked to 400px. Image 63% / text 37%. Sizing below is
-     tuned tightly to that fixed 37% budget so title, description,
-     and the CTA row pack with small, even gaps — no leftover dead
-     space, nothing touching. Verified by rendering, not by hand. */
-  @media (max-width:639px){
-    /* Free-scrolling carousel: break the row out of the page's
-       centered .wrap so its scroll/clip boundary is the true screen
-       edge, not the wrap's inner padding. 22px padding here only
-       gives the resting first/last card a matching inset — every
-       card in between bleeds edge-to-edge and slides fully past the
-       real screen edges as you swipe, instead of being clipped by an
-       inner box. */
-    .proj-cards-row{
-      margin-left:calc(50% - 50vw);
-      margin-right:calc(50% - 50vw);
-      padding-left:2px;
-      padding-right:22px;
-    }
-
-    .proj-card{ flex:0 0 88vw; height:400px; padding:22px; }
-    .proj-shot{ flex:0 0 63%; margin:-16px -16px 16px -16px; }
-    .proj-body{ flex:0 0 37%; }
-
-    .proj-title{ font-size:17px; margin-bottom:6px; }
-
-    .proj-desc{
-      flex:0 1 auto;
-      font-size:13px;
-      line-height:1.4;
-      margin-bottom:8px;
-    }
-
-    .proj-cta-row{ margin-top:auto; }
-    .proj-cta-btn{ padding:9px 18px; font-size:12.5px; gap:6px; }
-    .proj-cta-btn svg{ width:13px; height:13px; }
-    .proj-link-ic{ width:34px; height:34px; }
-    .proj-link-ic svg{ width:15px; height:15px; }
-  }
-
-  .ts-title{ margin-top:12px; }
-
-  /* ============ TECH STACK (marquee rows) ============ */
-  .ts-head{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--text-lo);
-    text-align:center;
-    margin:0 0 24px;
-  }
-
-  .ts-hr{
-    width:100%;
-    max-width:560px;
-    height:1px;
-    margin:24px auto;
-    background:linear-gradient(90deg, transparent, var(--card-border), transparent);
-  }
-
-  .ts-row-wrap{
-    overflow:hidden;
-    width:100%;
-    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  }
-
-  .ts-track{
-    display:inline-flex;
-    align-items:center;
-    white-space:nowrap;
-    width:max-content;
-    animation:tsScroll 32s linear infinite;
-  }
-
-  .ts-row-wrap:hover .ts-track{ animation-play-state:paused; }
-
-  .ts-dir-right{ animation-direction:reverse; }
-
-  @keyframes tsScroll{
-    from{ transform:translateX(0); }
-    to{ transform:translateX(-50%); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .ts-track{ animation:none; }
-  }
-
-  .ts-item{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:0 30px;
-    flex-shrink:0;
-    border-right:1px solid var(--card-border);
-  }
-
-  .ts-ic{
-    width:20px; height:20px;
-    flex-shrink:0;
-    border-radius:5px;
-    overflow:hidden;
-    display:flex; align-items:center; justify-content:center;
-  }
-
-  .ts-ic svg, .ts-ic img{ width:100%; height:100%; }
-
-  .ts-label{
-    font-size:13px;
-    font-weight:600;
-    color:var(--text-mid);
-    white-space:nowrap;
-  }
-
-  /* ============ FOOTER ============ */
-  footer.footer{
-    text-align:center;
-    padding:36px 0 50px;
-    font-size:12px;
-    color:var(--text-lo);
-    position:relative;
-    z-index:1;
-  }
-
-  /* =======================================================
-     RESPONSIVE
-     ======================================================= */
-  @media (max-width:600px){
-    section.section{ padding:80px 0; }
-    .wrap{ padding:0 22px; }
-    .section-title{ font-size:26px; }
-    .ts-item{ padding:0 18px; gap:8px; }
-    .ts-ic{ width:17px; height:17px; }
-    .ts-label{ font-size:12px; }
-  }
+    column-gap:32px;
+  }
+  .cf-footer-copyright{ justify-self:center; }
+  .cf-footer-contact{ flex-direction:row; align-items:center; justify-self:end; gap:26px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .cf-orb, .cf-content.in-view .cf-title-card span{ animation:none !important; }
+  .reveal, .cf-item, .cf-content.in-view .cf-item--cta{ transition:none !important; }
+  .cf-cta-wrap{ position:relative; bottom:auto; }
+  .cf-top-btn{ transition:opacity .3s ease; transform:none !important; }
+}
+
+@media (max-width:640px){
+  /* The ghost "CONTACT" title scales with viewport width (21vw) — fine on
+     wide screens, but on phones that meant it clipped hard off both edges
+     rather than reading as an intentional bleed. Contained here instead. */
+  .cf-title-card span{ font-size:clamp(2.8rem, 15vw, 6rem); }
+
+  .cf-socials{ gap:10px; }
+  .cf-socials a{ font-size:.85rem; font-weight:600; padding:9px 14px; }
+  .cf-socials svg, .cf-socials img{ width:16px; height:16px; }
+  .cf-cta{ padding:22px 38px; font-size:1.02rem; }
+  .cf-cta svg{ width:26px; height:26px; }
+  .cf-bar{ padding:12px 16px; font-size:1.05rem; font-weight:700; gap:10px; }
+  .cf-bar svg, .cf-bar img{ width:19px; height:19px; }
+}
 </style>
 </head>
 <body>
 
-<nav class="site-nav" id="siteNav">
-  <div class="nav-inner">
-    <div class="nav-glass-lens" aria-hidden="true"></div>
-    <a class="nav-brand" href="#home" aria-label="Uche Japheth">
-      <span id="logoText" class="logo-text" aria-hidden="true"></span><span id="logoCursor" class="logo-cursor" aria-hidden="true"></span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="#home" class="nav-link" data-nav="home">Home</a>
-      <a href="#ethos" class="nav-link" data-nav="ethos">Ethos & Execution</a>
-      <a href="#experience" class="nav-link" data-nav="experience">Experience</a>
-      <a href="#projects" class="nav-link" data-nav="projects">Projects</a>
-      <a href="#about" class="nav-link" data-nav="about">About</a>
-      <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
-    </div>
-    <a class="nav-cta" href="#contact">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-8-8 18-2-8-8-2Z"/></svg>
-      Put Me To Work
-    </a>
-    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
-      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
-    </button>
+<section class="section cf-section" id="contact">
+  <div class="cf-atmosphere" aria-hidden="true">
+    <div class="cf-orb cf-orb--amber"></div>
+    <div class="cf-orb cf-orb--purple"></div>
+    <div class="cf-orb cf-orb--blue"></div>
   </div>
-  <div class="nav-mobile-menu" id="navMobileMenu">
-    <div class="nav-glass-lens nav-glass-lens-drawer" aria-hidden="true"></div>
-    <a href="#home" class="nav-link nav-mobile-link" data-nav="home">Home</a>
-    <a href="#ethos" class="nav-link nav-mobile-link" data-nav="ethos">Ethos & Execution</a>
-    <a href="#experience" class="nav-link nav-mobile-link" data-nav="experience">Experience</a>
-    <a href="#projects" class="nav-link nav-mobile-link" data-nav="projects">Projects</a>
-    <a href="#about" class="nav-link nav-mobile-link" data-nav="about">About</a>
-    <a href="#contact" class="nav-link nav-mobile-link" data-nav="contact">Contact</a>
-    <a href="#contact" class="nav-mobile-cta">PUT ME TO WORK</a>
-  </div>
-</nav>
+  <div class="cf-grain" aria-hidden="true"></div>
+  <div class="cf-vignette" aria-hidden="true"></div>
 
-<button class="nav-hamburger-static" id="navHamburgerStatic" aria-label="Open menu" aria-expanded="false">
-  <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
-</button>
+  <div class="wrap">
+    <div class="cf-content reveal">
 
-<header class="hero-new" id="home">
-  <div class="hero-glow" aria-hidden="true"></div>
+      <div class="cf-title-card" aria-hidden="true"><span>CONTACT</span></div>
 
-  <div class="hero-wrap">
-    <div class="hero-mobile-photo">
-      <div class="mp-clip">
-        <div class="mp-glow"></div>
-        <div class="mp-orbit">
-          <span class="mp-orbit-dot mp-dot-1"></span>
-          <span class="mp-orbit-dot mp-dot-2"></span>
-        </div>
+      <h2 class="cf-heading cf-item" style="--d:.05s">Let's work on<br>something meaningful.</h2>
+
+      <p class="cf-sub cf-item" style="--d:.2s">Have a project, role, collaboration, or idea in mind? Let's talk.</p>
+
+      <div class="cf-cta-wrap cf-item cf-item--cta" style="--d:.35s">
+        <span class="cf-cta-ring">
+          <a class="cf-cta" href="mailto:camzyxworld@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10.5V8.2c0-.94-.76-1.7-1.7-1.7H4.7C3.76 6.5 3 7.26 3 8.2v7.6c0 .94.76 1.7 1.7 1.7h8.6c.94 0 1.7-.76 1.7-1.7v-2.3l4 2.6V7.9l-4 2.6Z"/></svg>
+            Book a call
+          </a>
+        </span>
       </div>
-      <img class="mp-photo" src="src/UJ pfp.png" alt="Uche Japheth" width="898" height="1122">
-      <span class="mp-icon mp-icon-community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-      <span class="mp-icon mp-icon-systems"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
-      <span class="mp-icon mp-icon-growth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
-      <div class="mp-pill"><span class="mp-pill-dot"></span>Community is Product</div>
-    </div>
 
-    <div class="hero-col-text">
-      <h1 class="hero-headline">
-        <span class="line line-white">Community.</span>
-        <span class="line line-violet">Systems.</span>
-        <span class="line line-green">Growth.</span>
-      </h1>
-
-      <div class="hero-accent-line"></div>
-
-      <p class="hero-sub">Building <span class="tint-violet">communities</span>, improving <span class="tint-blue">systems</span>, and creating structure through <span class="tint-green">technology</span>.</p>
-
-      <p class="hero-desc">I work across community, content, operations, and technology, connecting the people, information, and systems that help businesses grow.</p>
-
-      <div class="hero-btn-row">
-        <a class="hero-btn-primary" href="#projects">Explore my work
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <div class="cf-bars cf-item" style="--d:.5s">
+        <a class="cf-bar" href="mailto:camzyxworld@gmail.com">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/aws-res-amazon-simple-email-service-email/default.svg" alt="Amazon Simple Email Service Email" width="24" height="24">
+          camzyxworld@gmail.com
         </a>
-        <a class="hero-btn-secondary" href="#resumes">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5a1 1 0 0 0 1 1h5"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/></svg>
-          View my resumes
+        <a class="cf-bar" href="https://t.me/jappro" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/telegram/default.svg" alt="Telegram" width="24" height="24">
+          Telegram
         </a>
       </div>
+
+      <div class="cf-divider cf-item" style="--d:.6s" aria-hidden="true"></div>
+
+      <div class="cf-socials cf-item" style="--d:.7s">
+        <a href="https://linkedin.com/in/jappr0" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/linkedin/default.svg" alt="LinkedIn" width="24" height="24">
+          LinkedIn
+        </a>
+        <a href="https://x.com/jappr0?s=11" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/x-formerly-twitter/default.svg" alt="X (formerly Twitter)" width="24" height="24">
+          X(Twitter)
+        </a>
+        <a href="https://github.com/jappro" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/github/dark.svg" alt="GitHub" width="24" height="24">
+          GitHub
+        </a>
+      </div>
+
     </div>
-
-    <div class="hero-col-photo">
-      <div class="hero-orbit" aria-hidden="true">
-        <span class="orbit-dot orbit-dot-1"></span>
-        <span class="orbit-dot orbit-dot-2"></span>
-        <span class="orbit-dot orbit-dot-3"></span>
-      </div>
-
-      <div class="hero-photo-frame">
-        <div class="hero-photo-glow" aria-hidden="true"></div>
-        <div class="hero-photo-img" role="img" aria-label="Uche Japheth"></div>
-      </div>
-
-      <div class="hero-float-card card-community">
-        <span class="float-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-        <span class="float-label">COMMUNITY</span>
-        <span class="float-desc">Building &amp; nurturing engaged communities</span>
-      </div>
-
-      <div class="hero-float-card card-systems">
-        <span class="float-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
-        <span class="float-label">SYSTEMS</span>
-        <span class="float-desc">Designing processes that scale</span>
-      </div>
-
-      <div class="hero-float-card card-growth">
-        <span class="float-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
-        <span class="float-label">GROWTH</span>
-        <span class="float-desc">Driving growth through strategy &amp; content</span>
-      </div>
-
-      <div class="hero-photo-badge"><span class="hero-badge-dot"></span>Community is Product</div>
-    </div>
-  </div>
-
-  <div class="impact-heading">
-    <span class="impact-heading-line"></span>
-    <span>How I Drive Product Impact</span>
-    <span class="impact-heading-line"></span>
-  </div>
-
-  <div class="impact-section">
-
-    <div class="impact-diagram-col">
-      <span class="impact-kicker">How I Drive Product Impact</span>
-
-    <div class="impact-diagram">
-      <svg class="impact-ring" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#a48cff"/>
-            <stop offset="45%" stop-color="#38bdf8"/>
-            <stop offset="100%" stop-color="#4ADE80"/>
-          </linearGradient>
-        </defs>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#ringGrad)" stroke-width="0.9" opacity="0.55"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="0.3" stroke-dasharray="0.5 2.5"/>
-      </svg>
-      <svg class="impact-connectors" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <line x1="50" y1="34" x2="50" y2="13" stroke="#a48cff" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
-        <line x1="63.9" y1="42" x2="82" y2="31" stroke="#6f93ff" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
-        <line x1="59.2" y1="63.1" x2="71.5" y2="80.5" stroke="#4ADE80" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
-        <line x1="40.8" y1="63.1" x2="28.5" y2="80.5" stroke="#e6a24d" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
-        <line x1="36.1" y1="42" x2="18" y2="31" stroke="#38bdf8" stroke-width="0.4" stroke-linecap="round" stroke-dasharray="1.2 1.4" opacity="0.85"/>
-      </svg>
-      <span class="impact-dot dot-1"></span>
-      <span class="impact-dot dot-2"></span>
-      <span class="impact-dot dot-3"></span>
-      <span class="impact-dot dot-4"></span>
-      <span class="impact-dot dot-5"></span>
-
-      <div class="impact-center">
-        <span class="impact-cube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.3 6.6 3.7-6.6 3.7-6.6-3.7L12 4.3ZM5 9.2l6 3.4v6.9l-6-3.3V9.2Zm8 10.3v-6.9l6-3.4v6.9l-6 3.4Z"/></svg></span>
-        <span class="impact-center-label">PRODUCT</span>
-      </div>
-
-      <div class="impact-card card-pos-1 impact-violet">
-        <div class="impact-card-row">
-          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-          <div class="impact-card-text">
-            <h4>Web3 Community Builder</h4>
-            <p class="impact-desc">Community Operations &amp; Engagement</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="impact-card card-pos-2 impact-blue">
-        <div class="impact-card-row">
-          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
-          <div class="impact-card-text">
-            <h4>Content &amp; Growth</h4>
-            <p class="impact-desc">Social Media Strategy &amp; Content Creation</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="impact-card card-pos-3 impact-green">
-        <div class="impact-card-row">
-          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/></svg></span>
-          <div class="impact-card-text">
-            <h4>Customer Experience</h4>
-            <p class="impact-desc">Voice of Customer &amp; Experience Insights</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="impact-card card-pos-4 impact-amber">
-        <div class="impact-card-row">
-          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
-          <div class="impact-card-text">
-            <h4>Operations &amp; Systems</h4>
-            <p class="impact-desc">Process Improvement &amp; Workflow Design</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="impact-card card-pos-5 impact-blue2">
-        <div class="impact-card-row">
-          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V13"/><path d="M11 20V8"/><path d="M18 20V4"/></svg></span>
-          <div class="impact-card-text">
-            <h4>Data &amp; Insights</h4>
-            <p class="impact-desc">Data Analysis &amp; Reporting</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div class="signals-panel">
-      <div class="signals-top">
-        <div class="signals-text">
-          <h3 class="signals-heading">From Signals to Impact</h3>
-          <p class="signals-sub">What changes when people, information, and decisions start connecting.</p>
-        </div>
-      </div>
-
-      <div class="ba-toggle-row" id="baToggleRow">
-        <div class="ba-toggle" role="group" aria-label="Before and after dashboard toggle">
-          <button type="button" class="ba-btn ba-before" data-state="before" aria-pressed="false">
-            <span class="ba-dot ba-dot-red"></span>Before
-          </button>
-          <button type="button" class="ba-btn ba-after active" data-state="after" aria-pressed="true">
-            <span class="ba-dot ba-dot-green"></span>After
-          </button>
-        </div>
-      </div>
-
-      <div class="ba-stack" id="baStack" data-active="after">
-        <div class="ba-shot ba-shot-before" role="img" aria-label="Before dashboard"></div>
-        <div class="ba-shot ba-shot-after" role="img" aria-label="After dashboard"></div>
-      </div>
-    </div>
-
-  </div>
-</header>
-
-<section class="section" id="ethos">
-  <div class="wrap">
-    <!-- Ethos & Execution section — to be plugged in -->
   </div>
 </section>
 
-<section class="section" id="experience">
-  <div class="wrap">
-    <!-- Experience + Testimonial section — to be plugged in -->
-  </div>
-</section>
+<!-- Reusable SVG filter that gives the floating button's glass layer its "liquid" warp.
+     feTurbulence generates a noise field, feDisplacementMap uses it to bend the glass
+     layer's pixels along that noise — the same trick behind most "liquid glass" UI effects. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="cfLiquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.025" numOctaves="2" seed="7" result="cfNoise"/>
+    <feGaussianBlur in="cfNoise" stdDeviation="2" result="cfSoftNoise"/>
+    <feDisplacementMap in="SourceGraphic" in2="cfSoftNoise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
 
-<section class="section projects-new" id="projects">
-  <div class="projects-glow" aria-hidden="true"></div>
-  <div class="wrap">
-    <h2 class="section-title reveal">Featured Projects</h2>
-
-    <div class="proj-cards-row">
-
-      <div class="proj-card reveal">
-        <div class="proj-shot"><div class="proj-status proj-status--active"><span class="proj-status-dot"></span>Active</div><img src="src/vinceslink-project.jpg" alt="VincesLink preview" loading="lazy"></div>
-        <div class="proj-body">
-        <h3 class="proj-title">VincesLink</h3>
-        <p class="proj-desc">Designed and built the official business website for VINCESlink using modern AI-assisted development workflows.</p>
-        <div class="proj-cta-row">
-          <a class="proj-cta-btn" href="https://www.vinceslink.com" target="_blank" rel="noopener">View Stack <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-          <a class="proj-link-ic proj-link-ic--repo" href="https://github.com/jappro/vinceslink" target="_blank" rel="noopener" aria-label="VincesLink GitHub repository" data-tooltip="Visit Repository" data-repo-url="https://github.com/jappro/vinceslink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 5.5"/><path d="M14 10a5 5 0 0 0-7.07 0L4.1 12.83a5 5 0 0 0 7.07 7.07L12.5 18.5"/></svg></a>
-        </div>
-        </div>
-      </div>
-
-      <div class="proj-card reveal">
-        <div class="proj-shot"><div class="proj-status proj-status--progress"><span class="proj-status-dot"></span>In Process</div><img src="src/alfalfai-project.jpg" alt="Alfalf AI preview" loading="lazy"></div>
-        <div class="proj-body">
-        <h3 class="proj-title">Alfalf AI</h3>
-        <p class="proj-desc">An AI-powered operations platform helping Web3 projects design structured, retention-driven community campaigns.</p>
-        <div class="proj-cta-row">
-          <a class="proj-cta-btn" href="src/trim_BB67EF15-4FCE-4AED-9A5C-3EF23473CF4B.mp4" target="_blank" rel="noopener">See Demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-          <button type="button" class="proj-link-ic proj-link-ic--multi" aria-label="More Alfalf AI links" data-tooltip="More Links" data-github-url="https://github.com/jappro/alfalf-audit" data-telegram-url="https://t.me/AlfalfAI_bot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></button>
-        </div>
-        </div>
-      </div>
-
-      <div class="proj-card proj-card--muted reveal">
-        <div class="proj-shot"><div class="proj-status proj-status--soon">Coming Soon</div><img src="src/project-relay-project.jpg" alt="Project Relay preview" loading="lazy"></div>
-        <div class="proj-body">
-        <h3 class="proj-title">Project Relay</h3>
-        <p class="proj-desc">A trusted internet-sharing system built around consent, privacy, and controlled access.</p>
-        <div class="proj-cta-row">
-          <span class="proj-soon-pill">Coming Soon</span>
-        </div>
-        </div>
-      </div>
-
-    </div>
-
-    <h2 class="section-title reveal ts-title">Tech Stack</h2>
-    <h3 class="ts-head reveal">AI &amp; Analytics</h3>
-    <div class="ts-hr"></div>
-
-    <div class="ts-row-wrap reveal">
-      <div class="ts-track ts-dir-left"><span class="ts-item"><span class="ts-ic" style="color:#10A37F"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z"/></svg></span><span class="ts-label">ChatGPT</span></span><span class="ts-item"><span class="ts-ic"><svg fill="#D97757" viewBox="0 0 24 24"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span><span class="ts-label">Claude</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 24 24"><defs><linearGradient id="gem-a" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs><path fill="url(#gem-a)" d="M12 2c.7 4.4 3.6 7.3 8 8-4.4.7-7.3 3.6-8 8-.7-4.4-3.6-7.3-8-8 4.4-.7 7.3-3.6 8-8Z"/></svg></span><span class="ts-label">Gemini</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 486 500"><defs><radialGradient id="hxls-a" cx="-746.66" cy="781.44" r="13.89" fx="-746.66" fy="781.44" gradientTransform="matrix(-28.32596 -29.80763 -23.11916 21.97986 -2596.39 -38900.31)" gradientUnits="userSpaceOnUse"><stop offset=".06" stop-color="#379539"/><stop offset=".42" stop-color="#297c2d"/><stop offset=".7" stop-color="#15561c"/></radialGradient><radialGradient id="hxls-b" cx="-773.19" cy="771.25" r="13.89" fx="-773.19" fy="771.25" gradientTransform="matrix(-11.97612 -11.58137 -8.95853 9.26806 -2155.12 -15858.88)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#073b10"/><stop offset=".99" stop-color="#084a13" stop-opacity="0"/></radialGradient><radialGradient id="hxls-f" cx="-824.11" cy="810.99" r="13.89" fx="-824.11" fy="810.99" gradientTransform="matrix(-9.02 0 0 19.09 -7120.4 -15378.69)" gradientUnits="userSpaceOnUse"><stop offset=".29" stop-color="#4eb43b"/><stop offset="1" stop-color="#72cc61" stop-opacity="0"/></radialGradient><radialGradient id="hxls-h" cx="-769.14" cy="808.9" r="13.89" fx="-769.14" fy="808.9" gradientTransform="matrix(-16.9077 -13.68182 13.64112 -16.86345 -23523.37 3309.71)" gradientUnits="userSpaceOnUse"><stop offset=".44" stop-color="#79e96d"/><stop offset="1" stop-color="#d0eb76"/></radialGradient><radialGradient id="hxls-i" cx="-675.64" cy="793.28" r="13.89" fx="-675.64" fy="793.28" gradientTransform="matrix(15.99196 15.99755 45.54153 -45.54797 -25315.85 47178.18)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#20a85e"/><stop offset=".94" stop-color="#09442a"/></radialGradient><radialGradient id="hxls-j" cx="-657.62" cy="853.99" r="13.89" fx="-657.62" fy="853.99" gradientTransform="matrix(0 11.2 12.9 0 -10902.85 7734.8)" gradientUnits="userSpaceOnUse"><stop offset=".58" stop-color="#33a662" stop-opacity="0"/><stop offset=".97" stop-color="#98f0b0"/></radialGradient><linearGradient id="hxls-c" x1="69.43" x2="260.84" y1="210.33" y2="210.33" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#52d17c"/><stop offset=".33" stop-color="#4aa647"/></linearGradient><linearGradient id="hxls-d" x1="194.4" x2="194.4" y1="335.33" y2="161.68" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#29852f"/><stop offset=".5" stop-color="#4aa647" stop-opacity="0"/></linearGradient><linearGradient id="hxls-e" x1="80.49" x2="311.45" y1="297.22" y2="497.54" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66d052"/><stop offset="1" stop-color="#85e972"/></linearGradient><linearGradient id="hxls-g" x1="182.11" x2="69.43" y1="377" y2="377" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset=".18" stop-color="#c0e075" stop-opacity="0"/><stop offset="1" stop-color="#d1eb95"/></linearGradient></defs><path d="M69.43 159.72c0-34.52 27.98-62.5 62.49-62.5h354.09v361.11c0 23.01-18.65 41.67-41.66 41.67H152.74c-46.01 0-83.31-37.31-83.31-83.33V159.72Z" style="fill:url(#hxls-a)"/><path d="M69.43 159.72c0-34.52 27.98-62.5 62.49-62.5h354.09v361.11c0 23.01-18.65 41.67-41.66 41.67H152.74c-46.01 0-83.31-37.31-83.31-83.33V159.72Z" style="fill:url(#hxls-b);fill-opacity:.7"/><path d="M69.43 229.17c0-34.52 27.98-62.5 62.49-62.5h187.46c-23.01 0-41.66 18.66-41.66 41.67v83.33c0 23.01-18.65 41.67-41.66 41.67h-83.31c-46.01 0-83.31 37.31-83.31 83.33v-187.5Z" style="fill:url(#hxls-c)"/><path d="M69.43 229.17c0-34.52 27.98-62.5 62.49-62.5h187.46c-23.01 0-41.66 18.66-41.66 41.67v83.33c0 23.01-18.65 41.67-41.66 41.67h-83.31c-46.01 0-83.31 37.31-83.31 83.33v-187.5Z" style="fill:url(#hxls-d);fill-opacity:.3"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-e)"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-f)"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-g)"/><rect width="208.29" height="166.67" x="277.71" rx="41.66" ry="41.66" style="fill:url(#hxls-h)"/><rect width="222.17" height="222.22" y="236.11" rx="45.13" ry="45.13" style="fill:url(#hxls-i)"/><rect width="222.17" height="222.22" y="236.11" rx="45.13" ry="45.13" style="fill-opacity:.3;fill:url(#hxls-j)"/><path d="M169.48 410.71h-34.25l-21.5-40.47c-.77-1.42-1.36-2.54-1.77-3.37-.35-.88-.74-1.89-1.15-3.01h-.35c-.53 1.42-1.03 2.57-1.5 3.45-.47.89-1.03 1.98-1.68 3.28l-22.3 40.11h-32.3l38.76-63.58-36.1-63.4h33.8l19.11 36.13c.77 1.48 1.42 2.78 1.95 3.9.59 1.06 1.18 2.33 1.77 3.81h.35l1.95-4.07c.53-1 1.24-2.33 2.12-3.98l19.82-35.77h32.21l-36.63 62.43 37.7 64.55Z" style="fill:#fff"/></svg></span><span class="ts-label">Excel</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 74 100"><mask id="hgs-mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="71" height="98"><path d="M45.398 1.43036H7.86688C4.22415 1.43036 1.24374 4.41077 1.24374 8.0535V91.9465C1.24374 95.5893 4.22415 98.5697 7.86688 98.5697H65.2674C68.9101 98.5697 71.8905 95.5893 71.8905 91.9465V27.9229L45.398 1.43036Z" fill="white"/></mask><g mask="url(#hgs-mask0)"><path d="M45.398 1.43036H7.86688C4.22415 1.43036 1.24374 4.41077 1.24374 8.0535V91.9465C1.24374 95.5893 4.22415 98.5697 7.86688 98.5697H65.2674C68.9101 98.5697 71.8905 95.5893 71.8905 91.9465V27.9229L56.4365 16.8843L45.398 1.43036Z" fill="#0F9D58"/></g><path d="M18.9054 48.8962V80.908H54.2288V48.8962H18.9054ZM34.3594 76.4926H23.3209V70.9733H34.3594V76.4926ZM34.3594 67.6617H23.3209V62.1424H34.3594V67.6617ZM34.3594 58.8309H23.3209V53.3116H34.3594V58.8309ZM49.8134 76.4926H38.7748V70.9733H49.8134V76.4926ZM49.8134 67.6617H38.7748V62.1424H49.8134V67.6617ZM49.8134 58.8309H38.7748V53.3116H49.8134V58.8309Z" fill="#F1F1F1"/></svg></span><span class="ts-label">Google Sheets</span></span><span class="ts-item"><span class="ts-label">SEO</span></span><span class="ts-item"><span class="ts-ic" style="color:#10A37F"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z"/></svg></span><span class="ts-label">ChatGPT</span></span><span class="ts-item"><span class="ts-ic"><svg fill="#D97757" viewBox="0 0 24 24"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span><span class="ts-label">Claude</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 24 24"><defs><linearGradient id="gem-a" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs><path fill="url(#gem-a)" d="M12 2c.7 4.4 3.6 7.3 8 8-4.4.7-7.3 3.6-8 8-.7-4.4-3.6-7.3-8-8 4.4-.7 7.3-3.6 8-8Z"/></svg></span><span class="ts-label">Gemini</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 486 500"><defs><radialGradient id="hxls-a" cx="-746.66" cy="781.44" r="13.89" fx="-746.66" fy="781.44" gradientTransform="matrix(-28.32596 -29.80763 -23.11916 21.97986 -2596.39 -38900.31)" gradientUnits="userSpaceOnUse"><stop offset=".06" stop-color="#379539"/><stop offset=".42" stop-color="#297c2d"/><stop offset=".7" stop-color="#15561c"/></radialGradient><radialGradient id="hxls-b" cx="-773.19" cy="771.25" r="13.89" fx="-773.19" fy="771.25" gradientTransform="matrix(-11.97612 -11.58137 -8.95853 9.26806 -2155.12 -15858.88)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#073b10"/><stop offset=".99" stop-color="#084a13" stop-opacity="0"/></radialGradient><radialGradient id="hxls-f" cx="-824.11" cy="810.99" r="13.89" fx="-824.11" fy="810.99" gradientTransform="matrix(-9.02 0 0 19.09 -7120.4 -15378.69)" gradientUnits="userSpaceOnUse"><stop offset=".29" stop-color="#4eb43b"/><stop offset="1" stop-color="#72cc61" stop-opacity="0"/></radialGradient><radialGradient id="hxls-h" cx="-769.14" cy="808.9" r="13.89" fx="-769.14" fy="808.9" gradientTransform="matrix(-16.9077 -13.68182 13.64112 -16.86345 -23523.37 3309.71)" gradientUnits="userSpaceOnUse"><stop offset=".44" stop-color="#79e96d"/><stop offset="1" stop-color="#d0eb76"/></radialGradient><radialGradient id="hxls-i" cx="-675.64" cy="793.28" r="13.89" fx="-675.64" fy="793.28" gradientTransform="matrix(15.99196 15.99755 45.54153 -45.54797 -25315.85 47178.18)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#20a85e"/><stop offset=".94" stop-color="#09442a"/></radialGradient><radialGradient id="hxls-j" cx="-657.62" cy="853.99" r="13.89" fx="-657.62" fy="853.99" gradientTransform="matrix(0 11.2 12.9 0 -10902.85 7734.8)" gradientUnits="userSpaceOnUse"><stop offset=".58" stop-color="#33a662" stop-opacity="0"/><stop offset=".97" stop-color="#98f0b0"/></radialGradient><linearGradient id="hxls-c" x1="69.43" x2="260.84" y1="210.33" y2="210.33" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#52d17c"/><stop offset=".33" stop-color="#4aa647"/></linearGradient><linearGradient id="hxls-d" x1="194.4" x2="194.4" y1="335.33" y2="161.68" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#29852f"/><stop offset=".5" stop-color="#4aa647" stop-opacity="0"/></linearGradient><linearGradient id="hxls-e" x1="80.49" x2="311.45" y1="297.22" y2="497.54" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66d052"/><stop offset="1" stop-color="#85e972"/></linearGradient><linearGradient id="hxls-g" x1="182.11" x2="69.43" y1="377" y2="377" gradientTransform="matrix(1 0 0 -1 0 502)" gradientUnits="userSpaceOnUse"><stop offset=".18" stop-color="#c0e075" stop-opacity="0"/><stop offset="1" stop-color="#d1eb95"/></linearGradient></defs><path d="M69.43 159.72c0-34.52 27.98-62.5 62.49-62.5h354.09v361.11c0 23.01-18.65 41.67-41.66 41.67H152.74c-46.01 0-83.31-37.31-83.31-83.33V159.72Z" style="fill:url(#hxls-a)"/><path d="M69.43 159.72c0-34.52 27.98-62.5 62.49-62.5h354.09v361.11c0 23.01-18.65 41.67-41.66 41.67H152.74c-46.01 0-83.31-37.31-83.31-83.33V159.72Z" style="fill:url(#hxls-b);fill-opacity:.7"/><path d="M69.43 229.17c0-34.52 27.98-62.5 62.49-62.5h187.46c-23.01 0-41.66 18.66-41.66 41.67v83.33c0 23.01-18.65 41.67-41.66 41.67h-83.31c-46.01 0-83.31 37.31-83.31 83.33v-187.5Z" style="fill:url(#hxls-c)"/><path d="M69.43 229.17c0-34.52 27.98-62.5 62.49-62.5h187.46c-23.01 0-41.66 18.66-41.66 41.67v83.33c0 23.01-18.65 41.67-41.66 41.67h-83.31c-46.01 0-83.31 37.31-83.31 83.33v-187.5Z" style="fill:url(#hxls-d);fill-opacity:.3"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-e)"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-f)"/><path d="M69.43 83.33C69.43 37.31 106.73 0 152.74 0h166.63v166.67H152.74c-46.01 0-83.31 37.31-83.31 83.33V83.33Z" style="fill:url(#hxls-g)"/><rect width="208.29" height="166.67" x="277.71" rx="41.66" ry="41.66" style="fill:url(#hxls-h)"/><rect width="222.17" height="222.22" y="236.11" rx="45.13" ry="45.13" style="fill:url(#hxls-i)"/><rect width="222.17" height="222.22" y="236.11" rx="45.13" ry="45.13" style="fill-opacity:.3;fill:url(#hxls-j)"/><path d="M169.48 410.71h-34.25l-21.5-40.47c-.77-1.42-1.36-2.54-1.77-3.37-.35-.88-.74-1.89-1.15-3.01h-.35c-.53 1.42-1.03 2.57-1.5 3.45-.47.89-1.03 1.98-1.68 3.28l-22.3 40.11h-32.3l38.76-63.58-36.1-63.4h33.8l19.11 36.13c.77 1.48 1.42 2.78 1.95 3.9.59 1.06 1.18 2.33 1.77 3.81h.35l1.95-4.07c.53-1 1.24-2.33 2.12-3.98l19.82-35.77h32.21l-36.63 62.43 37.7 64.55Z" style="fill:#fff"/></svg></span><span class="ts-label">Excel</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 74 100"><mask id="hgs-mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="71" height="98"><path d="M45.398 1.43036H7.86688C4.22415 1.43036 1.24374 4.41077 1.24374 8.0535V91.9465C1.24374 95.5893 4.22415 98.5697 7.86688 98.5697H65.2674C68.9101 98.5697 71.8905 95.5893 71.8905 91.9465V27.9229L45.398 1.43036Z" fill="white"/></mask><g mask="url(#hgs-mask0)"><path d="M45.398 1.43036H7.86688C4.22415 1.43036 1.24374 4.41077 1.24374 8.0535V91.9465C1.24374 95.5893 4.22415 98.5697 7.86688 98.5697H65.2674C68.9101 98.5697 71.8905 95.5893 71.8905 91.9465V27.9229L56.4365 16.8843L45.398 1.43036Z" fill="#0F9D58"/></g><path d="M18.9054 48.8962V80.908H54.2288V48.8962H18.9054ZM34.3594 76.4926H23.3209V70.9733H34.3594V76.4926ZM34.3594 67.6617H23.3209V62.1424H34.3594V67.6617ZM34.3594 58.8309H23.3209V53.3116H34.3594V58.8309ZM49.8134 76.4926H38.7748V70.9733H49.8134V76.4926ZM49.8134 67.6617H38.7748V62.1424H49.8134V67.6617ZM49.8134 58.8309H38.7748V53.3116H49.8134V58.8309Z" fill="#F1F1F1"/></svg></span><span class="ts-label">Google Sheets</span></span><span class="ts-item"><span class="ts-label">SEO</span></span></div>
-    </div>
-
-    <div class="ts-hr"></div>
-
-    <div class="ts-row-wrap reveal">
-      <div class="ts-track ts-dir-right"><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 268.152 273.883"><defs><linearGradient id="hgws-a"><stop offset="0" stop-color="#0fbc5c"/><stop offset="1" stop-color="#0cba65"/></linearGradient><linearGradient id="hgws-g"><stop offset=".231" stop-color="#0fbc5f"/><stop offset=".861" stop-color="#67c30f"/><stop offset="1" stop-color="#86c504"/></linearGradient><linearGradient id="hgws-h"><stop offset=".142" stop-color="#1abd4d"/><stop offset=".861" stop-color="#ffce0a"/></linearGradient><linearGradient id="hgws-f"><stop offset=".316" stop-color="#ff4c3c"/><stop offset="1" stop-color="#ff9f13"/></linearGradient><linearGradient id="hgws-b"><stop offset=".231" stop-color="#ff4541"/><stop offset="1" stop-color="#ff8c18"/></linearGradient><linearGradient id="hgws-d"><stop offset=".408" stop-color="#fb4e5a"/><stop offset="1" stop-color="#ff4540"/></linearGradient><linearGradient id="hgws-c"><stop offset=".132" stop-color="#0cba65"/><stop offset=".859" stop-color="#3086ff"/></linearGradient><linearGradient id="hgws-e"><stop offset=".366" stop-color="#ff4e3a"/><stop offset="1" stop-color="#fdcd01"/></linearGradient><linearGradient xlink:href="#hgws-a" id="hgws-s" x1="219.7" x2="254.467" y1="329.535" y2="329.535" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-b" id="hgws-m" cx="109.627" cy="135.862" r="71.46" fx="109.627" fy="135.862" gradientTransform="matrix(-1.93688 1.043 1.45573 2.55542 290.525 -400.634)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-c" id="hgws-n" cx="45.259" cy="279.274" r="71.46" fx="45.259" fy="279.274" gradientTransform="matrix(-3.5126 -4.45809 -1.69255 1.26062 870.8 191.554)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-d" id="hgws-l" cx="304.017" cy="118.009" r="47.854" fx="304.017" fy="118.009" gradientTransform="matrix(2.06435 0 0 2.59204 -297.679 -151.747)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-e" id="hgws-o" cx="181.001" cy="177.201" r="71.46" fx="181.001" fy="177.201" gradientTransform="matrix(-.24858 2.08314 2.96249 .33417 -255.146 -331.164)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-f" id="hgws-p" cx="207.673" cy="108.097" r="41.102" fx="207.673" fy="108.097" gradientTransform="matrix(-1.2492 1.34326 -3.89684 -3.4257 880.501 194.905)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-g" id="hgws-r" cx="109.627" cy="135.862" r="71.46" fx="109.627" fy="135.862" gradientTransform="matrix(-1.93688 -1.043 1.45573 -2.55542 290.525 838.683)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-h" id="hgws-j" cx="154.87" cy="145.969" r="71.46" fx="154.87" fy="145.969" gradientTransform="matrix(-.0814 -1.93722 2.92674 -.11625 -215.135 632.86)" gradientUnits="userSpaceOnUse"/><clipPath id="hgws-i" clipPathUnits="userSpaceOnUse"><path d="M371.378 193.24H237.083v53.438h77.167c-1.241 7.563-4.026 15.003-8.105 21.786-4.674 7.773-10.451 13.69-16.373 18.196-17.74 13.498-38.42 16.258-52.783 16.258-36.283 0-67.283-23.286-79.285-54.928-.484-1.149-.805-2.335-1.197-3.507a81.115 81.115 0 0 1-4.101-25.448c0-9.226 1.569-18.057 4.43-26.398 11.285-32.897 42.985-57.467 80.179-57.467 7.481 0 14.685.884 21.517 2.648a77.668 77.668 0 0 1 33.425 18.25l40.834-39.712c-24.839-22.616-57.219-36.32-95.844-36.32-30.878 0-59.386 9.553-82.748 25.7-18.945 13.093-34.483 30.625-44.97 50.985-9.753 18.879-15.094 39.8-15.094 62.294 0 22.495 5.35 43.633 15.103 62.337v.126c10.302 19.857 25.368 36.954 43.678 49.988 15.997 11.386 44.68 26.551 84.031 26.551 22.63 0 42.687-4.051 60.375-11.644 12.76-5.478 24.065-12.622 34.301-21.804 13.525-12.132 24.117-27.139 31.347-44.404 7.23-17.265 11.097-36.79 11.097-57.957 0-9.858-.998-19.87-2.689-28.968Z"/></clipPath></defs><g clip-path="url(#hgws-i)" transform="matrix(.95792 0 0 .98525 -90.174 -78.856)"><path fill="url(#hgws-j)" d="M92.076 219.958c.148 22.14 6.501 44.983 16.117 63.424v.127c6.949 13.392 16.445 23.97 27.26 34.452l65.327-23.67c-12.36-6.235-14.246-10.055-23.105-17.026-9.054-9.066-15.802-19.473-20.004-31.677h-.17l.17-.127c-2.765-8.058-3.037-16.613-3.14-25.503Z"/><path fill="url(#hgws-l)" d="M237.083 79.025c-6.456 22.526-3.988 44.421 0 57.161 7.457.006 14.64.888 21.45 2.647a77.662 77.662 0 0 1 33.424 18.25l41.88-40.726c-24.81-22.59-54.667-37.297-96.754-37.332Z"/><path fill="url(#hgws-m)" d="M236.943 78.847c-31.67 0-60.91 9.798-84.871 26.359a145.533 145.533 0 0 0-24.332 21.15c-1.904 17.744 14.257 39.551 46.262 39.37 15.528-17.936 38.495-29.542 64.056-29.542l.07.002-1.044-57.335c-.048 0-.093-.004-.14-.004Z"/><path fill="url(#hgws-n)" d="m341.475 226.379-28.268 19.285c-1.24 7.562-4.028 15.002-8.107 21.786-4.674 7.772-10.45 13.69-16.373 18.196-17.702 13.47-38.328 16.244-52.687 16.255-14.842 25.102-17.444 37.675 1.043 57.934 22.877-.016 43.157-4.117 61.046-11.796 12.931-5.551 24.388-12.792 34.761-22.097 13.706-12.295 24.442-27.503 31.769-45 7.327-17.497 11.245-37.282 11.245-58.734Z"/><path fill="#3086ff" d="M234.996 191.21v57.498h136.006c1.196-7.874 5.152-18.064 5.152-26.5 0-9.858-.996-21.899-2.687-30.998Z"/><path fill="url(#hgws-o)" d="M128.39 124.327c-8.394 9.119-15.564 19.326-21.249 30.364-9.753 18.879-15.094 41.83-15.094 64.324 0 .317.026.627.029.944 4.32 8.224 59.666 6.649 62.456 0-.004-.31-.039-.613-.039-.924 0-9.226 1.57-16.026 4.43-24.367 3.53-10.289 9.056-19.763 16.123-27.926 1.602-2.031 5.875-6.397 7.121-9.016.475-.997-.862-1.557-.937-1.908-.083-.393-1.876-.077-2.277-.37-1.275-.929-3.8-1.414-5.334-1.845-3.277-.921-8.708-2.953-11.725-5.06-9.536-6.658-24.417-14.612-33.505-24.216Z"/><path fill="url(#hgws-p)" d="M162.099 155.857c22.112 13.301 28.471-6.714 43.173-12.977l-25.574-52.664a144.74 144.74 0 0 0-26.543 14.504c-12.316 8.512-23.192 18.9-32.176 30.72Z"/><path fill="url(#hgws-r)" d="M171.099 290.222c-29.683 10.641-34.33 11.023-37.062 29.29a144.806 144.806 0 0 0 16.792 13.984c15.996 11.386 46.766 26.551 86.118 26.551.046 0 .09-.004.137-.004v-59.157l-.094.002c-14.736 0-26.512-3.843-38.585-10.527-2.977-1.648-8.378 2.777-11.123.799-3.786-2.729-12.9 2.35-16.183-.938Z"/><path fill="url(#hgws-s)" d="M219.7 299.023v59.996c5.506.64 11.236 1.028 17.247 1.028 6.026 0 11.855-.307 17.52-.872v-59.748a105.119 105.119 0 0 1-17.477 1.461c-5.932 0-11.7-.686-17.29-1.865Z" opacity=".5"/></g></svg></span><span class="ts-label">Google Workspace</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 78.799 96"><defs><linearGradient id="hmso-a" gradientUnits="userSpaceOnUse" x1="16.942" x2="85.671" y1="83.36" y2="89.583"><stop offset="0" stop-color="#f32b44"/><stop offset=".6" stop-color="#a4070a"/></linearGradient><linearGradient id="hmso-b"><stop offset="0" stop-opacity=".4"/><stop offset="1" stop-opacity="0"/></linearGradient><linearGradient id="hmso-c" gradientUnits="userSpaceOnUse" x1="63.515" x2="33.003" xlink:href="#hmso-b" y1="87.298" y2="84.535"/><linearGradient id="hmso-d" gradientUnits="userSpaceOnUse" x1="44.738" x2="-5.901" y1="-3.312" y2="71.527"><stop offset="0" stop-color="#800600"/><stop offset=".6" stop-color="#c72127"/><stop offset="1" stop-color="#b85ba2"/></linearGradient><linearGradient id="hmso-e" gradientUnits="userSpaceOnUse" x1="45.823" x2="35.099" xlink:href="#hmso-b" y1="-4.81" y2="11.039"/><linearGradient id="hmso-f" gradientUnits="userSpaceOnUse" x1="61.486" x2="61.486" y1="-4.887" y2="88.781"><stop offset="0" stop-color="#ffb900"/><stop offset=".5" stop-color="#d83b01"/></linearGradient></defs><path d="m19.143 75.558c-2.724 0-4.945 2.121-4.945 4.753 0 1.789 1.031 3.322 2.565 4.14l19.118 10.246a10.11 10.11 0 0 0 4.969 1.303c1.164 0 2.275-.204 3.306-.562l6.531-1.814v-18.091c.027.025-31.519.025-31.545.025z" fill="url(#hmso-a)"/><path d="m19.143 75.558c-2.724 0-4.945 2.121-4.945 4.753 0 1.789 1.031 3.322 2.565 4.14l19.118 10.246a10.11 10.11 0 0 0 4.969 1.303c1.164 0 2.275-.204 3.306-.562l6.531-1.814v-18.091c.027.025-31.519.025-31.545.025z" fill="url(#hmso-c)"/><path d="m43.736.383a9.968 9.968 0 0 0 -2.777-.383c-1.56 0-3.12.307-4.522 1.022-.29.128-31.096 16.864-31.096 16.864-.423.205-.82.46-1.19.716-.052.025-.079.051-.132.077-.238.178-.45.357-.687.536-.106.077-.212.18-.291.256-.132.127-.265.255-.37.383-.37.383-1.005 1.2-1.005 1.2a9.15 9.15 0 0 0 -1.666 5.291v44.46c0 2.633 2.221 4.754 4.945 4.754.687 0 1.322-.128 1.904-.384l8.805-4.778c1.586-.766 2.856-2.07 3.517-3.68.158-.332.29-.74.37-1.15.026-.102.053-.23.053-.332 0-.05.026-.127.026-.178.027-.18.053-.384.053-.562 0-.154.027-.282.027-.435v-23.662-7.385c0-2.07.925-3.935 2.38-5.238 0 0-.688.613 0 0 .687-.613 1.586-1.15 2.644-1.507 1.057-.384 26.072-9.122 26.072-9.122v-14.744z" fill="url(#hmso-d)"/><path d="m43.736.383a9.968 9.968 0 0 0 -2.777-.383c-1.56 0-3.12.307-4.522 1.022-.29.128-31.096 16.864-31.096 16.864-.423.205-.82.46-1.19.716-.052.025-.079.051-.132.077-.238.178-.45.357-.687.536-.106.077-.212.18-.291.256-.132.127-.265.255-.37.383-.37.383-1.005 1.2-1.005 1.2a9.15 9.15 0 0 0 -1.666 5.291v44.46c0 2.633 2.221 4.754 4.945 4.754.687 0 1.322-.128 1.904-.384l8.805-4.778c1.586-.766 2.856-2.07 3.517-3.68.158-.332.29-.74.37-1.15.026-.102.053-.23.053-.332 0-.05.026-.127.026-.178.027-.18.053-.384.053-.562 0-.154.027-.282.027-.435v-23.662-7.385c0-2.07.925-3.935 2.38-5.238 0 0-.688.613 0 0 .687-.613 1.586-1.15 2.644-1.507 1.057-.384 26.072-9.122 26.072-9.122v-14.744z" fill="url(#hmso-e)"/><path d="m71.898 8.35-27.738-7.843c4.019 1.508 6.53 4.906 6.53 9.046 0 0-.025 75.2 0 77.014.027 4.088-2.67 7.589-6.53 8.892.846-.23 27.738-7.717 27.738-7.717 3.992-1.226 6.875-4.804 6.875-9.07v-61.252c.026-4.24-2.883-7.844-6.875-9.07z" fill="url(#hmso-f)"/></svg></span><span class="ts-label">Microsoft Office</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 256 268"><path fill="#FFF" d="M16.092 11.538 164.09.608c18.179-1.56 22.85-.508 34.28 7.801l47.243 33.282C253.406 47.414 256 48.975 256 55.207v182.527c0 11.439-4.155 18.205-18.696 19.24L65.44 267.378c-10.913.517-16.11-1.043-21.825-8.327L8.826 213.814C2.586 205.487 0 199.254 0 191.97V29.726c0-9.352 4.155-17.153 16.092-18.188Z"/><path d="M164.09.608 16.092 11.538C4.155 12.573 0 20.374 0 29.726v162.245c0 7.284 2.585 13.516 8.826 21.843l34.789 45.237c5.715 7.284 10.912 8.844 21.825 8.327l171.864-10.404c14.532-1.035 18.696-7.801 18.696-19.24V55.207c0-5.911-2.336-7.614-9.21-12.66l-1.185-.856L198.37 8.409C186.94.1 182.27-.952 164.09.608ZM69.327 52.22c-14.033.945-17.216 1.159-25.186-5.323L23.876 30.778c-2.06-2.086-1.026-4.69 4.163-5.207l142.274-10.395c11.947-1.043 18.17 3.12 22.842 6.758l24.401 17.68c1.043.525 3.638 3.637.517 3.637L71.146 52.095l-1.819.125Zm-16.36 183.954V81.222c0-6.767 2.077-9.887 8.3-10.413L230.02 60.93c5.724-.517 8.31 3.12 8.31 9.879v153.917c0 6.767-1.044 12.49-10.387 13.008l-161.487 9.361c-9.343.517-13.489-2.594-13.489-10.921ZM212.377 89.53c1.034 4.681 0 9.362-4.681 9.897l-7.783 1.542v114.404c-6.758 3.637-12.981 5.715-18.18 5.715-8.308 0-10.386-2.604-16.609-10.396l-50.898-80.079v77.476l16.1 3.646s0 9.362-12.989 9.362l-35.814 2.077c-1.043-2.086 0-7.284 3.63-8.318l9.351-2.595V109.823l-12.98-1.052c-1.044-4.68 1.55-11.439 8.826-11.965l38.426-2.585 52.958 81.113v-71.76l-13.498-1.552c-1.043-5.733 3.111-9.896 8.3-10.404l35.84-2.087Z"/></svg></span><span class="ts-label">Notion</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 1024 1024"><path fill="#1b1f23" fill-rule="evenodd" d="M512 0C229.12 0 0 229.12 0 512c0 226.56 146.56 417.92 350.08 485.76 25.6 4.48 35.2-10.88 35.2-24.32 0-12.16-.64-52.48-.64-95.36-128.64 23.68-161.92-31.36-172.16-60.16-5.76-14.72-30.72-60.16-52.48-72.32-17.92-9.6-43.52-33.28-.64-33.92 40.32-.64 69.12 37.12 78.72 52.48 46.08 77.44 119.68 55.68 149.12 42.24 4.48-33.28 17.92-55.68 32.64-68.48-113.92-12.8-232.96-56.96-232.96-252.8 0-55.68 19.84-101.76 52.48-137.6-5.12-12.8-23.04-65.28 5.12-135.68 0 0 42.88-13.44 140.8 52.48 40.96-11.52 84.48-17.28 128-17.28s87.04 5.76 128 17.28c97.92-66.56 140.8-52.48 140.8-52.48 28.16 70.4 10.24 122.88 5.12 135.68 32.64 35.84 52.48 81.28 52.48 137.6 0 196.48-119.68 240-233.6 252.8 18.56 16 34.56 46.72 34.56 94.72 0 68.48-.64 123.52-.64 140.8 0 13.44 9.6 29.44 35.2 24.32C877.44 929.92 1024 737.92 1024 512 1024 229.12 794.88 0 512 0" clip-rule="evenodd"/></svg></span><span class="ts-label">GitHub</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 256 289"><path fill="#539e43" d="M128 288.464c-3.975 0-7.685-1.06-11.13-2.915l-35.247-20.936c-5.3-2.915-2.65-3.975-1.06-4.505c7.155-2.385 8.48-2.915 15.9-7.156c.796-.53 1.856-.265 2.65.265l27.032 16.166c1.06.53 2.385.53 3.18 0l105.74-61.217c1.06-.53 1.59-1.59 1.59-2.915V83.08c0-1.325-.53-2.385-1.59-2.915l-105.74-60.953c-1.06-.53-2.385-.53-3.18 0L20.405 80.166c-1.06.53-1.59 1.855-1.59 2.915v122.17c0 1.06.53 2.385 1.59 2.915l28.887 16.695c15.636 7.95 25.44-1.325 25.44-10.6V93.68c0-1.59 1.326-3.18 3.181-3.18h13.516c1.59 0 3.18 1.325 3.18 3.18v120.58c0 20.936-11.396 33.126-31.272 33.126c-6.095 0-10.865 0-24.38-6.625l-27.827-15.9C4.24 220.885 0 213.465 0 205.515V83.346C0 75.396 4.24 67.976 11.13 64L116.87 2.783c6.625-3.71 15.635-3.71 22.26 0L244.87 64C251.76 67.975 256 75.395 256 83.346v122.17c0 7.95-4.24 15.37-11.13 19.345L139.13 286.08c-3.445 1.59-7.42 2.385-11.13 2.385m32.596-84.009c-46.377 0-55.917-21.2-55.917-39.221c0-1.59 1.325-3.18 3.18-3.18h13.78c1.59 0 2.916 1.06 2.916 2.65c2.12 14.045 8.215 20.936 36.306 20.936c22.261 0 31.802-5.035 31.802-16.96c0-6.891-2.65-11.926-37.367-15.372c-28.886-2.915-46.907-9.275-46.907-32.33c0-21.467 18.02-34.187 48.232-34.187c33.921 0 50.617 11.66 52.737 37.101q0 1.193-.795 2.385c-.53.53-1.325 1.06-2.12 1.06h-13.78c-1.326 0-2.65-1.06-2.916-2.385c-3.18-14.575-11.395-19.345-33.126-19.345c-24.38 0-27.296 8.48-27.296 14.84c0 7.686 3.445 10.07 36.306 14.31c32.597 4.24 47.967 10.336 47.967 33.127c-.265 23.321-19.345 36.571-53.002 36.571"/></svg></span><span class="ts-label">Node.js</span></span><span class="ts-item"><span class="ts-ic" style="background:#0B0D0E;border-radius:5px;padding:2px"><svg viewBox="0 0 1024 1024"><path d="M4.8 438.2A520.7 520.7 0 000 489.7h777.8c-2.7-5.3-6.4-10-10-14.7-133-171.8-204.5-157-306.9-161.3-34-1.4-57.2-2-193-2-72.7 0-151.7.2-228.6.4A621 621 0 0015 386.3h398.6v51.9H4.8zm779.1 103.5H.4c.8 13.8 2.1 27.5 4 41h723.4c32.2 0 50.3-18.3 56.1-41zM45 724.3s120 294.5 466.5 299.7c207 0 385-123 465.9-299.7H45z" fill="#fff"/><path d="M511.5 0A512.2 512.2 0 0065.3 260.6l202.7-.2c158.4 0 164.2.6 195.2 2l19.1.6c66.7 2.3 148.7 9.4 213.2 58.2 35 26.5 85.6 85 115.7 126.5 27.9 38.5 35.9 82.8 17 125.2-17.5 39-55 62.2-100.4 62.2H16.7s4.2 18 10.6 37.8h970.6a510.4 510.4 0 0026.1-160.7A512.4 512.4 0 00511.5 0z" fill="#fff"/></svg></span><span class="ts-label">Railway</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 268.152 273.883"><defs><linearGradient id="hgws-a"><stop offset="0" stop-color="#0fbc5c"/><stop offset="1" stop-color="#0cba65"/></linearGradient><linearGradient id="hgws-g"><stop offset=".231" stop-color="#0fbc5f"/><stop offset=".861" stop-color="#67c30f"/><stop offset="1" stop-color="#86c504"/></linearGradient><linearGradient id="hgws-h"><stop offset=".142" stop-color="#1abd4d"/><stop offset=".861" stop-color="#ffce0a"/></linearGradient><linearGradient id="hgws-f"><stop offset=".316" stop-color="#ff4c3c"/><stop offset="1" stop-color="#ff9f13"/></linearGradient><linearGradient id="hgws-b"><stop offset=".231" stop-color="#ff4541"/><stop offset="1" stop-color="#ff8c18"/></linearGradient><linearGradient id="hgws-d"><stop offset=".408" stop-color="#fb4e5a"/><stop offset="1" stop-color="#ff4540"/></linearGradient><linearGradient id="hgws-c"><stop offset=".132" stop-color="#0cba65"/><stop offset=".859" stop-color="#3086ff"/></linearGradient><linearGradient id="hgws-e"><stop offset=".366" stop-color="#ff4e3a"/><stop offset="1" stop-color="#fdcd01"/></linearGradient><linearGradient xlink:href="#hgws-a" id="hgws-s" x1="219.7" x2="254.467" y1="329.535" y2="329.535" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-b" id="hgws-m" cx="109.627" cy="135.862" r="71.46" fx="109.627" fy="135.862" gradientTransform="matrix(-1.93688 1.043 1.45573 2.55542 290.525 -400.634)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-c" id="hgws-n" cx="45.259" cy="279.274" r="71.46" fx="45.259" fy="279.274" gradientTransform="matrix(-3.5126 -4.45809 -1.69255 1.26062 870.8 191.554)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-d" id="hgws-l" cx="304.017" cy="118.009" r="47.854" fx="304.017" fy="118.009" gradientTransform="matrix(2.06435 0 0 2.59204 -297.679 -151.747)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-e" id="hgws-o" cx="181.001" cy="177.201" r="71.46" fx="181.001" fy="177.201" gradientTransform="matrix(-.24858 2.08314 2.96249 .33417 -255.146 -331.164)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-f" id="hgws-p" cx="207.673" cy="108.097" r="41.102" fx="207.673" fy="108.097" gradientTransform="matrix(-1.2492 1.34326 -3.89684 -3.4257 880.501 194.905)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-g" id="hgws-r" cx="109.627" cy="135.862" r="71.46" fx="109.627" fy="135.862" gradientTransform="matrix(-1.93688 -1.043 1.45573 -2.55542 290.525 838.683)" gradientUnits="userSpaceOnUse"/><radialGradient xlink:href="#hgws-h" id="hgws-j" cx="154.87" cy="145.969" r="71.46" fx="154.87" fy="145.969" gradientTransform="matrix(-.0814 -1.93722 2.92674 -.11625 -215.135 632.86)" gradientUnits="userSpaceOnUse"/><clipPath id="hgws-i" clipPathUnits="userSpaceOnUse"><path d="M371.378 193.24H237.083v53.438h77.167c-1.241 7.563-4.026 15.003-8.105 21.786-4.674 7.773-10.451 13.69-16.373 18.196-17.74 13.498-38.42 16.258-52.783 16.258-36.283 0-67.283-23.286-79.285-54.928-.484-1.149-.805-2.335-1.197-3.507a81.115 81.115 0 0 1-4.101-25.448c0-9.226 1.569-18.057 4.43-26.398 11.285-32.897 42.985-57.467 80.179-57.467 7.481 0 14.685.884 21.517 2.648a77.668 77.668 0 0 1 33.425 18.25l40.834-39.712c-24.839-22.616-57.219-36.32-95.844-36.32-30.878 0-59.386 9.553-82.748 25.7-18.945 13.093-34.483 30.625-44.97 50.985-9.753 18.879-15.094 39.8-15.094 62.294 0 22.495 5.35 43.633 15.103 62.337v.126c10.302 19.857 25.368 36.954 43.678 49.988 15.997 11.386 44.68 26.551 84.031 26.551 22.63 0 42.687-4.051 60.375-11.644 12.76-5.478 24.065-12.622 34.301-21.804 13.525-12.132 24.117-27.139 31.347-44.404 7.23-17.265 11.097-36.79 11.097-57.957 0-9.858-.998-19.87-2.689-28.968Z"/></clipPath></defs><g clip-path="url(#hgws-i)" transform="matrix(.95792 0 0 .98525 -90.174 -78.856)"><path fill="url(#hgws-j)" d="M92.076 219.958c.148 22.14 6.501 44.983 16.117 63.424v.127c6.949 13.392 16.445 23.97 27.26 34.452l65.327-23.67c-12.36-6.235-14.246-10.055-23.105-17.026-9.054-9.066-15.802-19.473-20.004-31.677h-.17l.17-.127c-2.765-8.058-3.037-16.613-3.14-25.503Z"/><path fill="url(#hgws-l)" d="M237.083 79.025c-6.456 22.526-3.988 44.421 0 57.161 7.457.006 14.64.888 21.45 2.647a77.662 77.662 0 0 1 33.424 18.25l41.88-40.726c-24.81-22.59-54.667-37.297-96.754-37.332Z"/><path fill="url(#hgws-m)" d="M236.943 78.847c-31.67 0-60.91 9.798-84.871 26.359a145.533 145.533 0 0 0-24.332 21.15c-1.904 17.744 14.257 39.551 46.262 39.37 15.528-17.936 38.495-29.542 64.056-29.542l.07.002-1.044-57.335c-.048 0-.093-.004-.14-.004Z"/><path fill="url(#hgws-n)" d="m341.475 226.379-28.268 19.285c-1.24 7.562-4.028 15.002-8.107 21.786-4.674 7.772-10.45 13.69-16.373 18.196-17.702 13.47-38.328 16.244-52.687 16.255-14.842 25.102-17.444 37.675 1.043 57.934 22.877-.016 43.157-4.117 61.046-11.796 12.931-5.551 24.388-12.792 34.761-22.097 13.706-12.295 24.442-27.503 31.769-45 7.327-17.497 11.245-37.282 11.245-58.734Z"/><path fill="#3086ff" d="M234.996 191.21v57.498h136.006c1.196-7.874 5.152-18.064 5.152-26.5 0-9.858-.996-21.899-2.687-30.998Z"/><path fill="url(#hgws-o)" d="M128.39 124.327c-8.394 9.119-15.564 19.326-21.249 30.364-9.753 18.879-15.094 41.83-15.094 64.324 0 .317.026.627.029.944 4.32 8.224 59.666 6.649 62.456 0-.004-.31-.039-.613-.039-.924 0-9.226 1.57-16.026 4.43-24.367 3.53-10.289 9.056-19.763 16.123-27.926 1.602-2.031 5.875-6.397 7.121-9.016.475-.997-.862-1.557-.937-1.908-.083-.393-1.876-.077-2.277-.37-1.275-.929-3.8-1.414-5.334-1.845-3.277-.921-8.708-2.953-11.725-5.06-9.536-6.658-24.417-14.612-33.505-24.216Z"/><path fill="url(#hgws-p)" d="M162.099 155.857c22.112 13.301 28.471-6.714 43.173-12.977l-25.574-52.664a144.74 144.74 0 0 0-26.543 14.504c-12.316 8.512-23.192 18.9-32.176 30.72Z"/><path fill="url(#hgws-r)" d="M171.099 290.222c-29.683 10.641-34.33 11.023-37.062 29.29a144.806 144.806 0 0 0 16.792 13.984c15.996 11.386 46.766 26.551 86.118 26.551.046 0 .09-.004.137-.004v-59.157l-.094.002c-14.736 0-26.512-3.843-38.585-10.527-2.977-1.648-8.378 2.777-11.123.799-3.786-2.729-12.9 2.35-16.183-.938Z"/><path fill="url(#hgws-s)" d="M219.7 299.023v59.996c5.506.64 11.236 1.028 17.247 1.028 6.026 0 11.855-.307 17.52-.872v-59.748a105.119 105.119 0 0 1-17.477 1.461c-5.932 0-11.7-.686-17.29-1.865Z" opacity=".5"/></g></svg></span><span class="ts-label">Google Workspace</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 78.799 96"><defs><linearGradient id="hmso-a" gradientUnits="userSpaceOnUse" x1="16.942" x2="85.671" y1="83.36" y2="89.583"><stop offset="0" stop-color="#f32b44"/><stop offset=".6" stop-color="#a4070a"/></linearGradient><linearGradient id="hmso-b"><stop offset="0" stop-opacity=".4"/><stop offset="1" stop-opacity="0"/></linearGradient><linearGradient id="hmso-c" gradientUnits="userSpaceOnUse" x1="63.515" x2="33.003" xlink:href="#hmso-b" y1="87.298" y2="84.535"/><linearGradient id="hmso-d" gradientUnits="userSpaceOnUse" x1="44.738" x2="-5.901" y1="-3.312" y2="71.527"><stop offset="0" stop-color="#800600"/><stop offset=".6" stop-color="#c72127"/><stop offset="1" stop-color="#b85ba2"/></linearGradient><linearGradient id="hmso-e" gradientUnits="userSpaceOnUse" x1="45.823" x2="35.099" xlink:href="#hmso-b" y1="-4.81" y2="11.039"/><linearGradient id="hmso-f" gradientUnits="userSpaceOnUse" x1="61.486" x2="61.486" y1="-4.887" y2="88.781"><stop offset="0" stop-color="#ffb900"/><stop offset=".5" stop-color="#d83b01"/></linearGradient></defs><path d="m19.143 75.558c-2.724 0-4.945 2.121-4.945 4.753 0 1.789 1.031 3.322 2.565 4.14l19.118 10.246a10.11 10.11 0 0 0 4.969 1.303c1.164 0 2.275-.204 3.306-.562l6.531-1.814v-18.091c.027.025-31.519.025-31.545.025z" fill="url(#hmso-a)"/><path d="m19.143 75.558c-2.724 0-4.945 2.121-4.945 4.753 0 1.789 1.031 3.322 2.565 4.14l19.118 10.246a10.11 10.11 0 0 0 4.969 1.303c1.164 0 2.275-.204 3.306-.562l6.531-1.814v-18.091c.027.025-31.519.025-31.545.025z" fill="url(#hmso-c)"/><path d="m43.736.383a9.968 9.968 0 0 0 -2.777-.383c-1.56 0-3.12.307-4.522 1.022-.29.128-31.096 16.864-31.096 16.864-.423.205-.82.46-1.19.716-.052.025-.079.051-.132.077-.238.178-.45.357-.687.536-.106.077-.212.18-.291.256-.132.127-.265.255-.37.383-.37.383-1.005 1.2-1.005 1.2a9.15 9.15 0 0 0 -1.666 5.291v44.46c0 2.633 2.221 4.754 4.945 4.754.687 0 1.322-.128 1.904-.384l8.805-4.778c1.586-.766 2.856-2.07 3.517-3.68.158-.332.29-.74.37-1.15.026-.102.053-.23.053-.332 0-.05.026-.127.026-.178.027-.18.053-.384.053-.562 0-.154.027-.282.027-.435v-23.662-7.385c0-2.07.925-3.935 2.38-5.238 0 0-.688.613 0 0 .687-.613 1.586-1.15 2.644-1.507 1.057-.384 26.072-9.122 26.072-9.122v-14.744z" fill="url(#hmso-d)"/><path d="m43.736.383a9.968 9.968 0 0 0 -2.777-.383c-1.56 0-3.12.307-4.522 1.022-.29.128-31.096 16.864-31.096 16.864-.423.205-.82.46-1.19.716-.052.025-.079.051-.132.077-.238.178-.45.357-.687.536-.106.077-.212.18-.291.256-.132.127-.265.255-.37.383-.37.383-1.005 1.2-1.005 1.2a9.15 9.15 0 0 0 -1.666 5.291v44.46c0 2.633 2.221 4.754 4.945 4.754.687 0 1.322-.128 1.904-.384l8.805-4.778c1.586-.766 2.856-2.07 3.517-3.68.158-.332.29-.74.37-1.15.026-.102.053-.23.053-.332 0-.05.026-.127.026-.178.027-.18.053-.384.053-.562 0-.154.027-.282.027-.435v-23.662-7.385c0-2.07.925-3.935 2.38-5.238 0 0-.688.613 0 0 .687-.613 1.586-1.15 2.644-1.507 1.057-.384 26.072-9.122 26.072-9.122v-14.744z" fill="url(#hmso-e)"/><path d="m71.898 8.35-27.738-7.843c4.019 1.508 6.53 4.906 6.53 9.046 0 0-.025 75.2 0 77.014.027 4.088-2.67 7.589-6.53 8.892.846-.23 27.738-7.717 27.738-7.717 3.992-1.226 6.875-4.804 6.875-9.07v-61.252c.026-4.24-2.883-7.844-6.875-9.07z" fill="url(#hmso-f)"/></svg></span><span class="ts-label">Microsoft Office</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 256 268"><path fill="#FFF" d="M16.092 11.538 164.09.608c18.179-1.56 22.85-.508 34.28 7.801l47.243 33.282C253.406 47.414 256 48.975 256 55.207v182.527c0 11.439-4.155 18.205-18.696 19.24L65.44 267.378c-10.913.517-16.11-1.043-21.825-8.327L8.826 213.814C2.586 205.487 0 199.254 0 191.97V29.726c0-9.352 4.155-17.153 16.092-18.188Z"/><path d="M164.09.608 16.092 11.538C4.155 12.573 0 20.374 0 29.726v162.245c0 7.284 2.585 13.516 8.826 21.843l34.789 45.237c5.715 7.284 10.912 8.844 21.825 8.327l171.864-10.404c14.532-1.035 18.696-7.801 18.696-19.24V55.207c0-5.911-2.336-7.614-9.21-12.66l-1.185-.856L198.37 8.409C186.94.1 182.27-.952 164.09.608ZM69.327 52.22c-14.033.945-17.216 1.159-25.186-5.323L23.876 30.778c-2.06-2.086-1.026-4.69 4.163-5.207l142.274-10.395c11.947-1.043 18.17 3.12 22.842 6.758l24.401 17.68c1.043.525 3.638 3.637.517 3.637L71.146 52.095l-1.819.125Zm-16.36 183.954V81.222c0-6.767 2.077-9.887 8.3-10.413L230.02 60.93c5.724-.517 8.31 3.12 8.31 9.879v153.917c0 6.767-1.044 12.49-10.387 13.008l-161.487 9.361c-9.343.517-13.489-2.594-13.489-10.921ZM212.377 89.53c1.034 4.681 0 9.362-4.681 9.897l-7.783 1.542v114.404c-6.758 3.637-12.981 5.715-18.18 5.715-8.308 0-10.386-2.604-16.609-10.396l-50.898-80.079v77.476l16.1 3.646s0 9.362-12.989 9.362l-35.814 2.077c-1.043-2.086 0-7.284 3.63-8.318l9.351-2.595V109.823l-12.98-1.052c-1.044-4.68 1.55-11.439 8.826-11.965l38.426-2.585 52.958 81.113v-71.76l-13.498-1.552c-1.043-5.733 3.111-9.896 8.3-10.404l35.84-2.087Z"/></svg></span><span class="ts-label">Notion</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 1024 1024"><path fill="#1b1f23" fill-rule="evenodd" d="M512 0C229.12 0 0 229.12 0 512c0 226.56 146.56 417.92 350.08 485.76 25.6 4.48 35.2-10.88 35.2-24.32 0-12.16-.64-52.48-.64-95.36-128.64 23.68-161.92-31.36-172.16-60.16-5.76-14.72-30.72-60.16-52.48-72.32-17.92-9.6-43.52-33.28-.64-33.92 40.32-.64 69.12 37.12 78.72 52.48 46.08 77.44 119.68 55.68 149.12 42.24 4.48-33.28 17.92-55.68 32.64-68.48-113.92-12.8-232.96-56.96-232.96-252.8 0-55.68 19.84-101.76 52.48-137.6-5.12-12.8-23.04-65.28 5.12-135.68 0 0 42.88-13.44 140.8 52.48 40.96-11.52 84.48-17.28 128-17.28s87.04 5.76 128 17.28c97.92-66.56 140.8-52.48 140.8-52.48 28.16 70.4 10.24 122.88 5.12 135.68 32.64 35.84 52.48 81.28 52.48 137.6 0 196.48-119.68 240-233.6 252.8 18.56 16 34.56 46.72 34.56 94.72 0 68.48-.64 123.52-.64 140.8 0 13.44 9.6 29.44 35.2 24.32C877.44 929.92 1024 737.92 1024 512 1024 229.12 794.88 0 512 0" clip-rule="evenodd"/></svg></span><span class="ts-label">GitHub</span></span><span class="ts-item"><span class="ts-ic"><svg viewBox="0 0 256 289"><path fill="#539e43" d="M128 288.464c-3.975 0-7.685-1.06-11.13-2.915l-35.247-20.936c-5.3-2.915-2.65-3.975-1.06-4.505c7.155-2.385 8.48-2.915 15.9-7.156c.796-.53 1.856-.265 2.65.265l27.032 16.166c1.06.53 2.385.53 3.18 0l105.74-61.217c1.06-.53 1.59-1.59 1.59-2.915V83.08c0-1.325-.53-2.385-1.59-2.915l-105.74-60.953c-1.06-.53-2.385-.53-3.18 0L20.405 80.166c-1.06.53-1.59 1.855-1.59 2.915v122.17c0 1.06.53 2.385 1.59 2.915l28.887 16.695c15.636 7.95 25.44-1.325 25.44-10.6V93.68c0-1.59 1.326-3.18 3.181-3.18h13.516c1.59 0 3.18 1.325 3.18 3.18v120.58c0 20.936-11.396 33.126-31.272 33.126c-6.095 0-10.865 0-24.38-6.625l-27.827-15.9C4.24 220.885 0 213.465 0 205.515V83.346C0 75.396 4.24 67.976 11.13 64L116.87 2.783c6.625-3.71 15.635-3.71 22.26 0L244.87 64C251.76 67.975 256 75.395 256 83.346v122.17c0 7.95-4.24 15.37-11.13 19.345L139.13 286.08c-3.445 1.59-7.42 2.385-11.13 2.385m32.596-84.009c-46.377 0-55.917-21.2-55.917-39.221c0-1.59 1.325-3.18 3.18-3.18h13.78c1.59 0 2.916 1.06 2.916 2.65c2.12 14.045 8.215 20.936 36.306 20.936c22.261 0 31.802-5.035 31.802-16.96c0-6.891-2.65-11.926-37.367-15.372c-28.886-2.915-46.907-9.275-46.907-32.33c0-21.467 18.02-34.187 48.232-34.187c33.921 0 50.617 11.66 52.737 37.101q0 1.193-.795 2.385c-.53.53-1.325 1.06-2.12 1.06h-13.78c-1.326 0-2.65-1.06-2.916-2.385c-3.18-14.575-11.395-19.345-33.126-19.345c-24.38 0-27.296 8.48-27.296 14.84c0 7.686 3.445 10.07 36.306 14.31c32.597 4.24 47.967 10.336 47.967 33.127c-.265 23.321-19.345 36.571-53.002 36.571"/></svg></span><span class="ts-label">Node.js</span></span><span class="ts-item"><span class="ts-ic" style="background:#0B0D0E;border-radius:5px;padding:2px"><svg viewBox="0 0 1024 1024"><path d="M4.8 438.2A520.7 520.7 0 000 489.7h777.8c-2.7-5.3-6.4-10-10-14.7-133-171.8-204.5-157-306.9-161.3-34-1.4-57.2-2-193-2-72.7 0-151.7.2-228.6.4A621 621 0 0015 386.3h398.6v51.9H4.8zm779.1 103.5H.4c.8 13.8 2.1 27.5 4 41h723.4c32.2 0 50.3-18.3 56.1-41zM45 724.3s120 294.5 466.5 299.7c207 0 385-123 465.9-299.7H45z" fill="#fff"/><path d="M511.5 0A512.2 512.2 0 0065.3 260.6l202.7-.2c158.4 0 164.2.6 195.2 2l19.1.6c66.7 2.3 148.7 9.4 213.2 58.2 35 26.5 85.6 85 115.7 126.5 27.9 38.5 35.9 82.8 17 125.2-17.5 39-55 62.2-100.4 62.2H16.7s4.2 18 10.6 37.8h970.6a510.4 510.4 0 0026.1-160.7A512.4 512.4 0 00511.5 0z" fill="#fff"/></svg></span><span class="ts-label">Railway</span></span></div>
-    </div>
-
-    <div class="ts-hr"></div>
-    <h3 class="ts-head reveal">Operations &amp; Development</h3>
-
-  </div>
-</section>
-
-<section class="section" id="about">
-  <div class="wrap">
-    <!-- About / Story section — to be plugged in -->
-  </div>
-</section>
-
-<section class="section final-cta" id="contact">
-  <div class="wrap">
-    <!-- Contact / Final CTA section — to be plugged in -->
-  </div>
-</section>
+<!-- Floating "back to top" button. Fixed to the viewport; JS toggles .is-visible
+     only while #contact is on screen, and links to #home with a same-page fallback. -->
+<a href="#home" class="cf-top-btn" id="cfTopBtn" aria-label="Back to top">
+  <span class="cf-top-btn-glass" aria-hidden="true"></span>
+  <svg class="cf-top-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 18 Q17 18 17 6"/>
+    <path d="M13 10 L17 5 L21 10"/>
+  </svg>
+</a>
 
 <footer class="footer">
-  <p>© Uche Japheth — Resume Series</p>
+  <div class="wrap cf-footer-inner">
+    <p class="cf-footer-tagline">People first.<br>Better systems, better results.</p>
+
+    <div class="cf-footer-contact">
+      <a class="cf-footer-link" href="tel:+2349153661595">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3.5h3.4l1.6 4.2-2 1.6a12.3 12.3 0 0 0 5.2 5.2l1.6-2 4.2 1.6v3.4c0 1-.9 1.8-1.9 1.6C9.9 18.3 5.7 14.1 3 7.4c-.2-1 .6-1.9 1.5-1.9Z"/></svg>
+        Call
+      </a>
+      <a class="cf-footer-link" href="https://wa.me/message/ACT6Q47INKJ3E1" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.4L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.5c.3 2 3 4.7 5 5 .8.1 1.5-.4 1.7-1.1"/></svg>
+        WhatsApp
+      </a>
+    </div>
+
+    <p class="cf-footer-copyright" id="cf-footer-text">&copy; 2026 Uche Japheth &bull; Professional Portfolio. All rights reserved.</p>
+  </div>
 </footer>
 
 <script>
-  /* ---- Before/After dashboard toggle + full-bleed screenshot stack ---- */
-  (function(){
-    var stack = document.getElementById('baStack');
-    var buttons = document.querySelectorAll('.ba-btn');
-    if (!stack || !buttons.length) return;
-    buttons.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var state = btn.getAttribute('data-state');
-        stack.setAttribute('data-active', state);
-        buttons.forEach(function(b){
-          var isActive = b === btn;
-          b.classList.toggle('active', isActive);
-          b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-      });
-    });
-  })();
-
-  // Full-bleed the before/after stack to the true right edge of the
-  // viewport. Pure CSS can't know the stack's real screen position
-  // (it sits inside a centered, variable-width grid column), so we
-  // measure it on load/resize and set an explicit pixel width that
-  // reaches — and slightly overshoots — the actual browser edge.
-  // html{overflow-x:hidden} clips the overshoot, giving the crop.
-  //
-  // Safety: .signals-panel / .impact-diagram-col carry min-width:0 so
-  // this explicit width can never force the CSS Grid track to expand
-  // (Grid's default min-width:auto would otherwise treat a large
-  // explicit child width as the column's minimum size and blow out
-  // the whole layout). HARD_CAP below is a second safety net in case
-  // anything upstream changes.
-  // Also: the toggle row (#baToggleRow) gets the SAME computed width
-  // as the stack, so its flex-end alignment resolves to the exact
-  // same true right edge — instead of the stack's dynamic bled edge
-  // and the toggle's static column edge disagreeing with each other.
-  (function(){
-    var stack = document.getElementById('baStack');
-    var toggleRow = document.getElementById('baToggleRow');
-    if(!stack) return;
-    var OVERSHOOT = 200;  // px past the true edge — generous on purpose so any
-                           // residual measurement error still reads as an obvious cut
-
-    // viewportWidth(): document.documentElement.clientWidth is the
-    // LAYOUT viewport width — the exact same coordinate system that
-    // getBoundingClientRect() uses. window.innerWidth can include
-    // scrollbar width, and window.visualViewport tracks the VISUAL
-    // (zoomed) viewport, which can diverge from the layout viewport
-    // on mobile "desktop mode" — clientWidth avoids both problems.
-    function viewportWidth(){
-      return document.documentElement.clientWidth;
-    }
-
-    function bleedRight(){
-      // Skip entirely when the signals panel isn't shown (mobile/tablet) —
-      // no point measuring a display:none element, and it avoids fighting
-      // the mobile layout with a leftover inline width if the user resizes
-      // across the breakpoint.
-      if (window.matchMedia('(max-width:1023px)').matches) return;
-
-      stack.style.maxWidth = 'none';
-      stack.style.width = '';
-      var rect = stack.getBoundingClientRect();
-      var vw = viewportWidth();
-      var trueEdgeWidth = vw - rect.left;
-
-      // HARD_CAP is just a sanity ceiling against runaway values now
-      // (the actual overflow bug was fixed via min-width:0 on the grid
-      // items) — set relative to the real viewport so it can never be
-      // smaller than what a legitimately wide desktop screen needs.
-      var HARD_CAP = Math.max(vw * 1.6, 2200);
-
-      // stack: overshoots the true edge on purpose, so the crop is visible
-      var stackTarget = trueEdgeWidth + OVERSHOOT;
-      stackTarget = Math.min(stackTarget, HARD_CAP);
-      stackTarget = Math.max(stackTarget, 320);
-      stack.style.width = stackTarget + 'px';
-
-      // toggle row: stops exactly AT the true edge — no overshoot —
-      // so the clickable buttons stay fully on-screen and flush with
-      // the same edge the stack bleeds to, instead of drifting off it
-      if(toggleRow){
-        var toggleTarget = Math.min(trueEdgeWidth, HARD_CAP);
-        toggleTarget = Math.max(toggleTarget, 320);
-        toggleRow.style.width = toggleTarget + 'px';
-      }
-    }
-
-    bleedRight();
-    window.addEventListener('resize', bleedRight);
-    window.addEventListener('load', bleedRight);
-    if(window.visualViewport){
-      window.visualViewport.addEventListener('resize', bleedRight);
-    }
-  })();
-
-  /* ---- Animated nav logo (typewriter / enlarge-sweep / erase) ---- */
-  // ============ ANIMATED NAV LOGO ============
-  // Sequence: type "@jappro" -> enlarge-sweep -> 1 blink -> swap the
-  // trailing "o" for "0" -> 2 blinks -> erase (no retype) ->
-  // type "Uche" -> 1 blink -> type " Japheth" -> enlarge-sweep that
-  // kills the cursor blink exactly as it reaches the final "h" ->
-  // stays static. Runs fresh on every page load/refresh, which is
-  // what makes it "repeat on revisit" with no extra loop needed.
-  // Shared across mobile and desktop — nav-brand is a single element,
-  // only nav-links/nav-cta are hidden on mobile, so this animation
-  // plays identically on every breakpoint.
-  (function(){
-    const textEl = document.getElementById('logoText');
-    const cursorEl = document.getElementById('logoCursor');
-    if(!textEl || !cursorEl) return;
-
-    const TYPE_SPEED = 95;    // ms between typed characters
-    const BLINK_MS = 420;     // continuous-blink toggle interval
-    const BLINK_HOLD = 220;   // ms per phase of an exact-count blink
-    const ENLARGE_STEP = 85;  // ms between each letter starting its pop
-    const ENLARGE_HOLD = 200; // ms the pop scale is held before falling back
-
-    let blinkTimer = null;
-
-    function sleep(ms){ return new Promise(res => setTimeout(res, ms)); }
-    function setCursorVisible(v){ cursorEl.style.opacity = v ? '1' : '0'; }
-
-    function startContinuousBlink(){
-      stopContinuousBlink();
-      let visible = true;
-      setCursorVisible(true);
-      blinkTimer = setInterval(() => {
-        visible = !visible;
-        setCursorVisible(visible);
-      }, BLINK_MS);
-    }
-
-    function stopContinuousBlink(){
-      if(blinkTimer){ clearInterval(blinkTimer); blinkTimer = null; }
-    }
-
-    async function blinkExact(times){
-      stopContinuousBlink();
-      for(let i = 0; i < times; i++){
-        setCursorVisible(false);
-        await sleep(BLINK_HOLD);
-        setCursorVisible(true);
-        await sleep(BLINK_HOLD);
-      }
-    }
-
-    function currentChars(){
-      return Array.from(textEl.querySelectorAll('.logo-char'));
-    }
-
-    function appendChar(ch){
-      const span = document.createElement('span');
-      span.className = 'logo-char';
-      // non-breaking space so a literal space still renders with
-      // visible width and survives the browser's whitespace collapsing
-      span.textContent = ch === ' ' ? '\u00A0' : ch;
-      textEl.appendChild(span);
-      return span;
-    }
-
-    async function typeText(str){
-      for(const ch of str){
-        appendChar(ch);
-        await sleep(TYPE_SPEED);
-      }
-    }
-
-    async function deleteChars(count){
-      for(let i = 0; i < count; i++){
-        const chars = currentChars();
-        const last = chars[chars.length - 1];
-        if(last) last.remove();
-        await sleep(TYPE_SPEED);
-      }
-    }
-
-    async function eraseAll(){
-      await deleteChars(currentChars().length);
-    }
-
-    // sweeps the enlarge pop across every current character, left to
-    // right; stopBlinkOnLast lets the caller kill the cursor blink at
-    // the exact moment the sweep reaches the final character
-    async function enlargeSweep({ stopBlinkOnLast = false } = {}){
-      const chars = currentChars();
-      for(let i = 0; i < chars.length; i++){
-        const span = chars[i];
-        const isLast = i === chars.length - 1;
-        if(isLast && stopBlinkOnLast){
-          stopContinuousBlink();
-        }
-        span.classList.add('enlarge');
-        setTimeout(() => span.classList.remove('enlarge'), ENLARGE_HOLD);
-        await sleep(ENLARGE_STEP);
-      }
-      await sleep(ENLARGE_HOLD + 20); // let the final letter settle back
-    }
-
-    async function runSequence(){
-      textEl.innerHTML = '';
-      setCursorVisible(true);
-      startContinuousBlink();
-
-      // ---- TEXT 1: @jappro ----
-      await typeText('@jappro');
-      await enlargeSweep();
-
-      await blinkExact(1);
-
-      await deleteChars(1);        // drop the trailing "o"
-      appendChar('0');             // -> @jappr0
-      await sleep(TYPE_SPEED);
-
-      await blinkExact(2);
-
-      await eraseAll();            // type & erase — erase only, no retype
-
-      await sleep(180);
-
-      // ---- TEXT 2: Uche Japheth ----
-      startContinuousBlink();
-      await typeText('Uche');
-
-      await blinkExact(1);
-
-      startContinuousBlink();
-      await typeText(' Japheth');
-
-      // sweep across the whole phrase; blink stops the instant it
-      // reaches the final "h" — then it stays static, permanently
-      await enlargeSweep({ stopBlinkOnLast: true });
-      setCursorVisible(false);
-    }
-
-    if(document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', runSequence);
-    } else {
-      runSequence();
-    }
-  })();
-
-  // Mobile nav pill: hidden while at the hero top, fades in once scrolling begins
-  (function(){
-    var nav = document.getElementById('siteNav');
-    if (!nav) return;
-
-    function isMobile(){
-      return window.matchMedia('(max-width:960px)').matches;
-    }
-
-    function update(){
-      if (!isMobile()) {
-        nav.classList.remove('nav-hidden', 'nav-visible');
-        return;
-      }
-      if (window.scrollY > 40) {
-        nav.classList.add('nav-visible');
-        nav.classList.remove('nav-hidden');
-      } else {
-        nav.classList.add('nav-hidden');
-        nav.classList.remove('nav-visible');
-      }
-    }
-
-    update();
-    window.addEventListener('scroll', update, { passive:true });
-    window.addEventListener('resize', update, { passive:true });
-  })();
-
-  // Impact card description marquee — only when text is actually truncated on small screens
-  (function(){
-    var descs = Array.prototype.slice.call(document.querySelectorAll('.impact-desc'));
-    if (!descs.length) return;
-
-    descs.forEach(function(p){
-      if (!p.dataset.fullText) p.dataset.fullText = p.textContent.trim();
-    });
-
-    var resizeTimer;
-
-    function evaluate(){
-      var isMobile = window.matchMedia('(max-width:1023px)').matches;
-
-      descs.forEach(function(p){
-        // Reset to plain state before re-measuring
-        p.classList.remove('marquee-mode');
-        p.textContent = p.dataset.fullText;
-
-        if (!isMobile) return;
-
-        // Force single-line measurement
-        var prevWhiteSpace = p.style.whiteSpace;
-        var prevClamp = p.style.webkitLineClamp;
-        p.style.whiteSpace = 'nowrap';
-        p.style.webkitLineClamp = 'unset';
-
-        var overflowing = p.scrollWidth > p.clientWidth + 1;
-
-        p.style.whiteSpace = prevWhiteSpace;
-        p.style.webkitLineClamp = prevClamp;
-
-        if (overflowing) {
-          var text = p.dataset.fullText;
-          p.classList.add('marquee-mode');
-          p.innerHTML =
-            '<span class="impact-desc-track">' +
-              '<span>' + text + '</span>' +
-              '<span aria-hidden="true">' + text + '</span>' +
-            '</span>';
-        }
-      });
-    }
-
-    evaluate();
-
-    window.addEventListener('resize', function(){
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(evaluate, 200);
-    }, { passive:true });
-  })();
-
-  // Mobile nav hamburger toggle (real button + the static-state duplicate
-  // that sits above the photo — both control the same drawer, kept in sync)
-  (function(){
-    var btn = document.getElementById('navHamburger');
-    var btnStatic = document.getElementById('navHamburgerStatic');
-    var menu = document.getElementById('navMobileMenu');
-    if (!btn || !menu) return;
-
-    function setOpen(open){
-      menu.classList.toggle('open', open);
-      btn.classList.toggle('is-open', open);
-      btn.setAttribute('aria-expanded', open);
-      if (btnStatic){
-        btnStatic.classList.toggle('is-open', open);
-        btnStatic.setAttribute('aria-expanded', open);
-      }
-    }
-
-    btn.addEventListener('click', function(){
-      setOpen(!menu.classList.contains('open'));
-    });
-    if (btnStatic){
-      btnStatic.addEventListener('click', function(){
-        setOpen(!menu.classList.contains('open'));
-      });
-    }
-    menu.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click', function(){ setOpen(false); });
-    });
-  })();
-
-  // Nav scroll-spy (only observes sections that currently exist in the DOM)
-  (function(){
-    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
-    if (!navLinks.length) return;
-
-    var sections = navLinks.map(function(link){
-      var id = link.getAttribute('data-nav');
-      var el = document.getElementById(id);
-      return el ? { id: id, el: el, link: link } : null;
-    }).filter(Boolean);
-
-    if (!sections.length) return;
-
-    function setActive(id){
-      navLinks.forEach(function(link){
-        link.classList.toggle('active', link.getAttribute('data-nav') === id);
-      });
-    }
-
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting) {
-            var match = sections.find(function(s){ return s.el === entry.target; });
-            if (match) setActive(match.id);
-          }
-        });
-      }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-      sections.forEach(function(s){ io.observe(s.el); });
-    }
-
-    setActive(sections[0].id);
-  })();
-
-  // Scroll reveal
-  (function(){
-    var items = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      items.forEach(function(el){ el.classList.add('in-view'); });
-      return;
-    }
+(function(){
+  // Minimal drop-in reveal observer — the real page already runs one of these
+  // globally for every ".reveal" element, so this is redundant-but-harmless
+  // once merged in, and makes this section work correctly on its own here.
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
           entry.target.classList.add('in-view');
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    items.forEach(function(el){ io.observe(el); });
-  })();
+    }, { threshold:0.25 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
 
-  /* ============ PROJECT CARD LINK MENUS ============
-     Two triggers share this:
-     - .proj-link-ic--repo (VincesLink): right-click on desktop,
-       long-press on touch devices, opens a menu with "Visit
-       Repository" / "Copy Repository Link". A plain tap/click still
-       navigates normally via the element's own href — nothing here
-       intercepts that.
-     - .proj-link-ic--multi (Alfalf AI): a plain click opens a menu
-       to choose between the GitHub repo and the Telegram bot, since
-       there's no single default destination for it.
-     Menu is a single shared floating element, positioned with
-     position:fixed via JS so it always renders correctly regardless
-     of the card sitting inside a scrolling row. */
-  (function(){
-    var LONG_PRESS_MS = 550;
-    var MOVE_CANCEL_PX = 10;
+  // Footer year, kept live
+  var footerText = document.getElementById('cf-footer-text');
+  if(footerText){
+    footerText.innerHTML = '&copy; ' + new Date().getFullYear() + ' Uche Japheth &bull; Professional Portfolio. All rights reserved.';
+  }
 
-    var menuEl = null;
-    var toastEl = null;
-    var toastTimer = null;
-
-    function ensureMenu(){
-      if (menuEl) return menuEl;
-      menuEl = document.createElement('div');
-      menuEl.className = 'proj-float-menu';
-      menuEl.setAttribute('role', 'menu');
-      document.body.appendChild(menuEl);
-      return menuEl;
+  // Subtle scroll-linked parallax on the whole ambient layer (skipped for reduced motion).
+  // Applied to the wrapper — not the individual orbs — so it doesn't fight with
+  // each orb's own pulse animation on the same "transform" property.
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var section = document.getElementById('contact');
+  var atmosphere = document.querySelector('.cf-atmosphere');
+  if(section && atmosphere && !prefersReduced){
+    var ticking = false;
+    function updateParallax(){
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight || 1;
+      var progress = 1 - Math.min(Math.max(rect.top / vh, 0), 1); // 0 → 1 as section enters
+      atmosphere.style.transform = 'translateY(' + (progress * 22) + 'px)';
+      ticking = false;
     }
+    window.addEventListener('scroll', function(){
+      if(!ticking){ window.requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive:true });
+    updateParallax();
+  }
 
-    function ensureToast(){
-      if (toastEl) return toastEl;
-      toastEl = document.createElement('div');
-      toastEl.className = 'proj-toast';
-      toastEl.setAttribute('role', 'status');
-      document.body.appendChild(toastEl);
-      return toastEl;
-    }
-
-    function closeMenu(){
-      if (menuEl) menuEl.classList.remove('is-open');
-    }
-
-    function openMenu(x, y, items){
-      var menu = ensureMenu();
-      menu.innerHTML = '';
-      items.forEach(function(item){
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'proj-float-menu-item';
-        btn.setAttribute('role', 'menuitem');
-        btn.textContent = item.label;
-        btn.addEventListener('click', function(e){
-          e.stopPropagation();
-          closeMenu();
-          item.onSelect();
+  // Floating "back to top" button. It activates the moment #contact is reached,
+  // and — since it's position:fixed, meaning it's already pinned to the same
+  // viewport spot no matter what's scrolling behind it — it just stays on through
+  // the footer too, rather than switching off and on again at that boundary.
+  // It only turns off again if you scroll back up above #contact entirely.
+  var topBtn = document.getElementById('cfTopBtn');
+  var footerEl = document.querySelector('footer.footer');
+  if(topBtn && section){
+    if('IntersectionObserver' in window){
+      var contactObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            topBtn.classList.add('is-visible'); // contact is on screen right now
+          } else if(entry.boundingClientRect.top < 0){
+            topBtn.classList.add('is-visible'); // scrolled past contact — into/through the footer
+          } else {
+            topBtn.classList.remove('is-visible'); // haven't reached contact yet
+          }
         });
-        menu.appendChild(btn);
-      });
+      }, { threshold: 0 });
+      contactObserver.observe(section);
 
-      menu.style.left = x + 'px';
-      menu.style.top = y + 'px';
-      menu.classList.add('is-open');
-
-      requestAnimationFrame(function(){
-        var rect = menu.getBoundingClientRect();
-        var left = x, top = y;
-        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
-        if (top + rect.height > window.innerHeight - 8) top = y - rect.height - 8;
-        if (left < 8) left = 8;
-        if (top < 8) top = 8;
-        menu.style.left = left + 'px';
-        menu.style.top = top + 'px';
-      });
-    }
-
-    function showToast(message, x, y){
-      var toast = ensureToast();
-      toast.textContent = message;
-      toast.style.left = x + 'px';
-      toast.style.top = y + 'px';
-      toast.classList.add('is-show');
-
-      requestAnimationFrame(function(){
-        var rect = toast.getBoundingClientRect();
-        var left = x - rect.width / 2;
-        var top = y - rect.height - 14;
-        if (left < 8) left = 8;
-        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
-        if (top < 8) top = y + 14;
-        toast.style.left = left + 'px';
-        toast.style.top = top + 'px';
-      });
-
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function(){ toast.classList.remove('is-show'); }, 1600);
-    }
-
-    function copyLink(url, x, y){
-      function done(ok){ showToast(ok ? 'Link copied' : 'Could not copy link', x, y); }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
-      } else {
-        try {
-          var ta = document.createElement('textarea');
-          ta.value = url;
-          ta.style.position = 'fixed';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-          done(true);
-        } catch (err) { done(false); }
+      // The button's resting offset is tuned to clear the sticky CTA while inside
+      // #contact. That same offset would land right on top of the footer's
+      // right-aligned Call/WhatsApp links once the footer is reached, so it tucks
+      // down to a smaller offset there instead — clearing under the footer's
+      // content rather than sitting in front of it.
+      if(footerEl){
+        var footerObserver = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            topBtn.classList.toggle('is-in-footer', entry.isIntersecting);
+          });
+        }, { threshold: 0 });
+        footerObserver.observe(footerEl);
       }
+    } else {
+      topBtn.classList.add('is-visible'); // no IO support — fail visible rather than unreachable
     }
 
-    document.addEventListener('click', function(e){
-      if (menuEl && menuEl.classList.contains('is-open') && !menuEl.contains(e.target)) closeMenu();
+    // Links to #home (your real page's hero anchor). This file only ever contains the
+    // contact section on its own, so if #home isn't found here, fall back to scrolling
+    // the current page to the very top instead of doing nothing.
+    topBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      var home = document.getElementById('home');
+      if(home){
+        home.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
-    document.addEventListener('scroll', closeMenu, true);
-    window.addEventListener('resize', closeMenu);
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
-
-    // ---- VincesLink repo icon: right-click (desktop) + long-press (touch) ----
-    document.querySelectorAll('.proj-link-ic--repo').forEach(function(el){
-      var repoUrl = el.getAttribute('data-repo-url');
-
-      el.addEventListener('contextmenu', function(e){
-        e.preventDefault();
-        openMenu(e.clientX, e.clientY, [
-          { label: 'Visit Repository', onSelect: function(){ window.open(repoUrl, '_blank', 'noopener'); } },
-          { label: 'Copy Repository Link', onSelect: function(){ copyLink(repoUrl, e.clientX, e.clientY); } }
-        ]);
-      });
-
-      var pressTimer = null, longPressed = false, startX = 0, startY = 0;
-
-      el.addEventListener('touchstart', function(e){
-        longPressed = false;
-        var t = e.touches[0];
-        startX = t.clientX; startY = t.clientY;
-        pressTimer = setTimeout(function(){
-          longPressed = true;
-          openMenu(startX, startY, [
-            { label: 'Visit Repository', onSelect: function(){ window.open(repoUrl, '_blank', 'noopener'); } },
-            { label: 'Copy Repository Link', onSelect: function(){ copyLink(repoUrl, startX, startY); } }
-          ]);
-          if (navigator.vibrate) navigator.vibrate(10);
-        }, LONG_PRESS_MS);
-      }, { passive: true });
-
-      el.addEventListener('touchmove', function(e){
-        var t = e.touches[0];
-        if (Math.abs(t.clientX - startX) > MOVE_CANCEL_PX || Math.abs(t.clientY - startY) > MOVE_CANCEL_PX) {
-          clearTimeout(pressTimer);
-        }
-      }, { passive: true });
-
-      el.addEventListener('touchend', function(e){
-        clearTimeout(pressTimer);
-        if (longPressed) {
-          e.preventDefault(); // this was a long-press, not a tap — don't navigate
-          e.stopPropagation();
-        }
-      });
-
-      el.addEventListener('touchcancel', function(){ clearTimeout(pressTimer); });
-    });
-
-    // ---- Alfalf AI multi-link icon: plain click opens the choice ----
-    document.querySelectorAll('.proj-link-ic--multi').forEach(function(el){
-      var githubUrl = el.getAttribute('data-github-url');
-      var telegramUrl = el.getAttribute('data-telegram-url');
-
-      el.addEventListener('click', function(e){
-        e.stopPropagation();
-        var rect = el.getBoundingClientRect();
-        openMenu(rect.left, rect.bottom + 8, [
-          { label: 'GitHub Repo', onSelect: function(){ window.open(githubUrl, '_blank', 'noopener'); } },
-          { label: 'Telegram Bot', onSelect: function(){ window.open(telegramUrl, '_blank', 'noopener'); } }
-        ]);
-      });
-    });
-  })();
+  }
+})();
 </script>
+
 </body>
 </html>
