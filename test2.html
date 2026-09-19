@@ -337,6 +337,10 @@ section.section{ padding:110px 0; }
   transform:translateY(0) scale(1);
   pointer-events:auto;
 }
+/* Tucks lower once the footer is reached — the resting offset above is
+   tuned to clear the sticky CTA inside #contact, which would otherwise
+   land the button right on the footer's right-aligned Call/WhatsApp links. */
+.cf-top-btn.is-in-footer{ bottom:14px; }
 /* the glass surface is a separate layer behind the icon so the SVG liquid-distortion
    filter warps only the glass, never the icon glyph riding on top of it */
 .cf-top-btn-glass{
@@ -358,47 +362,59 @@ section.section{ padding:110px 0; }
 .cf-top-btn-icon{ position:relative; width:22px; height:22px; z-index:1; }
 
 @media (max-width:640px){
-  .cf-top-btn{ right:14px; bottom:118px; width:48px; height:48px; }
+  .cf-top-btn{ right:6px; bottom:100px; width:48px; height:48px; }
   .cf-top-btn-icon{ width:19px; height:19px; }
+  /* On phones the copyright line wraps to 2 lines, which reaches into the
+     14px-tucked spot used on wider screens — so here the button sits just
+     above the whole footer instead, in the contact section's clear tail
+     space, rather than fighting for room inside a footer this narrow. */
+  .cf-top-btn.is-in-footer{ bottom:190px; }
 }
 
 /* ============================================================
-   FOOTER — a quiet close after the CTA's big moment: a short personal
-   statement, a small practical contact row, then fine-print copyright
-   last and smallest, like credits after the main scene.
+   FOOTER — a quiet close after the CTA's big moment. Laid out as a
+   grid so it stays short: on phones, the tagline and the two contact
+   links share one row (tagline left, contacts right), with the
+   copyright line below; from tablet up, all three pieces fit on a
+   single compact row since there's enough width for it.
    ============================================================ */
 footer.footer{
   position:relative;
   z-index:1;
-  padding:58px 0 46px;
+  padding:40px 0 34px;
   background:var(--bg);
   border-top:1px solid var(--card-border);
 }
-.cf-footer-inner{ text-align:center; }
+
+.cf-footer-inner{
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-areas:
+    "tagline  contacts"
+    "copyright copyright";
+  align-items:start;
+  column-gap:18px;
+  row-gap:22px;
+}
 
 .cf-footer-tagline{
+  grid-area:tagline;
+  text-align:left;
   font-family:'Space Grotesk', sans-serif;
   font-weight:500;
-  font-size:clamp(1.02rem, 2.6vw, 1.2rem);
+  font-size:clamp(1rem, 2.6vw, 1.2rem);
   line-height:1.5;
   color:var(--text-mid);
   letter-spacing:0.005em;
-  margin:0 0 30px;
-}
-
-.cf-footer-divider{
-  width:64px;
-  height:1px;
-  margin:0 auto 26px;
-  background:var(--card-border);
+  margin:0;
 }
 
 .cf-footer-contact{
+  grid-area:contacts;
   display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:26px;
-  margin-bottom:34px;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
 }
 .cf-footer-link{
   display:inline-flex;
@@ -410,6 +426,7 @@ footer.footer{
   font-size:.85rem;
   letter-spacing:0.02em;
   text-decoration:none;
+  white-space:nowrap;
   transition:color .3s ease;
 }
 .cf-footer-link svg{ width:15px; height:15px; flex-shrink:0; color:var(--text-lo); transition:color .3s ease; }
@@ -417,15 +434,29 @@ footer.footer{
 .cf-footer-link:hover svg, .cf-footer-link:focus-visible svg{ color:var(--teal); }
 
 .cf-footer-copyright{
+  grid-area:copyright;
+  text-align:center;
   margin:0;
   font-size:12px;
   letter-spacing:0.01em;
   color:var(--text-lo);
 }
 
-@media (max-width:640px){
-  footer.footer{ padding:48px 0 40px; }
-  .cf-footer-contact{ gap:18px; }
+/* True desktop widths: everything fits on one compact row — tagline left,
+   copyright centered between, contacts right. Tablet keeps the phone's
+   2-row layout below since a tablet-width row is too tight to fit a
+   full sentence of copyright text between the other two without
+   squeezing them — auto/1fr/auto lets tagline and contacts keep their
+   natural width and gives the copyright line whatever's left over. */
+@media (min-width:1024px){
+  .cf-footer-inner{
+    grid-template-columns:auto 1fr auto;
+    grid-template-areas:"tagline copyright contacts";
+    align-items:center;
+    column-gap:32px;
+  }
+  .cf-footer-copyright{ justify-self:center; }
+  .cf-footer-contact{ flex-direction:row; align-items:center; justify-self:end; gap:26px; }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -433,7 +464,6 @@ footer.footer{
   .reveal, .cf-item, .cf-content.in-view .cf-item--cta{ transition:none !important; }
   .cf-cta-wrap{ position:relative; bottom:auto; }
   .cf-top-btn{ transition:opacity .3s ease; transform:none !important; }
-  .cf-top-btn.is-visible{ transform:none !important; }
 }
 
 @media (max-width:640px){
@@ -533,8 +563,6 @@ footer.footer{
   <div class="wrap cf-footer-inner">
     <p class="cf-footer-tagline">People first.<br>Better systems, better results.</p>
 
-    <div class="cf-footer-divider" aria-hidden="true"></div>
-
     <div class="cf-footer-contact">
       <a class="cf-footer-link" href="tel:+2349153661595">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3.5h3.4l1.6 4.2-2 1.6a12.3 12.3 0 0 0 5.2 5.2l1.6-2 4.2 1.6v3.4c0 1-.9 1.8-1.9 1.6C9.9 18.3 5.7 14.1 3 7.4c-.2-1 .6-1.9 1.5-1.9Z"/></svg>
@@ -603,6 +631,7 @@ footer.footer{
   // the footer too, rather than switching off and on again at that boundary.
   // It only turns off again if you scroll back up above #contact entirely.
   var topBtn = document.getElementById('cfTopBtn');
+  var footerEl = document.querySelector('footer.footer');
   if(topBtn && section){
     if('IntersectionObserver' in window){
       var contactObserver = new IntersectionObserver(function(entries){
@@ -617,6 +646,20 @@ footer.footer{
         });
       }, { threshold: 0 });
       contactObserver.observe(section);
+
+      // The button's resting offset is tuned to clear the sticky CTA while inside
+      // #contact. That same offset would land right on top of the footer's
+      // right-aligned Call/WhatsApp links once the footer is reached, so it tucks
+      // down to a smaller offset there instead — clearing under the footer's
+      // content rather than sitting in front of it.
+      if(footerEl){
+        var footerObserver = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            topBtn.classList.toggle('is-in-footer', entry.isIntersecting);
+          });
+        }, { threshold: 0 });
+        footerObserver.observe(footerEl);
+      }
     } else {
       topBtn.classList.add('is-visible'); // no IO support — fail visible rather than unreachable
     }
