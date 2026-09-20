@@ -610,3 +610,19 @@ section.section{ padding:110px 0; }
   .section-blob{ filter:blur(60px); opacity:0.42; }
   .section-blob--mid{ opacity:0.36; }
 }
+
+/* ============================================================
+   SHARED MOBILE PADDING for .wrap / section.section
+   Originally duplicated independently by Projects (at 600px) and
+   Contact (at 640px, identical values) — consolidated here at 640px
+   once a second section needed the same override, so every current
+   and future user of .wrap/section.section gets one consistent
+   mobile breakpoint instead of two competing ones. Projects' own
+   section-title/ts-item tuning stayed in projects-techstack.css at
+   its originally-tested 600px, since that's Projects-specific, not
+   shared.
+============================================================= */
+@media (max-width:640px){
+  section.section{ padding:80px 0; }
+  .wrap{ padding:0 22px; }
+}
