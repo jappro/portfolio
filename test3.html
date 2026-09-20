@@ -739,6 +739,18 @@
       transform:none;
     }
 
+    /* Bigger on desktop (the photo itself is ~2x larger here than
+       on mobile, so the note needs to scale to still read as
+       intentional), and repositioned to sit at the blob's own
+       bottom-right corner instead of mobile's "cut across into the
+       dark background" placement — nudged slightly up and left
+       from that corner. */
+    .about-photo-note{
+      font-size:26px;
+      right:-2%;
+      bottom:24%;
+    }
+
     .about-metrics{
       display:none;
     }
