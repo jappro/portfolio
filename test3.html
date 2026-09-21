@@ -627,7 +627,65 @@
   }
 
   /* ============================================================
-     DESKTOP (≥900px)
+     TABLET (768px–1023px)
+     Deliberately NOT a compressed version of the desktop two-column
+     layout — that layout depends on much more horizontal room than
+     tablet has (independent flex columns, the JS that relocates
+     elements into a full-width row on "See more", clothesline
+     metrics whose labels already wrap at desktop width). Squeezing
+     that into ~800px would just reopen the same categories of bugs
+     that took a long time to fix at desktop size.
+
+     Instead this is mobile's proven single-column structure and
+     toggle behavior (unchanged — same JS, same clamped intro,
+     same story hidden behind "See more"), scaled up with CSS-only
+     size increases. Sits before the desktop query below, so
+     desktop's own rules naturally take over at 1024px+ with no
+     gap or overlap — nothing here needs an upper bound.
+     ============================================================ */
+  @media (min-width:768px){
+
+    .about-container{
+      padding:0 32px;
+    }
+
+    .about-photo-wrap{
+      max-width:340px;
+    }
+
+    .about-body{
+      font-size:17.5px;
+    }
+
+    .about-cta-btn{
+      padding:17px 32px;
+      gap:11px;
+      font-size:15.5px;
+    }
+    .about-cta-icon{
+      width:18px;
+      height:18px;
+    }
+
+    .about-metrics{
+      padding:4px 26px;
+    }
+    .about-metric-num{
+      font-size:20px;
+    }
+    .about-metric-label{
+      font-size:14px;
+    }
+
+    /* mini-cards: single row of 4 instead of mobile's 2x2 */
+    .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+      gap:14px;
+    }
+  }
+
+  /* ============================================================
+     DESKTOP (≥1024px)
      Mobile layout above is untouched by anything in this block.
      ============================================================ */
   @media (min-width:1024px){
