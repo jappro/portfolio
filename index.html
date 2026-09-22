@@ -3,6 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Loading screen: runs synchronously before first paint, so a
+     returning visitor (localStorage flag already set) never sees the
+     overlay flash — html.ls-skip hides it instantly via CSS. See
+     loading-screen.css / loading-screen.js for the rest. -->
+<script>
+(function(){
+  try{
+    if(localStorage.getItem('jappro-visited') === '1'){
+      document.documentElement.classList.add('ls-skip');
+    }
+  }catch(e){}
+})();
+</script>
+<noscript><style>#loadingScreen{display:none !important;}</style></noscript>
 <title>Uche Japheth</title>
 
 <!-- Fonts used across the site (Inter, Space Grotesk) — not present in
@@ -20,8 +35,21 @@
 <link rel="stylesheet" href="css/experience-testimonial.css">
 <link rel="stylesheet" href="css/projects-techstack.css">
 <link rel="stylesheet" href="css/contact-footer.css">
+<link rel="stylesheet" href="css/loading-screen.css">
 </head>
 <body>
+
+<!-- ============ LOADING / WELCOME SCREEN ============
+     First-visit only — see loading-screen.js and the inline <head>
+     script for the localStorage-gated show/skip logic. -->
+<div class="ls-screen" id="loadingScreen">
+  <div class="ls-glow" aria-hidden="true"></div>
+  <div class="ls-content">
+    <p class="ls-line ls-line--1">Good work starts somewhere.</p>
+    <p class="ls-line ls-line--2">Welcome to mine.</p>
+    <span class="ls-rule" aria-hidden="true"></span>
+  </div>
+</div>
 
 <nav class="site-nav" id="siteNav">
   <div class="nav-inner">
@@ -1260,6 +1288,7 @@
      BEFORE Contact + Footer once it's ready (reordering the above,
      not appending after it). -->
 
+<script src="js/loading-screen.js"></script>
 <script src="js/main.js"></script>
 <script src="js/hero-impact.js"></script>
 <script src="js/philosophy.js"></script>
