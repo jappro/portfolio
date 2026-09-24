@@ -197,7 +197,7 @@
     z-index:1;
     width:100%;
     aspect-ratio:1007/1217;
-    background-image:url('./src/about-portrait.png');
+    background-image:url('../src/about-portrait.png');
     background-size:contain;
     background-position:center bottom;
     background-repeat:no-repeat;
@@ -269,7 +269,7 @@
        height and bottom-anchored, matching .about-photo's own
        "center bottom" positioning. */
     -webkit-mask-image:url('src/about-portrait.png');
-    mask-image:url('./src/about-portrait.png');
+    mask-image:url('../src/about-portrait.png');
     -webkit-mask-mode:alpha;
     mask-mode:alpha;
     -webkit-mask-size:100% 263.16%;
