@@ -1,1 +1,915 @@
+:root{
+    --container-max:1280px;
+    --container-pad:16px;
+
+    --bg:#fafafa;
+    --bg-alt:#f2f2f4;
+    --card-bg:rgba(255,255,255,0.72);
+    --card-border:rgba(15,15,20,0.07);
+    --text-hi:#111114;
+    --text-mid:#52525b;
+    --text-lo:#8b8b93;
+    --shadow:0 24px 60px rgba(15,15,20,0.08);
+    --shadow-hover:0 30px 70px rgba(15,15,20,0.14);
+
+    --purple:#7c5cff;
+    --purple-soft:rgba(124,92,255,0.12);
+    --blue:#2f5fe0;
+    --blue-soft:rgba(47,95,224,0.1);
+    --amber:#c9711a;
+    --amber-soft:rgba(201,113,26,0.12);
+    --teal:#128f7c;
+    --teal-soft:rgba(18,143,124,0.12);
+
+    color-scheme:light;
+  }
+
+  [data-theme="dark"]{
+    --bg:#08080b;
+    --bg-alt:#0d0d12;
+    --card-bg:rgba(255,255,255,0.045);
+    --card-border:rgba(255,255,255,0.09);
+    --text-hi:#f5f5f7;
+    --text-mid:#b6b6bf;
+    --text-lo:#7c7c86;
+    --shadow:0 24px 60px rgba(0,0,0,0.5);
+    --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
+
+    --purple:#a48cff;
+    --purple-soft:rgba(164,140,255,0.14);
+    --blue:#6f93ff;
+    --blue-soft:rgba(111,147,255,0.14);
+    --amber:#e6a24d;
+    --amber-soft:rgba(230,162,77,0.14);
+    --teal:#2dd4bf;
+    --teal-soft:rgba(45,212,191,0.14);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== About section ===== */
+
+  #about{
+    padding:48px 0 88px;
+    background:var(--bg);
+  }
+
+  .about-container{
+    position:relative;
+    max-width:var(--container-max);
+    margin:0 auto;
+    padding:0 var(--container-pad);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* On mobile these wrappers are invisible to layout (their
+     children become direct flex items of .about-container, ordered
+     below) — this exists purely so desktop can turn each wrapper
+     into its own independent column without changing a single
+     thing about mobile's structure or order. */
+  .about-col-left,
+  .about-col-right{
+    display:contents;
+  }
+
+  .about-content{
+    position:relative;
+    z-index:1;
+    order:1;
+  }
+
+  .about-eyebrow{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:0 0 22px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--purple);
+    text-transform:uppercase;
+  }
+  .about-eyebrow::after{
+    content:'';
+    flex:0 0 44px;
+    height:1px;
+    background:var(--purple);
+    opacity:0.45;
+  }
+
+  .about-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(34px,10vw,50px);
+    line-height:1.1;
+    letter-spacing:-0.02em;
+    color:var(--text-hi);
+    margin:0 0 22px;
+  }
+  .about-title .accent{
+    background:linear-gradient(100deg, var(--purple) 15%, var(--teal) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .about-body{
+    font-size:16.5px;
+    font-weight:500;
+    line-height:1.75;
+    color:var(--text-mid);
+    max-width:52ch;
+    margin:0 0 24px;
+    /* smart clamp: shows as many full lines as fit up to 6 lines,
+       so more of the story is visible before "See more" without
+       ever overflowing on narrow screens */
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:6;
+    overflow:hidden;
+  }
+
+  .see-more-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:none;
+    border:none;
+    padding:0;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--purple);
+    cursor:pointer;
+  }
+  .see-more-btn .arrow{
+    display:inline-flex;
+    transition:transform .3s ease;
+  }
+  .see-more-btn[aria-expanded="true"] .arrow{
+    transform:rotate(90deg);
+  }
+  .see-more-btn:focus-visible{
+    outline:2px solid var(--purple);
+    outline-offset:4px;
+    border-radius:4px;
+  }
+
+  /* ===== Photo ===== */
+
+  .about-photo-wrap{
+    position:relative;
+    width:100%;
+    max-width:228px;
+    margin:4px auto 0;
+    transform:translate(-14px, -10px);
+    transition:opacity .55s ease, filter .55s ease, transform .55s ease;
+    order:2;
+  }
+
+  .about-photo-blob{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:122%;
+    height:64%;
+    border-radius:22px;
+    background:
+      radial-gradient(65% 65% at 15% 15%, #4527a0 0%, transparent 60%),
+      radial-gradient(50% 50% at 88% 12%, rgba(122,74,18,0.5) 0%, transparent 58%),
+      radial-gradient(70% 70% at 85% 88%, #0f1c4a 0%, transparent 62%),
+      radial-gradient(75% 75% at 12% 90%, #0a0a0e 0%, transparent 55%),
+      #1a1030;
+    z-index:0;
+  }
+
+  .about-photo{
+    position:relative;
+    z-index:1;
+    width:100%;
+    aspect-ratio:1007/1217;
+    background-image:url('src/about-portrait.png');
+    background-size:contain;
+    background-position:center bottom;
+    background-repeat:no-repeat;
+  }
+
+  .about-photo-fallback{
+    position:relative;
+    z-index:1;
+    aspect-ratio:1007/1217;
+    border-radius:20px;
+    border:1.5px dashed rgba(255,255,255,0.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;
+    color:rgba(255,255,255,0.85);
+  }
+  .about-photo-wrap.photo-missing .about-photo{display:none;}
+  .about-photo-wrap.photo-missing .about-photo-fallback{display:flex;}
+
+  /* ===== Bottom edge fade (pure CSS gradient) =====
+     Fixes the hard rectangular cutoff where the transparent-bg
+     portrait PNG ends.
+
+     History: three earlier attempts all relied on SVG resolving
+     inside the page — CSS mask-image (data-URI, then DOM <mask>),
+     then a visible SVG gradient overlay. Each looked fine in
+     testing but broke somewhere between environments. This version
+     drops SVG entirely and uses only plain CSS `background` with
+     radial/linear gradients — the same primitive already used for
+     the blob background elsewhere in this file, so it's proven to
+     render consistently here.
+
+     Trade-off: this no longer traces the exact hand-drawn curve
+     (deep at the edges, pinched to nothing at the center). Instead
+     it's two soft radial "pools" anchored at the bottom corners
+     (heavier coverage near the edges) plus a gentle uniform linear
+     fade across the full width (so the very bottom edge is never a
+     hard line anywhere, including center). The visual effect is a
+     soft glow rather than a precise curve, but it doesn't depend on
+     any SVG/masking feature at all.
+  */
+  .about-photo-shade{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:38%;
+    z-index:1;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 30% 210% at 0% 100%, var(--bg) 0%, var(--bg) 20%, transparent 88%),
+      radial-gradient(ellipse 30% 210% at 100% 100%, var(--bg) 0%, var(--bg) 20%, transparent 88%),
+      radial-gradient(ellipse 92% 95% at 0% 100%, var(--bg) 0%, transparent 72%),
+      radial-gradient(ellipse 92% 95% at 100% 100%, var(--bg) 0%, transparent 72%),
+      linear-gradient(to top, var(--bg) 0%, var(--bg) 4%, transparent 78%);
+    /* Confines the shade to only where the portrait's own pixels
+       are opaque, using the same PNG as a mask on its alpha
+       channel — so past the person's silhouette (where the PNG is
+       transparent and the blob shows through), the shade
+       disappears automatically instead of painting a rectangle
+       over the blob. Sized/positioned to line up with the same
+       bottom-anchored portion of the photo this box already
+       covers: this box is 38% of the full photo's height, so the
+       mask image is scaled to 100/38 ≈ 263% of the box's own
+       height and bottom-anchored, matching .about-photo's own
+       "center bottom" positioning. */
+    -webkit-mask-image:url('src/about-portrait.png');
+    mask-image:url('src/about-portrait.png');
+    -webkit-mask-mode:alpha;
+    mask-mode:alpha;
+    -webkit-mask-size:100% 263.16%;
+    mask-size:100% 263.16%;
+    -webkit-mask-position:center bottom;
+    mask-position:center bottom;
+    -webkit-mask-repeat:no-repeat;
+    mask-repeat:no-repeat;
+    /* Hidden until the JS below confirms the (same) image file has
+       actually loaded — otherwise the mask can lag a frame behind
+       the visible photo and the hard edge flashes briefly before
+       the shade catches up. Fades in instead of popping in. */
+    opacity:0;
+    transition:opacity .25s ease;
+    /* Forces this element onto its own stable GPU compositing
+       layer. Without this, some browsers re-rasterize a masked
+       element at a slightly different sub-pixel offset during
+       scroll, which can show up as a thin bright seam right at the
+       mask's edge for a frame. This is a real device/scroll
+       behavior I can't verify from a static screenshot — it's the
+       standard fix for this category of bug, but confirm on your
+       device.
+
+       The scale(1.02) below is a separate fix for a separate
+       symptom: at non-1x zoom (pinch/double-tap zoom), percentage-
+       based sizing on this element, the photo, and the blob can
+       each round to a slightly different sub-pixel boundary, and
+       daylight from the page background peeks through the gap as a
+       hairline. Scaling this element up ~2% around its own center
+       makes it deliberately overhang its logical edges, so any
+       rounding gap gets swallowed by that overlap instead of
+       showing. Same caveat as above — this is real zoom/rounding
+       behavior I can't reproduce pixel-for-pixel here; it's the
+       standard treatment, confirm on your device. */
+    transform:translateZ(0) scale(1.02);
+    -webkit-transform:translateZ(0) scale(1.02);
+    will-change:transform;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  .about-photo-wrap.photo-ready .about-photo-shade{
+    opacity:1;
+  }
+  /* Mobile-only: the whole photo fades out when expanded there, so
+     the shade goes with it. Scoped to below the desktop breakpoint
+     so this never touches the shade on desktop at all — toggling
+     display on a masked element turned out to be unreliable in
+     real browsers even when "overridden" back, so the fix is to
+     never apply it there in the first place, not fight it after. */
+  @media (max-width:1023px){
+    .about-container.is-expanded .about-photo-shade{
+      display:none;
+    }
+  }
+
+  .about-photo-note{
+    position:absolute;
+    right:-32%;
+    bottom:10%;
+    z-index:2;
+    font-family:'Caveat',cursive;
+    font-weight:600;
+    font-size:19px;
+    line-height:1.25;
+    color:#fff;
+    transform:rotate(-3deg);
+    text-align:right;
+  }
+
+  /* ===== "See more" expanded background =====
+     A separate, independent element for the faint full-bleed
+     background shown while the expanded story is open — decoupled
+     from the portrait image on purpose, so it can use its own file
+     without touching .about-photo at all. Swap the background-image
+     path below to change it. */
+  .about-expanded-bg{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    opacity:0;
+    pointer-events:none;
+    background-image:url('src/about-portrait-bg.jpg');
+    background-size:cover;
+    background-position:center;
+    border-radius:28px;
+    filter:grayscale(0.4) blur(0.5px);
+    transition:opacity .5s ease;
+  }
+  .about-container.is-expanded .about-expanded-bg{
+    opacity:0.1;
+  }
+
+  /* the small portrait simply fades out while expanded, instead of
+     being repurposed as the background (that's .about-expanded-bg's
+     job now) */
+  .about-container.is-expanded .about-photo-wrap{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .4s ease;
+  }
+
+  /* ===== Expanded story ===== */
+
+  .about-content{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .about-body{ order:1; }
+  .about-story-extra{ order:3; }
+  .see-more-btn{ order:2; }
+  .about-expanded{ order:4; }
+
+  .about-story-extra{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .6s ease, opacity .5s ease;
+  }
+  .about-story-extra.is-open{
+    opacity:1;
+    margin-top:4px;
+  }
+  .about-story-extra-inner{
+    padding-top:4px;
+  }
+
+  .about-expanded{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .6s ease, opacity .5s ease;
+  }
+  .about-expanded.is-open{
+    opacity:1;
+    margin-top:4px;
+  }
+
+  .about-expanded-inner{
+    padding-top:4px;
+  }
+
+  .about-expanded p,
+  .about-story-extra p{
+    font-size:16px;
+    font-weight:500;
+    line-height:1.8;
+    color:var(--text-mid);
+    max-width:56ch;
+    margin:0 0 18px;
+  }
+
+  .about-expanded .emphasis,
+  .about-story-extra .emphasis{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:17.5px;
+    color:var(--text-hi);
+    letter-spacing:0.01em;
+  }
+
+  .section-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--text-hi);
+    margin:36px 0 16px;
+  }
+
+  .cards-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:14px;
+  }
+
+  .mini-card{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:16px 14px;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+
+  .mini-card .icon{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:12px;
+  }
+  .mini-card .icon svg{width:17px;height:17px;}
+
+  .mini-card--purple .icon{background:var(--purple-soft);color:var(--purple);}
+  .mini-card--blue .icon{background:var(--blue-soft);color:var(--blue);}
+  .mini-card--amber .icon{background:var(--amber-soft);color:var(--amber);}
+  .mini-card--teal .icon{background:var(--teal-soft);color:var(--teal);}
+
+  .mini-card h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--text-hi);
+    margin:0 0 6px;
+  }
+  .mini-card p{
+    font-size:13px;
+    font-weight:500;
+    line-height:1.55;
+    color:var(--text-mid);
+    margin:0;
+  }
+
+  .card-large{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:20px;
+    padding:24px 22px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  .card-large h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--purple);
+    margin:0 0 12px;
+  }
+  .card-large p{
+    font-size:16px;
+    font-weight:500;
+    line-height:1.8;
+    color:var(--text-mid);
+    margin:0;
+  }
+
+  /* ===== Metrics ===== */
+
+  .about-metrics{
+    margin-top:44px;
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:4px 20px;
+    order:3;
+  }
+
+  .about-metric-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--card-border);
+  }
+  .about-metric-row:last-child{
+    border-bottom:none;
+  }
+
+  .about-metric-num{
+    flex:0 0 auto;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-0.01em;
+    color:var(--text-hi);
+  }
+
+  .about-metric-label{
+    flex:0 0 auto;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--text-mid);
+    text-align:right;
+  }
+
+  /* ===== CTA: View CV ===== */
+
+  .about-cta-wrap{
+    margin-top:28px;
+    display:flex;
+    justify-content:flex-start;
+    order:4;
+  }
+
+  .about-cta-btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    border-radius:999px;
+    border:1.5px solid var(--purple);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 45%),
+      var(--bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.07),
+      0 8px 20px rgba(0,0,0,0.4);
+    color:var(--text-hi);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    letter-spacing:0.01em;
+    text-decoration:none;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .about-cta-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--purple);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 12px 26px rgba(124,92,255,0.28);
+  }
+  .about-cta-btn:active{
+    transform:translateY(0);
+  }
+  .about-cta-btn:focus-visible{
+    outline:2px solid var(--purple);
+    outline-offset:3px;
+  }
+
+  .about-cta-icon{
+    width:16px;
+    height:16px;
+    flex:0 0 auto;
+    color:var(--purple);
+  }
+
+  /* Desktop-only clothesline metrics: hidden on mobile, mobile
+     keeps the bordered card list (.about-metrics) instead. */
+  .metrics-clothesline{
+    display:none;
+    order:5;
+  }
+
+  /* ============================================================
+     TABLET (768px–1023px)
+     Deliberately NOT a compressed version of the desktop two-column
+     layout — that layout depends on much more horizontal room than
+     tablet has (independent flex columns, the JS that relocates
+     elements into a full-width row on "See more", clothesline
+     metrics whose labels already wrap at desktop width). Squeezing
+     that into ~800px would just reopen the same categories of bugs
+     that took a long time to fix at desktop size.
+
+     Instead this is mobile's proven single-column structure and
+     toggle behavior (unchanged — same JS, same clamped intro,
+     same story hidden behind "See more"), scaled up with CSS-only
+     size increases. Sits before the desktop query below, so
+     desktop's own rules naturally take over at 1024px+ with no
+     gap or overlap — nothing here needs an upper bound.
+     ============================================================ */
+  @media (min-width:768px){
+
+    .about-container{
+      padding:0 32px;
+    }
+
+    .about-photo-wrap{
+      max-width:340px;
+    }
+
+    .about-body{
+      font-size:17.5px;
+    }
+
+    .about-cta-btn{
+      padding:17px 32px;
+      gap:11px;
+      font-size:15.5px;
+    }
+    .about-cta-icon{
+      width:18px;
+      height:18px;
+    }
+
+    .about-metrics{
+      padding:4px 26px;
+    }
+    .about-metric-num{
+      font-size:20px;
+    }
+    .about-metric-label{
+      font-size:14px;
+    }
+
+    /* mini-cards: single row of 4 instead of mobile's 2x2 */
+    .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+      gap:14px;
+    }
+  }
+
+  /* ============================================================
+     DESKTOP (≥1024px)
+     Mobile layout above is untouched by anything in this block.
+     ============================================================ */
+  @media (min-width:1024px){
+
+    .about-container{
+      display:grid;
+      grid-template-columns:1.15fr 0.85fr;
+      column-gap:72px;
+      align-items:start;
+      max-width:1440px;
+      padding:0 64px;
+    }
+
+    .about-col-left,
+    .about-col-right{
+      display:flex;
+      flex-direction:column;
+    }
+    .about-col-left{ grid-column:1; }
+    .about-col-right{ grid-column:2; }
+
+    /* On mobile, the photo is taken out of flow (position:absolute)
+       when expanded, so nothing is left holding a gap in that
+       single shared column. On desktop the photo and the metrics
+       are in their OWN column, independent of the story's height,
+       so that trick isn't needed — undo it here.
+
+       Updated: the photo and blob should now stay fully visible
+       and unchanged on desktop regardless of toggle state (per
+       explicit request), not fade at all — so this also cancels
+       the opacity fade, not just the position trick. */
+    .about-container.is-expanded .about-photo-wrap{
+      position:relative;
+      inset:auto;
+      opacity:1 !important;
+      pointer-events:auto !important;
+      filter:none !important;
+    }
+    /* No shade override needed here anymore — the mobile-only hide
+       rule above is now scoped so it never reaches desktop in the
+       first place, so there's nothing to undo. */
+
+    /* let each column stack its own children in plain DOM order —
+       the mobile `order` values still apply but are harmless here
+       since within each column they're already in ascending order */
+
+    .about-body{
+      display:block;
+      -webkit-line-clamp:unset;
+      overflow:visible;
+      font-size:19px;
+      font-weight:600;
+      /* the first sentence of .about-story-extra continues this
+         same paragraph visually on desktop (per spec, no blank
+         line between them) — remove the trailing gap so the two
+         separate elements read as one flowing paragraph */
+      margin-bottom:0;
+    }
+
+    .about-story-extra .tight-follow{
+      margin-top:0;
+    }
+
+    /* Bumped up for desktop readability — larger and heavier than
+       the mobile values (16px/500), matching .about-body's own
+       desktop increase above. */
+    .about-expanded p,
+    .about-story-extra p{
+      font-size:18px;
+      font-weight:600;
+    }
+
+    /* CV button scaled up proportionally alongside the text bump
+       above — mobile stays at its original size. */
+    .about-cta-btn{
+      padding:22px 42px;
+      gap:14px;
+      font-size:18.5px;
+    }
+    .about-cta-icon{
+      width:23px;
+      height:23px;
+    }
+
+    /* On desktop the story is shown in full by default — only
+       the mini-cards + "Where I'm headed" (.about-expanded) stay
+       gated behind "See more". Re-order so the story sits between
+       the intro and the button (mobile has it AFTER the button,
+       revealed together with the cards on toggle), and force it
+       open regardless of the JS-driven inline max-height/is-open
+       state — the !important here is deliberate: it overrides the
+       toggle so this part is simply never collapsible on desktop. */
+    .about-story-extra{
+      order:2;
+      max-height:none !important;
+      opacity:1 !important;
+      overflow:visible !important;
+      margin:0 0 8px !important;
+    }
+    .about-story-extra-inner{
+      padding-top:0;
+    }
+    .see-more-btn{ order:3; }
+    .about-expanded{ order:4; }
+
+    .about-photo-wrap{
+      max-width:480px;
+      margin:0 0 0 auto;
+      transform:none;
+    }
+
+    /* Bigger on desktop (the photo itself is ~2x larger here than
+       on mobile, so the note needs to scale to still read as
+       intentional), and repositioned to sit at the blob's own
+       bottom-right corner instead of mobile's "cut across into the
+       dark background" placement — nudged slightly up and left
+       from that corner. */
+    .about-photo-note{
+      font-size:26px;
+      right:-17%;
+      bottom:calc(14% - 8px);
+    }
+
+    .about-metrics{
+      display:none;
+    }
+
+    .metrics-clothesline{
+      display:block;
+      margin-top:56px;
+    }
+
+    .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+    }
+
+    /* ===== Clothesline metrics ===== */
+
+    .clothesline-rope{
+      height:6px;
+      border-top:2px solid rgba(255,255,255,0.32);
+      border-bottom:2px solid rgba(255,255,255,0.32);
+    }
+
+    .clothesline-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      padding:0 2px;
+    }
+
+    .clothesline-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      flex:1 1 0;
+      min-width:0;
+    }
+
+    .clothesline-wire{
+      width:0;
+      height:var(--wire-h, 40px);
+      border-left:2px dashed rgba(255,255,255,0.32);
+    }
+
+    .clothesline-tag{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      padding:0 6px;
+    }
+
+    .tag-num{
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:700;
+      font-size:19px;
+      letter-spacing:-0.01em;
+      color:var(--text-hi);
+      white-space:nowrap;
+    }
+
+    .tag-label{
+      font-size:12px;
+      font-weight:500;
+      color:var(--text-mid);
+      margin-top:4px;
+      line-height:1.3;
+      max-width:100px;
+    }
+
+    /* Desktop-only expanded background disabled per request — the
+       faint image-behind-text effect stays mobile-only. Plain
+       matte black on desktop regardless of toggle state. */
+    .about-expanded-bg{
+      display:none;
+    }
+
+    /* ============================================================
+       Desktop "See more" — full-width breakout row.
+       When expanded, JS physically relocates #aboutExpanded,
+       .about-cta-wrap and .metrics-clothesline to become direct
+       children of .about-container (see the script below), because
+       CSS alone can't reach into a nested flex column and place its
+       child into a grandparent grid row. These rules only match
+       them in that relocated position (direct-child selector) — in
+       the default/nested position they're unaffected.
+       ============================================================ */
+    .about-container.is-expanded > #aboutExpanded{
+      grid-column:1 / -1;
+      grid-row:2;
+      max-height:none !important;
+      opacity:1 !important;
+      overflow:visible !important;
+      margin-top:8px !important;
+    }
+    .about-container.is-expanded > #aboutExpanded .about-expanded-inner{
+      padding-top:0;
+    }
+    .about-container.is-expanded > #aboutExpanded .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+    }
+
+    .about-container.is-expanded > .about-cta-wrap{
+      grid-column:1;
+      grid-row:3;
+      margin-top:28px;
+    }
+
+    .about-container.is-expanded > .metrics-clothesline{
+      grid-column:2;
+      grid-row:3;
+      margin-top:0;
+      align-self:start;
+    }
+  }
 
