@@ -483,18 +483,12 @@
       quote: "Japheth one of our dependable supporters, he shows up consistently and geniunly care about the community." },
     { name: "Vincent", role: "CEO/Founder", company: "Vinceslink", avatar: "src/vincent pfp.jpg",
       quote: "Japheth took the vision behind Vinceslink and turned it into a polished digital experience without needing every detail spelled out. He took ownership from concept to execution, bringing creativity, attention to detail, and strong problem-solving throughout. I\u2019m pleased with what he delivered and would confidently recommend him to anyone looking for someone who can take an idea and bring it to life." },
-    { name: "Christian", role: "Founder", company: "Kiooverse", avatar: "src/christian pfp.jpg",
-      quote: "Japheth brings a thoughtful, consistent approach to community work. Easy to collaborate with, and always delivers.",
-      placeholder: true },
     { name: "Lars", role: "Co-Founder (COO)", company: "Pecunity", avatar: "src/lars pfp.jpg",
       quote: "@Japheth did a great job I highly recommend him for his passionate and modest community work" },
     { name: "Christopher", role: "Managing Director", company: "Racine Technologies Limited", avatar: "src/christopher pfp.jpg",
       quote: "It has been an absolute pleasure working alongside Uche at Racine Technologies. He consistently demonstrates exceptional dedication, strong operational discipline, and a remarkably proactive approach to problem-solving. Whether handling complex procurement tasks, driving corporate engagements, or executing day-to-day operations, Uche approaches every project with complete ownership and reliability. He is a key contributor to our team\u2019s success, and any organization would be fortunate to have his competence and work ethic on their team." },
     { name: "Mr Konsole", role: "Community Admin", company: "BIGA Arcade", avatar: "src/mrkonsole pfp.jpg",
-      quote: "GG Japheth, thanks for the support..\nKeep the vibe on that's the BIGA way." },
-    { name: "fenicks", role: "Admin", company: "Kiooverse", avatar: "src/fenicks pfp.jpg",
-      quote: "Japheth has been a dependable presence in the Kiooverse community. Always shows up, always delivers.",
-      placeholder: true }
+      quote: "GG Japheth, thanks for the support..\nKeep the vibe on that's the BIGA way." }
   ];
 
   var cardsEl = document.getElementById('tstCards');
