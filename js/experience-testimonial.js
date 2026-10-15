@@ -77,7 +77,7 @@
       roles: [
         {
           role: "Community Manager & Social Media Manager",
-          period: "Feb 2026 \u2013 Present",
+          period: "Feb 2026 \u2013 Jun 2026",
           location: "Germany \u00b7 Remote",
           descShort: "Rejoined the Pecunity team after being invited back to lead community operations and social media",
           descFull: "Rejoined the Pecunity team after being invited back to lead community operations and social media efforts.\n\nFocused on strengthening community engagement, coordinating communications, and maintaining the project\u2019s online presence while collaborating with the core team on ecosystem growth initiatives.\n\n\u2022 Managed daily community operations across Discord and Telegram.\n\u2022 Planned and published social media content on X.\n\u2022 Coordinated announcements and ecosystem updates.\n\u2022 Developed engagement initiatives to improve community participation.\n\u2022 Worked directly with the leadership team on communication strategy.\n\u2022 Monitored community sentiment and reported feedback to the team."
