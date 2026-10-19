@@ -1,1221 +1,265 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+
+<html lang="en" style="background-color:#F1E9DB; color-scheme:light;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Section Preview</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light">
+<title>Pecunity — Case Study | Japheth's Portfolio</title>
+<link rel="icon" href="docs/copy_FB3F98BD-C4DD-4668-997D-0697BBDAA09C.png">
 <style>
-
-  :root{
-    --container-max:1280px;
-    --container-pad:16px;
-
-    --bg:#fafafa;
-    --bg-alt:#f2f2f4;
-    --card-bg:rgba(255,255,255,0.72);
-    --card-border:rgba(15,15,20,0.07);
-    --text-hi:#111114;
-    --text-mid:#52525b;
-    --text-lo:#8b8b93;
-    --shadow:0 24px 60px rgba(15,15,20,0.08);
-    --shadow-hover:0 30px 70px rgba(15,15,20,0.14);
-
-    --purple:#7c5cff;
-    --purple-soft:rgba(124,92,255,0.12);
-    --blue:#2f5fe0;
-    --blue-soft:rgba(47,95,224,0.1);
-    --amber:#c9711a;
-    --amber-soft:rgba(201,113,26,0.12);
-    --teal:#128f7c;
-    --teal-soft:rgba(18,143,124,0.12);
-
-    color-scheme:light;
-  }
-
-  [data-theme="dark"]{
-    --bg:#08080b;
-    --bg-alt:#0d0d12;
-    --card-bg:rgba(255,255,255,0.045);
-    --card-border:rgba(255,255,255,0.09);
-    --text-hi:#f5f5f7;
-    --text-mid:#b6b6bf;
-    --text-lo:#7c7c86;
-    --shadow:0 24px 60px rgba(0,0,0,0.5);
-    --shadow-hover:0 30px 80px rgba(0,0,0,0.6);
-
-    --purple:#a48cff;
-    --purple-soft:rgba(164,140,255,0.14);
-    --blue:#6f93ff;
-    --blue-soft:rgba(111,147,255,0.14);
-    --amber:#e6a24d;
-    --amber-soft:rgba(230,162,77,0.14);
-    --teal:#2dd4bf;
-    --teal-soft:rgba(45,212,191,0.14);
-  }
-
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    font-family:'Inter',sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  /* ===== About section ===== */
-
-  #about{
-    padding:48px 0 88px;
-    background:var(--bg);
-  }
-
-  .about-container{
-    position:relative;
-    max-width:var(--container-max);
-    margin:0 auto;
-    padding:0 var(--container-pad);
-    display:flex;
-    flex-direction:column;
-  }
-
-  /* On mobile these wrappers are invisible to layout (their
-     children become direct flex items of .about-container, ordered
-     below) — this exists purely so desktop can turn each wrapper
-     into its own independent column without changing a single
-     thing about mobile's structure or order. */
-  .about-col-left,
-  .about-col-right{
-    display:contents;
-  }
-
-  .about-content{
-    position:relative;
-    z-index:1;
-    order:1;
-  }
-
-  .about-eyebrow{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin:0 0 22px;
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:13px;
-    letter-spacing:0.08em;
-    color:var(--purple);
-    text-transform:uppercase;
-  }
-  .about-eyebrow::after{
-    content:'';
-    flex:0 0 44px;
-    height:1px;
-    background:var(--purple);
-    opacity:0.45;
-  }
-
-  .about-title{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(34px,10vw,50px);
-    line-height:1.1;
-    letter-spacing:-0.02em;
-    color:var(--text-hi);
-    margin:0 0 22px;
-  }
-  .about-title .accent{
-    background:linear-gradient(100deg, var(--purple) 15%, var(--teal) 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-
-  .about-body{
-    font-size:16.5px;
-    font-weight:500;
-    line-height:1.75;
-    color:var(--text-mid);
-    max-width:52ch;
-    margin:0 0 24px;
-    /* smart clamp: shows as many full lines as fit up to 6 lines,
-       so more of the story is visible before "See more" without
-       ever overflowing on narrow screens */
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:6;
-    overflow:hidden;
-  }
-
-  .see-more-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:none;
-    border:none;
-    padding:0;
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:15px;
-    color:var(--purple);
-    cursor:pointer;
-  }
-  .see-more-btn .arrow{
-    display:inline-flex;
-    transition:transform .3s ease;
-  }
-  .see-more-btn[aria-expanded="true"] .arrow{
-    transform:rotate(90deg);
-  }
-  .see-more-btn:focus-visible{
-    outline:2px solid var(--purple);
-    outline-offset:4px;
-    border-radius:4px;
-  }
-
-  /* ===== Photo ===== */
-
-  .about-photo-wrap{
-    position:relative;
-    width:100%;
-    max-width:228px;
-    margin:4px auto 0;
-    transform:translate(-14px, -10px);
-    transition:opacity .55s ease, filter .55s ease, transform .55s ease;
-    order:2;
-  }
-
-  .about-photo-blob{
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    width:122%;
-    height:64%;
-    border-radius:22px;
-    background:
-      radial-gradient(65% 65% at 15% 15%, #4527a0 0%, transparent 60%),
-      radial-gradient(50% 50% at 88% 12%, rgba(122,74,18,0.5) 0%, transparent 58%),
-      radial-gradient(70% 70% at 85% 88%, #0f1c4a 0%, transparent 62%),
-      radial-gradient(75% 75% at 12% 90%, #0a0a0e 0%, transparent 55%),
-      #1a1030;
-    z-index:0;
-  }
-
-  .about-photo{
-    position:relative;
-    z-index:1;
-    width:100%;
-    aspect-ratio:1007/1217;
-    background-image:url('src/about-portrait.png');
-    background-size:contain;
-    background-position:center bottom;
-    background-repeat:no-repeat;
-  }
-
-  .about-photo-fallback{
-    position:relative;
-    z-index:1;
-    aspect-ratio:1007/1217;
-    border-radius:20px;
-    border:1.5px dashed rgba(255,255,255,0.5);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:24px;
-    font-family:'Space Grotesk',sans-serif;
-    font-size:13px;
-    color:rgba(255,255,255,0.85);
-  }
-  .about-photo-wrap.photo-missing .about-photo{display:none;}
-  .about-photo-wrap.photo-missing .about-photo-fallback{display:flex;}
-
-  /* ===== Bottom edge fade (pure CSS gradient) =====
-     Fixes the hard rectangular cutoff where the transparent-bg
-     portrait PNG ends.
-
-     History: three earlier attempts all relied on SVG resolving
-     inside the page — CSS mask-image (data-URI, then DOM <mask>),
-     then a visible SVG gradient overlay. Each looked fine in
-     testing but broke somewhere between environments. This version
-     drops SVG entirely and uses only plain CSS `background` with
-     radial/linear gradients — the same primitive already used for
-     the blob background elsewhere in this file, so it's proven to
-     render consistently here.
-
-     Trade-off: this no longer traces the exact hand-drawn curve
-     (deep at the edges, pinched to nothing at the center). Instead
-     it's two soft radial "pools" anchored at the bottom corners
-     (heavier coverage near the edges) plus a gentle uniform linear
-     fade across the full width (so the very bottom edge is never a
-     hard line anywhere, including center). The visual effect is a
-     soft glow rather than a precise curve, but it doesn't depend on
-     any SVG/masking feature at all.
-  */
-  .about-photo-shade{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:38%;
-    z-index:1;
-    pointer-events:none;
-    background:
-      radial-gradient(ellipse 30% 210% at 0% 100%, var(--bg) 0%, var(--bg) 20%, transparent 88%),
-      radial-gradient(ellipse 30% 210% at 100% 100%, var(--bg) 0%, var(--bg) 20%, transparent 88%),
-      radial-gradient(ellipse 92% 95% at 0% 100%, var(--bg) 0%, transparent 72%),
-      radial-gradient(ellipse 92% 95% at 100% 100%, var(--bg) 0%, transparent 72%),
-      linear-gradient(to top, var(--bg) 0%, var(--bg) 4%, transparent 78%);
-    /* Confines the shade to only where the portrait's own pixels
-       are opaque, using the same PNG as a mask on its alpha
-       channel — so past the person's silhouette (where the PNG is
-       transparent and the blob shows through), the shade
-       disappears automatically instead of painting a rectangle
-       over the blob. Sized/positioned to line up with the same
-       bottom-anchored portion of the photo this box already
-       covers: this box is 38% of the full photo's height, so the
-       mask image is scaled to 100/38 ≈ 263% of the box's own
-       height and bottom-anchored, matching .about-photo's own
-       "center bottom" positioning. */
-    -webkit-mask-image:url('src/about-portrait.png');
-    mask-image:url('src/about-portrait.png');
-    -webkit-mask-mode:alpha;
-    mask-mode:alpha;
-    -webkit-mask-size:100% 263.16%;
-    mask-size:100% 263.16%;
-    -webkit-mask-position:center bottom;
-    mask-position:center bottom;
-    -webkit-mask-repeat:no-repeat;
-    mask-repeat:no-repeat;
-    /* Hidden until the JS below confirms the (same) image file has
-       actually loaded — otherwise the mask can lag a frame behind
-       the visible photo and the hard edge flashes briefly before
-       the shade catches up. Fades in instead of popping in. */
-    opacity:0;
-    transition:opacity .25s ease;
-    /* Forces this element onto its own stable GPU compositing
-       layer. Without this, some browsers re-rasterize a masked
-       element at a slightly different sub-pixel offset during
-       scroll, which can show up as a thin bright seam right at the
-       mask's edge for a frame. This is a real device/scroll
-       behavior I can't verify from a static screenshot — it's the
-       standard fix for this category of bug, but confirm on your
-       device.
-
-       The scale(1.02) below is a separate fix for a separate
-       symptom: at non-1x zoom (pinch/double-tap zoom), percentage-
-       based sizing on this element, the photo, and the blob can
-       each round to a slightly different sub-pixel boundary, and
-       daylight from the page background peeks through the gap as a
-       hairline. Scaling this element up ~2% around its own center
-       makes it deliberately overhang its logical edges, so any
-       rounding gap gets swallowed by that overlap instead of
-       showing. Same caveat as above — this is real zoom/rounding
-       behavior I can't reproduce pixel-for-pixel here; it's the
-       standard treatment, confirm on your device. */
-    transform:translateZ(0) scale(1.02);
-    -webkit-transform:translateZ(0) scale(1.02);
-    will-change:transform;
-    backface-visibility:hidden;
-    -webkit-backface-visibility:hidden;
-  }
-  .about-photo-wrap.photo-ready .about-photo-shade{
-    opacity:1;
-  }
-  /* Mobile-only: the whole photo fades out when expanded there, so
-     the shade goes with it. Scoped to below the desktop breakpoint
-     so this never touches the shade on desktop at all — toggling
-     display on a masked element turned out to be unreliable in
-     real browsers even when "overridden" back, so the fix is to
-     never apply it there in the first place, not fight it after. */
-  @media (max-width:1023px){
-    .about-container.is-expanded .about-photo-shade{
-      display:none;
-    }
-  }
-
-  .about-photo-note{
-    position:absolute;
-    right:-32%;
-    bottom:10%;
-    z-index:2;
-    font-family:'Caveat',cursive;
-    font-weight:600;
-    font-size:19px;
-    line-height:1.25;
-    color:#fff;
-    transform:rotate(-3deg);
-    text-align:right;
-  }
-
-  /* ===== "See more" expanded background =====
-     A separate, independent element for the faint full-bleed
-     background shown while the expanded story is open — decoupled
-     from the portrait image on purpose, so it can use its own file
-     without touching .about-photo at all. Swap the background-image
-     path below to change it. */
-  .about-expanded-bg{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    opacity:0;
-    pointer-events:none;
-    background-image:url('src/about-portrait-bg.jpg');
-    background-size:cover;
-    background-position:center;
-    border-radius:28px;
-    filter:grayscale(0.4) blur(0.5px);
-    transition:opacity .5s ease;
-  }
-  .about-container.is-expanded .about-expanded-bg{
-    opacity:0.1;
-  }
-
-  /* the small portrait simply fades out while expanded, instead of
-     being repurposed as the background (that's .about-expanded-bg's
-     job now) */
-  .about-container.is-expanded .about-photo-wrap{
-    position:absolute;
-    inset:0;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity .4s ease;
-  }
-
-  /* ===== Expanded story ===== */
-
-  .about-content{
-    display:flex;
-    flex-direction:column;
-  }
-
-  .about-body{ order:1; }
-  .about-story-extra{ order:3; }
-  .see-more-btn{ order:2; }
-  .about-expanded{ order:4; }
-
-  .about-story-extra{
-    max-height:0;
-    opacity:0;
-    overflow:hidden;
-    transition:max-height .6s ease, opacity .5s ease;
-  }
-  .about-story-extra.is-open{
-    opacity:1;
-    margin-top:4px;
-  }
-  .about-story-extra-inner{
-    padding-top:4px;
-  }
-
-  .about-expanded{
-    max-height:0;
-    opacity:0;
-    overflow:hidden;
-    transition:max-height .6s ease, opacity .5s ease;
-  }
-  .about-expanded.is-open{
-    opacity:1;
-    margin-top:4px;
-  }
-
-  .about-expanded-inner{
-    padding-top:4px;
-  }
-
-  .about-expanded p,
-  .about-story-extra p{
-    font-size:16px;
-    font-weight:500;
-    line-height:1.8;
-    color:var(--text-mid);
-    max-width:56ch;
-    margin:0 0 18px;
-  }
-
-  .about-expanded .emphasis,
-  .about-story-extra .emphasis{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:17.5px;
-    color:var(--text-hi);
-    letter-spacing:0.01em;
-  }
-
-  .section-label{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:12.5px;
-    letter-spacing:0.09em;
-    text-transform:uppercase;
-    color:var(--text-hi);
-    margin:36px 0 16px;
-  }
-
-  .cards-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:14px;
-  }
-
-  .mini-card{
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    border-radius:16px;
-    padding:16px 14px;
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-  }
-
-  .mini-card .icon{
-    width:32px;
-    height:32px;
-    border-radius:9px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:12px;
-  }
-  .mini-card .icon svg{width:17px;height:17px;}
-
-  .mini-card--purple .icon{background:var(--purple-soft);color:var(--purple);}
-  .mini-card--blue .icon{background:var(--blue-soft);color:var(--blue);}
-  .mini-card--amber .icon{background:var(--amber-soft);color:var(--amber);}
-  .mini-card--teal .icon{background:var(--teal-soft);color:var(--teal);}
-
-  .mini-card h4{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:14.5px;
-    color:var(--text-hi);
-    margin:0 0 6px;
-  }
-  .mini-card p{
-    font-size:13px;
-    font-weight:500;
-    line-height:1.55;
-    color:var(--text-mid);
-    margin:0;
-  }
-
-  .card-large{
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    border-radius:20px;
-    padding:24px 22px;
-    box-shadow:var(--shadow);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-  }
-  .card-large h4{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:14px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--purple);
-    margin:0 0 12px;
-  }
-  .card-large p{
-    font-size:16px;
-    font-weight:500;
-    line-height:1.8;
-    color:var(--text-mid);
-    margin:0;
-  }
-
-  /* ===== Metrics ===== */
-
-  .about-metrics{
-    margin-top:44px;
-    border:1px solid var(--card-border);
-    border-radius:18px;
-    padding:4px 20px;
-    order:3;
-  }
-
-  .about-metric-row{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:16px;
-    padding:16px 0;
-    border-bottom:1px solid var(--card-border);
-  }
-  .about-metric-row:last-child{
-    border-bottom:none;
-  }
-
-  .about-metric-num{
-    flex:0 0 auto;
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:19px;
-    letter-spacing:-0.01em;
-    color:var(--text-hi);
-  }
-
-  .about-metric-label{
-    flex:0 0 auto;
-    font-size:13.5px;
-    font-weight:500;
-    color:var(--text-mid);
-    text-align:right;
-  }
-
-  /* ===== CTA: View CV ===== */
-
-  .about-cta-wrap{
-    margin-top:28px;
-    display:flex;
-    justify-content:flex-start;
-    order:4;
-  }
-
-  .about-cta-btn{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:15px 28px;
-    border-radius:999px;
-    border:1.5px solid var(--purple);
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 45%),
-      var(--bg);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.07),
-      0 8px 20px rgba(0,0,0,0.4);
-    color:var(--text-hi);
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:14.5px;
-    letter-spacing:0.01em;
-    text-decoration:none;
-    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  }
-  .about-cta-btn:hover{
-    transform:translateY(-2px);
-    border-color:var(--purple);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      0 12px 26px rgba(124,92,255,0.28);
-  }
-  .about-cta-btn:active{
-    transform:translateY(0);
-  }
-  .about-cta-btn:focus-visible{
-    outline:2px solid var(--purple);
-    outline-offset:3px;
-  }
-
-  .about-cta-icon{
-    width:16px;
-    height:16px;
-    flex:0 0 auto;
-    color:var(--purple);
-  }
-
-  /* Desktop-only clothesline metrics: hidden on mobile, mobile
-     keeps the bordered card list (.about-metrics) instead. */
-  .metrics-clothesline{
-    display:none;
-    order:5;
-  }
-
-  /* ============================================================
-     TABLET (768px–1023px)
-     Deliberately NOT a compressed version of the desktop two-column
-     layout — that layout depends on much more horizontal room than
-     tablet has (independent flex columns, the JS that relocates
-     elements into a full-width row on "See more", clothesline
-     metrics whose labels already wrap at desktop width). Squeezing
-     that into ~800px would just reopen the same categories of bugs
-     that took a long time to fix at desktop size.
-
-     Instead this is mobile's proven single-column structure and
-     toggle behavior (unchanged — same JS, same clamped intro,
-     same story hidden behind "See more"), scaled up with CSS-only
-     size increases. Sits before the desktop query below, so
-     desktop's own rules naturally take over at 1024px+ with no
-     gap or overlap — nothing here needs an upper bound.
-     ============================================================ */
-  @media (min-width:768px){
-
-    .about-container{
-      padding:0 32px;
-    }
-
-    .about-photo-wrap{
-      max-width:340px;
-    }
-
-    .about-body{
-      font-size:17.5px;
-    }
-
-    .about-cta-btn{
-      padding:17px 32px;
-      gap:11px;
-      font-size:15.5px;
-    }
-    .about-cta-icon{
-      width:18px;
-      height:18px;
-    }
-
-    .about-metrics{
-      padding:4px 26px;
-    }
-    .about-metric-num{
-      font-size:20px;
-    }
-    .about-metric-label{
-      font-size:14px;
-    }
-
-    /* mini-cards: single row of 4 instead of mobile's 2x2 */
-    .cards-grid{
-      grid-template-columns:repeat(4, 1fr);
-      gap:14px;
-    }
-  }
-
-  /* ============================================================
-     DESKTOP (≥1024px)
-     Mobile layout above is untouched by anything in this block.
-     ============================================================ */
-  @media (min-width:1024px){
-
-    .about-container{
-      display:grid;
-      grid-template-columns:1.15fr 0.85fr;
-      column-gap:72px;
-      align-items:start;
-      max-width:1440px;
-      padding:0 64px;
-    }
-
-    .about-col-left,
-    .about-col-right{
-      display:flex;
-      flex-direction:column;
-    }
-    .about-col-left{ grid-column:1; }
-    .about-col-right{ grid-column:2; }
-
-    /* On mobile, the photo is taken out of flow (position:absolute)
-       when expanded, so nothing is left holding a gap in that
-       single shared column. On desktop the photo and the metrics
-       are in their OWN column, independent of the story's height,
-       so that trick isn't needed — undo it here.
-
-       Updated: the photo and blob should now stay fully visible
-       and unchanged on desktop regardless of toggle state (per
-       explicit request), not fade at all — so this also cancels
-       the opacity fade, not just the position trick. */
-    .about-container.is-expanded .about-photo-wrap{
-      position:relative;
-      inset:auto;
-      opacity:1 !important;
-      pointer-events:auto !important;
-      filter:none !important;
-    }
-    /* No shade override needed here anymore — the mobile-only hide
-       rule above is now scoped so it never reaches desktop in the
-       first place, so there's nothing to undo. */
-
-    /* let each column stack its own children in plain DOM order —
-       the mobile `order` values still apply but are harmless here
-       since within each column they're already in ascending order */
-
-    .about-body{
-      display:block;
-      -webkit-line-clamp:unset;
-      overflow:visible;
-      font-size:19px;
-      font-weight:600;
-      /* the first sentence of .about-story-extra continues this
-         same paragraph visually on desktop (per spec, no blank
-         line between them) — remove the trailing gap so the two
-         separate elements read as one flowing paragraph */
-      margin-bottom:0;
-    }
-
-    .about-story-extra .tight-follow{
-      margin-top:0;
-    }
-
-    /* Bumped up for desktop readability — larger and heavier than
-       the mobile values (16px/500), matching .about-body's own
-       desktop increase above. */
-    .about-expanded p,
-    .about-story-extra p{
-      font-size:18px;
-      font-weight:600;
-    }
-
-    /* CV button scaled up proportionally alongside the text bump
-       above — mobile stays at its original size. */
-    .about-cta-btn{
-      padding:22px 42px;
-      gap:14px;
-      font-size:18.5px;
-    }
-    .about-cta-icon{
-      width:23px;
-      height:23px;
-    }
-
-    /* On desktop the story is shown in full by default — only
-       the mini-cards + "Where I'm headed" (.about-expanded) stay
-       gated behind "See more". Re-order so the story sits between
-       the intro and the button (mobile has it AFTER the button,
-       revealed together with the cards on toggle), and force it
-       open regardless of the JS-driven inline max-height/is-open
-       state — the !important here is deliberate: it overrides the
-       toggle so this part is simply never collapsible on desktop. */
-    .about-story-extra{
-      order:2;
-      max-height:none !important;
-      opacity:1 !important;
-      overflow:visible !important;
-      margin:0 0 8px !important;
-    }
-    .about-story-extra-inner{
-      padding-top:0;
-    }
-    .see-more-btn{ order:3; }
-    .about-expanded{ order:4; }
-
-    .about-photo-wrap{
-      max-width:480px;
-      margin:0 0 0 auto;
-      transform:none;
-    }
-
-    /* Bigger on desktop (the photo itself is ~2x larger here than
-       on mobile, so the note needs to scale to still read as
-       intentional), and repositioned to sit at the blob's own
-       bottom-right corner instead of mobile's "cut across into the
-       dark background" placement — nudged slightly up and left
-       from that corner. */
-    .about-photo-note{
-      font-size:26px;
-      right:-17%;
-      bottom:calc(14% - 8px);
-    }
-
-    .about-metrics{
-      display:none;
-    }
-
-    .metrics-clothesline{
-      display:block;
-      margin-top:56px;
-    }
-
-    .cards-grid{
-      grid-template-columns:repeat(4, 1fr);
-    }
-
-    /* ===== Clothesline metrics ===== */
-
-    .clothesline-rope{
-      height:6px;
-      border-top:2px solid rgba(255,255,255,0.32);
-      border-bottom:2px solid rgba(255,255,255,0.32);
-    }
-
-    .clothesline-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      padding:0 2px;
-    }
-
-    .clothesline-item{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      flex:1 1 0;
-      min-width:0;
-    }
-
-    .clothesline-wire{
-      width:0;
-      height:var(--wire-h, 40px);
-      border-left:2px dashed rgba(255,255,255,0.32);
-    }
-
-    .clothesline-tag{
-      margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
-      padding:0 6px;
-    }
-
-    .tag-num{
-      font-family:'Space Grotesk',sans-serif;
-      font-weight:700;
-      font-size:19px;
-      letter-spacing:-0.01em;
-      color:var(--text-hi);
-      white-space:nowrap;
-    }
-
-    .tag-label{
-      font-size:12px;
-      font-weight:500;
-      color:var(--text-mid);
-      margin-top:4px;
-      line-height:1.3;
-      max-width:100px;
-    }
-
-    /* Desktop-only expanded background disabled per request — the
-       faint image-behind-text effect stays mobile-only. Plain
-       matte black on desktop regardless of toggle state. */
-    .about-expanded-bg{
-      display:none;
-    }
-
-    /* ============================================================
-       Desktop "See more" — full-width breakout row.
-       When expanded, JS physically relocates #aboutExpanded,
-       .about-cta-wrap and .metrics-clothesline to become direct
-       children of .about-container (see the script below), because
-       CSS alone can't reach into a nested flex column and place its
-       child into a grandparent grid row. These rules only match
-       them in that relocated position (direct-child selector) — in
-       the default/nested position they're unaffected.
-       ============================================================ */
-    .about-container.is-expanded > #aboutExpanded{
-      grid-column:1 / -1;
-      grid-row:2;
-      max-height:none !important;
-      opacity:1 !important;
-      overflow:visible !important;
-      margin-top:8px !important;
-    }
-    .about-container.is-expanded > #aboutExpanded .about-expanded-inner{
-      padding-top:0;
-    }
-    .about-container.is-expanded > #aboutExpanded .cards-grid{
-      grid-template-columns:repeat(4, 1fr);
-    }
-
-    .about-container.is-expanded > .about-cta-wrap{
-      grid-column:1;
-      grid-row:3;
-      margin-top:28px;
-    }
-
-    .about-container.is-expanded > .metrics-clothesline{
-      grid-column:2;
-      grid-row:3;
-      margin-top:0;
-      align-self:start;
-    }
-  }
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background-color: #F1E9DB; color-scheme: light; scroll-behavior: smooth; }
+body { font-family: Georgia, serif; background-color: #F1E9DB; color: #1a1a1a; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+.topbar { padding: 1rem 0; background-color: #F1E9DB; border-bottom: 1px solid rgba(139,58,58,0.15); position: sticky; top: 0; z-index: 100; }
+.topbar-inner { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; }
+.back-btn { display: inline-flex; align-items: center; gap: 0.5rem; background-color: #0D3B46; color: #F1E9DB; text-decoration: none; padding: 0.55rem 1.25rem; border-radius: 8px; font-family: Georgia, serif; font-size: 0.9rem; transition: background-color 0.2s; }
+.back-btn:hover { background-color: #0a2d37; }
+.page-tag { font-family: Georgia, serif; font-size: 0.72rem; color: #3a3a3a; letter-spacing: 0.18em; text-transform: uppercase; }
+.page-header { padding: 4.5rem 0 3rem; border-bottom: 1px solid rgba(139,58,58,0.15); }
+.chip { display: inline-block; border: 1.5px solid #8B3A3A; color: #8B3A3A; font-family: Georgia, serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.4rem; }
+.page-header h1 { font-family: Georgia, serif; font-weight: bold; font-size: clamp(2.6rem, 7vw, 4.2rem); line-height: 1.08; color: #1a1a1a; margin-bottom: 0.7rem; }
+.page-header .subtitle { font-family: Georgia, serif; font-size: 1.1rem; color: #3a3a3a; max-width: 540px; margin-bottom: 2.2rem; line-height: 1.65; }
+.meta-strip { display: grid; grid-template-columns: repeat(3, 1fr); border: 1.5px solid rgba(139,58,58,0.2); border-radius: 12px; overflow: hidden; background-color: #FFFFFF; }
+.meta-item { padding: 1.3rem 1.6rem; border-right: 1px solid rgba(139,58,58,0.12); }
+.meta-item:last-child { border-right: none; }
+.meta-label { display: block; font-family: Georgia, serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: #C15F3C; margin-bottom: 0.4rem; }
+.meta-val { font-family: Georgia, serif; font-size: 0.97rem; color: #1a1a1a; line-height: 1.45; }
+.section { display: grid; grid-template-columns: 210px 1fr; gap: 4.5rem; padding: 4rem 0; border-bottom: 1px solid rgba(139,58,58,0.12); align-items: start; }
+.section:last-of-type { border-bottom: none; }
+.section-label { position: sticky; top: 74px; }
+.section-num { display: block; font-family: Georgia, serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: #C15F3C; margin-bottom: 0.55rem; }
+.section-title { font-family: Georgia, serif; font-size: 1.75rem; color: #1a1a1a; line-height: 1.2; }
+.body-text p { font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.85; margin-bottom: 1.1rem; }
+.body-text p:last-child { margin-bottom: 0; }
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.bullet-list li { display: flex; align-items: flex-start; gap: 0.9rem; font-family: Georgia, serif; font-size: 1.05rem; color: #3a3a3a; line-height: 1.65; }
+.bullet-list li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background-color: #8B3A3A; flex-shrink: 0; margin-top: 0.57rem; }
+.metric-group { margin-top: 2rem; padding: 1.5rem 1.75rem; background-color: #fff; border: 1px solid rgba(139,58,58,0.15); border-radius: 12px; }
+.metric-group-title { font-family: Georgia, serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: #C15F3C; margin-bottom: 1rem; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.metric-card { background-color: #F1E9DB; border-radius: 10px; padding: 1rem 1.2rem; }
+.metric-num { font-family: Georgia, serif; font-size: 1.6rem; font-weight: bold; color: #8B3A3A; line-height: 1.1; margin-bottom: 0.3rem; }
+.metric-desc { font-family: Georgia, serif; font-size: 0.8rem; color: #3a3a3a; line-height: 1.5; }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+.result-card { background-color: #fff; border: 1px solid rgba(139,58,58,0.15); border-radius: 12px; padding: 1.4rem 1.5rem; }
+.result-card.featured { background-color: #0D3B46; border-color: #0D3B46; }
+.result-card.featured .r-dot { background-color: #F1E9DB; }
+.result-card.featured p { color: #F1E9DB; }
+.r-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #8B3A3A; margin-bottom: 0.8rem; }
+.result-card p { font-family: Georgia, serif; font-size: 0.95rem; color: #1a1a1a; line-height: 1.6; }
+.testimonial { background-color: #0D3B46; color: #F1E9DB; border-radius: 12px; padding: 2.5rem 2.75rem; margin-top: 2.5rem; }
+.testimonial blockquote { font-family: Georgia, serif; font-size: 1.18rem; line-height: 1.78; margin-bottom: 1.2rem; color: #F1E9DB; }
+.testimonial blockquote::before { content: '\201C'; }
+.testimonial blockquote::after  { content: '\201D'; }
+.testimonial cite { font-family: Georgia, serif; font-size: 0.88rem; font-style: italic; color: rgba(241,233,219,0.65); }
+.proof-section-head { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem; }
+.proof-section-head h3 { font-family: Georgia, serif; font-size: 1.15rem; color: #1a1a1a; white-space: nowrap; }
+.proof-section-head::after { content: ''; flex: 1; height: 1px; background-color: rgba(139,58,58,0.15); }
+.proof-link-btn { display: inline-block; background: #0D3B46; color: #F1E9DB; padding: .45rem 1rem; border-radius: 6px; font-family: Georgia, serif; font-size: .85rem; text-decoration: none; margin-top: .25rem; }
+.proof-link-btn:hover { background-color: #0a2d37; }
+footer { padding: 2rem 0; border-top: 1px solid rgba(139,58,58,0.15); margin-top: 4rem; background-color: #F1E9DB; }
+.foot-inner { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.foot-copy { font-family: Georgia, serif; font-size: 0.82rem; color: #3a3a3a; }
+.foot-link { font-family: Georgia, serif; font-size: 0.82rem; color: #0D3B46; text-decoration: none; }
+.foot-link:hover { text-decoration: underline; }
+@media (max-width: 800px) {
+  .wrap { padding: 0 1.25rem; }
+  .topbar-inner { padding: 0 1.25rem; }
+  .foot-inner { padding: 0 1.25rem; }
+  .section { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 0; }
+  .section-label { position: static; }
+  .meta-strip { grid-template-columns: 1fr; }
+  .meta-item { border-right: none; border-bottom: 1px solid rgba(139,58,58,0.12); }
+  .meta-item:last-child { border-bottom: none; }
+  .page-header { padding: 2.5rem 0 2rem; }
+  .result-grid { grid-template-columns: 1fr; }
+  .testimonial { padding: 1.8rem 1.6rem; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<section id="about">
-  <div class="about-container" id="aboutContainer">
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="/portfolio" class="back-btn">&#8592; Back to Portfolio</a>
+    <span class="page-tag">Case Study</span>
+  </div>
+</nav>
 
-    <div class="about-col-left">
-    <div class="about-content">
-
-      <div class="about-expanded-bg" aria-hidden="true"></div>
-
-      <p class="about-eyebrow">About me</p>
-
-      <h2 class="about-title">A foundation built through <span class="accent">curiosity.</span></h2>
-
-      <p class="about-body">
-        I've always been curious about how things work, how people respond, and why some systems work better than others.
-      </p>
-
-      <div class="about-story-extra" id="aboutStoryExtra">
-        <div class="about-story-extra-inner">
-          <p class="tight-follow">I started out studying Petroleum Engineering, but curiosity kept pulling me toward Web3, social media, operations, data, and digital products.</p>
-          <p>What looked like different directions gradually became one way of learning: getting involved, figuring things out, taking responsibility, and finding ways to make things better.</p>
-          <p class="emphasis">I like to learn by doing.</p>
-        </div>
+<header class="page-header">
+  <div class="wrap">
+    <span class="chip">DeFi &middot; Community Growth</span>
+    <h1>Pecunity</h1>
+    <p class="subtitle">Community Growth &amp; Campaign Execution Case Study</p>
+    <div class="meta-strip">
+      <div class="meta-item">
+        <span class="meta-label">Joined</span>
+        <span class="meta-val">Q2 2025</span>
       </div>
-
-      <button class="see-more-btn" id="seeMoreBtn" aria-expanded="false" aria-controls="aboutExpanded">
-        <span class="btn-label">See more</span>
-        <span class="arrow" aria-hidden="true">→</span>
-      </button>
-
-      <div class="about-expanded" id="aboutExpanded">
-        <div class="about-expanded-inner">
-
-          <p>Learning gives me the foundation.<br>Experience shows me how to apply it.</p>
-
-          <p>I learn by testing what I know, seeing what happens, and improving from there.</p>
-
-          <h3 class="section-label">What keeps me moving</h3>
-
-          <div class="cards-grid">
-
-            <div class="mini-card mini-card--purple">
-              <div class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
-              </div>
-              <h4>Curiosity</h4>
-              <p>I want to understand how things work, not just know how to use them.</p>
-            </div>
-
-            <div class="mini-card mini-card--blue">
-              <div class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-              </div>
-              <h4>Structure</h4>
-              <p>I love creating systems that improve execution.</p>
-            </div>
-
-            <div class="mini-card mini-card--amber">
-              <div class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6.5V12c0 4.5 3 7.5 8 9 5-1.5 8-4.5 8-9V6.5L12 3Z"/></svg>
-              </div>
-              <h4>Ownership</h4>
-              <p>If I take responsibility for something, I want to see it through.</p>
-            </div>
-
-            <div class="mini-card mini-card--teal">
-              <div class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <h4>Growth</h4>
-              <p>There's always another layer to understand, another skill to build, or a better way to do something.</p>
-            </div>
-
-          </div>
-
-          <h3 class="section-label">Where I'm headed</h3>
-
-          <div class="card-large">
-            <p>I'm still figuring out how far this curiosity will take me.<br><br>But I know I want to keep working around technology, products, systems, and the people who use them.</p>
-          </div>
-
-        </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-val">9 Months</span>
       </div>
-
-    </div>
-
-    <div class="about-cta-wrap">
-      <a href="cv.html" class="about-cta-btn">
-        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
-          <path d="M14 2v6h6"/>
-          <line x1="8" y1="13" x2="16" y2="13"/>
-          <line x1="8" y1="17" x2="16" y2="17"/>
-          <line x1="8" y1="9" x2="10" y2="9"/>
-        </svg>
-        <span>View CV</span>
-        <svg class="about-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="7" y1="17" x2="17" y2="7"/>
-          <polyline points="7 7 17 7 17 17"/>
-        </svg>
-      </a>
-    </div>
-
-    </div>
-
-    <div class="about-col-right">
-    <div class="about-photo-wrap" id="aboutPhotoWrap">
-      <div class="about-photo-blob"></div>
-      <div
-        class="about-photo"
-        id="aboutPhotoImg"
-        role="img"
-        aria-label="Portrait photo"
-      ></div>
-      <div class="about-photo-fallback">Add photo at<br>src/about-portrait.png</div>
-      <div class="about-photo-shade" aria-hidden="true"></div>
-      <p class="about-photo-note">People first.<br>Better systems, better results.</p>
-    </div>
-
-    <div class="about-metrics">
-      <div class="about-metric-row">
-        <span class="about-metric-num">4+</span>
-        <span class="about-metric-label">Years</span>
-      </div>
-      <div class="about-metric-row">
-        <span class="about-metric-num">5+</span>
-        <span class="about-metric-label">Core capabilities</span>
-      </div>
-      <div class="about-metric-row">
-        <span class="about-metric-num">10+</span>
-        <span class="about-metric-label">Projects &amp; collaborations</span>
-      </div>
-      <div class="about-metric-row">
-        <span class="about-metric-num">8K+</span>
-        <span class="about-metric-label">Web3 community audience</span>
-      </div>
-      <div class="about-metric-row">
-        <span class="about-metric-num">700+</span>
-        <span class="about-metric-label">Non-Web3 social audience</span>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-val">Community Manager &middot; Campaign Lead &middot; Growth Strategist</span>
       </div>
     </div>
+  </div>
+</header>
 
-    <div class="metrics-clothesline" aria-hidden="false">
-      <div class="clothesline-rope"></div>
-      <div class="clothesline-row">
-        <div class="clothesline-item" style="--wire-h:58px;">
-          <div class="clothesline-wire"></div>
-          <div class="clothesline-tag">
-            <span class="tag-num">4+</span>
-            <span class="tag-label">Years</span>
-          </div>
+<main>
+  <div class="wrap">
+
+<!-- 01 Overview -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Overview</h2>
+  </div>
+  <div class="body-text">
+    <p>Pecunity is a decentralized finance protocol focused on automated, cross-chain passive income strategies. I joined during its early stage when it was still operating as OctoDeFi and contributed through its rebranding and growth phase.</p>
+    <p>My work spanned community management, campaign coordination, and growth strategy — helping the project establish a credible, engaged community at a critical stage of development.</p>
+  </div>
+</div>
+
+<!-- 02 Challenge -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Challenge</h2>
+  </div>
+  <div>
+    <ul class="bullet-list">
+      <li>Low Discord engagement and an inactive member base with little daily activity</li>
+      <li>Limited campaign participation across Zealy and social platforms</li>
+      <li>Weak X (Twitter) visibility during key presale and launch windows</li>
+      <li>Operational gaps in campaign coordination and task management</li>
+      <li>Early-stage structural challenges compounded by a full rebranding transition from OctoDeFi to Pecunity</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 03 Action -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Action</h2>
+  </div>
+  <div>
+    <ul class="bullet-list">
+      <li>Designed engagement loops that achieved 90% consistent participation across campaign activities</li>
+      <li>Built and executed onboarding flows that converted new users from initial curiosity into active community members</li>
+      <li>Coordinated campaign execution simultaneously across Discord, X, and Zealy — driving structured task participation and cross-platform visibility</li>
+      <li>Drove organic ecosystem awareness through structured conversations and consistent social promotion</li>
+      <li>Supported the full OctoDeFi &rarr; Pecunity rebranding transition with community messaging and continuity</li>
+      <li>Sustained engagement momentum throughout campaign cycles, keeping participation active during growth phases and presale windows</li>
+    </ul>
+
+    <!-- Campaign Metrics -->
+    <div class="metric-group">
+      <p class="metric-group-title">Campaign Metrics</p>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-num">1.5k → 4k+</div>
+          <div class="metric-desc">X followers grown through structured engagement campaigns</div>
         </div>
-        <div class="clothesline-item" style="--wire-h:38px;">
-          <div class="clothesline-wire"></div>
-          <div class="clothesline-tag">
-            <span class="tag-num">5+</span>
-            <span class="tag-label">Core capabilities</span>
-          </div>
+        <div class="metric-card">
+          <div class="metric-num">500 → 3k+</div>
+          <div class="metric-desc">Telegram community members, with 500+ active before presale</div>
         </div>
-        <div class="clothesline-item" style="--wire-h:46px;">
-          <div class="clothesline-wire"></div>
-          <div class="clothesline-tag">
-            <span class="tag-num">10+</span>
-            <span class="tag-label">Projects &amp; collaborations</span>
-          </div>
+        <div class="metric-card">
+          <div class="metric-num">+237%</div>
+          <div class="metric-desc">Zealy participation growth within 7 days of campaign launch</div>
         </div>
-        <div class="clothesline-item" style="--wire-h:26px;">
-          <div class="clothesline-wire"></div>
-          <div class="clothesline-tag">
-            <span class="tag-num">8K+</span>
-            <span class="tag-label">Web3 community audience</span>
-          </div>
-        </div>
-        <div class="clothesline-item" style="--wire-h:34px;">
-          <div class="clothesline-wire"></div>
-          <div class="clothesline-tag">
-            <span class="tag-num">700+</span>
-            <span class="tag-label">Non-Web3 social audience</span>
-          </div>
+        <div class="metric-card">
+          <div class="metric-num">800 → 6k+</div>
+          <div class="metric-desc">Zealy participants scaled across the campaign period</div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- 04 Results -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Results</h2>
+  </div>
+  <div>
+
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="r-dot"></div>
+        <p>X following grew from 1.5k to 4k+ through consistent campaign-driven engagement</p>
+      </div>
+      <div class="result-card">
+        <div class="r-dot"></div>
+        <p>Telegram community scaled from 500 to 3k+ members with 500+ active before presale</p>
+      </div>
+      <div class="result-card">
+        <div class="r-dot"></div>
+        <p>Zealy participation surged 237% in 7 days, growing from 800 to 6k+ participants</p>
+      </div>
+      <div class="result-card featured">
+        <div class="r-dot"></div>
+        <p>Direct founder acknowledgment and public testimonial from Co-Founder Lars</p>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <blockquote>@Japheth did a great job. I highly recommend him for his passionate and modest community work.</blockquote>
+      <cite>Lars &mdash; Co-Founder, Pecunity</cite>
+    </div>
+
+    <!-- Visual Proof -->
+    <div class="proof-section-head"><h3>Visual Proof</h3></div>
+    <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+
+      <img src="docs/projects/proofs/IMG_9446.jpeg" loading="lazy" decoding="async" alt="Founder Recognition"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+
+      <img src="docs/projects/proofs/IMG_9447.jpeg" loading="lazy" decoding="async" alt="Task Completion"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+
+      <img src="docs/projects/proofs/IMG_9448.jpeg" loading="lazy" decoding="async" alt="Testimonial"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+
+      <img src="docs/projects/proofs/IMG_9449.jpeg" loading="lazy" decoding="async" alt="PinkSale Tweet"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+      <a href="https://x.com/japhonchain/status/1983495449530007623?s=46"
+         target="_blank" rel="noopener" class="proof-link-btn">&#8599; View PinkSale Tweet on X</a>
+
+      <img src="docs/projects/proofs/IMG_9450.jpeg" loading="lazy" decoding="async" alt="Campaign Thread"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+      <a href="https://x.com/japhonchain/status/2024562834688889181?s=46"
+         target="_blank" rel="noopener" class="proof-link-btn">&#8599; View Campaign Thread on X</a>
+
+      <!-- Event growth proof — plug in image path below when ready -->
+      <img src="docs/projects/proofs/IMG_9630.jpeg" loading="lazy" decoding="async" alt="Event Growth Proof"
+           style="display:block; max-width:100%; height:auto; border-radius:10px;">
+
+      <a href="https://discord.com/channels/1104136246806204436/1395518482074046595/1436254160075882618"
+         target="_blank" rel="noopener" class="proof-link-btn">&#8599; View Discord Announcement</a>
 
     </div>
 
   </div>
-</section>
+</div>
 
-<script>
-  (function(){
-    var btn = document.getElementById('seeMoreBtn');
-    var panel = document.getElementById('aboutExpanded');
-    var storyExtra = document.getElementById('aboutStoryExtra');
-    var panels = [panel, storyExtra];
-    var container = document.getElementById('aboutContainer');
-    var label = btn.querySelector('.btn-label');
+  </div><!-- /wrap -->
+</main>
 
-    btn.addEventListener('click', function(){
-      var isOpen = panel.classList.contains('is-open');
-
-      if(isOpen){
-        panels.forEach(function(p){
-          p.style.maxHeight = p.scrollHeight + 'px';
-        });
-        requestAnimationFrame(function(){
-          panels.forEach(function(p){
-            p.style.maxHeight = '0px';
-          });
-        });
-        panels.forEach(function(p){ p.classList.remove('is-open'); });
-        container.classList.remove('is-expanded');
-        btn.setAttribute('aria-expanded', 'false');
-        label.textContent = 'See more';
-      } else {
-        panels.forEach(function(p){
-          p.classList.add('is-open');
-          p.style.maxHeight = p.scrollHeight + 'px';
-        });
-        container.classList.add('is-expanded');
-        btn.setAttribute('aria-expanded', 'true');
-        label.textContent = 'See less';
-      }
-    });
-
-    // keep max-height correct if fonts/images shift layout after open
-    window.addEventListener('resize', function(){
-      if(panel.classList.contains('is-open')){
-        panels.forEach(function(p){
-          p.style.maxHeight = p.scrollHeight + 'px';
-        });
-      }
-      syncDesktopLayout();
-    });
-
-    // ===== Desktop-only "See more" full-width breakout =====
-    // On desktop, when expanded, #aboutExpanded / .about-cta-wrap /
-    // .metrics-clothesline move OUT of their nested columns to
-    // become direct children of .about-container, so CSS grid can
-    // place them in a new full-width row below both columns. CSS
-    // can't reach into a nested flex child to do this, so it's done
-    // here. Mobile is untouched — guarded by the matchMedia check,
-    // this never runs below the desktop breakpoint.
-    var ctaWrap = document.querySelector('.about-cta-wrap');
-    var clothesline = document.querySelector('.metrics-clothesline');
-    var contentEl = document.querySelector('.about-content');
-    var colLeftEl = document.querySelector('.about-col-left');
-    var colRightEl = document.querySelector('.about-col-right');
-    var desktopMq = window.matchMedia('(min-width:1024px)');
-
-    function relocateForDesktopExpand(){
-      container.appendChild(panel);
-      container.appendChild(ctaWrap);
-      container.appendChild(clothesline);
-    }
-    function restoreOriginalPositions(){
-      contentEl.appendChild(panel);
-      colLeftEl.appendChild(ctaWrap);
-      colRightEl.appendChild(clothesline);
-    }
-    function syncDesktopLayout(){
-      var isOpen = panel.classList.contains('is-open');
-      var shouldBeRelocated = isOpen && desktopMq.matches;
-      var isRelocated = panel.parentElement === container;
-      if(shouldBeRelocated && !isRelocated){
-        relocateForDesktopExpand();
-      } else if(!shouldBeRelocated && isRelocated){
-        restoreOriginalPositions();
-      }
-    }
-    // run once after every toggle, and once on load
-    btn.addEventListener('click', syncDesktopLayout);
-    syncDesktopLayout();
-
-    // graceful fallback if the photo file isn't present yet, and a
-    // signal for when it's safe to reveal the shade (see the
-    // .about-photo-shade CSS — it stays opacity:0 until this class
-    // is added, since the mask depends on the same file loading and
-    // would otherwise pop in a moment after the photo does)
-    var wrap = document.getElementById('aboutPhotoWrap');
-    var preload = new Image();
-    preload.onerror = function(){
-      wrap.classList.add('photo-missing');
-    };
-    preload.onload = function(){
-      wrap.classList.add('photo-ready');
-    };
-    preload.src = 'src/about-portrait.png';
-  })();
-</script>
+<footer>
+  <div class="foot-inner">
+    <span class="foot-copy">&copy; 2025 Japheth A. &mdash; Web3 Community Strategist</span>
+    <a href="/portfolio" class="foot-link">&#8592; Back to Portfolio</a>
+  </div>
+</footer>
 
 </body>
 </html>
