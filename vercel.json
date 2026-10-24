@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "resume-pied-five.vercel.app"
+        }
+      ],
+      "destination": "https://japheth.name.ng/:path*",
+      "permanent": true
+    }
+  ]
+}
