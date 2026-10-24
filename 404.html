@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found | Uche Japheth</title>
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="css/base.css">
+
+<style>
+  /* Scoped to this page only — small enough that a dedicated CSS file
+     would be more fragmentation than it's worth. Reuses base.css for
+     the shared dark background, fonts, and color tokens. */
+  .nf-wrap{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+  }
+  .nf-code{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:800;
+    font-size:clamp(4rem, 16vw, 7rem);
+    line-height:1;
+    letter-spacing:-0.02em;
+    background:linear-gradient(100deg, var(--purple), var(--amber));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:14px;
+  }
+  .nf-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(1.3rem, 4vw, 1.7rem);
+    color:var(--text-hi);
+    margin-bottom:10px;
+  }
+  .nf-sub{
+    font-size:clamp(.95rem, 2.4vw, 1.05rem);
+    color:var(--text-mid);
+    max-width:420px;
+    line-height:1.6;
+    margin-bottom:34px;
+  }
+  .nf-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:15px 32px;
+    border-radius:999px;
+    background:linear-gradient(180deg, #a48cff 0%, var(--purple) 55%, #6b46e0 100%);
+    color:#141414;
+    font-family:'Inter', sans-serif;
+    font-weight:800;
+    font-size:14.5px;
+    letter-spacing:0.01em;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,0.18);
+    box-shadow:
+      0 12px 28px rgba(124,92,255,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      inset 0 -3px 6px rgba(0,0,0,0.22);
+    transition:filter 0.2s ease, transform 0.1s ease;
+  }
+  .nf-btn:hover{ filter:brightness(1.08); }
+  .nf-btn:active{ transform:translateY(1px); }
+  .nf-btn svg{ width:16px; height:16px; }
+</style>
+</head>
+<body>
+
+<div class="nf-wrap">
+  <p class="nf-code">404</p>
+  <h1 class="nf-title">This page doesn't exist.</h1>
+  <p class="nf-sub">The link you followed might be outdated. The rest of the site is right where it should be.</p>
+  <a class="nf-btn" href="/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Back to homepage
+  </a>
+</div>
+
+</body>
+</html>
