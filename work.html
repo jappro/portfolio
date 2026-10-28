@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Works | Uche Japheth</title>
+<meta name="description" content="Selected work by Uche Japheth, Social Media Manager & Community Specialist.">
+<meta name="theme-color" content="#05080c">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<!-- First slide photo is requested early; the rest load lazily -->
+<link rel="preload" as="image" href="src/works/slide-1.jpg" fetchpriority="high">
+
+<style>
+  :root {
+    /* Swap this to your main site's font if it differs from Inter */
+    --font: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --ink: #05080c;
+    --paper: #fff;
+    --purple: #8b5cf6;
+    --pad: clamp(20px, 4.6vw, 88px);
+    --ease: cubic-bezier(.22, .61, .36, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ink); color: var(--paper); }
+  body { font-family: var(--font); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  .hero { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; isolation: isolate; }
+
+  /* ---------- Slides ---------- */
+  .slide {
+    position: absolute; inset: 0; opacity: 0; visibility: hidden;
+    transition: opacity .9s var(--ease), visibility 0s .9s;
+  }
+  .slide.is-active { opacity: 1; visibility: visible; transition: opacity .9s var(--ease); }
+
+  /* Tonal fallbacks, visible until a photo loads or if one fails */
+  .slide:nth-child(1) { background: linear-gradient(120deg, #0b1118, #18232f); }
+  .slide:nth-child(2) { background: linear-gradient(120deg, #0d1411, #1c2a26); }
+  .slide:nth-child(3) { background: linear-gradient(120deg, #12100d, #2a2119); }
+  .slide:nth-child(4) { background: linear-gradient(120deg, #0a0f18, #1a2433); }
+  .slide:nth-child(5) { background: linear-gradient(120deg, #14100f, #2b1f1c); }
+
+  .slide img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: var(--pos, 60% 50%);
+    transform: scale(1.045); transition: transform 6s var(--ease);
+  }
+  .slide.is-active img { transform: scale(1); }
+
+  /* Directional shade keeps the type readable and the photo alive */
+  .slide::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(4,7,11,.80) 0%, rgba(4,7,11,.50) 42%, rgba(4,7,11,.08) 85%),
+      linear-gradient(180deg, rgba(4,7,11,.55) 0%, transparent 22%, transparent 68%, rgba(4,7,11,.60) 100%);
+  }
+
+  /* ---------- Headline ---------- */
+  .copy {
+    position: absolute; z-index: 2; left: var(--pad); right: var(--pad);
+    top: 41%; transform: translateY(-50%);
+  }
+  .headline {
+    margin: 0; font-weight: 700; text-transform: uppercase;
+    font-size: clamp(2.5rem, 4.7vw, 6.25rem);
+    line-height: 1.02; letter-spacing: -.022em;
+  }
+  .line { display: block; }
+  .t, .r { white-space: pre-wrap; }
+  .r { visibility: hidden; }              /* untyped text still reserves its space */
+  .t.cur::after {                         /* zero net width, so it never shifts the layout */
+    content: ""; display: inline-block; width: .055em; height: .78em;
+    margin: 0 -.115em 0 .06em; background: var(--paper);
+  }
+
+  /* Slide 03 labels */
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; margin: clamp(22px, 2.6vw, 40px) 0 0; padding: 0; list-style: none; }
+  .tags li {
+    padding: .75em 1.2em; border: 1px solid rgba(255,255,255,.55);
+    font-size: clamp(.75rem, .85vw, 1rem); font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .5s var(--ease), transform .5s var(--ease);
+  }
+  .tags.in li { opacity: 1; transform: none; transition-delay: calc(var(--i) * 90ms); }
+
+  /* ---------- Top bar ---------- */
+  .bar {
+    position: absolute; z-index: 5; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    padding: clamp(20px, 2.2vw, 36px) var(--pad) 0;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 18px; margin: 0;
+    font-size: clamp(.75rem, .9vw, .95rem); font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  }
+  .brand::before { content: ""; width: 37px; height: 1px; background: var(--paper); }
+  .actions { display: flex; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 18px;
+    border: 1px solid rgba(255,255,255,.72); background: rgba(5,8,12,.18);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    color: var(--paper); text-decoration: none;
+    font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+    transition: background .25s, color .25s, border-color .25s;
+  }
+  .btn svg { width: 11px; height: 11px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.4; }
+  .btn:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+  .btn:focus-visible, .dot:focus-visible i { outline: 2px solid var(--paper); outline-offset: 3px; }
+
+  /* ---------- Progress indicators ---------- */
+  /* Bottom row: progress dashes on the left, constant CTA on the right, centred on one line */
+  .foot {
+    position: absolute; z-index: 5; left: 0; right: 0; bottom: clamp(24px, 9vh, 110px);
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 0 var(--pad);
+  }
+  .dots { display: flex; gap: 14px; }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 16px;
+    min-height: clamp(52px, 3.4vw, 64px); padding: 0 clamp(22px, 2vw, 34px);
+    border: 1.5px solid var(--purple); background: rgba(139,92,246,.10);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    color: var(--paper); text-decoration: none;
+    font-size: clamp(.85rem, 1.05vw, 1.05rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    transition: background .25s;
+  }
+  .cta svg { width: 1.05em; height: 1.05em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; }
+  .cta:hover { background: var(--purple); }
+  .cta:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+  .dot { appearance: none; border: 0; background: none; padding: 18px 0; width: 23px; cursor: pointer; transition: width .5s var(--ease); }
+  .dot[aria-current="true"] { width: 31px; }
+  .dot i { display: block; position: relative; height: 3px; overflow: hidden; background: rgba(255,255,255,.28); }
+  .dot b { position: absolute; inset: 0; background: var(--paper); transform: scaleX(0); transform-origin: left; }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 720px) {
+    .bar { align-items: flex-start; }
+    .actions { width: 100%; gap: 10px; }
+    .btn { flex: 1; justify-content: center; min-height: 44px; padding: 0 8px; gap: 6px; font-size: .64rem; letter-spacing: .1em; text-align: center; line-height: 1.25; }
+    .slide img { object-position: var(--pos-m, var(--pos, 60% 50%)); }
+    .copy { top: auto; bottom: calc(118px + env(safe-area-inset-bottom)); transform: none; }
+    .foot { bottom: calc(16px + env(safe-area-inset-bottom)); align-items: flex-end; gap: 12px; }
+    .dots { gap: 0; margin: 0 0 -4px -4px; }
+    .dot { width: 25px; padding: 18px 4px; }
+    .dot[aria-current="true"] { width: 34px; }
+    /* Two-line CTA with the arrow beside the first line */
+    .cta { align-items: flex-start; gap: 14px; min-height: 0; padding: 13px 14px; font-size: .74rem; letter-spacing: .1em; line-height: 1.4; }
+    .cta .l1, .cta .l2 { display: block; }
+    .cta svg { margin-top: .15em; }
+    .headline { font-size: clamp(2rem, 10.2vw, 3.25rem); line-height: 1.04; text-wrap: balance; }
+    .line { display: inline; }            /* let words flow so type can stay large */
+    .tags { gap: 8px; margin-top: 20px; }
+    .tags li { padding: .7em 1em; font-size: .7rem; letter-spacing: .12em; }
+    .slide::after {
+      background:
+        linear-gradient(180deg, rgba(4,7,11,.62) 0%, transparent 26%, rgba(4,7,11,.30) 45%, rgba(4,7,11,.82) 100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .slide.is-active { transition-duration: .3s; }
+    .slide img, .slide.is-active img { transform: none; transition: none; }
+    .tags li { transition: none; transform: none; }
+  }
+
+  /* ---------- Intro (sub-hero) ---------- */
+  .intro { background: var(--ink); padding: clamp(64px, 7vw, 128px) var(--pad) clamp(72px, 8vw, 140px); }
+  .intro-inner {
+    display: grid; grid-template-columns: minmax(0, 57.4fr) minmax(0, 26fr); align-items: center;
+    margin-left: calc(12.6vw - var(--pad));
+  }
+  .paper { position: relative; aspect-ratio: 1000 / 540; container-type: inline-size; }
+  .sheet {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+    filter: drop-shadow(0 24px 26px rgba(0,0,0,.65)) drop-shadow(0 2px 3px rgba(0,0,0,.5));
+  }
+  .sheet-m { display: none; }
+
+  /* Text is sized in container units, so it scales with the paper and can never overflow it */
+  .paper-copy {
+    position: absolute; z-index: 1; left: 12.8%; top: 23%;
+    font-size: 3.45cqw; line-height: 1.26; font-weight: 400; letter-spacing: -.005em; color: #f3edff;
+  }
+  .paper-copy p { margin: 0 0 1.5em; }
+  .paper-copy p:last-child { margin: 0; color: rgba(243,237,255,.82); }
+  .ln { display: block; white-space: nowrap; }
+
+  .scroll {
+    display: flex; flex-direction: column; align-items: center; justify-self: center;
+    gap: clamp(18px, 2vw, 32px); color: var(--paper); text-decoration: none;
+  }
+  .scroll-label { font-size: clamp(.72rem, .8vw, .9rem); font-weight: 500; letter-spacing: .26em; padding-left: .26em; text-transform: uppercase; }
+  .chev { width: clamp(56px, 4.7vw, 80px); height: auto; overflow: visible; filter: drop-shadow(0 0 5px rgba(170,140,255,.55)); }
+  .chev path { fill: none; stroke: #e9e0ff; stroke-width: 2; stroke-linejoin: round; }
+  .scroll:focus-visible { outline: 2px solid var(--paper); outline-offset: 10px; }
+
+  /* Three stages light up top to bottom, then fade and repeat */
+  @keyframes step {
+    0%   { opacity: .16; transform: translateY(-3px); }
+    18%  { opacity: 1;   transform: none; }
+    42%  { opacity: .5; }
+    62%, 100% { opacity: .16; transform: translateY(3px); }
+  }
+  .st { animation: step 2.4s var(--ease) infinite both; }
+  .s2 { animation-delay: .4s; }
+  .s3 { animation-delay: .8s; }
+
+  @media (max-width: 720px) {
+    .intro { padding: 56px var(--pad) 72px; }
+    .intro-inner { grid-template-columns: 1fr; gap: 40px; margin-left: 0; }
+    .paper { aspect-ratio: 600 / 690; width: 100%; max-width: 520px; margin-inline: auto; }
+    .sheet-d { display: none; }
+    .sheet-m { display: block; }
+    .paper-copy { left: 11cqw; right: 11cqw; top: 15cqw; font-size: 5.7cqw; line-height: 1.3; }
+    .paper-copy p { margin-bottom: 1.3em; }
+    .ln { display: inline; white-space: normal; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .st { animation: none; }
+    .s1 { opacity: 1; } .s2 { opacity: .55; } .s3 { opacity: .28; }
+  }
+</style>
+</head>
+
+<body>
+<section class="hero" role="region" aria-roledescription="carousel" aria-label="Featured work">
+
+  <header class="bar">
+    <h1 class="brand">My Works</h1>
+    <nav class="actions" aria-label="Page">
+      <!-- TODO: point this at the real work stack (case studies / evidence) once it exists -->
+      <a class="btn" href="#work-stack">Open Work Stack
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg>
+      </a>
+      <a class="btn" href="https://www.japheth.name.ng">
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M10 6H2M5.5 2.5 2 6l3.5 3.5"/></svg>
+        Back to Portfolio
+      </a>
+    </nav>
+  </header>
+
+  <!-- Slide content lives here; the script only animates it.
+       Photos: export ~1920px wide, under ~250 KB each, to src/works/ -->
+  <div class="slides">
+
+    <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 5">
+      <img src="src/works/slide-1.jpg" alt="" style="--pos:65% 50%; --pos-m:80% 50%" fetchpriority="high" decoding="async" onerror="this.hidden=true">
+      <div class="copy">
+        <h2 class="headline">
+          <span class="line">Good work should</span>
+          <span class="line">move the</span>
+          <span class="line">numbers.</span>
+        </h2>
+      </div>
+    </article>
+
+    <article class="slide" aria-roledescription="slide" aria-label="2 of 5">
+      <img src="src/works/slide-2.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <div class="copy">
+        <h2 class="headline">
+          <span class="line">No guesswork.</span>
+          <span class="line">Just strategies</span>
+          <span class="line">that work.</span>
+        </h2>
+      </div>
+    </article>
+
+    <article class="slide" aria-roledescription="slide" aria-label="3 of 5">
+      <img src="src/works/slide-3.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <div class="copy">
+        <h2 class="headline">
+          <span class="line">Good content</span>
+          <span class="line">must drive:</span>
+        </h2>
+        <ul class="tags">
+          <li style="--i:0">Visibility</li>
+          <li style="--i:1">Followers</li>
+          <li style="--i:2">Engagement</li>
+          <li style="--i:3">Sales</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="slide" aria-roledescription="slide" aria-label="4 of 5">
+      <img src="src/works/slide-4.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <div class="copy">
+        <h2 class="headline">
+          <span class="line">Let’s recreate this</span>
+          <span class="line">for your</span>
+          <span class="line">brand.</span>
+        </h2>
+      </div>
+    </article>
+
+    <article class="slide" aria-roledescription="slide" aria-label="5 of 5">
+      <img src="src/works/slide-5.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <div class="copy">
+        <h2 class="headline">
+          <span class="line">Ads &amp; campaigns</span>
+          <span class="line">must connect activity</span>
+          <span class="line">to revenue.</span>
+        </h2>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="foot">
+    <div class="dots" role="group" aria-label="Choose slide"></div>
+    <a class="cta" href="https://www.japheth.name.ng/#contact">
+      <span class="txt"><span class="l1">Let’s build</span> <span class="l2">with purpose</span></span>
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg>
+    </a>
+  </div>
+</section>
+
+<section class="intro" id="intro" aria-label="Introduction">
+  <!-- Shared paper textures (kept out of display:none so every browser can use them) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="pg" cx="30%" cy="25%" r="85%"><stop offset="0" stop-color="#5a3699"/><stop offset="1" stop-color="#43267c"/></radialGradient>
+      <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="7"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .9 0 0 0 -.38"/></filter>
+      <filter id="mottle" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".014 .045" numOctaves="3" seed="3"/><feColorMatrix values="0 0 0 0 .08  0 0 0 0 .02  0 0 0 0 .26  1.3 0 0 0 -.5"/></filter>
+    </defs>
+  </svg>
+
+  <div class="intro-inner">
+    <div class="paper">
+      <svg class="sheet sheet-d" viewBox="0 0 1000 540" aria-hidden="true" focusable="false">
+        <defs><path id="tear-d" d="M22.0 74.6L26.4 74.1L30.8 73.3L35.2 73.4L39.6 71.8L44.0 72.0L48.4 69.5L52.8 70.4L57.2 69.7L61.6 67.0L66.1 64.9L70.5 61.7L74.9 61.6L79.3 62.1L83.7 60.7L88.1 58.7L92.5 59.0L96.9 58.6L101.3 56.5L105.7 56.9L110.1 54.7L114.5 53.2L118.9 52.5L123.3 51.1L127.7 50.7L132.1 49.9L136.5 51.4L140.9 52.1L145.4 53.1L149.8 55.8L154.2 55.0L158.6 52.0L163.0 51.7L167.4 53.9L171.8 54.8L176.2 54.4L180.6 54.0L185.0 53.7L189.4 53.9L193.8 56.4L198.2 56.0L202.6 55.3L207.0 56.8L211.4 55.2L215.8 54.2L220.2 55.1L224.7 54.0L229.1 52.3L233.5 51.3L237.9 50.7L242.3 52.0L246.7 51.4L251.1 49.4L255.5 50.2L259.9 48.5L264.3 48.7L268.7 47.0L273.1 47.9L277.5 47.0L281.9 45.1L286.3 44.4L290.7 44.0L295.1 44.8L299.5 44.1L304.0 43.2L308.4 44.2L312.8 45.0L317.2 46.6L321.6 44.7L326.0 44.7L330.4 43.8L334.8 44.3L339.2 43.8L343.6 45.3L348.0 45.2L352.4 43.2L356.8 41.2L361.2 41.8L365.6 39.8L370.0 39.8L374.4 39.1L378.8 37.7L383.3 38.7L387.7 39.4L392.1 40.1L396.5 39.2L400.9 40.4L405.3 39.9L409.7 41.1L414.1 41.5L418.5 41.8L422.9 40.8L427.3 43.3L431.7 44.6L436.1 45.8L440.5 46.1L444.9 45.5L449.3 45.3L453.7 46.9L458.1 48.9L462.6 50.4L467.0 46.2L471.4 47.5L475.8 52.6L480.2 54.0L484.6 55.6L489.0 54.5L493.4 53.8L497.8 55.1L502.2 54.0L506.6 53.2L511.0 52.6L515.4 52.6L519.8 51.6L524.2 53.8L528.6 52.6L533.0 54.4L537.4 53.9L541.9 54.6L546.3 55.7L550.7 54.8L555.1 54.2L559.5 55.2L563.9 54.9L568.3 55.5L572.7 55.5L577.1 56.8L581.5 57.8L585.9 59.2L590.3 57.3L594.7 57.7L599.1 56.1L603.5 57.2L607.9 57.5L612.3 57.0L616.7 55.4L621.2 55.0L625.6 54.3L630.0 52.5L634.4 52.6L638.8 51.4L643.2 50.2L647.6 48.5L652.0 46.4L656.4 46.8L660.8 47.3L665.2 46.0L669.6 44.2L674.0 45.1L678.4 43.5L682.8 43.3L687.2 42.9L691.6 44.7L696.0 40.4L700.5 40.1L704.9 40.4L709.3 46.5L713.7 45.7L718.1 45.3L722.5 46.2L726.9 48.1L731.3 49.9L735.7 49.7L740.1 49.4L744.5 49.6L748.9 50.4L753.3 50.2L757.7 50.1L762.1 49.7L766.5 48.6L770.9 49.9L775.3 49.6L779.8 47.7L784.2 46.8L788.6 46.4L793.0 44.8L797.4 45.3L801.8 46.8L806.2 48.0L810.6 46.0L815.0 47.3L819.4 48.3L823.8 47.4L828.2 47.1L832.6 48.3L837.0 49.3L841.4 47.5L845.8 46.1L850.2 47.4L854.6 46.1L859.1 45.2L863.5 46.9L867.9 47.3L872.3 47.7L876.7 48.0L881.1 48.3L885.5 46.2L889.9 47.0L894.3 46.3L898.7 45.6L903.1 43.7L907.5 43.2L911.9 43.6L916.3 41.7L920.7 40.9L925.1 38.7L929.5 36.9L933.9 37.6L938.4 35.3L942.8 34.6L947.2 34.4L951.6 33.1L956.0 34.1L960.4 34.0L964.8 34.9L969.2 35.2L973.6 34.4L978.0 35.6L960.3 46.9L957.9 50.6L956.9 54.3L956.7 58.1L957.9 61.8L960.5 65.6L969.6 69.3L969.5 73.0L966.3 76.8L968.3 80.5L967.2 84.3L964.6 88.0L963.5 91.7L965.0 95.5L966.6 99.2L967.6 103.0L967.4 106.7L966.9 110.4L964.8 114.2L964.0 117.9L961.5 121.7L958.8 125.4L953.7 129.1L949.5 132.9L945.1 136.6L942.5 140.4L940.5 144.1L939.9 147.8L938.8 151.6L946.7 155.3L945.7 159.1L938.2 162.8L941.7 166.5L943.5 170.3L943.6 174.0L945.6 177.8L943.8 181.5L943.4 185.2L942.5 189.0L944.5 192.7L945.0 196.5L947.9 200.2L949.7 203.9L951.4 207.7L951.9 211.4L951.6 215.2L950.5 218.9L950.9 222.6L947.8 226.4L946.1 230.1L942.8 233.9L940.8 237.6L940.4 241.3L939.9 245.1L941.7 248.8L942.4 252.6L945.9 256.3L949.2 260.0L952.6 263.8L952.4 267.5L956.2 271.3L956.1 275.0L958.8 278.7L960.1 282.5L960.4 286.2L961.4 290.0L962.5 293.7L964.7 297.4L963.8 301.2L967.0 304.9L975.1 308.7L975.5 312.4L975.2 316.1L975.8 319.9L974.8 323.6L970.7 327.4L965.8 331.1L963.4 334.8L963.8 338.6L960.7 342.3L959.1 346.1L959.2 349.8L960.3 353.5L958.5 357.3L960.7 361.0L960.0 364.8L958.4 368.5L956.2 372.2L956.5 376.0L956.2 379.7L956.2 383.5L957.7 387.2L960.9 390.9L960.5 394.7L963.8 398.4L963.9 402.2L963.6 405.9L952.7 409.6L952.1 413.4L949.2 417.1L953.8 420.9L950.8 424.6L947.1 428.3L946.3 432.1L946.7 435.8L943.3 439.6L942.4 443.3L940.7 447.0L940.1 450.8L940.3 454.5L938.5 458.3L939.9 462.0L937.9 465.7L938.3 469.5L936.9 473.2L937.3 477.0L978.0 473.3L973.6 475.8L969.2 477.5L964.8 478.6L960.4 479.0L956.0 480.7L951.6 482.4L947.2 485.2L942.8 487.0L938.4 486.9L933.9 487.0L929.5 486.1L925.1 487.0L920.7 487.6L916.3 487.4L911.9 488.4L907.5 486.9L903.1 487.3L898.7 487.7L894.3 486.4L889.9 486.9L885.5 487.6L881.1 487.9L876.7 486.8L872.3 485.7L867.9 486.7L863.5 486.7L859.1 488.1L854.6 487.9L850.2 488.5L845.8 488.1L841.4 490.9L837.0 490.7L832.6 490.3L828.2 492.0L823.8 492.6L819.4 494.3L815.0 495.2L810.6 494.3L806.2 495.9L801.8 496.1L797.4 496.6L793.0 498.0L788.6 498.5L784.2 497.9L779.8 497.3L775.3 496.5L770.9 497.4L766.5 498.5L762.1 495.1L757.7 500.1L753.3 499.4L748.9 500.9L744.5 501.0L740.1 500.0L735.7 502.2L731.3 503.9L726.9 505.3L722.5 508.0L718.1 507.9L713.7 511.5L709.3 512.6L704.9 515.0L700.5 514.8L696.0 515.5L691.6 512.5L687.2 511.7L682.8 512.9L678.4 511.3L674.0 511.5L669.6 511.0L665.2 509.2L660.8 508.9L656.4 501.3L652.0 501.8L647.6 505.3L643.2 502.8L638.8 502.1L634.4 501.2L630.0 502.1L625.6 502.9L621.2 501.3L616.7 503.1L612.3 501.6L607.9 500.5L603.5 501.7L599.1 504.2L594.7 504.1L590.3 503.8L585.9 503.5L581.5 502.6L577.1 502.2L572.7 501.8L568.3 500.3L563.9 501.6L559.5 500.4L555.1 498.8L550.7 498.0L546.3 497.8L541.9 497.3L537.4 495.2L533.0 495.9L528.6 496.6L524.2 495.0L519.8 495.3L515.4 495.2L511.0 495.2L506.6 496.6L502.2 497.1L497.8 503.7L493.4 504.2L489.0 499.4L484.6 499.8L480.2 502.5L475.8 503.7L471.4 504.2L467.0 504.3L462.6 503.8L458.1 503.2L453.7 503.4L449.3 503.6L444.9 504.7L440.5 505.3L436.1 503.7L431.7 500.9L427.3 501.0L422.9 499.7L418.5 500.1L414.1 498.4L409.7 498.4L405.3 496.7L400.9 497.0L396.5 495.3L392.1 495.1L387.7 495.2L383.3 494.6L378.8 494.0L374.4 493.5L370.0 492.5L365.6 493.3L361.2 492.4L356.8 490.3L352.4 489.6L348.0 486.0L343.6 487.1L339.2 488.6L334.8 492.4L330.4 493.0L326.0 493.0L321.6 491.6L317.2 491.9L312.8 490.2L308.4 489.6L304.0 487.3L299.5 487.8L295.1 485.9L290.7 489.3L286.3 487.0L281.9 486.1L277.5 485.8L273.1 486.9L268.7 487.3L264.3 487.4L259.9 487.6L255.5 488.6L251.1 488.5L246.7 490.4L242.3 489.9L237.9 492.0L233.5 493.6L229.1 495.9L224.7 496.1L220.2 503.7L215.8 504.0L211.4 498.5L207.0 500.8L202.6 500.3L198.2 499.1L193.8 497.3L189.4 497.8L185.0 497.6L180.6 496.5L176.2 496.8L171.8 495.5L167.4 494.4L163.0 494.4L158.6 492.7L154.2 492.3L149.8 494.4L145.4 494.8L140.9 493.7L136.5 494.1L132.1 495.2L127.7 496.2L123.3 495.0L118.9 493.9L114.5 495.5L110.1 495.7L105.7 496.0L101.3 495.9L96.9 496.1L92.5 494.6L88.1 494.0L83.7 493.3L79.3 491.9L74.9 491.3L70.5 491.5L66.1 489.5L61.6 490.2L57.2 489.0L52.8 488.4L48.4 487.6L44.0 487.9L39.6 485.8L35.2 487.6L30.8 486.4L26.4 486.5L22.0 486.1L52.4 492.3L56.3 488.7L55.7 485.1L57.7 481.4L59.2 477.8L60.5 474.2L61.4 470.6L60.2 466.9L59.2 463.3L59.5 459.7L55.4 456.0L54.1 452.4L43.5 448.8L42.2 445.2L42.4 441.5L48.5 437.9L51.0 434.3L51.2 430.7L48.6 427.0L51.6 423.4L52.7 419.8L61.2 416.1L59.7 412.5L50.9 408.9L50.0 405.3L48.7 401.6L49.4 398.0L52.5 394.4L52.3 390.7L52.0 387.1L53.6 383.5L57.4 379.9L57.8 376.2L56.6 372.6L54.4 369.0L53.3 365.3L53.4 361.7L48.4 358.1L47.4 354.5L41.6 350.8L39.0 347.2L38.4 343.6L35.4 339.9L34.6 336.3L32.9 332.7L31.2 329.1L29.1 325.4L29.4 321.8L28.6 318.2L28.5 314.5L27.5 310.9L25.9 307.3L26.0 303.7L26.3 300.0L27.2 296.4L27.9 292.8L31.0 289.1L31.5 285.5L33.2 281.9L33.9 278.3L37.8 274.6L41.2 271.0L41.7 267.4L43.4 263.7L43.2 260.1L40.8 256.5L41.0 252.9L37.2 249.2L36.3 245.6L36.7 242.0L32.6 238.3L32.6 234.7L29.6 231.1L35.4 227.5L37.6 223.8L36.2 220.2L38.5 216.6L39.3 212.9L39.9 209.3L36.5 205.7L38.5 202.1L35.4 198.4L35.8 194.8L37.2 191.2L34.9 187.5L36.6 183.9L40.0 180.3L42.4 176.7L45.0 173.0L46.1 169.4L49.7 165.8L53.0 162.1L56.4 158.5L59.2 154.9L61.8 151.3L60.3 147.6L59.7 144.0L58.5 140.4L59.6 136.7L58.2 133.1L59.9 129.5L58.0 125.9L58.0 122.2L58.1 118.6L59.3 115.0L59.7 111.3L58.0 107.7L55.4 104.1L55.1 100.5L51.1 96.8L49.2 93.2L48.6 89.6L45.7 85.9L43.7 82.3L42.5 78.7L44.3 75.1Z"/><clipPath id="clip-d"><use href="#tear-d"/></clipPath></defs>
+        <use href="#tear-d" fill="url(#pg)"/>
+        <g clip-path="url(#clip-d)"><rect width="1000" height="540" filter="url(#mottle)" opacity=".7"/><rect width="1000" height="540" filter="url(#grain)" opacity=".35"/></g>
+        <use href="#tear-d" fill="none" stroke="#8d6fd0" stroke-opacity=".45" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <svg class="sheet sheet-m" viewBox="0 0 600 690" aria-hidden="true" focusable="false">
+        <defs><path id="tear-m" d="M22.0 61.1L26.0 59.7L30.1 60.5L34.1 59.2L38.1 57.7L42.1 56.2L46.2 55.0L50.2 53.7L54.2 52.2L58.3 51.6L62.3 48.6L66.3 46.2L70.3 43.5L74.4 42.9L78.4 41.9L82.4 40.3L86.5 38.4L90.5 38.1L94.5 38.5L98.6 36.5L102.6 35.9L106.6 36.1L110.6 37.4L114.7 39.7L118.7 39.6L122.7 41.0L126.8 42.4L130.8 41.8L134.8 48.8L138.8 47.5L142.9 41.7L146.9 43.4L150.9 44.3L155.0 44.5L159.0 42.2L163.0 43.4L167.0 45.7L171.1 42.7L175.1 41.7L179.1 37.2L183.2 42.0L187.2 42.0L191.2 44.9L195.2 46.5L199.3 46.4L203.3 48.5L207.3 49.0L211.4 49.0L215.4 49.0L219.4 46.7L223.4 45.3L227.5 44.0L231.5 43.1L235.5 42.3L239.6 42.0L243.6 40.0L247.6 39.6L251.7 41.0L255.7 42.1L259.7 41.5L263.7 40.9L267.8 40.6L271.8 42.4L275.8 42.0L279.9 42.2L283.9 45.5L287.9 45.9L291.9 46.3L296.0 46.0L300.0 47.3L304.0 46.6L308.1 44.9L312.1 46.0L316.1 49.2L320.1 50.5L324.2 50.3L328.2 50.2L332.2 49.2L336.3 50.4L340.3 51.8L344.3 53.7L348.3 55.6L352.4 54.5L356.4 56.4L360.4 57.6L364.5 56.1L368.5 56.6L372.5 55.7L376.6 54.9L380.6 54.6L384.6 54.3L388.6 52.5L392.7 50.5L396.7 48.6L400.7 46.1L404.8 44.3L408.8 44.3L412.8 42.4L416.8 42.4L420.9 42.7L424.9 41.1L428.9 40.6L433.0 39.3L437.0 38.4L441.0 37.6L445.0 36.9L449.1 38.7L453.1 36.9L457.1 38.3L461.2 37.9L465.2 36.4L469.2 34.9L473.2 33.4L477.3 33.4L481.3 34.3L485.3 32.5L489.4 33.1L493.4 34.5L497.4 33.5L501.4 33.2L505.5 34.3L509.5 34.4L513.5 35.8L517.6 36.5L521.6 38.4L525.6 38.5L529.7 38.6L533.7 37.8L537.7 38.0L541.7 39.2L545.8 39.0L549.8 38.5L553.8 38.5L557.9 38.0L561.9 38.3L565.9 36.2L569.9 34.6L574.0 33.9L578.0 35.4L564.1 44.3L562.8 48.0L564.6 51.7L565.7 55.5L563.8 59.2L564.0 62.9L566.7 66.7L564.5 70.4L565.0 74.1L565.3 77.9L568.5 81.6L567.7 85.3L568.6 89.0L570.4 92.8L568.6 96.5L571.0 100.2L569.2 104.0L569.0 107.7L565.0 111.4L563.0 115.2L560.7 118.9L559.4 122.6L557.5 126.3L557.2 130.1L556.4 133.8L558.3 137.5L560.3 141.3L561.4 145.0L564.1 148.7L561.4 152.5L565.1 156.2L566.7 159.9L568.7 163.6L568.6 167.4L571.0 171.1L569.4 174.8L568.9 178.6L569.6 182.3L570.5 186.0L571.3 189.8L568.2 193.5L565.9 197.2L566.3 200.9L567.7 204.7L567.2 208.4L568.4 212.1L569.0 215.9L567.9 219.6L564.6 223.3L565.1 227.1L562.4 230.8L561.1 234.5L561.1 238.2L558.2 242.0L556.7 245.7L554.2 249.4L552.0 253.2L548.6 256.9L545.6 260.6L543.4 264.4L540.5 268.1L539.3 271.8L538.9 275.5L539.9 279.3L539.7 283.0L540.7 286.7L540.3 290.5L543.2 294.2L543.3 297.9L543.1 301.7L543.3 305.4L546.0 309.1L547.9 312.8L547.1 316.6L545.6 320.3L545.4 324.0L542.4 327.8L542.1 331.5L544.4 335.2L545.7 338.9L547.1 342.7L547.1 346.4L549.8 350.1L551.3 353.9L551.2 357.6L549.9 361.3L549.6 365.1L543.5 368.8L542.6 372.5L548.1 376.2L545.6 380.0L546.2 383.7L543.3 387.4L542.9 391.2L543.5 394.9L543.5 398.6L542.2 402.4L542.6 406.1L545.7 409.8L545.4 413.5L546.5 417.3L550.0 421.0L549.2 424.7L553.1 428.5L555.6 432.2L557.8 435.9L555.9 439.7L555.7 443.4L557.7 447.1L559.4 450.8L561.1 454.6L560.3 458.3L561.7 462.0L563.2 465.8L564.0 469.5L572.9 473.2L576.0 477.0L577.0 480.7L571.4 484.4L571.4 488.1L571.2 491.9L574.5 495.6L574.0 499.3L575.5 503.1L575.3 506.8L574.0 510.5L570.9 514.3L569.6 518.0L568.3 521.7L565.6 525.4L565.2 529.2L562.1 532.9L563.3 536.6L561.0 540.4L560.1 544.1L563.0 547.8L562.2 551.6L562.4 555.3L562.0 559.0L561.0 562.7L563.1 566.5L563.6 570.2L563.9 573.9L563.8 577.7L560.5 581.4L561.4 585.1L560.7 588.8L561.5 592.6L559.6 596.3L559.9 600.0L561.6 603.8L561.5 607.5L563.9 611.2L567.0 615.0L567.9 618.7L567.0 622.4L568.2 626.1L567.4 629.9L567.9 633.6L563.5 637.3L578.0 631.6L574.0 631.8L569.9 630.7L565.9 630.1L561.9 628.7L557.9 628.0L553.8 625.8L549.8 629.2L545.8 632.3L541.7 633.6L537.7 633.8L533.7 636.0L529.7 637.8L525.6 637.8L521.6 640.9L517.6 641.5L513.5 641.1L509.5 643.1L505.5 642.1L501.4 642.4L497.4 637.2L493.4 638.0L489.4 640.4L485.3 647.4L481.3 649.4L477.3 649.5L473.2 651.9L469.2 653.9L465.2 655.6L461.2 655.9L457.1 658.0L453.1 656.6L449.1 657.5L445.0 656.1L441.0 656.2L437.0 656.1L433.0 654.8L428.9 653.6L424.9 651.5L420.9 649.3L416.8 649.0L412.8 649.2L408.8 648.6L404.8 647.9L400.7 649.6L396.7 651.0L392.7 653.1L388.6 653.8L384.6 654.9L380.6 653.5L376.6 654.3L372.5 655.6L368.5 654.2L364.5 652.1L360.4 653.0L356.4 654.5L352.4 653.7L348.3 654.9L344.3 661.3L340.3 661.5L336.3 657.6L332.2 660.3L328.2 662.2L324.2 663.3L320.1 662.2L316.1 663.4L312.1 662.5L308.1 661.1L304.0 660.9L300.0 660.0L296.0 659.1L291.9 655.6L287.9 654.5L283.9 650.3L279.9 650.1L275.8 647.9L271.8 648.2L267.8 648.7L263.7 648.1L259.7 648.0L255.7 648.0L251.7 648.4L247.6 647.7L243.6 646.1L239.6 645.4L235.5 644.6L231.5 643.4L227.5 643.4L223.4 640.7L219.4 639.8L215.4 640.1L211.4 640.5L207.3 640.3L203.3 642.2L199.3 644.7L195.2 644.5L191.2 646.1L187.2 648.7L183.2 651.2L179.1 653.0L175.1 652.1L171.1 652.2L167.0 651.3L163.0 649.5L159.0 647.8L155.0 646.5L150.9 644.1L146.9 643.1L142.9 643.0L138.8 642.4L134.8 641.4L130.8 640.3L126.8 641.1L122.7 641.3L118.7 639.6L114.7 641.0L110.6 638.9L106.6 637.8L102.6 637.7L98.6 637.2L94.5 636.2L90.5 635.5L86.5 636.3L82.4 634.2L78.4 634.4L74.4 636.2L70.3 636.6L66.3 639.3L62.3 640.7L58.3 641.4L54.2 643.0L50.2 644.8L46.2 645.3L42.1 645.4L38.1 648.1L34.1 646.9L30.1 647.1L26.0 646.2L22.0 646.4L49.7 642.8L50.3 639.1L48.4 635.5L49.3 631.8L47.4 628.2L46.9 624.5L46.2 620.9L47.2 617.2L45.5 613.6L47.5 609.9L48.2 606.3L51.6 602.6L53.7 599.0L53.4 595.3L51.2 591.7L50.9 588.0L56.1 584.4L55.9 580.7L58.4 577.1L60.0 573.4L61.3 569.8L61.0 566.1L62.0 562.5L62.3 558.8L63.2 555.2L62.9 551.5L61.4 547.9L61.0 544.2L58.5 540.6L58.6 536.9L56.0 533.3L52.3 529.6L50.9 526.0L51.1 522.3L49.7 518.7L50.7 515.0L49.3 511.4L50.5 507.7L48.6 504.1L46.4 500.4L47.3 496.8L45.4 493.1L42.8 489.5L41.5 485.8L42.0 482.2L38.5 478.5L35.8 474.9L35.1 471.2L32.9 467.6L32.9 463.9L33.2 460.3L35.9 456.6L32.8 453.0L32.4 449.3L33.8 445.7L34.8 442.0L38.2 438.4L39.0 434.7L38.0 431.1L38.3 427.4L39.2 423.8L39.7 420.1L44.7 416.5L45.7 412.8L44.0 409.2L39.1 405.5L39.3 401.9L40.4 398.2L41.8 394.6L39.8 390.9L37.3 387.3L35.3 383.6L37.7 380.0L39.5 376.3L39.0 372.7L38.0 369.0L39.3 365.4L38.5 361.7L38.3 358.1L36.6 354.4L36.7 350.8L35.5 347.1L34.5 343.5L32.9 339.8L22.2 336.2L23.3 332.5L20.3 328.9L28.9 325.2L25.9 321.6L25.5 317.9L26.7 314.3L24.9 310.6L27.5 306.9L29.4 303.3L31.4 299.6L32.9 296.0L33.0 292.3L32.9 288.7L36.6 285.0L44.1 281.4L47.2 277.7L42.0 274.1L42.5 270.4L42.2 266.8L42.8 263.1L43.6 259.5L45.2 255.8L48.1 252.2L46.9 248.5L45.7 244.9L46.4 241.2L47.9 237.6L50.4 233.9L51.4 230.3L53.6 226.6L55.2 223.0L57.1 219.3L58.9 215.7L58.1 212.0L56.2 208.4L51.4 204.7L59.7 201.1L58.8 197.4L57.7 193.8L55.0 190.1L52.2 186.5L52.1 182.8L50.7 179.2L47.5 175.5L46.0 171.9L43.4 168.2L44.7 164.6L45.8 160.9L47.1 157.3L46.8 153.6L49.8 150.0L49.1 146.3L49.5 142.7L51.3 139.0L50.9 135.4L52.2 131.7L55.1 128.1L55.4 124.4L54.0 120.8L53.9 117.1L53.8 113.5L53.1 109.8L53.1 106.2L51.4 102.5L53.6 98.9L54.1 95.2L56.9 91.6L57.8 87.9L59.4 84.3L56.9 80.6L60.7 77.0L60.1 73.3L60.9 69.7L61.7 66.0L61.0 62.4Z"/><clipPath id="clip-m"><use href="#tear-m"/></clipPath></defs>
+        <use href="#tear-m" fill="url(#pg)"/>
+        <g clip-path="url(#clip-m)"><rect width="600" height="690" filter="url(#mottle)" opacity=".7"/><rect width="600" height="690" filter="url(#grain)" opacity=".35"/></g>
+        <use href="#tear-m" fill="none" stroke="#8d6fd0" stroke-opacity=".45" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <div class="paper-copy">
+        <p>
+          <span class="ln">Below are selected projects I’ve worked on</span>
+          <span class="ln">across social media, community building,</span>
+          <span class="ln">and digital brand growth.</span>
+        </p>
+        <p>
+          <span class="ln">Explore the thinking behind the work,</span>
+          <span class="ln">selected work samples, and the results</span>
+          <span class="ln">and impact on project growth.</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Scroll target: change the href to the project showcase's id when it exists -->
+    <a class="scroll" href="#projects" aria-label="Scroll below to the projects">
+      <span class="scroll-label">Scroll below</span>
+      <svg class="chev" viewBox="-2 -2 104 150" aria-hidden="true" focusable="false">
+        <g><g class="st s1"><path d="M0 0L50 30L100 0V9L50 39L0 9Z"/></g></g>
+        <g transform="translate(0 58)"><g class="st s2"><path d="M8 0L50 25L92 0V9L50 34L8 9Z"/></g></g>
+        <g transform="translate(0 116)"><g class="st s3"><path d="M16 0L50 20L84 0V9L50 29L16 9Z"/></g></g>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<script>
+(() => {
+  const DURATION = 5000;   // time each slide stays
+  const DELAY    = 400;    // typing starts as the photo fades in
+  const TYPING   = 2100;   // full headline is typed within this window, whatever its length
+  const HOLD     = 500;    // cursor lingers briefly after the last character
+  const TAGS_AT  = DELAY + TYPING + 150;
+
+  const hero = document.querySelector('.hero');
+  const dotsWrap = hero.querySelector('.dots');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Split each headline into a typed part (.t) and an untyped part (.r) so layout never moves
+  const slides = [...hero.querySelectorAll('.slide')].map((el, i) => {
+    const h = el.querySelector('.headline');
+    const lines = [...h.querySelectorAll('.line')].map(line => {
+      const text = line.textContent.trim().replace(/\s+/g, ' ');
+      const t = document.createElement('span'); t.className = 't';
+      const r = document.createElement('span'); r.className = 'r'; r.textContent = text;
+      line.textContent = ''; line.setAttribute('aria-hidden', 'true'); line.append(t, r);
+      return { text, t, r };
+    });
+    const label = lines.map(l => l.text).join(' ');
+    h.setAttribute('aria-label', label);
+    const total = lines.reduce((n, l) => n + l.text.length, 0);
+
+    const dot = document.createElement('button');
+    dot.type = 'button'; dot.className = 'dot';
+    dot.setAttribute('aria-label', `Show slide ${i + 1} of ${slides_count()}: ${label}`);
+    dot.innerHTML = '<i><b></b></i>';
+    dot.addEventListener('click', () => show(i));
+    dot.addEventListener('focusin',  e => { if (e.target.matches(':focus-visible')) paused = true; });
+    dot.addEventListener('focusout', () => { paused = false; });
+    dotsWrap.append(dot);
+
+    return { el, lines, total, shown: -1, tags: el.querySelector('.tags'), dot, fill: dot.querySelector('b') };
+  });
+  function slides_count() { return hero.querySelectorAll('.slide').length; }
+
+  let cur = -1, elapsed = 0, last = 0, paused = false, started = false;
+
+  function paint(s, c) {
+    if (c === s.shown) return;
+    s.shown = c;
+    let offset = 0;
+    s.lines.forEach(l => {
+      const n = Math.min(Math.max(c - offset, 0), l.text.length);
+      l.t.textContent = l.text.slice(0, n);
+      l.r.textContent = l.text.slice(n);
+      offset += l.text.length;
+    });
+  }
+
+  function cursor(s, on, c) {
+    let offset = 0, idx = -1;
+    s.lines.forEach((l, i) => {
+      if (idx < 0 && c > offset && c <= offset + l.text.length) idx = i;
+      offset += l.text.length;
+    });
+    s.lines.forEach((l, i) => l.t.classList.toggle('cur', on && i === idx));
+  }
+
+  function show(i) {
+    if (cur >= 0) {
+      const o = slides[cur];
+      o.el.classList.remove('is-active');
+      o.dot.removeAttribute('aria-current');
+      o.fill.style.transform = 'scaleX(0)';
+    }
+    cur = i; elapsed = 0;
+    const s = slides[i];
+    s.shown = -1; paint(s, 0); cursor(s, false, 0);
+    if (s.tags) s.tags.classList.remove('in');
+    s.el.classList.add('is-active');
+    s.dot.setAttribute('aria-current', 'true');
+    slides.forEach((x, k) => x.el.setAttribute('aria-hidden', k === i ? 'false' : 'true'));
+    render();
+  }
+
+  function render() {
+    const s = slides[cur];
+    if (reduced.matches) {
+      paint(s, s.total); cursor(s, false, 0);
+      if (s.tags) s.tags.classList.add('in');
+      s.fill.style.transform = 'scaleX(1)';
+      return;
+    }
+    const p = Math.min(Math.max((elapsed - DELAY) / TYPING, 0), 1);
+    const c = Math.round(p * s.total);
+    paint(s, c);
+    cursor(s, c > 0 && elapsed < DELAY + TYPING + HOLD, c);
+    if (s.tags) s.tags.classList.toggle('in', elapsed >= TAGS_AT);
+    s.fill.style.transform = `scaleX(${Math.min(elapsed / DURATION, 1)})`;
+  }
+
+  // One loop drives image, text and progress, so they can never drift apart
+  function tick(now) {
+    const dt = Math.min(now - last, 100);   // a hidden tab can't fast-forward the slideshow
+    last = now;
+    if (!paused) elapsed += dt;
+    if (elapsed >= DURATION) show((cur + 1) % slides.length); else render();
+    requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (started) return; started = true;
+    show(0); last = performance.now(); requestAnimationFrame(tick);
+  }
+
+  // Wait for the headline font so typing never reflows; don't wait more than a second
+  Promise.race([
+    document.fonts ? document.fonts.load('700 48px Inter') : Promise.resolve(),
+    new Promise(r => setTimeout(r, 1200))
+  ]).then(start, start);
+})();
+</script>
+<script>
+// Scroll cue: smooth-scrolls to the element named by the link's href; if it doesn't exist yet, scrolls past the intro
+(() => {
+  const a = document.querySelector('.scroll');
+  if (!a) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    const edge = target || document.querySelector('.intro');
+    const top = target ? target.getBoundingClientRect().top + scrollY : edge.getBoundingClientRect().bottom + scrollY;
+    scrollTo({ top, behavior: reduce.matches ? 'auto' : 'smooth' });
+  });
+})();
+</script>
+</body>
+</html>
