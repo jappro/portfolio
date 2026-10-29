@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&display=swap">
 <!-- First slide photo is requested early; the rest load lazily -->
 <link rel="preload" as="image" href="src/works/slide-1.jpg" fetchpriority="high">
 
@@ -233,9 +233,9 @@
     grid-template-areas: "head stage" "lede stage" "ctas stage" "panel stage";
     grid-template-rows: auto auto auto 1fr;
   }
-  .headline {
+  .work .headline {
     grid-area: head; margin: 0; color: #fff; font-weight: 700;
-    font-size: clamp(1.7rem, 2.8vw, 4rem); line-height: 1.24; letter-spacing: -.03em;
+    font-size: clamp(1.7rem, 2.8vw, 4rem); line-height: 1.24; letter-spacing: -.03em; text-transform: none;
   }
   .ln { display: block; white-space: nowrap; }
   .d-start { display: none; }
@@ -273,7 +273,7 @@
   .shot { position: relative; }
   .shot img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 771; border-radius: .45cqw; background: #fff; }
 
-  /* Identity panel: torn paper bleeding in from the left and bottom, thread flowing out of it */
+  /* Identity panel: torn paper bleeding in from the left and bottom */
   .panel {
     grid-area: panel; align-self: end; position: relative; display: block;
     margin: 7vw 0 0 calc(-1 * var(--pad)); width: 29vw; aspect-ratio: 420 / 330; color: #fff; text-decoration: none;
@@ -281,7 +281,6 @@
   .panel .pp { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 12px 18px rgba(0,0,0,.5)); transition: filter .3s; }
   .panel:hover .pp { filter: brightness(1.12) drop-shadow(0 12px 18px rgba(0,0,0,.5)); }
   .pp-m { display: none; }
-  .thread { position: absolute; left: 79%; top: 31%; width: 54%; height: auto; overflow: visible; pointer-events: none; }
   .id-copy { position: absolute; left: var(--pad); right: 22%; top: 26%; }
   .id-row { display: flex; align-items: center; gap: 14px; }
   .id-row img { display: block; width: clamp(34px, 2.9vw, 46px); height: auto; aspect-ratio: 1; object-fit: contain; border-radius: 9px; }
@@ -295,16 +294,16 @@
       padding: 44px var(--pad) 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: none;
       grid-template-areas: "stage" "lede" "ctas" "panel";
     }
-    .headline { grid-area: stage; align-self: start; z-index: 3; padding: 7% 8% 0; font-size: clamp(1.3rem, 6.2vw, 2.1rem); line-height: 1.16; }
+    .work .headline { grid-area: stage; align-self: end; z-index: 3; padding: 0 8% 7.5%; font-size: clamp(1.3rem, 6.2vw, 2.1rem); line-height: 1.16; }
     .ln { display: inline; white-space: normal; }
     .d-start { display: inline; } .d-end { display: none; }
     .tilt { transform: none; }
     .frame { padding: 2.6cqw; border-radius: 2.2cqw; }
     .shot img { border-radius: 1cqw; }
-    /* Dark shade over most of the dashboard, easing off toward the bottom-right so the charts stay recognisable */
+    /* Dark shade over most of the dashboard, easing off toward the top so the charts stay recognisable */
     .shot::after {
       content: ""; position: absolute; inset: 0; border-radius: 1cqw; pointer-events: none;
-      background: linear-gradient(165deg, rgba(6,6,10,.96) 0%, rgba(6,6,10,.9) 52%, rgba(6,6,10,.55) 80%, rgba(6,6,10,.22) 100%);
+      background: linear-gradient(15deg, rgba(6,6,10,.96) 0%, rgba(6,6,10,.9) 52%, rgba(6,6,10,.55) 80%, rgba(6,6,10,.22) 100%);
     }
     .lede { margin-top: 28px; max-width: none; font-size: 1.0625rem; }
     .ctas { flex-direction: column; margin-top: 24px; }
@@ -313,7 +312,158 @@
     .pp-d { display: none; } .pp-m { display: block; }
     .id-copy { top: 23%; right: 16%; }
     .id-desc { font-size: 1rem; }
-    .thread { left: 80%; top: 34%; width: 24%; }
+  }
+
+  /* ---------- Kiooverse case study ---------- */
+  .kio {
+    --g: #2ee59d; --cut: 16px;
+    position: relative; isolation: isolate; overflow: clip; background: var(--ink); color: #fff;
+    padding: clamp(80px, 8vw, 150px) var(--pad) clamp(64px, 7vw, 120px);
+    display: grid; column-gap: clamp(28px, 4vw, 72px);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: 1fr 1fr auto;
+    grid-template-areas: "stage head" "stage body" "id id"; align-items: center;
+  }
+  .kio::before { /* faint dot grid that fades out away from the dashboard */
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1.4px); background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(70% 60% at 28% 42%, #000, transparent); mask-image: radial-gradient(70% 60% at 28% 42%, #000, transparent);
+  }
+  .kio-head { grid-area: head; align-self: end; padding-bottom: clamp(20px, 2.4vw, 40px); }
+  .kio-body { grid-area: body; align-self: start; }
+  .kio-title { margin: 0; font-size: clamp(1.8rem, 3.5vw, 4.6rem); font-weight: 700; line-height: 1.06; letter-spacing: -.025em; text-transform: uppercase; text-wrap: balance; }
+
+  .kio-metric { margin-top: clamp(18px, 2.4vw, 40px); }
+  .kio-big {
+    display: flex; align-items: center; gap: .1em; color: var(--g);
+    font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: clamp(3.2rem, 8.4vw, 9.6rem); line-height: .95;
+    text-shadow: 0 0 44px rgba(46,229,157,.35);
+  }
+  .kio-arrow { height: .72em; width: auto; flex: none; fill: none; stroke: currentColor; stroke-width: 3; filter: drop-shadow(0 0 10px rgba(46,229,157,.5)); }
+  .kio-num { font-variant-numeric: tabular-nums; }
+  .kio-label { display: flex; align-items: center; gap: 14px; margin-top: clamp(10px, 1vw, 18px); font-weight: 600; font-size: clamp(.78rem, 1vw, 1.05rem); letter-spacing: .24em; text-transform: uppercase; }
+  .kio-label::before { content: ""; width: 38px; height: 2px; background: var(--g); }
+
+  .kio-text { margin: 0; max-width: 33em; font-size: clamp(1rem, 1.25vw, 1.35rem); line-height: 1.58; font-weight: 400; color: rgba(255,255,255,.78); }
+  .kio-tested { display: block; margin-top: 1.3em; color: #fff; font-weight: 600; font-size: .82em; letter-spacing: .16em; text-transform: uppercase; }
+  .kio-hl {
+    display: inline-block; margin-left: .5em; padding: .18em .7em; background: #7c3aed; transform: skewX(-8deg);
+    font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: 1.12em; letter-spacing: .14em;
+  }
+  .kio-hl > span { display: inline-block; transform: skewX(8deg); }
+
+  .kio-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(26px, 2.8vw, 44px); }
+  .kbtn {
+    position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 12px;
+    min-height: clamp(48px, 3.5vw, 58px); padding: 0 clamp(20px, 1.9vw, 30px); text-decoration: none; text-transform: uppercase;
+    font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: clamp(.74rem, .88vw, .9rem); letter-spacing: .14em;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    transition: background .25s, color .25s;
+  }
+  .kbtn svg { width: 12px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; }
+  .kbtn-primary { background: var(--g); color: #04110b; }
+  .kbtn-primary:hover { background: #fff; }
+  .kbtn-ghost { background: rgba(255,255,255,.55); color: #fff; }
+  .kbtn-ghost::before { content: ""; position: absolute; inset: 1px; z-index: -1; background: #0a0d0c; clip-path: inherit; transition: background .25s; }
+  .kbtn-ghost:hover::before { background: #14201b; }
+  .kbtn:focus-visible, .kio-id:focus-visible { clip-path: none; outline: 2px solid #fff; outline-offset: 4px; }
+
+  /* Dashboard: a viewfinder. Corner brackets lock on, a scan line sweeps once, the level meter fills */
+  .kio-stage { grid-area: stage; position: relative; display: flex; gap: clamp(12px, 1.3vw, 22px); align-self: center; }
+  .kio-stage::before {
+    content: ""; position: absolute; inset: -14% -22%; z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(46,229,157,.14), rgba(124,58,237,.06) 55%, transparent 75%);
+  }
+  .kio-meter { display: flex; flex-direction: column-reverse; gap: 6px; width: clamp(6px, .7vw, 10px); flex: none; }
+  .kio-meter i {
+    flex: 1; background: rgba(46,229,157,calc(.5 + var(--i) * .085)); box-shadow: 0 0 12px rgba(46,229,157,.5);
+    transition: background .4s, box-shadow .4s; transition-delay: calc(var(--i) * 140ms + 500ms);
+  }
+  .kio.armed:not(.in) .kio-meter i { background: rgba(255,255,255,.1); box-shadow: none; }
+  .kio-frame { position: relative; flex: 1; min-width: 0; }
+  .kc { position: absolute; width: clamp(18px, 1.9vw, 28px); aspect-ratio: 1; z-index: 2; border: 0 solid var(--g); pointer-events: none; filter: drop-shadow(0 0 6px rgba(46,229,157,.6)); transition: transform .9s var(--ease), opacity .7s var(--ease); }
+  .kc-tl { top: -9px; left: -9px; border-width: 2px 0 0 2px; }
+  .kc-tr { top: -9px; right: -9px; border-width: 2px 2px 0 0; }
+  .kc-bl { bottom: -9px; left: -9px; border-width: 0 0 2px 2px; }
+  .kc-br { bottom: -9px; right: -9px; border-width: 0 2px 2px 0; }
+  .kio-frame:hover .kc-tl { transform: translate(-5px, -5px); } .kio-frame:hover .kc-tr { transform: translate(5px, -5px); }
+  .kio-frame:hover .kc-bl { transform: translate(-5px, 5px); }  .kio-frame:hover .kc-br { transform: translate(5px, 5px); }
+  .kio.armed:not(.in) .kc { opacity: 0; }
+  .kio.armed:not(.in) .kc-tl { transform: translate(-18px, -18px); } .kio.armed:not(.in) .kc-tr { transform: translate(18px, -18px); }
+  .kio.armed:not(.in) .kc-bl { transform: translate(-18px, 18px); }  .kio.armed:not(.in) .kc-br { transform: translate(18px, 18px); }
+
+  .kio-open { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: zoom-in; }
+  .kio-open:focus-visible { outline: 2px solid #fff; outline-offset: 10px; }
+  .kio-shot { position: relative; display: block; overflow: hidden; border: 1px solid rgba(46,229,157,.3); box-shadow: 0 30px 70px rgba(0,0,0,.65), 0 0 60px rgba(46,229,157,.08); }
+  .kio-shot img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 1296; background: #fff; }
+  .kio-shot::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 22%; pointer-events: none; opacity: 0;
+    background: linear-gradient(180deg, transparent, rgba(46,229,157,.2) 78%, rgba(46,229,157,.85));
+  }
+  .kio.in .kio-shot::after { animation: kioScan 1.5s .4s ease-in both; }
+  @keyframes kioScan { 0% { transform: translateY(-100%); opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(455%); opacity: 0; } }
+  .kio-hint {
+    position: absolute; right: 12px; bottom: 12px; padding: 8px 12px; background: rgba(5,8,12,.88); border: 1px solid rgba(46,229,157,.5);
+    font: 700 .68rem "Chakra Petch", var(--font); letter-spacing: .16em; text-transform: uppercase; color: #fff;
+    opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s;
+  }
+  .kio-open:hover .kio-hint, .kio-open:focus-visible .kio-hint { opacity: 1; transform: none; }
+  @media (hover: none) { .kio-hint { opacity: 1; transform: none; } }
+
+  /* Project strip: a cut-corner card with a gradient edge */
+  .kio-id {
+    --cut: 18px; grid-area: id; display: block; margin-top: clamp(44px, 5vw, 88px); padding: 1px; color: #fff; text-decoration: none;
+    background: linear-gradient(110deg, rgba(46,229,157,.8), rgba(255,255,255,.1) 42%, rgba(124,58,237,.7));
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    transition: filter .3s;
+  }
+  .kio-id:hover { filter: brightness(1.25); }
+  .kio-id-in {
+    display: grid; align-items: center; column-gap: clamp(16px, 2vw, 32px); row-gap: 14px;
+    grid-template-columns: auto minmax(0, .8fr) minmax(0, 2fr) auto; grid-template-areas: "logo name desc go";
+    padding: clamp(18px, 2vw, 30px) clamp(20px, 2.4vw, 40px); background: #090c0b;
+    clip-path: polygon(calc(var(--cut) - 1px) 0, 100% 0, 100% calc(100% - var(--cut) + 1px), calc(100% - var(--cut) + 1px) 100%, 0 100%, 0 calc(var(--cut) - 1px));
+  }
+  .kio-logo { grid-area: logo; width: clamp(52px, 4.4vw, 72px); height: auto; aspect-ratio: 1; object-fit: contain; background: #111; clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+  .kio-id-name { grid-area: name; display: grid; gap: 6px; }
+  .kio-name { font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: clamp(1.1rem, 1.6vw, 1.6rem); letter-spacing: .14em; text-transform: uppercase; }
+  .kio-domain { display: inline-flex; align-items: center; gap: 8px; color: var(--g); font-weight: 500; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; }
+  .kio-domain svg, .kio-go svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .kio-id-desc { grid-area: desc; max-width: 54ch; font-size: clamp(.95rem, 1.1vw, 1.15rem); line-height: 1.55; font-weight: 400; color: rgba(255,255,255,.78); }
+  .kio-go { grid-area: go; display: grid; place-items: center; width: 46px; height: 46px; background: var(--g); color: #04110b; clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+  .kio-go svg { width: 14px; height: 14px; }
+
+  /* Reveal on scroll (only armed when JS runs, so content never depends on it) */
+  .kio.armed [data-r] { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--d, 0) * 1ms); }
+  .kio.armed.in [data-r] { opacity: 1; transform: none; }
+
+  /* Full-size dashboard viewer */
+  .kio-lb { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: #fff; overflow: auto; }
+  .kio-lb::backdrop { background: rgba(3,5,8,.94); }
+  .kio-lb img { display: block; width: min(1080px, 92vw); height: auto; aspect-ratio: 1080 / 1296; margin: clamp(64px, 8vh, 88px) auto 48px; border: 1px solid rgba(46,229,157,.35); box-shadow: 0 0 80px rgba(46,229,157,.12); background: #fff; }
+  .kio-x { position: fixed; top: 16px; right: 16px; z-index: 2; width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.55); background: rgba(5,8,12,.9); color: #fff; cursor: pointer; }
+  .kio-x svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .kio-x:hover { background: #fff; color: var(--ink); }
+  html:has(.kio-lb[open]) { overflow: hidden; }
+
+  @media (max-width: 900px) {
+    .kio {
+      padding-top: 72px; align-items: start; grid-template-columns: minmax(0, 1fr); grid-template-rows: none;
+      grid-template-areas: "head" "stage" "body" "id";
+    }
+    .kio-head { padding-bottom: 0; }
+    .kio-title { font-size: clamp(1.7rem, 8.2vw, 2.6rem); }
+    .kio-big { font-size: clamp(2.8rem, 15vw, 6rem); }
+    .kio-stage { flex-direction: column-reverse; margin: 40px 0 36px; }
+    .kio-meter { flex-direction: row; width: auto; height: 6px; }
+    .kio-text { max-width: none; }
+    .kio-ctas { flex-direction: column; align-items: stretch; }
+    .kbtn { justify-content: center; min-height: 52px; }
+    .kio-id-in { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "logo name" "desc desc"; }
+    .kio-go { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kio [data-r], .kc, .kio-meter i { transition: none; }
+    .kio.in .kio-shot::after { animation: none; }
   }
 </style>
 </head>
@@ -513,9 +663,6 @@
           <g clip-path="url(#clip-pm)"><rect width="360" height="330" filter="url(#mottle)" opacity=".7"/><rect width="360" height="330" filter="url(#grain)" opacity=".35"/></g>
           <use href="#tear-pm" fill="none" stroke="#8d6fd0" stroke-opacity=".4" stroke-width="1.4" stroke-linejoin="round"/>
         </svg>
-    <svg class="thread" viewBox="0 0 230 110" aria-hidden="true" focusable="false">
-      <path d="M2 16C26 2 52 0 60 16C69 34 58 54 66 74C72 92 98 102 128 98C158 94 190 82 228 96" fill="none" stroke="#8b5cf6" stroke-width="1.3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-    </svg>
     <div class="id-copy">
       <div class="id-row"><img src="src/pecunity-logo.jpg" alt="" width="46" height="46" loading="lazy" decoding="async"><span class="id-name">Pecunity</span></div>
       <span class="id-rule"></span>
@@ -524,6 +671,60 @@
     </div>
   </a>
 </section>
+
+<section class="kio" id="kiooverse" aria-label="Kiooverse project">
+
+  <div class="kio-head">
+    <h2 class="kio-title" data-r>A strategic approach to gaming community growth</h2>
+    <div class="kio-metric" data-r style="--d:160">
+      <span class="sr">Up 1,189% visibility boost</span>
+      <div class="kio-big" aria-hidden="true">
+        <svg class="kio-arrow" viewBox="0 0 24 32" focusable="false"><path d="M12 30V4M3 13 12 4l9 9"/></svg>
+        <span class="kio-num" data-count="1189">+1,189%</span>
+      </div>
+      <div class="kio-label" aria-hidden="true">Visibility boost</div>
+    </div>
+  </div>
+
+  <div class="kio-stage" data-r style="--d:120">
+    <div class="kio-meter" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div>
+    <div class="kio-frame">
+      <i class="kc kc-tl"></i><i class="kc kc-tr"></i><i class="kc kc-bl"></i><i class="kc kc-br"></i>
+      <button class="kio-open" type="button" aria-haspopup="dialog">
+        <span class="kio-shot">
+          <img src="src/works/kiooverse-dashboard-v4.png" width="1080" height="1296" loading="lazy" decoding="async"
+               alt="Kiooverse campaign dashboard. Activate to view it full size.">
+        </span>
+        <span class="kio-hint" aria-hidden="true">View full size</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="kio-body">
+    <p class="kio-text" data-r style="--d:240">A gaming-focused social media and community strategy built around content publishing, creator outreach, player engagement, and campaign experiments to connect the project with its intended gaming audience.
+      <span class="kio-tested">7 strategies tested. <span class="kio-hl"><span>Kiooverse</span></span></span></p>
+    <div class="kio-ctas" data-r style="--d:320">
+      <!-- TODO: point this at the complete contribution report once it exists -->
+      <a class="kbtn kbtn-primary" href="#kiooverse-report"><span>Complete contribution report</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a>
+      <a class="kbtn kbtn-ghost" href="https://docs.google.com/spreadsheets/d/141LBw6j0OUtO5JZixAtIpz5BtCgBk_sU8_So1-2A214/edit?usp=drivesdk" target="_blank" rel="noopener"><span>Dashboard</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a>
+    </div>
+  </div>
+
+  <a class="kio-id" href="https://kiooverse.xyz" target="_blank" rel="noopener noreferrer" data-r style="--d:400">
+    <span class="kio-id-in">
+      <img class="kio-logo" src="src/kiooverse-logo.jpg" alt="" width="72" height="72" loading="lazy" decoding="async">
+      <span class="kio-id-name"><span class="kio-name">Kiooverse</span><span class="kio-domain">kiooverse.xyz <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></span></span>
+      <span class="kio-id-desc">Kiooverse is a gaming platform with KL1 Blockchain and its first game, Kioomon Origins, where players embark on epic quests, battle, and explore a vast, ever-evolving universe.</span>
+      <span class="kio-go" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></span>
+      <span class="sr">(opens kiooverse.xyz in a new tab)</span>
+    </span>
+  </a>
+</section>
+
+<dialog class="kio-lb" id="kioLb" aria-label="Kiooverse campaign dashboard, full size">
+  <button class="kio-x" type="button" aria-label="Close dashboard view"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+  <img src="src/works/kiooverse-dashboard-v4.png" width="1080" height="1296" decoding="async" alt="Kiooverse campaign dashboard, full size.">
+</dialog>
 
 <script>
 (() => {
@@ -654,6 +855,39 @@
     const top = target ? target.getBoundingClientRect().top + scrollY : edge.getBoundingClientRect().bottom + scrollY;
     scrollTo({ top, behavior: reduce.matches ? 'auto' : 'smooth' });
   });
+})();
+</script>
+<script>
+// Kiooverse case study: reveal on scroll, count the metric up, and open the dashboard full size
+(() => {
+  const root = document.querySelector('.kio');
+  if (!root) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const num = root.querySelector('[data-count]');
+  const final = +num.dataset.count;
+  const fmt = n => '+' + n.toLocaleString('en-US') + '%';
+
+  const reveal = () => {
+    root.classList.add('in');
+    const t0 = performance.now();
+    (function step(t) {
+      const p = Math.min(Math.max((t - t0 - 300) / 1500, 0), 1);
+      num.textContent = fmt(Math.round(final * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  };
+  if (!reduce.matches && 'IntersectionObserver' in window) {
+    root.classList.add('armed'); num.textContent = fmt(0);
+    new IntersectionObserver((es, io) => {
+      if (es.some(e => e.isIntersecting)) { io.disconnect(); reveal(); }
+    }, { rootMargin: '0px 0px -20% 0px' }).observe(root);
+  }
+
+  const lb = document.getElementById('kioLb');
+  root.querySelector('.kio-open').addEventListener('click', () => {
+    if (typeof lb.showModal === 'function') lb.showModal(); else window.open(lb.querySelector('img').src, '_blank', 'noopener');
+  });
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.kio-x')) lb.close(); });
 })();
 </script>
 </body>
