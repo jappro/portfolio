@@ -466,6 +466,68 @@
     .kio [data-r], .kc, .kio-meter i { transition: none; }
     .kio.in .kio-shot::after { animation: none; }
   }
+
+  /* ---------- Visual works ---------- */
+  .vw {
+    position: relative; overflow: clip; background: var(--ink); color: #fff;
+    padding: clamp(80px, 8vw, 150px) var(--pad) clamp(72px, 8vw, 140px);
+    display: grid; column-gap: clamp(24px, 4vw, 64px); row-gap: clamp(36px, 4vw, 64px); align-items: start;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); grid-template-areas: "head head" "list board";
+  }
+  .vw-head { grid-area: head; }
+  .vw-title { margin: 0; font-size: clamp(3rem, 9vw, 10.5rem); font-weight: 700; line-height: .92; letter-spacing: -.035em; text-transform: uppercase; }
+  .vw-text { margin: clamp(18px, 2vw, 32px) 0 0; max-width: 26em; font-size: clamp(1.15rem, 1.7vw, 1.95rem); line-height: 1.45; font-weight: 500; color: rgba(255,255,255,.9); }
+
+  /* The three dots, then the stack, like a screenshot of a design board */
+  .vw-board { grid-area: board; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: #0a0c10; overflow: hidden; }
+  .vw-bar { display: flex; gap: 9px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .vw-bar i { width: 13px; height: 13px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.25); }
+  .vw-bar i:nth-child(1) { background: #28c840; } .vw-bar i:nth-child(2) { background: #ff5f57; } .vw-bar i:nth-child(3) { background: #4f7cff; }
+  .vw-canvas { padding: clamp(18px, 3.2vw, 48px); background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.4px); background-size: 22px 22px; }
+  .vw-stack { position: relative; container-type: inline-size; aspect-ratio: 760 / 815; }
+
+  /* Trims: a coloured border plus a hard offset shadow in the same colour */
+  .tr { --tc: #ff4d4d; --ts: rgba(255,77,77,.3); }
+  .tb { --tc: #4d6bff; --ts: rgba(77,107,255,.34); }
+  .tg { --tc: #3ddc5a; --ts: rgba(61,220,90,.3); }
+  .vw-fr, .vw-fl {
+    margin: 0; overflow: hidden; box-sizing: border-box; border: 3px solid var(--tc);
+    background: #0f1114 repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 8px, transparent 8px 16px);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .vw-fr img, .vw-fl img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .vw-fr {
+    position: absolute; border-width: max(2px, .45cqw);
+    box-shadow: .9cqw .9cqw 0 var(--ts), 0 1.6cqw 3cqw rgba(0,0,0,.5);
+  }
+  .vw-fr:hover { z-index: 9; transform: translate(-.5cqw, -.5cqw); box-shadow: 1.5cqw 1.5cqw 0 var(--ts), 0 2cqw 4cqw rgba(0,0,0,.55); }
+  .f1 { left: 24.1%; top: 20.9%; width: 47%;   aspect-ratio: 1.24;  z-index: 5; }
+  .f2 { left: 0;     top: 73.4%; width: 39.2%; aspect-ratio: 1.386; z-index: 4; }
+  .f3 { left: 65.4%; top: 1%;    width: 34.2%; aspect-ratio: 1;     z-index: 3; }
+  .f4 { left: 1%;    top: .6%;   width: 72%;   aspect-ratio: 1.906; z-index: 2; }
+  .f5 { left: 11.6%; top: 42.5%; width: 88%;   aspect-ratio: 1.524; z-index: 1; }
+
+  .vw-list { grid-area: list; display: grid; gap: clamp(20px, 2vw, 32px); }
+  .vw-fl { aspect-ratio: 4 / 3; box-shadow: clamp(6px, .7vw, 11px) clamp(6px, .7vw, 11px) 0 var(--ts), 0 18px 36px rgba(0,0,0,.45); }
+  .vw-fl:hover { transform: translate(-3px, -3px); }
+
+  /* Pop in, staggered, once the section scrolls into view (only armed when JS runs) */
+  @keyframes vwPop { from { opacity: 0; transform: translateY(24px) scale(.96); } to { opacity: 1; transform: none; } }
+  .vw.armed:not(.in) .vw-fr, .vw.armed:not(.in) .vw-fl { opacity: 0; }
+  .vw.in .vw-fr, .vw.in .vw-fl { animation: vwPop .8s var(--ease) backwards; animation-delay: calc(var(--d, 0) * 1ms); }
+
+  @media (max-width: 900px) {
+    .vw { padding-top: 72px; row-gap: 32px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "board" "list"; }
+    .vw-title { font-size: clamp(3rem, 17vw, 5.5rem); }
+    .vw-canvas { padding: 16px; }
+    .vw-list { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .vw-fl { aspect-ratio: 1 / 1; }
+    .vw-fl:nth-child(3) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vw.in .vw-fr, .vw.in .vw-fl { animation: none; }
+    .vw-fr, .vw-fl { transition: none; }
+  }
 </style>
 </head>
 
@@ -727,6 +789,33 @@
   <img src="src/works/kiooverse-dashboard-v4.png" width="1080" height="1296" decoding="async" alt="Kiooverse campaign dashboard, full size.">
 </dialog>
 
+<section class="vw" id="visual-works" aria-label="Visual works">
+
+  <div class="vw-head">
+    <h2 class="vw-title">Visual works</h2>
+    <p class="vw-text">A collection of graphics created across brands, campaigns, and digital communities.</p>
+  </div>
+
+  <div class="vw-board">
+    <div class="vw-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="vw-canvas">
+      <div class="vw-stack">
+        <figure class="vw-fr f5 tb" style="--d:0"><img src="src/works/Pecunity%20TVL2.823Z" alt="Pecunity TVL graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+        <figure class="vw-fr f4 tr" style="--d:100"><img src="src/works/Racine%20Technologies%20Limited.png" alt="Racine Technologies Limited brand graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+        <figure class="vw-fr f3 tb" style="--d:200"><img src="src/works/App%20Mock-up.850Z" alt="App mock-up graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+        <figure class="vw-fr f2 tg" style="--d:300"><img src="src/works/Kioomon%20Origins%20appicon.png" alt="Kioomon Origins app icon" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+        <figure class="vw-fr f1 tr" style="--d:420"><img src="src/works/Launch%20Banner.448Z" alt="Launch banner graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="vw-list">
+    <figure class="vw-fl tr" style="--d:200"><img src="src/works/brand%20japh.179Z" alt="Japheth brand graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+    <figure class="vw-fl tr" style="--d:320"><img src="src/works/weekend%20QST.319Z" alt="Weekend quest graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+    <figure class="vw-fl tr" style="--d:440"><img src="src/works/Racine%20Technologies%20Limited.png" alt="Racine Technologies Limited brand graphic" loading="lazy" decoding="async" onerror="this.hidden=true"></figure>
+  </div>
+</section>
+
 <script>
 (() => {
   const DURATION = 5000;   // time each slide stays
@@ -889,6 +978,17 @@
     if (typeof lb.showModal === 'function') lb.showModal(); else window.open(lb.querySelector('img').src, '_blank', 'noopener');
   });
   lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.kio-x')) lb.close(); });
+})();
+</script>
+<script>
+// Visual works: pop the graphics in once the section scrolls into view
+(() => {
+  const root = document.querySelector('.vw');
+  if (!root || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  root.classList.add('armed');
+  new IntersectionObserver((es, io) => {
+    if (es.some(e => e.isIntersecting)) { io.disconnect(); root.classList.add('in'); }
+  }, { rootMargin: '0px 0px -15% 0px' }).observe(root);
 })();
 </script>
 </body>
