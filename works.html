@@ -242,17 +242,17 @@
   .glow { background: linear-gradient(180deg, #fff 50%, #c7b0ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 16px rgba(139,92,246,.45)); }
   .lede {
     grid-area: lede; margin: clamp(20px, 2vw, 32px) 0 0; max-width: 27em;
-    font-size: clamp(1rem, 1.3vw, 1.4rem); line-height: 1.5; font-weight: 400; color: rgba(255,255,255,.74);
+    font-size: clamp(1.15rem, 1.7vw, 1.95rem); line-height: 1.45; font-weight: 500; color: rgba(255,255,255,.9);
   }
   .ctas { grid-area: ctas; display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(24px, 2.6vw, 40px); align-self: start; }
   .pbtn {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    min-height: clamp(42px, 2.9vw, 50px); padding: 0 clamp(18px, 1.6vw, 26px);
+    min-height: clamp(50px, 3.7vw, 62px); padding: 0 clamp(20px, 1.9vw, 30px);
     border: 1px solid; text-decoration: none; text-transform: uppercase;
-    font-size: clamp(.68rem, .78vw, .8rem); font-weight: 600; letter-spacing: .14em;
+    font-size: clamp(.84rem, .98vw, 1.05rem); font-weight: 700; letter-spacing: .12em;
     transition: background .25s, color .25s, border-color .25s;
   }
-  .pbtn svg { width: 11px; height: 11px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.4; }
+  .pbtn svg { width: 13px; height: 13px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.4; }
   .pbtn-primary { color: #c9b6ff; border-color: var(--purple); background: rgba(139,92,246,.08); }
   .pbtn-primary:hover { background: var(--purple); color: #fff; }
   .pbtn-ghost { color: #fff; border-color: rgba(255,255,255,.55); background: rgba(10,10,14,.9); }
@@ -276,17 +276,17 @@
   /* Identity panel: torn paper bleeding in from the left and bottom */
   .panel {
     grid-area: panel; align-self: end; position: relative; display: block;
-    margin: 7vw 0 0 calc(-1 * var(--pad)); width: 29vw; aspect-ratio: 420 / 330; color: #fff; text-decoration: none;
+    margin: 6vw 0 0 calc(-1 * var(--pad)); width: 36vw; aspect-ratio: 420 / 330; color: #fff; text-decoration: none;
   }
   .panel .pp { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 12px 18px rgba(0,0,0,.5)); transition: filter .3s; }
   .panel:hover .pp { filter: brightness(1.12) drop-shadow(0 12px 18px rgba(0,0,0,.5)); }
   .pp-m { display: none; }
-  .id-copy { position: absolute; left: var(--pad); right: 22%; top: 26%; }
+  .id-copy { position: absolute; left: var(--pad); right: 18%; top: 24%; }
   .id-row { display: flex; align-items: center; gap: 14px; }
   .id-row img { display: block; width: clamp(34px, 2.9vw, 46px); height: auto; aspect-ratio: 1; object-fit: contain; border-radius: 9px; }
-  .id-name { font-size: clamp(.72rem, .8vw, .9rem); font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+  .id-name { font-size: clamp(.85rem, 1vw, 1.1rem); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
   .id-rule { display: block; width: clamp(80px, 7.2vw, 120px); height: 1px; background: rgba(255,255,255,.4); margin: 14px 0 clamp(16px, 1.6vw, 26px); }
-  .id-desc { display: block; font-size: clamp(.95rem, 1.12vw, 1.2rem); line-height: 1.5; font-weight: 400; color: #f1ecff; }
+  .id-desc { display: block; font-size: clamp(1.05rem, 1.5vw, 1.7rem); line-height: 1.45; font-weight: 500; color: #fbf9ff; }
 
   /* ---------- Showcase on phones and small tablets: dashboard first, headline over it ---------- */
   @media (max-width: 900px) {
@@ -305,13 +305,13 @@
       content: ""; position: absolute; inset: 0; border-radius: 1cqw; pointer-events: none;
       background: linear-gradient(15deg, rgba(6,6,10,.96) 0%, rgba(6,6,10,.9) 52%, rgba(6,6,10,.55) 80%, rgba(6,6,10,.22) 100%);
     }
-    .lede { margin-top: 28px; max-width: none; font-size: 1.0625rem; }
+    .lede { margin-top: 28px; max-width: none; font-size: 1.22rem; }
     .ctas { flex-direction: column; margin-top: 24px; }
-    .pbtn { min-height: 48px; }
+    .pbtn { min-height: 56px; font-size: .92rem; }
     .panel { width: 92vw; aspect-ratio: 360 / 330; margin-top: 56px; }
     .pp-d { display: none; } .pp-m { display: block; }
     .id-copy { top: 23%; right: 16%; }
-    .id-desc { font-size: 1rem; }
+    .id-desc { font-size: 1.15rem; }
   }
 
   /* ---------- Kiooverse case study ---------- */
@@ -343,8 +343,8 @@
   .kio-label { display: flex; align-items: center; gap: 14px; margin-top: clamp(10px, 1vw, 18px); font-weight: 600; font-size: clamp(.78rem, 1vw, 1.05rem); letter-spacing: .24em; text-transform: uppercase; }
   .kio-label::before { content: ""; width: 38px; height: 2px; background: var(--g); }
 
-  .kio-text { margin: 0; max-width: 33em; font-size: clamp(1rem, 1.25vw, 1.35rem); line-height: 1.58; font-weight: 400; color: rgba(255,255,255,.78); }
-  .kio-tested { display: block; margin-top: 1.3em; color: #fff; font-weight: 600; font-size: .82em; letter-spacing: .16em; text-transform: uppercase; }
+  .kio-text { margin: 0; max-width: 33em; font-size: clamp(1.12rem, 1.6vw, 1.85rem); line-height: 1.5; font-weight: 500; color: rgba(255,255,255,.9); }
+  .kio-tested { display: block; margin-top: 1.3em; color: #fff; font-weight: 700; font-size: .88em; letter-spacing: .16em; text-transform: uppercase; }
   .kio-hl {
     display: inline-block; margin-left: .5em; padding: .18em .7em; background: #7c3aed; transform: skewX(-8deg);
     font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: 1.12em; letter-spacing: .14em;
@@ -354,12 +354,12 @@
   .kio-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(26px, 2.8vw, 44px); }
   .kbtn {
     position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 12px;
-    min-height: clamp(48px, 3.5vw, 58px); padding: 0 clamp(20px, 1.9vw, 30px); text-decoration: none; text-transform: uppercase;
-    font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: clamp(.74rem, .88vw, .9rem); letter-spacing: .14em;
+    min-height: clamp(54px, 4vw, 68px); padding: 0 clamp(22px, 2.1vw, 34px); text-decoration: none; text-transform: uppercase;
+    font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: clamp(.92rem, 1.12vw, 1.15rem); letter-spacing: .12em;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
     transition: background .25s, color .25s;
   }
-  .kbtn svg { width: 12px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; }
+  .kbtn svg { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; }
   .kbtn-primary { background: var(--g); color: #04110b; }
   .kbtn-primary:hover { background: #fff; }
   .kbtn-ghost { background: rgba(255,255,255,.55); color: #fff; }
@@ -426,9 +426,9 @@
   .kio-logo { grid-area: logo; width: clamp(52px, 4.4vw, 72px); height: auto; aspect-ratio: 1; object-fit: contain; background: #111; clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
   .kio-id-name { grid-area: name; display: grid; gap: 6px; }
   .kio-name { font-family: "Chakra Petch", var(--font); font-weight: 700; font-size: clamp(1.1rem, 1.6vw, 1.6rem); letter-spacing: .14em; text-transform: uppercase; }
-  .kio-domain { display: inline-flex; align-items: center; gap: 8px; color: var(--g); font-weight: 500; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; }
+  .kio-domain { display: inline-flex; align-items: center; gap: 8px; color: var(--g); font-weight: 600; font-size: clamp(.8rem, .9vw, .95rem); letter-spacing: .14em; text-transform: uppercase; }
   .kio-domain svg, .kio-go svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.6; }
-  .kio-id-desc { grid-area: desc; max-width: 54ch; font-size: clamp(.95rem, 1.1vw, 1.15rem); line-height: 1.55; font-weight: 400; color: rgba(255,255,255,.78); }
+  .kio-id-desc { grid-area: desc; max-width: 54ch; font-size: clamp(1.05rem, 1.4vw, 1.55rem); line-height: 1.5; font-weight: 500; color: rgba(255,255,255,.9); }
   .kio-go { grid-area: go; display: grid; place-items: center; width: 46px; height: 46px; background: var(--g); color: #04110b; clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
   .kio-go svg { width: 14px; height: 14px; }
 
@@ -457,7 +457,8 @@
     .kio-meter { flex-direction: row; width: auto; height: 6px; }
     .kio-text { max-width: none; }
     .kio-ctas { flex-direction: column; align-items: stretch; }
-    .kbtn { justify-content: center; min-height: 52px; }
+    .kbtn { justify-content: center; min-height: 58px; font-size: .98rem; }
+    .kio-id-desc { font-size: 1.12rem; }
     .kio-id-in { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "logo name" "desc desc"; }
     .kio-go { display: none; }
   }
