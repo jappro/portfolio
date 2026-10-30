@@ -688,6 +688,65 @@
     .ce-blog.is-in .cb-read b { animation: none; transform: scaleX(1); }
     .ce-vis, .cm-card, .cm-card img, .ce-shot img { transition: none; }
   }
+
+  /* ---------- Project showcases: Vinceslink and Alfalf AI ---------- */
+  .vl, .af { position: relative; overflow: clip; isolation: isolate; background: var(--ink); color: #fff; padding: clamp(80px, 8vw, 150px) var(--pad); display: grid; align-items: center; column-gap: clamp(28px, 4vw, 72px); }
+  .vl { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .af { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); padding-top: 0; }
+  .vl::before, .af::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(50% 55% at 72% 50%, rgba(139,92,246,.16), transparent 70%); }
+  .af::before { background: radial-gradient(48% 55% at 28% 50%, rgba(139,92,246,.14), transparent 70%); }
+  .pj-title { margin: 0; font-size: clamp(2.8rem, 6.4vw, 7.6rem); font-weight: 700; line-height: .95; letter-spacing: -.035em; text-transform: uppercase; }
+  .pj-lead { margin: clamp(18px, 2vw, 32px) 0 0; max-width: 24em; font-size: clamp(1.15rem, 1.7vw, 1.95rem); line-height: 1.45; font-weight: 500; color: rgba(255,255,255,.9); }
+  .af .chips { margin: 0 0 clamp(18px, 2vw, 30px); }
+  .af-dot { display: inline-block; width: 8px; height: 8px; margin-right: .7em; border-radius: 50%; background: #3ddc5a; box-shadow: 0 0 0 0 rgba(61,220,90,.6); animation: afPulse 1.8s ease-out infinite; }
+  @keyframes afPulse { to { box-shadow: 0 0 0 10px rgba(61,220,90,0); } }
+  .af-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(26px, 2.8vw, 44px); }
+  .af-media { display: grid; justify-items: center; }
+
+  /* Vinceslink: a PC that plays a short walkthrough */
+  .vl-stage { display: grid; justify-items: center; gap: clamp(20px, 2.4vw, 36px); }
+  .vl-pc { width: min(100%, 900px); filter: drop-shadow(0 40px 60px rgba(0,0,0,.6)); }
+  .vl-bezel { padding: clamp(10px, 1.4vw, 18px) clamp(10px, 1.4vw, 18px) 0; border-radius: 18px 18px 8px 8px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, #1c1e26, #0e1015); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+  .vl-screen { position: relative; overflow: hidden; container-type: inline-size; aspect-ratio: 1000 / 512; border-radius: 6px; background: #07080c; }
+  .vl-boot { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(80% 90% at 50% 40%, #161a26, #07080c); transition: opacity .6s, transform .8s var(--ease); }
+  .vl-screen[data-state="open"] .vl-boot { opacity: 0; transform: scale(1.08); pointer-events: none; }
+  .vl-link { display: inline-flex; padding: .75em 1.3em; border: 1.5px solid rgba(255,255,255,.75); color: #fff; font: 600 3.3cqw var(--font); letter-spacing: .03em; transition: background .15s, color .15s; }
+  .vl-link.press { background: #fff; color: #07080c; }
+  .vl-rest { visibility: hidden; }
+  .vl-link.typing .vl-typed::after { content: ""; display: inline-block; width: .08em; height: .95em; margin: 0 -.08em 0 .05em; vertical-align: -.12em; background: currentColor; animation: vlBlink 1s steps(1) infinite; }
+  @keyframes vlBlink { 50% { opacity: 0; } }
+  .vl-pages { position: absolute; inset: 0; opacity: 0; transform: scale(.94); transition: opacity .6s var(--ease), transform .8s var(--ease); }
+  .vl-screen[data-state="open"] .vl-pages { opacity: 1; transform: none; }
+  .vl-pages img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transform: translateX(3%) scale(1.02); transition: opacity .7s var(--ease), transform .9s var(--ease); }
+  .vl-pages img.is-on { opacity: 1; transform: none; z-index: 2; }
+  .vl-chev { position: absolute; z-index: 4; right: 2.4cqw; top: 50%; width: 6.4cqw; height: 6.4cqw; min-width: 32px; min-height: 32px; display: grid; place-items: center; padding: 0; border-radius: 50%; border: 1px solid rgba(255,255,255,.7); background: rgba(8,10,14,.74); color: #fff; opacity: 0; pointer-events: none; transform: translateY(-50%); transition: opacity .4s, transform .2s, background .2s; }
+  .vl-chev svg { width: 45%; height: 45%; fill: none; stroke: currentColor; stroke-width: 1.8; }
+  .vl-screen[data-chev="1"] .vl-chev { opacity: 1; }
+  .vl-chev.press { transform: translateY(-50%) scale(.86); background: var(--purple); }
+  .vl-pc.manual .vl-chev { pointer-events: auto; cursor: pointer; }
+  .vl-cur { position: absolute; z-index: 6; left: 0; top: 0; width: clamp(18px, 3.4cqw, 30px); pointer-events: none; opacity: 0; transform: translate(var(--x, 86cqw), var(--y, 46cqw)); transition: transform 1s cubic-bezier(.6, 0, .3, 1), opacity .4s; }
+  .vl-cur.on { opacity: 1; } .vl-cur.jump { transition: opacity .4s; }
+  .vl-cur svg { display: block; width: 100%; margin: -8% 0 0 -12%; fill: #fff; stroke: #0b0b10; stroke-width: 1.4; stroke-linejoin: round; filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)); }
+  .vl-ripple { position: absolute; left: 0; top: 0; width: 5cqw; height: 5cqw; margin: -2.5cqw 0 0 -2.5cqw; border-radius: 50%; border: 2px solid var(--purple); opacity: 0; }
+  .vl-cur.click .vl-ripple { animation: vlRip .55s ease-out; }
+  @keyframes vlRip { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+  .vl-chin { height: clamp(34px, 3.6vw, 52px); display: flex; align-items: center; justify-content: center; }
+  .vl-cap { min-height: 1em; font: 600 clamp(.66rem, .86vw, .88rem) var(--font); letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.8); }
+  .vl-cap.typing::after { content: ""; display: inline-block; width: 1px; height: .95em; margin-left: 3px; vertical-align: -.12em; background: currentColor; animation: vlBlink 1s steps(1) infinite; }
+  .vl-neck { width: 12%; height: clamp(22px, 3vw, 44px); margin: 0 auto; background: linear-gradient(90deg, #14161c, #2a2d37 50%, #14161c); }
+  .vl-base { width: 30%; height: clamp(8px, 1vw, 14px); margin: 0 auto; border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, #2c2f39, #14161c); }
+
+  @media (max-width: 900px) {
+    .vl, .af { grid-template-columns: minmax(0, 1fr); row-gap: 40px; padding-top: 72px; }
+    .af { padding-top: 24px; }
+    .af-media { order: 2; } .af-copy { order: 1; }
+    .vl-link { font-size: 5.2cqw; }
+    .vl-cap { letter-spacing: .14em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .af-dot { animation: none; }
+    .vl-pages, .vl-pages img, .vl-boot { transition: none; }
+  }
 </style>
 </head>
 
@@ -1121,6 +1180,55 @@
   <div class="sm-lb-body"></div>
 </dialog>
 
+<section class="vl" id="vinceslink" aria-label="Vinceslink project">
+  <div class="vl-copy" data-sm-r>
+    <h2 class="pj-title">Vinceslink</h2>
+    <p class="pj-lead">Vinceslink is a multi-industry Nigerian brand that combines technology, daily commerce, and real estate services under one roof.</p>
+    <ul class="chips"><li>Built with AI</li><li>4-page website</li></ul>
+  </div>
+
+  <div class="vl-stage" data-sm-r style="--d:140">
+    <div class="vl-pc" aria-hidden="true">
+      <div class="vl-bezel">
+        <div class="vl-screen" data-state="idle" data-chev="0">
+          <div class="vl-boot"><span class="vl-link"><span class="vl-typed"></span><span class="vl-rest">www.vinceslink.com</span></span></div>
+          <div class="vl-pages"><img src="src/works/Vinceslink%20Home%20page.PNG" data-label="vinceslink home page" alt="Vinceslink home page screenshot" width="1000" height="500" decoding="async" onerror="this.hidden=true"><img src="src/works/Vinceslink%20Gadget%20Hub.png" data-label="vinceslink gadget hub" alt="Vinceslink Gadget Hub page screenshot" width="1000" height="500" decoding="async" onerror="this.hidden=true"><img src="src/works/Vinceslink%20Super%20Store.png" data-label="vinceslink super store" alt="Vinceslink Super Store page screenshot" width="1000" height="500" decoding="async" onerror="this.hidden=true"><img src="src/works/Vinceslink%20Properties.png" data-label="vinceslink properties" alt="Vinceslink Properties page screenshot" width="1000" height="500" decoding="async" onerror="this.hidden=true"></div>
+          <button class="vl-chev" type="button" tabindex="-1" aria-label="Next page"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M7 3l6 6-6 6"/></svg></button>
+          <span class="vl-cur"><svg viewBox="0 0 24 24"><path d="M3 2l7.5 18 2.6-7.4L21 10z"/></svg><i class="vl-ripple"></i></span>
+        </div>
+        <div class="vl-chin"><span class="vl-cap"></span></div>
+      </div>
+      <div class="vl-neck"></div><div class="vl-base"></div>
+    </div>
+    <p class="sr">Animated preview of vinceslink.com showing its four pages: Home, Gadget Hub, Super Store and Properties.</p>
+    <a class="pbtn pbtn-primary" href="https://vinceslink.com" target="_blank" rel="noopener">Visit <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a>
+  </div>
+</section>
+
+<section class="af" id="alfalf" aria-label="Alfalf AI project">
+  <div class="af-media" data-sm-r>
+    <div class="vd-media" data-video data-play="0" data-muted="1" style="--r:1.7778; --mh: clamp(300px, 34vw, 560px)">
+      <video src="src/trim_BB67EF15-4FCE-4AED-9A5C-3EF23473CF4B.mp4#t=0.1" muted playsinline preload="metadata"></video>
+      <button class="vd-center" type="button" data-act="play" aria-label="Play demo video"><span><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg></span></button>
+      <div class="vd-ctl">
+        <button class="vd-b" type="button" data-act="play" aria-label="Play demo video"><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg><svg class="ic ic-pause" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-pause"/></svg></button>
+        <button class="vd-b" type="button" data-act="mute" aria-label="Unmute demo video"><svg class="ic ic-off" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-off"/></svg><svg class="ic ic-on" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-on"/></svg></button>
+        <button class="vd-b vd-view" type="button" data-act="view" aria-label="View demo video full size"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>View</span></button>
+      </div>
+      <i class="vd-prog" aria-hidden="true"><b></b></i>
+    </div>
+  </div>
+  <div class="af-copy" data-sm-r style="--d:140">
+    <ul class="chips"><li><i class="af-dot" aria-hidden="true"></i>In development</li><li>Founder-built</li></ul>
+    <h2 class="pj-title">Alfalf AI</h2>
+    <p class="pj-lead">Alfalf AI is an AI-powered operations platform helping Web3 projects design structured, retention-driven community campaigns.</p>
+    <div class="af-ctas">
+      <a class="pbtn pbtn-ghost" href="https://github.com/jappro/alfalf-bot" target="_blank" rel="noopener">Git Repo <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a>
+      <a class="pbtn pbtn-primary" href="https://t.me/AlfalfAI_bot" target="_blank" rel="noopener">Alfalf TG Bot <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a>
+    </div>
+  </div>
+</section>
+
 <script>
 (() => {
   const DURATION = 5000;   // time each slide stays
@@ -1391,6 +1499,140 @@
   ct.addEventListener('scroll', () => requestAnimationFrame(syncCt), { passive: true });
   root.querySelectorAll('.cm-bar .sm-chev').forEach(b => b.addEventListener('click', () => ct.scrollBy({ left: +b.dataset.dir * ct.clientWidth * .8, behavior: smooth })));
   addEventListener('resize', syncCt); syncCt();
+})();
+</script>
+<script>
+// Project showcases: Vinceslink walkthrough and the Alfalf AI demo video
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasIO = 'IntersectionObserver' in window;
+  const lb = document.getElementById('smLb');
+
+  // Reveal on scroll (shares the styles used in Sample work)
+  if (hasIO && !reduce) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -12% 0px' });
+    document.querySelectorAll('.vl, .af').forEach(r => { r.classList.add('sm-armed'); r.querySelectorAll('[data-sm-r]').forEach(el => io.observe(el)); });
+  }
+
+  // Alfalf AI demo: 5-second preview in view, then play, mute and view controls
+  const m = document.querySelector('.af .vd-media');
+  if (m) {
+    const v = m.querySelector('video'); let timer = 0, engaged = false;
+    v.addEventListener('loadedmetadata', () => { if (v.videoWidth) m.style.setProperty('--r', (v.videoWidth / v.videoHeight).toFixed(4)); });
+    v.addEventListener('timeupdate', () => m.style.setProperty('--p', v.duration ? v.currentTime / v.duration : 0));
+    const sync = () => {
+      m.dataset.play = v.paused ? '0' : '1'; m.dataset.muted = v.muted ? '1' : '0';
+      m.querySelectorAll('[data-act="play"]').forEach(b => b.setAttribute('aria-label', v.paused ? 'Play demo video' : 'Pause demo video'));
+      m.querySelector('[data-act="mute"]').setAttribute('aria-label', v.muted ? 'Unmute demo video' : 'Mute demo video');
+    };
+    ['play', 'pause', 'ended', 'volumechange'].forEach(ev => v.addEventListener(ev, sync));
+    m.addEventListener('click', e => {
+      const b = e.target.closest('[data-act]'); if (!b) return;
+      engaged = true; clearTimeout(timer);
+      if (b.dataset.act === 'play') { if (v.paused) { if (v.ended) v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); }
+      if (b.dataset.act === 'mute') v.muted = !v.muted;
+      if (b.dataset.act === 'view') {
+        v.pause(); const body = lb.querySelector('.sm-lb-body'); body.textContent = '';
+        const el = document.createElement('video'); el.controls = true; el.playsInline = true; el.src = v.currentSrc;
+        el.addEventListener('loadedmetadata', () => { el.currentTime = v.currentTime; el.play().catch(() => {}); }, { once: true });
+        body.append(el);
+        if (typeof lb.showModal === 'function') lb.showModal(); else window.open(v.currentSrc, '_blank', 'noopener');
+      }
+    });
+    sync();
+    if (hasIO) new IntersectionObserver(es => es.forEach(e => {
+      clearTimeout(timer);
+      if (e.isIntersecting && e.intersectionRatio >= .6) {
+        if (reduce || engaged) return;
+        v.currentTime = 0; v.play().catch(() => {});
+        timer = setTimeout(() => { if (!engaged) v.pause(); }, 5000);
+      } else v.pause();
+    }), { threshold: [0, .6] }).observe(m);
+  }
+
+  // Vinceslink walkthrough: type the link, click it, then click through the four pages, on a loop
+  const pc = document.querySelector('.vl-pc');
+  if (!pc) return;
+  const screen = pc.querySelector('.vl-screen'), link = pc.querySelector('.vl-link');
+  const typed = link.querySelector('.vl-typed'), rest = link.querySelector('.vl-rest');
+  const imgs = [...pc.querySelectorAll('.vl-pages img')], chev = pc.querySelector('.vl-chev');
+  const cur = pc.querySelector('.vl-cur'), cap = pc.querySelector('.vl-cap');
+  const URL_TXT = 'www.vinceslink.com', last = imgs.length - 1;
+  let tok = 0, capId = 0;
+
+  const sleep = (ms, t) => new Promise((res, rej) => setTimeout(() => t === tok ? res() : rej('stop'), ms));
+  const setTyped = n => { typed.textContent = URL_TXT.slice(0, n); rest.textContent = URL_TXT.slice(n); };
+  const typeCap = async text => {
+    const id = ++capId; cap.textContent = ''; cap.classList.add('typing');
+    for (let i = 1; i <= text.length; i++) {
+      await new Promise(r => setTimeout(r, 34));
+      if (id !== capId) return;
+      cap.textContent = text.slice(0, i);
+    }
+    setTimeout(() => { if (id === capId) cap.classList.remove('typing'); }, 500);
+  };
+  const place = (el, fx = .55, fy = .6) => {
+    const s = screen.getBoundingClientRect(), r = el.getBoundingClientRect();
+    cur.style.setProperty('--x', (r.left + r.width * fx - s.left) + 'px');
+    cur.style.setProperty('--y', (r.top + r.height * fy - s.top) + 'px');
+  };
+  const jump = () => {
+    cur.classList.add('jump');
+    cur.style.setProperty('--x', screen.clientWidth * .88 + 'px'); cur.style.setProperty('--y', screen.clientHeight * .9 + 'px');
+    void cur.offsetWidth; cur.classList.remove('jump');
+  };
+  const rest_ = () => { cur.style.setProperty('--x', screen.clientWidth * .5 + 'px'); cur.style.setProperty('--y', screen.clientHeight * .78 + 'px'); };
+  const click = el => {
+    cur.classList.remove('click'); void cur.offsetWidth; cur.classList.add('click');
+    el.classList.add('press'); setTimeout(() => el.classList.remove('press'), 220);
+  };
+  const show = i => {
+    imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
+    screen.dataset.state = 'open'; screen.dataset.chev = '0';
+    typeCap(imgs[i].dataset.label);
+  };
+  const reset = () => {
+    capId++; screen.dataset.state = 'idle'; screen.dataset.chev = '0';
+    imgs.forEach(im => im.classList.remove('is-on'));
+    setTyped(0); link.classList.remove('typing', 'press'); cur.classList.remove('on', 'click'); cap.textContent = ''; cap.classList.remove('typing');
+  };
+
+  async function play(t) {
+    try {
+      for (;;) {
+        reset(); await sleep(800, t);
+        link.classList.add('typing');
+        for (let i = 1; i <= URL_TXT.length; i++) { setTyped(i); await sleep(62, t); }
+        await sleep(500, t); link.classList.remove('typing');
+        jump(); cur.classList.add('on'); await sleep(60, t);
+        place(link); await sleep(1150, t);
+        click(link); await sleep(320, t);
+        for (let i = 0; i <= last; i++) {
+          show(i);
+          if (i < last) {
+            await sleep(600, t); screen.dataset.chev = '1'; rest_();      // chevron appears, cursor drifts away
+            await sleep(2500, t); place(chev); await sleep(1050, t);       // cursor returns to the chevron
+            click(chev);
+            await sleep(180, t);
+          } else {
+            cur.classList.remove('on'); await sleep(4600, t);              // last page rests, then the loop restarts
+          }
+        }
+        screen.dataset.state = 'idle'; await sleep(900, t);
+      }
+    } catch (e) { if (e !== 'stop') throw e; }
+  }
+
+  if (reduce) {                       // no animation: show the home page, next button works by hand
+    let n = 0; pc.removeAttribute('aria-hidden'); pc.classList.add('manual'); chev.tabIndex = 0;
+    const set = () => { imgs.forEach((im, k) => im.classList.toggle('is-on', k === n)); cap.textContent = imgs[n].dataset.label; };
+    screen.dataset.state = 'open'; screen.dataset.chev = '1'; set();
+    chev.addEventListener('click', () => { n = (n + 1) % imgs.length; set(); });
+  } else if (hasIO) {
+    new IntersectionObserver(es => { tok++; if (es[0].isIntersecting) play(tok); else reset(); }, { threshold: .35 }).observe(pc);
+  } else { screen.dataset.state = 'open'; imgs[0].classList.add('is-on'); cap.textContent = imgs[0].dataset.label; }
 })();
 </script>
 </body>
