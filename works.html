@@ -528,6 +528,166 @@
     .vw.in .vw-fr, .vw.in .vw-fl { animation: none; }
     .vw-fr, .vw-fl { transition: none; }
   }
+
+  /* ---------- Sample work ---------- */
+  .sm { position: relative; overflow: clip; background: var(--ink); color: #fff; padding: clamp(80px, 8vw, 150px) var(--pad) clamp(72px, 8vw, 140px); }
+  .sm-title { margin: 0; font-size: clamp(3rem, 9vw, 10.5rem); font-weight: 700; line-height: .92; letter-spacing: -.035em; text-transform: uppercase; }
+  .sm-lead { margin: clamp(18px, 2vw, 32px) 0 0; max-width: 28em; font-size: clamp(1.15rem, 1.7vw, 1.95rem); line-height: 1.45; font-weight: 500; color: rgba(255,255,255,.9); }
+  .sm-part { margin-top: clamp(80px, 9vw, 160px); }
+  .sm-h { display: grid; gap: 14px; margin: 0 0 clamp(26px, 3vw, 48px); max-width: 16em; font-size: clamp(2rem, 4.8vw, 5.6rem); font-weight: 700; line-height: 1; letter-spacing: -.03em; text-transform: uppercase; text-wrap: balance; }
+  .sm-part .sm-lead { margin: calc(-1 * clamp(8px, 1vw, 20px)) 0 clamp(26px, 3vw, 48px); }
+  .sm-n { font-size: .8rem; font-weight: 600; letter-spacing: .26em; color: var(--purple); display: flex; align-items: center; gap: 14px; }
+  .sm-n::after { content: ""; width: 44px; height: 1px; background: var(--purple); }
+
+  .sm-armed [data-sm-r]:not(.is-in) { opacity: 0; }
+  @keyframes smPop { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  [data-sm-r].is-in { animation: smPop .85s var(--ease) backwards; animation-delay: calc(var(--d, 0) * 1ms); }
+
+  .ic { width: 18px; height: 18px; flex: none; fill: currentColor; }
+  .sm-chev { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.4); background: rgba(10,10,14,.9); color: #fff; cursor: pointer; transition: background .25s, border-color .25s, opacity .25s; }
+  .sm-chev svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+  .sm-chev:hover { background: var(--purple); border-color: var(--purple); }
+  .sm-chev:disabled { opacity: .3; pointer-events: none; }
+  .sm-chev:focus-visible, .vd-b:focus-visible, .vd-pip:focus-visible, .vd-center:focus-visible, .vd-screen:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .vd-nav { display: flex; gap: 12px; }
+
+  /* Videos: one at a time, swipe or use the chevrons */
+  .vd-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(16px, 1.8vw, 28px); }
+  .vd-pips { display: flex; gap: 10px; }
+  .vd-pip { width: 36px; padding: 14px 0; border: 0; background: none; cursor: pointer; }
+  .vd-pip i { display: block; height: 3px; background: rgba(255,255,255,.22); transition: background .3s; }
+  .vd-pip[aria-current="true"] i { background: var(--purple); }
+  .vd-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: #0a0c10; }
+  .vd-track::-webkit-scrollbar, .cm-track::-webkit-scrollbar { display: none; }
+  .vd-slide { flex: 0 0 100%; scroll-snap-align: start; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(24px, 5vw, 88px); align-items: center; padding: clamp(28px, 4.2vw, 68px); }
+  .vd-media { --mh: clamp(400px, 38vw, 640px); position: relative; justify-self: center; width: min(100%, calc(var(--mh) * var(--r, .5625))); aspect-ratio: var(--r, .5625); background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 7px #101217, 0 0 0 8px rgba(255,255,255,.14), 0 40px 80px rgba(0,0,0,.6); }
+  .vd-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .vd-center { position: absolute; inset: 0; display: grid; place-items: center; border: 0; padding: 0; color: #fff; cursor: pointer; background: linear-gradient(transparent 55%, rgba(0,0,0,.6)); }
+  .vd-center span { width: clamp(60px, 5vw, 76px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); background: rgba(10,10,14,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: opacity .3s, transform .3s; }
+  .vd-center .ic { width: 26px; height: 26px; }
+  [data-play="1"] .vd-center span { opacity: 0; transform: scale(.8); }
+  .vd-ctl { position: absolute; left: 12px; right: 12px; bottom: 16px; display: flex; gap: 8px; }
+  .vd-b { height: 42px; min-width: 42px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid rgba(255,255,255,.45); border-radius: 10px; background: rgba(8,10,14,.74); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff; font: 700 .74rem var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background .25s, color .25s; }
+  .vd-b:hover { background: #fff; color: var(--ink); }
+  .vd-view { margin-left: auto; }
+  .vd-b .ic-pause, .vd-b .ic-on { display: none; }
+  [data-play="1"] .vd-b .ic-play { display: none; } [data-play="1"] .vd-b .ic-pause { display: block; }
+  [data-muted="0"] .vd-b .ic-off { display: none; } [data-muted="0"] .vd-b .ic-on { display: block; }
+  .vd-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255,255,255,.18); pointer-events: none; }
+  .vd-prog b { display: block; height: 100%; background: var(--purple); transform-origin: left; transform: scaleX(var(--p, 0)); }
+
+  .vd-no { font-size: .8rem; font-weight: 600; letter-spacing: .26em; color: var(--purple); }
+  .vd-title { margin: 12px 0 0; font-size: clamp(1.9rem, 3.4vw, 4.2rem); font-weight: 700; line-height: 1.05; letter-spacing: -.028em; text-wrap: balance; }
+  .vd-sub { margin: 20px 0 0; max-width: 28em; font-size: clamp(1.1rem, 1.5vw, 1.7rem); line-height: 1.5; font-weight: 500; color: rgba(255,255,255,.9); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .chips li { padding: .55em 1em; border: 1px solid rgba(255,255,255,.28); font-size: .76rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .vd-note { margin: 24px 0 0; padding-left: 16px; border-left: 2px solid var(--purple); max-width: 28em; font-size: clamp(1rem, 1.25vw, 1.3rem); line-height: 1.5; font-style: italic; color: rgba(255,255,255,.82); }
+  .vd-cta { margin-top: 26px; }
+
+  /* Trailer: a black mock screen that links out */
+  .vd-screen { display: grid; place-items: center; background: radial-gradient(120% 90% at 50% 40%, #14141d 0%, #000 70%); text-decoration: none; color: #fff; }
+  .vd-screen::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 4px); }
+  .vd-playbig { position: relative; width: clamp(64px, 6.4vw, 100px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.7); background: rgba(139,92,246,.2); transition: transform .3s var(--ease), background .3s; }
+  .vd-playbig .ic { width: 34%; height: 34%; margin-left: 6%; }
+  .vd-playbig::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 1px solid rgba(139,92,246,.7); animation: vdPulse 2.2s ease-out infinite; }
+  .vd-screen:hover .vd-playbig { transform: scale(1.08); background: var(--purple); }
+  @keyframes vdPulse { from { transform: scale(.85); opacity: .9; } to { transform: scale(1.4); opacity: 0; } }
+
+  /* End of the track: more is on the way */
+  .vd-more { grid-template-columns: 1fr; justify-items: center; text-align: center; align-content: center; min-height: clamp(240px, 26vw, 380px); }
+  .vd-more p { margin: 0; max-width: 24em; font-size: clamp(1.15rem, 1.8vw, 2rem); font-weight: 500; line-height: 1.4; }
+  .vd-load { display: flex; gap: 10px; margin-top: 24px; }
+  .vd-load i { width: 10px; height: 10px; border-radius: 50%; background: var(--purple); animation: vdDot 1.2s ease-in-out infinite both; }
+  .vd-load i:nth-child(2) { animation-delay: .15s; } .vd-load i:nth-child(3) { animation-delay: .3s; }
+  @keyframes vdDot { 0%, 80%, 100% { transform: scale(.55); opacity: .4; } 40% { transform: scale(1); opacity: 1; } }
+  .vd-ind { width: min(260px, 60%); height: 3px; margin-top: 22px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .vd-ind b { display: block; width: 40%; height: 100%; background: var(--purple); animation: vdSlide 1.6s ease-in-out infinite; }
+  @keyframes vdSlide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+
+  /* Content and execution */
+  .ce { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 5vw, 80px) clamp(20px, 3vw, 48px); align-items: start; }
+  .ce-card { display: grid; gap: clamp(16px, 1.6vw, 26px); }
+  .ce-vis { position: relative; display: block; margin: 0; aspect-ratio: 1024 / 492; overflow: hidden; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); background: #0b0d11; box-shadow: 0 30px 60px rgba(0,0,0,.5); transition: transform .45s var(--ease), border-color .3s; }
+  .ce-vis:hover { transform: translateY(-6px); border-color: rgba(139,92,246,.7); }
+  .ce-shot img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); cursor: zoom-in; }
+  .ce-shot:hover img { transform: scale(1.03); }
+  .ce-view { position: absolute; right: 14px; bottom: 14px; }
+  .ce-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .ce-name { margin: 0; max-width: 14em; font-size: clamp(1.5rem, 2.3vw, 2.8rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; }
+  .ce-mock { container-type: inline-size; text-decoration: none; color: #fff; }
+  .sx { position: absolute; inset: 0; display: flex; flex-direction: column; background: #0f1218; }
+  .sx-top { display: flex; align-items: center; gap: 2cqw; height: 7cqw; padding: 0 2.4cqw; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .sx-logo { width: 3cqw; height: 4cqw; border-radius: .6cqw; background: #1fa463; }
+  .sx-name { width: 18cqw; height: 1.4cqw; border-radius: 1cqw; background: rgba(255,255,255,.4); }
+  .sx-share { margin-left: auto; width: 8cqw; height: 3cqw; border-radius: 1.6cqw; background: rgba(139,92,246,.55); }
+  .sx-tool { display: flex; align-items: center; gap: 1.6cqw; height: 4cqw; padding: 0 2.4cqw; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .sx-tool i { width: 5cqw; height: 1.2cqw; border-radius: 1cqw; background: rgba(255,255,255,.14); }
+  .sx-row { display: grid; grid-template-columns: 4cqw 1fr 1.1fr 2.2fr 1fr 1fr; align-items: center; gap: 1.4cqw; height: 3.5cqw; padding: 0 2.4cqw 0 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+  .sx-row b { font: 500 1.2cqw var(--font); text-align: center; color: rgba(255,255,255,.35); height: 100%; display: grid; place-items: center; background: rgba(255,255,255,.04); }
+  .sx-row i { display: block; width: var(--w); height: 1cqw; border-radius: 1cqw; background: rgba(255,255,255,.16); }
+  .sx-row em { display: block; width: 6cqw; height: 1.8cqw; border-radius: 1cqw; background: rgba(61,220,90,.6); }
+  .sx-row em.p { background: rgba(139,92,246,.7); } .sx-row em.a { background: rgba(245,170,60,.65); }
+  .sx-head { height: 3.6cqw; background: rgba(255,255,255,.05); }
+  .sx-head span { font: 700 1.1cqw var(--font); letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+  .sx-row:not(.sx-head) { animation: sxRow 7s ease-in-out infinite; animation-delay: calc(var(--k) * .6s); }
+  @keyframes sxRow { 0%, 14%, 100% { background: transparent; } 6% { background: rgba(139,92,246,.2); } }
+
+  .ce-blog { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto; gap: clamp(20px, 3vw, 56px); align-items: center; padding: clamp(26px, 3.4vw, 56px); border: 1px solid rgba(255,255,255,.12); border-radius: 18px; background: linear-gradient(120deg, #0f0d1a, #0a0c10 60%); }
+  .cb-tag { font-size: .8rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--purple); }
+  .cb-title { margin: 14px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.1rem, 4.6vw, 5.4rem); font-weight: 700; line-height: 1.02; letter-spacing: -.02em; text-wrap: balance; }
+  .cb-read { display: block; width: min(220px, 50%); height: 3px; margin-top: 22px; background: rgba(255,255,255,.14); overflow: hidden; }
+  .cb-read b { display: block; height: 100%; background: var(--purple); transform-origin: left; transform: scaleX(0); }
+  .ce-blog.is-in .cb-read b { animation: cbFill 1.6s .5s var(--ease) both; }
+  @keyframes cbFill { to { transform: scaleX(1); } }
+  .cb-meta { margin: 0; display: grid; gap: 16px; }
+  .cb-meta div { display: grid; gap: 4px; padding-left: 16px; border-left: 2px solid rgba(139,92,246,.7); }
+  .cb-meta dt { font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  .cb-meta dd { margin: 0; font-size: clamp(1.15rem, 1.6vw, 1.8rem); font-weight: 600; }
+
+  /* Communication: a scrollable track of square screenshots */
+  .cm-bar { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+  .cm-track { display: flex; gap: clamp(14px, 1.6vw, 26px); overflow-x: auto; scroll-snap-type: x proximity; padding: 10px 2px 26px; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+  .cm-card { position: relative; flex: 0 0 clamp(250px, 27vw, 440px); aspect-ratio: 1; margin: 0; scroll-snap-align: start; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,.14); background: #0b0d11; cursor: zoom-in; transition: transform .4s var(--ease), border-color .3s; }
+  .cm-card img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .6s var(--ease); }
+  .cm-card:hover { transform: translateY(-6px); border-color: rgba(139,92,246,.7); }
+  .cm-card:hover img { transform: scale(1.04); }
+  .cm-view { position: absolute; right: 12px; bottom: 12px; height: 40px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.5); border-radius: 10px; background: rgba(8,10,14,.78); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff; font: 700 .72rem var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background .25s, color .25s; }
+  .cm-view:hover, .cm-view:focus-visible { background: #fff; color: var(--ink); outline: none; }
+  .cm-prog { height: 2px; background: rgba(255,255,255,.12); }
+  .cm-prog b { display: block; height: 100%; background: var(--purple); transform-origin: left; transform: scaleX(var(--sp, .2)); transition: transform .15s linear; }
+
+  .sm-toast { position: fixed; left: 50%; bottom: 28px; z-index: 50; display: flex; gap: 12px; align-items: flex-start; width: max-content; max-width: min(92vw, 520px); padding: 16px 20px; background: #14111f; border: 1px solid var(--purple); color: #fff; font-size: 1rem; font-weight: 500; line-height: 1.45; cursor: pointer; opacity: 0; pointer-events: none; transform: translate(-50%, 20px); transition: opacity .35s, transform .35s var(--ease); }
+  .sm-toast.show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+  .sm-toast svg { width: 20px; height: 20px; flex: none; margin-top: 2px; color: var(--purple); }
+
+  .sm-lb { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: #fff; overflow: auto; }
+  .sm-lb::backdrop { background: rgba(3,5,8,.94); }
+  .sm-lb-body { display: grid; justify-items: center; padding: clamp(64px, 8vh, 88px) 0 48px; }
+  .sm-lb-body img { display: block; width: min(1000px, 92vw); height: auto; border: 1px solid rgba(255,255,255,.2); background: #0b0d11; }
+  .sm-lb-body video { display: block; max-width: 92vw; max-height: 84vh; background: #000; border: 1px solid rgba(255,255,255,.2); }
+  .sm-lb-x { position: fixed; top: 16px; right: 16px; z-index: 2; width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.55); background: rgba(5,8,12,.9); color: #fff; cursor: pointer; }
+  .sm-lb-x svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .sm-lb-x:hover { background: #fff; color: var(--ink); }
+  html:has(.sm-lb[open]) { overflow: hidden; }
+
+  @media (max-width: 900px) {
+    .sm { padding-top: 72px; }
+    .sm-title { font-size: clamp(3rem, 15vw, 5.5rem); }
+    .vd-slide { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 22px 20px 32px; }
+    .vd-media { --mh: min(62vh, 480px); }
+    .vd-screen { --mh: 56vw !important; }
+    .ce { grid-template-columns: minmax(0, 1fr); }
+    .ce-blog { grid-template-columns: minmax(0, 1fr); }
+    .ce-blog .pbtn { justify-self: stretch; }
+    .cm-card { flex-basis: min(76vw, 340px); }
+    .sm-toast { bottom: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-sm-r].is-in { animation: none; }
+    .vd-playbig::after, .vd-load i, .vd-ind b, .sx-row:not(.sx-head) { animation: none; }
+    .ce-blog.is-in .cb-read b { animation: none; transform: scaleX(1); }
+    .ce-vis, .cm-card, .cm-card img, .ce-shot img { transition: none; }
+  }
 </style>
 </head>
 
@@ -816,6 +976,151 @@
   </div>
 </section>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="sym-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+  <symbol id="sym-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></symbol>
+  <symbol id="sym-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="sym-off" viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="sym-view" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></symbol>
+</defs></svg>
+
+<section class="sm" id="sample-work" aria-label="Sample work">
+
+  <div class="sm-head" data-sm-r>
+    <h2 class="sm-title">Sample work</h2>
+    <p class="sm-lead">Videos, content execution, and team feedback from projects I’ve worked on.</p>
+  </div>
+
+  <!-- 01 Video & infographics -->
+  <div class="sm-part">
+    <h3 class="sm-h" data-sm-r><span class="sm-n">01</span>Video &amp; infographics</h3>
+    <div class="vd">
+      <div class="vd-bar">
+        <div class="vd-pips" role="group" aria-label="Choose a video"><button class="vd-pip" type="button" aria-label="Video 1"><i></i></button><button class="vd-pip" type="button" aria-label="Video 2"><i></i></button><button class="vd-pip" type="button" aria-label="Video 3, trailer"><i></i></button><button class="vd-pip" type="button" aria-label="More videos coming"><i></i></button></div>
+        <div class="vd-nav">
+          <button class="sm-chev" type="button" data-dir="-1" aria-label="Previous video"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M11 3 5 9l6 6"/></svg></button>
+          <button class="sm-chev" type="button" data-dir="1" aria-label="Next video"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M7 3l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="vd-track" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Video samples">
+      <article class="vd-slide" aria-roledescription="slide" aria-label="1 of 4">
+        <div class="vd-media" data-video data-play="0" data-muted="1" style="--r:.5625">
+          <video src="src/works/Get%20instant%205k%20followers.mp4#t=0.1" muted playsinline preload="metadata"></video>
+          <button class="vd-center" type="button" data-act="play" aria-label="Play video"><span><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg></span></button>
+          <div class="vd-ctl">
+            <button class="vd-b" type="button" data-act="play" aria-label="Play video"><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg><svg class="ic ic-pause" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-pause"/></svg></button>
+            <button class="vd-b" type="button" data-act="mute" aria-label="Unmute video"><svg class="ic ic-off" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-off"/></svg><svg class="ic ic-on" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-on"/></svg></button>
+            <button class="vd-b vd-view" type="button" data-act="view" aria-label="View video full size"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>View</span></button>
+          </div>
+          <i class="vd-prog" aria-hidden="true"><b></b></i>
+        </div>
+        <div class="vd-copy" data-sm-r>
+          <span class="vd-no">01</span>
+          <h4 class="vd-title">Organic way to boost brand visibility in a week.</h4>
+          <p class="vd-sub">A motion video animated purely in CapCut (keyframes, masks, overlays, audio, and captions), with a little AI animation help.</p>
+          <ul class="chips"><li>CapCut</li><li>Keyframes &amp; masks</li><li>Audio &amp; captions</li><li>AI assist</li></ul>
+        </div>
+      </article>
+      <article class="vd-slide" aria-roledescription="slide" aria-label="2 of 4">
+        <div class="vd-media" data-video data-play="0" data-muted="1" style="--r:.5625">
+          <video src="src/works/RTL%20intro%20short.MOV#t=0.1" muted playsinline preload="metadata"></video>
+          <button class="vd-center" type="button" data-act="play" aria-label="Play video"><span><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg></span></button>
+          <div class="vd-ctl">
+            <button class="vd-b" type="button" data-act="play" aria-label="Play video"><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg><svg class="ic ic-pause" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-pause"/></svg></button>
+            <button class="vd-b" type="button" data-act="mute" aria-label="Unmute video"><svg class="ic ic-off" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-off"/></svg><svg class="ic ic-on" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-on"/></svg></button>
+            <button class="vd-b vd-view" type="button" data-act="view" aria-label="View video full size"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>View</span></button>
+          </div>
+          <i class="vd-prog" aria-hidden="true"><b></b></i>
+        </div>
+        <div class="vd-copy" data-sm-r>
+          <span class="vd-no">02</span>
+          <h4 class="vd-title">Introducing Racine Technologies.</h4>
+          <p class="vd-sub">A short introductory video for Racine Technologies. Clips generated with Google Flow, audio from ElevenLabs, and the final edit done entirely in CapCut.</p>
+          <ul class="chips"><li>Google Flow</li><li>ElevenLabs</li><li>CapCut</li></ul>
+        </div>
+      </article>
+      <article class="vd-slide" aria-roledescription="slide" aria-label="3 of 4">
+        <a class="vd-media vd-screen" href="https://youtu.be/UGccAisn-3w?si=L_PBs-rP1ydceaP8" target="_blank" rel="noopener" style="--r:1.7778; --mh: clamp(200px, 22vw, 380px)" aria-label="Watch the Kioomon Origins trailer on YouTube (opens in a new tab)">
+          <span class="vd-playbig"><svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-play"/></svg></span>
+        </a>
+        <div class="vd-copy" data-sm-r>
+          <span class="vd-no">03</span>
+          <h4 class="vd-title">Trailer video gameplay.</h4>
+          <p class="vd-sub">A short trailer for Kioomon Origins showcasing the in-game world.</p>
+          <blockquote class="vd-note">“This video was not directly edited by me. I was involved in the content evaluation.”</blockquote>
+          <div class="vd-cta"><a class="pbtn pbtn-primary" href="https://youtu.be/UGccAisn-3w?si=L_PBs-rP1ydceaP8" target="_blank" rel="noopener">Watch trailer <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a></div>
+        </div>
+      </article>
+      <article class="vd-slide vd-more" aria-roledescription="slide" aria-label="4 of 4">
+        <p>Japheth is still adding other videos and UGC content</p>
+        <div class="vd-load" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="vd-ind" aria-hidden="true"><b></b></div>
+      </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Content & execution -->
+  <div class="sm-part">
+    <h3 class="sm-h" data-sm-r><span class="sm-n">02</span>Content &amp; execution</h3>
+    <div class="ce">
+      <article class="ce-card" data-sm-r>
+        <a class="ce-vis ce-mock" href="https://docs.google.com/spreadsheets/d/1OTBnVJqo2_4WqkmHb0zK0ibhAp7of6Qc28_brXsFXOo/edit?usp=drivesdk" target="_blank" rel="noopener" aria-label="Open the content calendar and execution sheet in Google Sheets (opens in a new tab)">
+          <span class="sx" aria-hidden="true">
+            <span class="sx-top"><b class="sx-logo"></b><i class="sx-name"></i><em class="sx-share"></em></span>
+            <span class="sx-tool"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="sx-row sx-head"><b></b><span>Date</span><span>Platform</span><span>Content</span><span>Format</span><span>Status</span></span>
+            <span class="sx-row" style="--k:0"><b>1</b><i style="--w:52%"></i><i style="--w:40%"></i><i style="--w:86%"></i><i style="--w:48%"></i><em class="g"></em></span><span class="sx-row" style="--k:1"><b>2</b><i style="--w:48%"></i><i style="--w:36%"></i><i style="--w:70%"></i><i style="--w:52%"></i><em class="g"></em></span><span class="sx-row" style="--k:2"><b>3</b><i style="--w:55%"></i><i style="--w:44%"></i><i style="--w:92%"></i><i style="--w:44%"></i><em class="p"></em></span><span class="sx-row" style="--k:3"><b>4</b><i style="--w:50%"></i><i style="--w:38%"></i><i style="--w:64%"></i><i style="--w:56%"></i><em class="g"></em></span><span class="sx-row" style="--k:4"><b>5</b><i style="--w:46%"></i><i style="--w:42%"></i><i style="--w:80%"></i><i style="--w:50%"></i><em class="a"></em></span><span class="sx-row" style="--k:5"><b>6</b><i style="--w:54%"></i><i style="--w:36%"></i><i style="--w:74%"></i><i style="--w:46%"></i><em class="p"></em></span><span class="sx-row" style="--k:6"><b>7</b><i style="--w:48%"></i><i style="--w:44%"></i><i style="--w:88%"></i><i style="--w:54%"></i><em class="a"></em></span><span class="sx-row" style="--k:7"><b>8</b><i style="--w:52%"></i><i style="--w:40%"></i><i style="--w:68%"></i><i style="--w:48%"></i><em class="p"></em></span><span class="sx-row" style="--k:8"><b>9</b><i style="--w:50%"></i><i style="--w:38%"></i><i style="--w:78%"></i><i style="--w:52%"></i><em class="g"></em></span>
+          </span>
+        </a>
+        <div class="ce-meta"><h4 class="ce-name">View content calendar and execution.</h4><a class="pbtn pbtn-primary" href="https://docs.google.com/spreadsheets/d/1OTBnVJqo2_4WqkmHb0zK0ibhAp7of6Qc28_brXsFXOo/edit?usp=drivesdk" target="_blank" rel="noopener">Open sheet <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a></div>
+      </article>
+
+      <article class="ce-card" data-sm-r style="--d:120">
+        <figure class="ce-vis ce-shot" data-lb="src/works/content_calender_sample.jpg" data-alt="Content calendar sample">
+          <img src="src/works/content_calender_sample.jpg" width="1024" height="492" alt="Content calendar sample" loading="lazy" decoding="async" onerror="this.hidden=true">
+          <button class="vd-b ce-view" type="button" aria-label="View the calendar sample full size"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>View</span></button>
+        </figure>
+        <div class="ce-meta"><h4 class="ce-name">Calendar sample.</h4><button class="pbtn pbtn-ghost" type="button" data-toast>Open calendar <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></button></div>
+      </article>
+
+      <article class="ce-blog" data-sm-r>
+        <div class="cb-main">
+          <span class="cb-tag">Blog post · Copywriting sample</span>
+          <h4 class="cb-title">NVIDIA H200 at $2.16/hr</h4>
+          <i class="cb-read" aria-hidden="true"><b></b></i>
+        </div>
+        <dl class="cb-meta">
+          <div><dt>Published on</dt><dd>Medium</dd></div>
+          <div><dt>Written for</dt><dd>Ocean Network</dd></div>
+          <div><dt>Length</dt><dd>6 min read</dd></div>
+        </dl>
+        <a class="pbtn pbtn-primary" href="https://docs.google.com/spreadsheets/d/13aBr9mLnnBWJ2LKoWf3POfoYsyJAhKNHALig-QxcM04/edit?usp=drivesdk" target="_blank" rel="noopener">Open blog sample <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg></a>
+      </article>
+    </div>
+  </div>
+
+  <!-- 03 Communication, comments, testimonials -->
+  <div class="sm-part">
+    <h3 class="sm-h" data-sm-r><span class="sm-n">03</span>Communication, team comments &amp; testimonials</h3>
+    <p class="sm-lead" data-sm-r>Announcements, day-to-day communication, and the team’s feedback on strategies I proposed.</p>
+    <div class="cm">
+      <div class="cm-bar"><div class="vd-nav"><button class="sm-chev" type="button" data-dir="-1" aria-label="Scroll screenshots back"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M11 3 5 9l6 6"/></svg></button><button class="sm-chev" type="button" data-dir="1" aria-label="Scroll screenshots forward"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M7 3l6 6-6 6"/></svg></button></div></div>
+      <div class="cm-track" tabindex="0" role="group" aria-label="Screenshots of announcements, team comments and testimonials">
+        <figure class="cm-card" data-sm-r data-lb="src/works/chris%20comment.JPG" data-alt="Team comment from Chris" style="--d:0"><img src="src/works/chris%20comment.JPG" alt="Team comment from Chris" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Team comment from Chris"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure><figure class="cm-card" data-sm-r data-lb="src/works/Christian%20comment.png" data-alt="Team comment from Christian" style="--d:80"><img src="src/works/Christian%20comment.png" alt="Team comment from Christian" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Team comment from Christian"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure><figure class="cm-card" data-sm-r data-lb="src/works/dc-announcement.PNG" data-alt="Discord announcement" style="--d:160"><img src="src/works/dc-announcement.PNG" alt="Discord announcement" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Discord announcement"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure><figure class="cm-card" data-sm-r data-lb="src/works/TG-announcement.png" data-alt="Telegram announcement" style="--d:240"><img src="src/works/TG-announcement.png" alt="Telegram announcement" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Telegram announcement"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure><figure class="cm-card" data-sm-r data-lb="src/works/lars%20comment.jpg" data-alt="Team comment from Lars" style="--d:0"><img src="src/works/lars%20comment.jpg" alt="Team comment from Lars" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Team comment from Lars"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure><figure class="cm-card" data-sm-r data-lb="src/works/Testimonial%20proof.png" data-alt="Testimonial proof" style="--d:80"><img src="src/works/Testimonial%20proof.png" alt="Testimonial proof" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Testimonial proof"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure><figure class="cm-card" data-sm-r data-lb="src/works/Lars%20testimonial%20proof.jpg" data-alt="Testimonial proof from Lars" style="--d:160"><img src="src/works/Lars%20testimonial%20proof.jpg" alt="Testimonial proof from Lars" loading="lazy" decoding="async" onerror="this.hidden=true"><button class="cm-view" type="button" aria-label="View screenshot in full: Testimonial proof from Lars"><svg class="ic ic-view" viewBox="0 0 24 24" aria-hidden="true"><use href="#sym-view"/></svg><span>Tap to view</span></button></figure>
+      </div>
+      <div class="cm-prog" aria-hidden="true"><b></b></div>
+    </div>
+  </div>
+</section>
+
+<div class="sm-toast" id="smToast" role="status" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>This calendar contains unpublished content that can’t be publicly disclosed.</span></div>
+
+<dialog class="sm-lb" id="smLb" aria-label="Full size view">
+  <button class="sm-lb-x" type="button" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+  <div class="sm-lb-body"></div>
+</dialog>
+
 <script>
 (() => {
   const DURATION = 5000;   // time each slide stays
@@ -989,6 +1294,103 @@
   new IntersectionObserver((es, io) => {
     if (es.some(e => e.isIntersecting)) { io.disconnect(); root.classList.add('in'); }
   }, { rootMargin: '0px 0px -15% 0px' }).observe(root);
+})();
+</script>
+<script>
+// Sample work: scroll reveals, auto-previewing videos, carousels, viewer and toast
+(() => {
+  const root = document.querySelector('.sm');
+  if (!root) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const smooth = reduce ? 'auto' : 'smooth';
+  const hasIO = 'IntersectionObserver' in window;
+
+  // Reveal on scroll
+  if (hasIO && !reduce) {
+    root.classList.add('sm-armed');
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -12% 0px' });
+    root.querySelectorAll('[data-sm-r]').forEach(el => io.observe(el));
+  }
+
+  // Full-size viewer (images and video)
+  const lb = document.getElementById('smLb'), lbBody = lb.querySelector('.sm-lb-body');
+  const openLb = (kind, src, alt, t) => {
+    lbBody.textContent = '';
+    let el;
+    if (kind === 'video') {
+      el = document.createElement('video'); el.controls = true; el.playsInline = true; el.src = src;
+      el.addEventListener('loadedmetadata', () => { if (t) el.currentTime = t; el.play().catch(() => {}); }, { once: true });
+    } else { el = document.createElement('img'); el.src = src; el.alt = alt || ''; }
+    lbBody.append(el);
+    if (typeof lb.showModal === 'function') lb.showModal(); else window.open(src, '_blank', 'noopener');
+  };
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.sm-lb-x')) lb.close(); });
+  lb.addEventListener('close', () => { lbBody.textContent = ''; });
+  root.querySelectorAll('[data-lb]').forEach(el => el.addEventListener('click', () => openLb('image', el.dataset.lb, el.dataset.alt)));
+
+  // Videos: preview 5 seconds when in view, then pause; the viewer can still play, mute and expand
+  const vids = [...root.querySelectorAll('.vd-media[data-video]')].map(m => {
+    const v = m.querySelector('video'), o = { m, v, slide: m.closest('.vd-slide'), timer: 0, engaged: false };
+    v.addEventListener('loadedmetadata', () => { if (v.videoWidth) m.style.setProperty('--r', (v.videoWidth / v.videoHeight).toFixed(4)); });
+    v.addEventListener('timeupdate', () => m.style.setProperty('--p', v.duration ? v.currentTime / v.duration : 0));
+    const sync = () => {
+      m.dataset.play = v.paused ? '0' : '1'; m.dataset.muted = v.muted ? '1' : '0';
+      m.querySelectorAll('[data-act="play"]').forEach(b => b.setAttribute('aria-label', v.paused ? 'Play video' : 'Pause video'));
+      m.querySelector('[data-act="mute"]').setAttribute('aria-label', v.muted ? 'Unmute video' : 'Mute video');
+    };
+    ['play', 'pause', 'ended', 'volumechange'].forEach(ev => v.addEventListener(ev, sync));
+    m.addEventListener('click', e => {
+      const b = e.target.closest('[data-act]'); if (!b) return;
+      o.engaged = true; clearTimeout(o.timer);
+      if (b.dataset.act === 'play') { if (v.paused) { if (v.ended) v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); }
+      if (b.dataset.act === 'mute') v.muted = !v.muted;
+      if (b.dataset.act === 'view') { v.pause(); openLb('video', v.currentSrc, '', v.currentTime); }
+    });
+    sync();
+    return o;
+  });
+  if (hasIO) {
+    const vio = new IntersectionObserver(es => es.forEach(e => {
+      const o = vids.find(x => x.m === e.target); if (!o) return;
+      clearTimeout(o.timer);
+      if (e.isIntersecting && e.intersectionRatio >= .6) {
+        if (reduce || o.engaged) return;
+        o.v.currentTime = 0; o.v.play().catch(() => {});
+        o.timer = setTimeout(() => { if (!o.engaged) o.v.pause(); }, 5000);
+      } else o.v.pause();
+    }), { threshold: [0, .6] });
+    vids.forEach(o => vio.observe(o.m));
+  }
+
+  // Video carousel
+  const track = root.querySelector('.vd-track'), slides = [...track.children];
+  const pips = [...root.querySelectorAll('.vd-pip')], navBtns = [...root.querySelectorAll('.vd > .vd-bar .sm-chev')];
+  const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+  const syncCar = () => {
+    const i = idx();
+    pips.forEach((p, k) => p.setAttribute('aria-current', k === i));
+    navBtns[0].disabled = i <= 0; navBtns[1].disabled = i >= slides.length - 1;
+  };
+  track.addEventListener('scroll', () => requestAnimationFrame(syncCar), { passive: true });
+  navBtns.forEach(b => b.addEventListener('click', () => track.scrollBy({ left: +b.dataset.dir * track.clientWidth, behavior: smooth })));
+  pips.forEach((p, k) => p.addEventListener('click', () => track.scrollTo({ left: k * track.clientWidth, behavior: smooth })));
+  addEventListener('resize', syncCar); syncCar();
+
+  // Toast for the private calendar
+  const toast = document.getElementById('smToast'); let tt = 0;
+  root.querySelector('[data-toast]').addEventListener('click', () => {
+    toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 5200);
+  });
+  toast.addEventListener('click', () => toast.classList.remove('show'));
+
+  // Screenshot track
+  const ct = root.querySelector('.cm-track'), cp = root.querySelector('.cm-prog');
+  const syncCt = () => cp.style.setProperty('--sp', Math.min(1, (ct.scrollLeft + ct.clientWidth) / ct.scrollWidth));
+  ct.addEventListener('scroll', () => requestAnimationFrame(syncCt), { passive: true });
+  root.querySelectorAll('.cm-bar .sm-chev').forEach(b => b.addEventListener('click', () => ct.scrollBy({ left: +b.dataset.dir * ct.clientWidth * .8, behavior: smooth })));
+  addEventListener('resize', syncCt); syncCt();
 })();
 </script>
 </body>
