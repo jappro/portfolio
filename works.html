@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <!-- First slide photo is requested early; the rest load lazily -->
-<link rel="preload" as="image" href="src/works/slide-1.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="src/works/slide-1.jpg" media="(min-width: 721px)" fetchpriority="high">
 
 <style>
   :root {
@@ -57,9 +57,10 @@
   .slide:nth-child(4) { background: linear-gradient(120deg, #0a0f18, #1a2433); }
   .slide:nth-child(5) { background: linear-gradient(120deg, #14100f, #2b1f1c); }
 
+  .slide picture { position: absolute; inset: 0; display: block; }
   .slide img {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: var(--pos, 60% 50%);
+    object-fit: cover; object-position: var(--pos, 50% 45%);
     transform: scale(1.045); transition: transform 6s var(--ease);
   }
   .slide.is-active img { transform: scale(1); }
@@ -155,7 +156,7 @@
     .bar { align-items: flex-start; }
     .actions { width: 100%; gap: 10px; }
     .btn { flex: 1; justify-content: center; min-height: 44px; padding: 0 8px; gap: 6px; font-size: .64rem; letter-spacing: .1em; text-align: center; line-height: 1.25; }
-    .slide img { object-position: var(--pos-m, var(--pos, 60% 50%)); }
+    .slide img { object-position: var(--pos-m, var(--pos, 50% 50%)); }
     .copy { top: auto; bottom: calc(118px + env(safe-area-inset-bottom)); transform: none; }
     .foot { bottom: calc(16px + env(safe-area-inset-bottom)); align-items: flex-end; gap: 12px; }
     .dots { gap: 0; margin: 0 0 -4px -4px; }
@@ -851,7 +852,7 @@
     color: var(--mc, #fff); font-weight: 700; background: linear-gradient(currentColor, currentColor) 0 96% / 100% .13em no-repeat; text-shadow: 0 0 22px color-mix(in srgb, currentColor 35%, transparent);
     transition: background-size .8s var(--ease); transition-delay: calc(var(--k, 0) * 160ms + 1.9s);
   }
-  .pt mark.g { --mc: var(--pg); } .pt mark.p { --mc: var(--pp); } .pt mark.r { --mc: var(--pr); }
+  .pt mark.mk-g { --mc: var(--pg); } .pt mark.mk-p { --mc: var(--pp); } .pt mark.mk-r { --mc: var(--pr); }
 
   /* Entrance: photo slides in, ring and chips pop, then the bubble types in and the highlights draw */
   .pt.armed:not(.in) .pt-photo, .pt.armed:not(.in) .pt-disc, .pt.armed:not(.in) .pt-chip, .pt.armed:not(.in) .pt-bubble { opacity: 0; }
@@ -926,11 +927,11 @@
   </header>
 
   <!-- Slide content lives here; the script only animates it.
-       Photos: export ~1920px wide, under ~250 KB each, to src/works/ -->
+       Photos: slide-N.jpg is the 16:9 desktop image (ideally 1920x1080). Optional slide-N-m.jpg is a portrait crop for phones (ideally 1080x1920); without it phones use the 16:9 image, centred. -->
   <div class="slides">
 
     <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 5">
-      <img src="src/works/slide-1.jpg" alt="" style="--pos:65% 50%; --pos-m:80% 50%" fetchpriority="high" decoding="async" onerror="this.hidden=true">
+      <picture><source media="(max-width: 720px)" srcset="src/works/slide-1-m.jpg"><img src="src/works/slide-1.jpg" alt="" width="1000" height="562" fetchpriority="high" decoding="async" onerror="if(!this.dataset.fb&&this.parentNode.tagName==='PICTURE'){this.dataset.fb=1;this.parentNode.querySelectorAll('source').forEach(function(s){s.remove()});this.src=this.getAttribute('src')}else{this.hidden=true}"></picture>
       <div class="copy">
         <h2 class="headline">
           <span class="line">Good work should</span>
@@ -941,7 +942,7 @@
     </article>
 
     <article class="slide" aria-roledescription="slide" aria-label="2 of 5">
-      <img src="src/works/slide-2.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <picture><source media="(max-width: 720px)" srcset="src/works/slide-2-m.jpg"><img src="src/works/slide-2.jpg" alt="" width="1000" height="562" loading="lazy" decoding="async" onerror="if(!this.dataset.fb&&this.parentNode.tagName==='PICTURE'){this.dataset.fb=1;this.parentNode.querySelectorAll('source').forEach(function(s){s.remove()});this.src=this.getAttribute('src')}else{this.hidden=true}"></picture>
       <div class="copy">
         <h2 class="headline">
           <span class="line">No guesswork.</span>
@@ -952,7 +953,7 @@
     </article>
 
     <article class="slide" aria-roledescription="slide" aria-label="3 of 5">
-      <img src="src/works/slide-3.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <picture><source media="(max-width: 720px)" srcset="src/works/slide-3-m.jpg"><img src="src/works/slide-3.jpg" alt="" width="1000" height="562" loading="lazy" decoding="async" onerror="if(!this.dataset.fb&&this.parentNode.tagName==='PICTURE'){this.dataset.fb=1;this.parentNode.querySelectorAll('source').forEach(function(s){s.remove()});this.src=this.getAttribute('src')}else{this.hidden=true}"></picture>
       <div class="copy">
         <h2 class="headline">
           <span class="line">Good content</span>
@@ -968,7 +969,7 @@
     </article>
 
     <article class="slide" aria-roledescription="slide" aria-label="4 of 5">
-      <img src="src/works/slide-4.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <picture><source media="(max-width: 720px)" srcset="src/works/slide-4-m.jpg"><img src="src/works/slide-4.jpg" alt="" width="1000" height="562" loading="lazy" decoding="async" onerror="if(!this.dataset.fb&&this.parentNode.tagName==='PICTURE'){this.dataset.fb=1;this.parentNode.querySelectorAll('source').forEach(function(s){s.remove()});this.src=this.getAttribute('src')}else{this.hidden=true}"></picture>
       <div class="copy">
         <h2 class="headline">
           <span class="line">Let’s recreate this</span>
@@ -979,7 +980,7 @@
     </article>
 
     <article class="slide" aria-roledescription="slide" aria-label="5 of 5">
-      <img src="src/works/slide-5.jpg" alt="" loading="lazy" decoding="async" onerror="this.hidden=true">
+      <picture><source media="(max-width: 720px)" srcset="src/works/slide-5-m.jpg"><img src="src/works/slide-5.jpg" alt="" width="1000" height="562" loading="lazy" decoding="async" onerror="if(!this.dataset.fb&&this.parentNode.tagName==='PICTURE'){this.dataset.fb=1;this.parentNode.querySelectorAll('source').forEach(function(s){s.remove()});this.src=this.getAttribute('src')}else{this.hidden=true}"></picture>
       <div class="copy">
         <h2 class="headline">
           <span class="line">Ads &amp; campaigns</span>
@@ -1421,11 +1422,11 @@
         <path class="star" d="M60 44l4.6 11.4L76 60l-11.4 4.6L60 76l-4.6-11.4L44 60l11.4-4.6z"/>
       </svg>
       <div class="pt-scroll" tabindex="0" role="region" aria-label="Message from Japheth">
-        <p class="pt-lead">“Experience is a <mark class="p" style="--k:0">reference</mark>, not a <mark class="r" style="--k:1">guarantee</mark> of future results.”</p>
+        <p class="pt-lead">“Experience is a <mark class="mk-p" style="--k:0">reference</mark>, not a <mark class="mk-r" style="--k:1">guarantee</mark> of future results.”</p>
         <p>POW and experience show what I’ve done. They don’t define the limits of what I can do.</p>
-        <p>What matters most to me is <mark class="g" style="--k:2">competence</mark>: the ability to <mark class="g" style="--k:3">think</mark>, <mark class="g" style="--k:4">learn</mark>, and <mark class="g" style="--k:5">adapt</mark> <mark class="p" style="--k:6">frighteningly fast</mark>.</p>
+        <p>What matters most to me is <mark class="mk-g" style="--k:2">competence</mark>: the ability to <mark class="mk-g" style="--k:3">think</mark>, <mark class="mk-g" style="--k:4">learn</mark>, and <mark class="mk-g" style="--k:5">adapt</mark> <mark class="mk-p" style="--k:6">frighteningly fast</mark>.</p>
         <p>I may not have documented everything I’ve worked on, but I know what I’ve learned and what I’m capable of bringing to the table.</p>
-        <p>I’m confident in my abilities, and I don’t claim to know everything. Give me the opportunity, and I promise I <mark class="g" style="--k:7">won’t disappoint your trial</mark>.</p>
+        <p>I’m confident in my abilities, and I don’t claim to know everything. Give me the opportunity, and I promise I <mark class="mk-g" style="--k:7">won’t disappoint your trial</mark>.</p>
         <p class="pt-sign">— Japheth</p>
       </div>
     </div>
