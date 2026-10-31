@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -20,11 +20,10 @@
 <link rel="apple-touch-icon" href="/favicon.PNG">
 <link rel="stylesheet" href="css/contact-footer.css">
 <link rel="stylesheet" href="css/loading-screen.css">
-<link rel="stylesheet" href="css/base.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <!-- First slide photo is requested early; the rest load lazily -->
 <link rel="preload" as="image" href="src/works/slide-1.jpg" fetchpriority="high">
 
@@ -891,9 +890,21 @@
   }
   @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
-  /* Fallbacks for the pasted contact/footer markup; any rule in css/contact-footer.css wins over these */
-  :where(.wrap) { width: min(100% - 2 * var(--pad), 1280px); margin-inline: auto; }
-  :where(.section) { position: relative; }
+  /* ---------- Stand-in for the shared base.css pieces that css/contact-footer.css relies on ----------
+     Tokens, .wrap, section.section and the .reveal / .in-view fade-in. Anything in contact-footer.css wins over these.
+     Values other than --teal and --text-hi are best guesses; swap them for the real tokens from base.css if they differ. */
+  :root {
+    --bg: #05080c; --text-hi: #f5f5f7; --text-mid: #b9bac6; --text-lo: #7c7d8a;
+    --card-bg: rgba(255,255,255,.04); --card-border: rgba(255,255,255,.12);
+    --amber: #f5a524; --amber-soft: rgba(245,165,36,.18);
+    --purple-soft: rgba(139,92,246,.2);
+    --blue: #3b82f6; --blue-soft: rgba(59,130,246,.18);
+    --teal: #2dd4bf; --teal-soft: rgba(45,212,191,.14);
+  }
+  .wrap { width: min(100% - 2 * var(--pad), 1180px); margin-inline: auto; }
+  section.section { position: relative; padding-block: clamp(88px, 11vw, 150px); }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in-view { opacity: 1; transform: none; }
 </style>
 </head>
 
@@ -1961,6 +1972,16 @@
   const upd = () => sc.classList.toggle('at-end', sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 4);
   sc.addEventListener('scroll', upd, { passive: true });
   addEventListener('resize', upd); addEventListener('load', upd); upd();
+})();
+</script>
+<script>
+// Adds .in-view to .reveal elements as they scroll into view (the contact section's staggered fade-in is driven by it)
+(() => {
+  const els = document.querySelectorAll('.reveal');
+  const show = el => el.classList.add('in-view');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { els.forEach(show); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }), { threshold: .15 });
+  els.forEach(el => io.observe(el));
 })();
 </script>
 <script src="js/loading-screen.js"></script>
