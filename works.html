@@ -6,6 +6,20 @@
 <title>My Works | Uche Japheth</title>
 <meta name="description" content="Selected work by Uche Japheth, Social Media Manager & Community Specialist.">
 <meta name="theme-color" content="#05080c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Uche Japheth">
+<meta property="og:title" content="My Works | Uche Japheth">
+<meta property="og:description" content="Selected work by Uche Japheth, Social Media Manager &amp; Community Specialist.">
+<meta property="og:url" content="https://works.japheth.name.ng">
+<meta property="og:image" content="https://works.japheth.name.ng/src/og-works.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="My Works | Uche Japheth">
+<meta name="twitter:image" content="https://works.japheth.name.ng/src/og-works.jpg">
+
+<link rel="icon" type="image/png" href="/favicon.PNG">
+<link rel="apple-touch-icon" href="/favicon.PNG">
+<link rel="stylesheet" href="css/contact-footer.css">
+<link rel="stylesheet" href="css/loading-screen.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -747,17 +761,145 @@
     .af-dot { animation: none; }
     .vl-pages, .vl-pages img, .vl-boot { transition: none; }
   }
+
+  /* ---------- Teaser: more proof of work on the way ---------- */
+  .pw { display: grid; justify-items: center; gap: 22px; padding: clamp(36px, 5vw, 80px) var(--pad) clamp(56px, 7vw, 110px); background: var(--ink); color: #fff; text-align: center; }
+  .pw-text { margin: 0; font-size: clamp(1.1rem, 1.6vw, 1.75rem); font-weight: 500; line-height: 1.4; color: rgba(255,255,255,.88); }
+  .pw-text b { color: #b69bff; font-weight: 700; letter-spacing: .06em; }
+  .pw-dots { display: inline-flex; gap: 5px; margin-left: 10px; vertical-align: middle; }
+  .pw-dots i { width: 6px; height: 6px; border-radius: 50%; background: #b69bff; animation: vdDot 1.2s ease-in-out infinite both; }
+  .pw-dots i:nth-child(2) { animation-delay: .15s; } .pw-dots i:nth-child(3) { animation-delay: .3s; }
+  .pw-bar { width: min(240px, 56%); height: 2px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .pw-bar b { display: block; width: 36%; height: 100%; background: linear-gradient(90deg, transparent, #8b5cf6, transparent); animation: vdSlide 1.8s ease-in-out infinite; }
+
+  /* ---------- Closing pitch: portrait + message ---------- */
+  .pt {
+    --pg: #3ddc7f; --pp: #b69bff; --pr: #ff6b62;
+    position: relative; overflow: clip; isolation: isolate; background: var(--ink); color: #fff;
+    height: calc(clamp(420px, 58vw, 1000px) + clamp(40px, 6vw, 110px));
+  }
+  .pt-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .pt-glow { position: absolute; left: -10%; top: -6%; width: 80%; height: 112%; background: radial-gradient(closest-side at 34% 40%, rgba(139,92,246,.42), rgba(139,92,246,.1) 58%, transparent 76%); }
+  .pt-dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1.4px); background-size: 26px 26px; -webkit-mask-image: radial-gradient(60% 70% at 30% 45%, #000, transparent); mask-image: radial-gradient(60% 70% at 30% 45%, #000, transparent); }
+
+  .pt-fig { position: absolute; z-index: 2; left: 0; bottom: 0; width: clamp(420px, 58vw, 1000px); aspect-ratio: 1008 / 1011; }
+  .pt-row { position: absolute; left: 0; display: flex; gap: .5em; width: max-content; white-space: nowrap; font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; line-height: 1; pointer-events: none; will-change: transform; }
+  .pt-row1 { top: 2%; font-size: clamp(5rem, 15vw, 17rem); color: transparent; -webkit-text-stroke: 1.5px rgba(167,139,250,.5); animation: ptSlide 50s linear infinite; }
+  .pt-row2 { top: 64%; font-size: clamp(2rem, 5.4vw, 6rem); color: transparent; -webkit-text-stroke: 1px rgba(61,220,127,.45); animation: ptSlide 60s linear infinite reverse; }
+  @keyframes ptSlide { to { transform: translateX(-50%); } }
+  .pt-row1 span, .pt-row2 span { padding-right: .5em; }
+
+  /* A bright backdrop so the black shirt and hair keep their shape */
+  .pt-disc {
+    position: absolute; left: 4%; top: 9%; width: 78%; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle at 34% 28%, #b79bff, #7447e8 42%, #3a1c92 100%);
+    box-shadow: 0 0 140px rgba(139,92,246,.5), inset 0 0 90px rgba(255,255,255,.14);
+    translate: calc(var(--px, 0) * -6px) calc(var(--py, 0) * -4px); transition: translate .6s ease-out;
+    animation: ptBreathe 7s ease-in-out infinite;
+  }
+  @keyframes ptBreathe { 50% { scale: 1.025; } }
+  .pt-rings { position: absolute; left: -4%; top: 3%; width: 94%; aspect-ratio: 1; overflow: visible; pointer-events: none; fill: none; }
+  .pt-rings circle { transform-origin: 50% 50%; }
+  .pt-rings .r1 { stroke: rgba(214,200,255,.65); stroke-width: .35; stroke-dasharray: .6 2.2; stroke-linecap: round; animation: ptSpin 90s linear infinite; }
+  .pt-rings .r2 { stroke: rgba(61,220,127,.7); stroke-width: .4; stroke-dasharray: 14 9 2 9; animation: ptSpin 60s linear infinite reverse; }
+  @keyframes ptSpin { to { transform: rotate(360deg); } }
+  .pt-photo {
+    position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%;
+    translate: calc(var(--px, 0) * -9px) calc(var(--py, 0) * -5px); transition: translate .5s ease-out;
+    filter: drop-shadow(0 0 1.5px rgba(226,214,255,.75)) drop-shadow(-12px 0 30px rgba(139,92,246,.5)) drop-shadow(0 28px 36px rgba(0,0,0,.55));
+  }
+  .pt-chip {
+    position: absolute; z-index: 4; padding: .6em 1.1em; border: 1px solid var(--c); border-radius: 999px; background: rgba(10,8,22,.74);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: #fff; box-shadow: 0 0 24px color-mix(in srgb, var(--c) 40%, transparent);
+    font: 700 clamp(.7rem, .9vw, .9rem) var(--font); letter-spacing: .2em; text-transform: uppercase;
+    translate: calc(var(--px, 0) * 16px) calc(var(--py, 0) * 12px); transition: translate .5s ease-out;
+    animation: ptFloat 5s ease-in-out infinite alternate;
+  }
+  .pt-chip::before { content: ""; display: inline-block; width: .55em; height: .55em; margin-right: .7em; border-radius: 50%; background: var(--c); }
+  .pt-c1 { --c: var(--pg); left: 45%; top: 8%; }
+  .pt-c2 { --c: var(--pp); left: 56%; top: 22%; animation-delay: -1.6s; }
+  .pt-c3 { --c: var(--pr); left: 47%; top: 35%; animation-delay: -3.1s; }
+  @keyframes ptFloat { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
+
+  /* The message bubble */
+  .pt-msg { position: absolute; z-index: 5; left: clamp(300px, 40vw, 780px); width: min(48vw, 800px); top: clamp(30px, 5.5vw, 100px); }
+  .pt-typing { position: absolute; left: 0; top: 56px; display: none; }
+  .pt-bubble {
+    position: relative; border-radius: 28px; background: linear-gradient(145deg, #1c1640, #0d0c18);
+    border: 1px solid rgba(167,139,250,.5); box-shadow: 0 34px 90px rgba(0,0,0,.6), 0 0 70px rgba(139,92,246,.2);
+  }
+  .pt-tail, .pt-tail::after { position: absolute; width: 28px; height: 38px; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+  .pt-tail { left: -27px; top: 74px; background: rgba(167,139,250,.55); }
+  .pt-tail::after { content: ""; left: 2px; top: 0; background: #17123a; }
+  .pt-qm { position: absolute; z-index: 0; font: 700 clamp(9rem, 15vw, 17rem)/1 Georgia, "Times New Roman", serif; color: rgba(167,139,250,.11); pointer-events: none; user-select: none; }
+  .pt-qo { left: 3%; top: -2%; } .pt-qc { right: 4%; bottom: -12%; }
+  .pt-badge { position: absolute; z-index: 3; right: -34px; top: -40px; width: clamp(84px, 8vw, 118px); filter: drop-shadow(0 8px 20px rgba(0,0,0,.5)); animation: ptSpin 18s linear infinite; }
+  .pt-badge .bg { fill: #7c3aed; stroke: rgba(255,255,255,.4); stroke-width: 1; }
+  .pt-badge text { fill: #fff; font: 700 11px var(--font); letter-spacing: .1em; }
+  .pt-badge .star { fill: var(--pg); }
+
+  .pt-scroll {
+    position: relative; z-index: 1; max-height: clamp(280px, 46vh, 440px); overflow-y: auto; overscroll-behavior: contain;
+    padding: clamp(24px, 2.6vw, 44px) clamp(24px, 2.8vw, 48px); scrollbar-width: thin; scrollbar-color: #8b5cf6 transparent; outline-offset: -6px;
+  }
+  .pt-scroll::-webkit-scrollbar { width: 6px; } .pt-scroll::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 6px; }
+  .pt-scroll:not(.at-end) { -webkit-mask-image: linear-gradient(#000 calc(100% - 44px), transparent); mask-image: linear-gradient(#000 calc(100% - 44px), transparent); }
+  .pt-scroll p { margin: 0 0 1em; font-size: clamp(1.05rem, 1.35vw, 1.5rem); line-height: 1.55; font-weight: 500; color: rgba(255,255,255,.9); }
+  .pt-scroll .pt-lead { font-size: clamp(1.4rem, 2.2vw, 2.6rem); line-height: 1.2; font-weight: 700; letter-spacing: -.02em; color: #fff; margin-bottom: .8em; }
+  .pt-scroll .pt-sign { margin: 0; color: var(--pp); font-weight: 600; letter-spacing: .08em; }
+  .pt mark {
+    color: var(--mc, #fff); font-weight: 700; background: linear-gradient(currentColor, currentColor) 0 96% / 100% .13em no-repeat; text-shadow: 0 0 22px color-mix(in srgb, currentColor 35%, transparent);
+    transition: background-size .8s var(--ease); transition-delay: calc(var(--k, 0) * 160ms + 1.9s);
+  }
+  .pt mark.g { --mc: var(--pg); } .pt mark.p { --mc: var(--pp); } .pt mark.r { --mc: var(--pr); }
+
+  /* Entrance: photo slides in, ring and chips pop, then the bubble types in and the highlights draw */
+  .pt.armed:not(.in) .pt-photo, .pt.armed:not(.in) .pt-disc, .pt.armed:not(.in) .pt-chip, .pt.armed:not(.in) .pt-bubble { opacity: 0; }
+  .pt.armed:not(.in) mark { background-size: 0 .13em; }
+  .pt.in .pt-photo { animation: ptPhoto 1.3s var(--ease) backwards; }
+  .pt.in .pt-disc { animation: ptBreathe 7s ease-in-out infinite, ptFade 1s .1s var(--ease) backwards; }
+  .pt.in .pt-chip { animation: ptFloat 5s ease-in-out infinite alternate, ptFade .7s calc(.7s + var(--i, 0) * .15s) var(--ease) backwards; }
+  .pt.in .pt-bubble { animation: ptPop .9s 1.2s cubic-bezier(.2, 1.15, .3, 1) backwards; }
+  .pt.in .pt-typing { display: inline-flex; animation: ptTyping 1.3s .1s ease both; }
+  .pt-typing { gap: 5px; padding: 14px 18px; border-radius: 20px; background: #1c1640; border: 1px solid rgba(167,139,250,.5); }
+  .pt-typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--pp); animation: vdDot 1s ease-in-out infinite both; }
+  .pt-typing i:nth-child(2) { animation-delay: .15s; } .pt-typing i:nth-child(3) { animation-delay: .3s; }
+  .pt-c2 { --i: 1; } .pt-c3 { --i: 2; }
+  @keyframes ptPhoto { from { opacity: 0; transform: translateX(-7%); filter: blur(10px) drop-shadow(0 0 0 transparent); } }
+  @keyframes ptFade { from { opacity: 0; } }
+  @keyframes ptPop { from { opacity: 0; transform: translateY(24px) scale(.9); transform-origin: 0 20%; } }
+  @keyframes ptTyping { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+
+  @media (max-width: 900px) {
+    .pt { height: auto; display: flex; flex-direction: column; padding: 64px var(--pad) 0; }
+    .pt-msg { position: relative; left: auto; top: auto; width: 100%; order: 1; }
+    .pt-typing { top: auto; bottom: -48px; }
+    .pt-fig { position: relative; left: auto; bottom: auto; order: 2; width: calc(100% + 2 * var(--pad)); margin: 40px 0 0 calc(-1 * var(--pad)); }
+    .pt-tail, .pt-tail::after { width: 38px; height: 26px; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+    .pt-tail { left: 18%; top: auto; bottom: -25px; } .pt-tail::after { left: 0; top: -2px; }
+    .pt-badge { right: -8px; top: -46px; width: 84px; }
+    .pt-scroll { max-height: min(54vh, 420px); }
+    .pt-row2 { display: none; }
+    .pt-c1 { left: 47%; top: 6%; } .pt-c2 { left: 57%; top: 20%; } .pt-c3 { left: 49%; top: 33%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pt-row, .pt-rings circle, .pt-disc, .pt-chip, .pt-badge, .pw-dots i, .pw-bar b, .pt-typing i { animation: none; }
+    .pt-photo, .pt-disc, .pt-chip { transition: none; translate: none; }
+    .pt-typing { display: none !important; }
+    .pt mark { transition: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 </head>
 
 <body>
+<!-- LOADING SCREEN: paste the loading-screen markup from the main portfolio here if it needs any (css/loading-screen.css and js/loading-screen.js are already linked) -->
 <section class="hero" role="region" aria-roledescription="carousel" aria-label="Featured work">
 
   <header class="bar">
     <h1 class="brand">My Works</h1>
     <nav class="actions" aria-label="Page">
-      <!-- TODO: point this at the real work stack (case studies / evidence) once it exists -->
-      <a class="btn" href="#work-stack">Open Work Stack
+      <a class="btn" href="https://drive.google.com/drive/folders/1Elvx-M-4swmGGsw-PY7595mJGv5net7A" target="_blank" rel="noopener">Open Work Stack
         <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg>
       </a>
       <a class="btn" href="https://www.japheth.name.ng">
@@ -835,7 +977,7 @@
 
   <div class="foot">
     <div class="dots" role="group" aria-label="Choose slide"></div>
-    <a class="cta" href="https://www.japheth.name.ng/#contact">
+    <a class="cta" href="#contact">
       <span class="txt"><span class="l1">Let’s build</span> <span class="l2">with purpose</span></span>
       <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M3.5 2.5h6v6"/></svg>
     </a>
@@ -1228,6 +1370,55 @@
     </div>
   </div>
 </section>
+
+<section class="pw" aria-label="More proof of work is on the way">
+  <p class="pw-text">Japheth is documenting more <b>POW</b> (proof of work)<span class="pw-dots" aria-hidden="true"><i></i><i></i><i></i></span></p>
+  <div class="pw-bar" aria-hidden="true"><b></b></div>
+</section>
+
+<section class="pt" id="pitch" aria-label="A note from Japheth">
+  <div class="pt-bg" aria-hidden="true"><i class="pt-glow"></i><i class="pt-dots"></i></div>
+
+  <div class="pt-fig">
+    <div class="pt-row pt-row1" aria-hidden="true"><span>Competence</span><span>Competence</span><span>Competence</span><span>Competence</span></div>
+    <div class="pt-row pt-row2" aria-hidden="true"><span>Think · Learn · Adapt ·</span><span>Think · Learn · Adapt ·</span><span>Think · Learn · Adapt ·</span><span>Think · Learn · Adapt ·</span></div>
+    <div class="pt-disc" aria-hidden="true"></div>
+    <svg class="pt-rings" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <circle class="r1" cx="50" cy="50" r="47"/><circle class="r2" cx="50" cy="50" r="41"/>
+    </svg>
+    <img class="pt-photo" src="src/works/Japheth.png" width="1008" height="1011" loading="lazy" decoding="async"
+         alt="Portrait of Japheth seated at a desk with a laptop, resting his chin on his hand.">
+    <span class="pt-chip pt-c1" aria-hidden="true">Think</span>
+    <span class="pt-chip pt-c2" aria-hidden="true">Learn</span>
+    <span class="pt-chip pt-c3" aria-hidden="true">Adapt</span>
+  </div>
+
+  <div class="pt-msg">
+    <div class="pt-typing" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="pt-bubble">
+      <span class="pt-tail" aria-hidden="true"></span>
+      <span class="pt-qm pt-qo" aria-hidden="true">“</span><span class="pt-qm pt-qc" aria-hidden="true">”</span>
+      <svg class="pt-badge" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+        <circle cx="60" cy="60" r="58" class="bg"/>
+        <defs><path id="ptCirc" d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0"/></defs>
+        <text><textPath href="#ptCirc" textLength="268" lengthAdjust="spacing">READY FOR YOUR TRIAL • </textPath></text>
+        <path class="star" d="M60 44l4.6 11.4L76 60l-11.4 4.6L60 76l-4.6-11.4L44 60l11.4-4.6z"/>
+      </svg>
+      <div class="pt-scroll" tabindex="0" role="region" aria-label="Message from Japheth">
+        <p class="pt-lead">“Experience is a <mark class="p" style="--k:0">reference</mark>, not a <mark class="r" style="--k:1">guarantee</mark> of future results.”</p>
+        <p>POW and experience show what I’ve done. They don’t define the limits of what I can do.</p>
+        <p>What matters most to me is <mark class="g" style="--k:2">competence</mark>: the ability to <mark class="g" style="--k:3">think</mark>, <mark class="g" style="--k:4">learn</mark>, and <mark class="g" style="--k:5">adapt</mark> <mark class="p" style="--k:6">frighteningly fast</mark>.</p>
+        <p>I may not have documented everything I’ve worked on, but I know what I’ve learned and what I’m capable of bringing to the table.</p>
+        <p>I’m confident in my abilities, and I don’t claim to know everything. Give me the opportunity, and I promise I <mark class="g" style="--k:7">won’t disappoint your trial</mark>.</p>
+        <p class="pt-sign">— Japheth</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT + FOOTER =====
+     Paste the contact and footer HTML from the main portfolio here.
+     Keep id="contact" on the contact section so the "Let's build with purpose" button scrolls to it. -->
 
 <script>
 (() => {
@@ -1635,5 +1826,35 @@
   } else { screen.dataset.state = 'open'; imgs[0].classList.add('is-on'); cap.textContent = imgs[0].dataset.label; }
 })();
 </script>
+<script>
+// Closing pitch: reveal on scroll, pointer parallax, and the scroll hint inside the message
+(() => {
+  const root = document.querySelector('.pt');
+  if (!root) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    root.classList.add('armed');
+    new IntersectionObserver((es, io) => {
+      if (es.some(e => e.isIntersecting)) { io.disconnect(); root.classList.add('in'); }
+    }, { threshold: .3 }).observe(root);
+  }
+  if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    let raf = 0;
+    const set = (x, y) => { root.style.setProperty('--px', x.toFixed(3)); root.style.setProperty('--py', y.toFixed(3)); };
+    root.addEventListener('pointermove', e => {
+      const r = root.getBoundingClientRect();
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => set(((e.clientX - r.left) / r.width - .5) * 2, ((e.clientY - r.top) / r.height - .5) * 2));
+    });
+    root.addEventListener('pointerleave', () => set(0, 0));
+  }
+  const sc = root.querySelector('.pt-scroll');
+  const upd = () => sc.classList.toggle('at-end', sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 4);
+  sc.addEventListener('scroll', upd, { passive: true });
+  addEventListener('resize', upd); addEventListener('load', upd); upd();
+})();
+</script>
+<script src="js/loading-screen.js"></script>
+<script src="js/contact-footer.js"></script>
 </body>
 </html>
