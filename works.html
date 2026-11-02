@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Loading screen: decides on first paint whether to show it (skipped on repeat visits unless ?welcome) -->
+<script>
+(function(){var h=document.documentElement,seen=false;
+try{seen=!!localStorage.getItem('jappro-visited')&&!/[?&]welcome/.test(location.search)}catch(e){}
+h.classList.add(seen?'ls-skip':'jx-cine-lock');
+setTimeout(function(){h.classList.remove('jx-cine-lock')},18000)})();
+</script>
+<noscript><style>.ls-screen{display:none!important}</style></noscript>
 <title>My Works | Uche Japheth, Social Media Manager &amp; Community Specialist</title>
 <meta name="description" content="Case studies and sample work by Uche Japheth, Social Media Manager &amp; Community Specialist: community growth campaigns, video, content execution, and AI-built projects.">
 <link rel="canonical" href="https://works.japheth.name.ng/">
@@ -964,7 +972,44 @@
 
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<!-- LOADING SCREEN: paste the loading-screen markup from the main portfolio here if it needs any (css/loading-screen.css and js/loading-screen.js are already linked) -->
+<!-- ===== LOADING SCREEN ===== -->
+<div class="ls-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading Uche Japheth’s portfolio">
+  <div class="jx-cine-half jx-cine-half--top">
+    <div class="jx-cine-bar jx-cine-bar--top">
+      <div class="jx-cine-rec"><i></i><span id="jx-cine-tc">00:00:00:00</span></div>
+      <img class="jx-cine-logo" src="src/jappro:0.jpg" alt="jappro/0">
+    </div>
+  </div>
+  <div class="jx-cine-half jx-cine-half--bottom">
+    <div class="jx-cine-bar jx-cine-bar--bottom">
+      <div class="jx-cine-credit">Uche Japheth • 2026</div>
+    </div>
+  </div>
+
+  <div class="ls-glow" aria-hidden="true"></div>
+  <div class="jx-cine-atmos" aria-hidden="true">
+    <div class="jx-cine-orb jx-cine-orb--a"></div><div class="jx-cine-orb jx-cine-orb--b"></div><div class="jx-cine-orb jx-cine-orb--c"></div>
+    <canvas class="jx-cine-stars"></canvas>
+    <div class="jx-cine-vig"></div><div class="jx-cine-grain"></div>
+    <span class="jx-cine-corner jx-cine-corner--tl"></span><span class="jx-cine-corner jx-cine-corner--tr"></span>
+    <span class="jx-cine-corner jx-cine-corner--bl"></span><span class="jx-cine-corner jx-cine-corner--br"></span>
+  </div>
+
+  <div class="jx-cine-stage">
+    <div class="ls-content">
+      <div class="jx-cine-lines" id="jx-cine-lines">
+        <p class="ls-line ls-line--1 is-hot"><span class="jx-cine-txt">Good work starts somewhere</span></p>
+        <p class="ls-line ls-line--2"><i class="jx-cine-dash"></i><span class="jx-cine-txt">Welcome to mine</span><i class="jx-cine-dash"></i></p>
+        <div class="jx-cine-flare" id="jx-cine-flare"></div>
+      </div>
+      <div class="jx-cine-load">
+        <span class="ls-rule" aria-hidden="true"><i class="jx-cine-fill" id="jx-cine-fill"></i></span>
+        <div class="jx-cine-meta"><span class="jx-cine-label">Loading the work</span><span class="jx-cine-pct"><span id="jx-cine-num">0</span><b>%</b></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="jx-cine-seam"></div>
+</div>
 <main id="main">
 <section class="hero" id="home" role="region" aria-roledescription="carousel" aria-label="Featured work">
 
@@ -1702,6 +1747,15 @@
     requestAnimationFrame(tick);
   }
 
+  // Hold the hero's first slide until the loading screen lifts its lock (with a safety timeout)
+  function whenUnlocked(fn) {
+    const h = document.documentElement;
+    if (!h.classList.contains('jx-cine-lock')) return fn();
+    const mo = new MutationObserver(() => { if (!h.classList.contains('jx-cine-lock')) { mo.disconnect(); fn(); } });
+    mo.observe(h, { attributes: true, attributeFilter: ['class'] });
+    setTimeout(() => { mo.disconnect(); fn(); }, 19000);
+  }
+
   function start() {
     if (started) return; started = true;
     show(0); last = performance.now(); requestAnimationFrame(tick);
@@ -1711,7 +1765,7 @@
   Promise.race([
     document.fonts ? document.fonts.load('700 48px Inter') : Promise.resolve(),
     new Promise(r => setTimeout(r, 1200))
-  ]).then(start, start);
+  ]).then(() => whenUnlocked(start), () => whenUnlocked(start));
 })();
 </script>
 <script>
