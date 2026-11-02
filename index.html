@@ -28,15 +28,12 @@
      overlay flash — html.ls-skip hides it instantly via CSS. See
      loading-screen.css / loading-screen.js for the rest. -->
 <script>
-(function(){
-  try{
-    if(localStorage.getItem('jappro-visited') === '1'){
-      document.documentElement.classList.add('ls-skip');
-    }
-  }catch(e){}
-})();
+(function(){var h=document.documentElement,seen=false;
+try{seen=!!localStorage.getItem('jappro-visited')&&!/[?&]welcome/.test(location.search)}catch(e){}
+h.classList.add(seen?'ls-skip':'jx-cine-lock');
+setTimeout(function(){h.classList.remove('jx-cine-lock')},18000)})();
 </script>
-<noscript><style>#loadingScreen{display:none !important;}</style></noscript>
+<noscript><style>.ls-screen{display:none!important}</style></noscript>
 <title>Uche Japheth | Social Media Manager &amp; Community Specialist</title>
 <meta name="description" content="Uche Japheth — Social Media Manager &amp; Community Specialist in Nigeria. Social strategy, community operations, CRM &amp; customer experience for growing brands.">
 <link rel="canonical" href="https://japheth.name.ng/">
@@ -130,13 +127,42 @@
 <!-- ============ LOADING / WELCOME SCREEN ============
      First-visit only — see loading-screen.js and the inline <head>
      script for the localStorage-gated show/skip logic. -->
-<div class="ls-screen" id="loadingScreen">
-  <div class="ls-glow" aria-hidden="true"></div>
-  <div class="ls-content">
-    <p class="ls-line ls-line--1">Good work starts somewhere.</p>
-    <p class="ls-line ls-line--2">Welcome to mine.</p>
-    <span class="ls-rule" aria-hidden="true"></span>
+<div class="ls-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading Uche Japheth’s portfolio">
+  <div class="jx-cine-half jx-cine-half--top">
+    <div class="jx-cine-bar jx-cine-bar--top">
+      <div class="jx-cine-rec"><i></i><span id="jx-cine-tc">00:00:00:00</span></div>
+      <img class="jx-cine-logo" src="src/jappro:0.jpg" alt="jappro/0">
+    </div>
   </div>
+  <div class="jx-cine-half jx-cine-half--bottom">
+    <div class="jx-cine-bar jx-cine-bar--bottom">
+      <div class="jx-cine-credit">Uche Japheth • 2026</div>
+    </div>
+  </div>
+
+  <div class="ls-glow" aria-hidden="true"></div>
+  <div class="jx-cine-atmos" aria-hidden="true">
+    <div class="jx-cine-orb jx-cine-orb--a"></div><div class="jx-cine-orb jx-cine-orb--b"></div><div class="jx-cine-orb jx-cine-orb--c"></div>
+    <canvas class="jx-cine-stars"></canvas>
+    <div class="jx-cine-vig"></div><div class="jx-cine-grain"></div>
+    <span class="jx-cine-corner jx-cine-corner--tl"></span><span class="jx-cine-corner jx-cine-corner--tr"></span>
+    <span class="jx-cine-corner jx-cine-corner--bl"></span><span class="jx-cine-corner jx-cine-corner--br"></span>
+  </div>
+
+  <div class="jx-cine-stage">
+    <div class="ls-content">
+      <div class="jx-cine-lines" id="jx-cine-lines">
+        <p class="ls-line ls-line--1 is-hot"><span class="jx-cine-txt">Good work starts somewhere</span></p>
+        <p class="ls-line ls-line--2"><i class="jx-cine-dash"></i><span class="jx-cine-txt">Welcome to mine</span><i class="jx-cine-dash"></i></p>
+        <div class="jx-cine-flare" id="jx-cine-flare"></div>
+      </div>
+      <div class="jx-cine-load">
+        <span class="ls-rule" aria-hidden="true"><i class="jx-cine-fill" id="jx-cine-fill"></i></span>
+        <div class="jx-cine-meta"><span class="jx-cine-label">Loading the work</span><span class="jx-cine-pct"><span id="jx-cine-num">0</span><b>%</b></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="jx-cine-seam"></div>
 </div>
 
 <nav class="site-nav" id="siteNav">
