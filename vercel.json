@@ -1,17 +1,16 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "has": [{ "type": "host", "value": "works.japheth.name.ng" }],
-      "destination": "/works.html"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/works.html",
+      "src": "/works.html",
       "has": [{ "type": "host", "value": "japheth.name.ng" }],
-      "destination": "https://works.japheth.name.ng",
-      "permanent": true
-    }
+      "status": 308,
+      "headers": { "Location": "https://works.japheth.name.ng" }
+    },
+    {
+      "src": "/",
+      "has": [{ "type": "host", "value": "works.japheth.name.ng" }],
+      "dest": "/works.html"
+    },
+    { "handle": "filesystem" }
   ]
 }
