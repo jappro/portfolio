@@ -1,14 +1,16 @@
 {
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "works.japheth.name.ng" }],
+      "destination": "/works.html"
+    }
+  ],
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "resume-pied-five.vercel.app"
-        }
-      ],
-      "destination": "https://japheth.name.ng/:path*",
+      "source": "/works.html",
+      "has": [{ "type": "host", "value": "japheth.name.ng" }],
+      "destination": "https://works.japheth.name.ng",
       "permanent": true
     }
   ]
