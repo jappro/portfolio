@@ -208,10 +208,9 @@
     z-index:1;
     width:100%;
     aspect-ratio:1007/1217;
-    background-image:url('uche-japheth.png');
-    background-size:contain;
-    background-position:center bottom;
-    background-repeat:no-repeat;
+    display:block;
+    object-fit:contain;
+    object-position:center bottom;
   }
 
   .about-photo-fallback{
@@ -278,9 +277,11 @@
        covers: this box is 38% of the full photo's height, so the
        mask image is scaled to 100/38 ≈ 263% of the box's own
        height and bottom-anchored, matching .about-photo's own
-       "center bottom" positioning. */
-    -webkit-mask-image:url('uche-japheth.png');
-    mask-image:url('uche-japheth.png');
+       "center bottom" positioning. The image path itself lives in
+       the HTML (the --portrait-mask variable on #aboutPhotoWrap),
+       so the file name is only ever set in one place. */
+    -webkit-mask-image:var(--portrait-mask);
+    mask-image:var(--portrait-mask);
     -webkit-mask-mode:alpha;
     mask-mode:alpha;
     -webkit-mask-size:100% 263.16%;
@@ -1079,14 +1080,16 @@
     </div>
 
     <div class="about-col-right">
-    <div class="about-photo-wrap" id="aboutPhotoWrap">
+    <div class="about-photo-wrap" id="aboutPhotoWrap" style="--portrait-mask:url('uche-japheth.png');">
       <div class="about-photo-blob"></div>
-      <div
+      <img
         class="about-photo"
         id="aboutPhotoImg"
-        role="img"
-        aria-label="Portrait photo"
-      ></div>
+        src="uche-japheth.png"
+        alt="Portrait photo"
+        width="1007"
+        height="1217"
+      >
       <div class="about-photo-fallback">Add photo at<br>uche-japheth.png</div>
       <div class="about-photo-shade" aria-hidden="true"></div>
       <p class="about-photo-note">People first.<br>Better systems, better results.</p>
@@ -1260,7 +1263,7 @@
     preload.onload = function(){
       wrap.classList.add('photo-ready');
     };
-    preload.src = 'uche-japheth.png';
+    preload.src = document.getElementById('aboutPhotoImg').getAttribute('src');
   })();
 </script>
 
