@@ -354,17 +354,18 @@
      A separate, independent element for the faint full-bleed
      background shown while the expanded story is open — decoupled
      from the portrait image on purpose, so it can use its own file
-     without touching .about-photo at all. Swap the background-image
-     path below to change it. */
+     without touching .about-photo at all. It's an <img> in the HTML
+     (class "about-expanded-bg") — change its src there to swap it. */
   .about-expanded-bg{
     position:absolute;
     inset:0;
     z-index:0;
     opacity:0;
     pointer-events:none;
-    background-image:url('src/about-portrait-bg.jpg');
-    background-size:cover;
-    background-position:center;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
     border-radius:28px;
     filter:grayscale(0.4) blur(0.5px);
     transition:opacity .5s ease;
@@ -975,7 +976,7 @@
     <div class="about-col-left">
     <div class="about-content">
 
-      <div class="about-expanded-bg" aria-hidden="true"></div>
+      <img class="about-expanded-bg" src="Uche_Japheth.jpg" alt="Uche Japheth">
 
       <p class="about-eyebrow">About me</p>
 
