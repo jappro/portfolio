@@ -197,7 +197,7 @@
     z-index:1;
     width:100%;
     aspect-ratio:1007/1217;
-    background-image:url('../src/about-portrait-bg.jpg');
+    background-image:url('uche-japheth.png');
     background-size:contain;
     background-position:center bottom;
     background-repeat:no-repeat;
@@ -268,8 +268,8 @@
        mask image is scaled to 100/38 ≈ 263% of the box's own
        height and bottom-anchored, matching .about-photo's own
        "center bottom" positioning. */
-    -webkit-mask-image:url('../src/uche-japheth.png');
-    mask-image:url('../src/uche-japheth.png');
+    -webkit-mask-image:url('uche-japheth.png');
+    mask-image:url('uche-japheth.png');
     -webkit-mask-mode:alpha;
     mask-mode:alpha;
     -webkit-mask-size:100% 263.16%;
@@ -343,17 +343,18 @@
      A separate, independent element for the faint full-bleed
      background shown while the expanded story is open — decoupled
      from the portrait image on purpose, so it can use its own file
-     without touching .about-photo at all. Swap the background-image
-     path below to change it. */
+     without touching .about-photo at all. It's an <img> in the HTML
+     (class "about-expanded-bg") — change its src there to swap it. */
   .about-expanded-bg{
     position:absolute;
     inset:0;
     z-index:0;
     opacity:0;
     pointer-events:none;
-    background-image:url('../src/about-portrait-bg.jpg');
-    background-size:cover;
-    background-position:center;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
     border-radius:28px;
     filter:grayscale(0.4) blur(0.5px);
     transition:opacity .5s ease;
@@ -381,23 +382,32 @@
   }
 
   .about-body{ order:1; }
-  .about-story-extra{ order:3; }
   .see-more-btn{ order:2; }
-  .about-expanded{ order:4; }
+  .about-story-p2{ order:3; }
+  .about-story-extra{ order:4; }
+  .about-expanded{ order:5; }
 
+  .about-story-p2,
   .about-story-extra{
     max-height:0;
     opacity:0;
     overflow:hidden;
     transition:max-height .6s ease, opacity .5s ease;
   }
+  .about-story-p2.is-open,
   .about-story-extra.is-open{
     opacity:1;
     margin-top:4px;
   }
+  .about-story-p2-inner,
   .about-story-extra-inner{
     padding-top:4px;
   }
+
+  /* p2 sits directly above the rest of the story — keep the gap
+     between them the same as between any two story paragraphs */
+  .about-story-p2 + .about-story-extra.is-open{ margin-top:0; }
+  .about-story-p2 + .about-story-extra .about-story-extra-inner{ padding-top:0; }
 
   .about-expanded{
     max-height:0;
@@ -415,6 +425,7 @@
   }
 
   .about-expanded p,
+  .about-story-p2 p,
   .about-story-extra p{
     font-size:16px;
     font-weight:500;
@@ -644,7 +655,29 @@
 
     .about-body{
       font-size:17.5px;
+      margin-bottom:14px;
     }
+
+    /* Tablet default story: the intro + the "Petroleum Engineering"
+       paragraph are always visible; only the rest of the story sits
+       behind "See more". Forced open with !important to override the
+       toggle's inline max-height / is-open state (same technique the
+       desktop block uses). Placed above the button. */
+    .about-story-p2{
+      order:2;
+      max-height:none !important;
+      opacity:1 !important;
+      overflow:visible !important;
+      margin:0 0 8px !important;
+    }
+    .about-story-p2-inner{
+      padding-top:0;
+    }
+    .about-story-p2 p{
+      font-size:17.5px;
+      margin-bottom:10px;
+    }
+    .see-more-btn{ order:3; }
 
     .about-cta-btn{
       padding:17px 32px;
@@ -656,162 +689,27 @@
       height:18px;
     }
 
-    .about-metrics{
-      padding:4px 26px;
-    }
-    .about-metric-num{
-      font-size:20px;
-    }
-    .about-metric-label{
-      font-size:14px;
-    }
-
     /* mini-cards: single row of 4 instead of mobile's 2x2 */
     .cards-grid{
       grid-template-columns:repeat(4, 1fr);
       gap:14px;
     }
-  }
 
-  /* ============================================================
-     DESKTOP (≥1024px)
-     Mobile layout above is untouched by anything in this block.
-     ============================================================ */
-  @media (min-width:1024px){
-
-    .about-container{
-      display:grid;
-      grid-template-columns:1.15fr 0.85fr;
-      column-gap:72px;
-      align-items:start;
-      max-width:1440px;
-      padding:0 64px;
-    }
-
-    .about-col-left,
-    .about-col-right{
-      display:flex;
-      flex-direction:column;
-    }
-    .about-col-left{ grid-column:1; }
-    .about-col-right{ grid-column:2; }
-
-    /* On mobile, the photo is taken out of flow (position:absolute)
-       when expanded, so nothing is left holding a gap in that
-       single shared column. On desktop the photo and the metrics
-       are in their OWN column, independent of the story's height,
-       so that trick isn't needed — undo it here.
-
-       Updated: the photo and blob should now stay fully visible
-       and unchanged on desktop regardless of toggle state (per
-       explicit request), not fade at all — so this also cancels
-       the opacity fade, not just the position trick. */
-    .about-container.is-expanded .about-photo-wrap{
-      position:relative;
-      inset:auto;
-      opacity:1 !important;
-      pointer-events:auto !important;
-      filter:none !important;
-    }
-    /* No shade override needed here anymore — the mobile-only hide
-       rule above is now scoped so it never reaches desktop in the
-       first place, so there's nothing to undo. */
-
-    /* let each column stack its own children in plain DOM order —
-       the mobile `order` values still apply but are harmless here
-       since within each column they're already in ascending order */
-
-    .about-body{
-      display:block;
-      -webkit-line-clamp:unset;
-      overflow:visible;
-      font-size:19px;
-      font-weight:600;
-      /* the first sentence of .about-story-extra continues this
-         same paragraph visually on desktop (per spec, no blank
-         line between them) — remove the trailing gap so the two
-         separate elements read as one flowing paragraph */
-      margin-bottom:0;
-    }
-
-    .about-story-extra .tight-follow{
-      margin-top:0;
-    }
-
-    /* Bumped up for desktop readability — larger and heavier than
-       the mobile values (16px/500), matching .about-body's own
-       desktop increase above. */
-    .about-expanded p,
-    .about-story-extra p{
-      font-size:18px;
-      font-weight:600;
-    }
-
-    /* CV button scaled up proportionally alongside the text bump
-       above — mobile stays at its original size. */
-    .about-cta-btn{
-      padding:22px 42px;
-      gap:14px;
-      font-size:18.5px;
-    }
-    .about-cta-icon{
-      width:23px;
-      height:23px;
-    }
-
-    /* On desktop the story is shown in full by default — only
-       the mini-cards + "Where I'm headed" (.about-expanded) stay
-       gated behind "See more". Re-order so the story sits between
-       the intro and the button (mobile has it AFTER the button,
-       revealed together with the cards on toggle), and force it
-       open regardless of the JS-driven inline max-height/is-open
-       state — the !important here is deliberate: it overrides the
-       toggle so this part is simply never collapsible on desktop. */
-    .about-story-extra{
-      order:2;
-      max-height:none !important;
-      opacity:1 !important;
-      overflow:visible !important;
-      margin:0 0 8px !important;
-    }
-    .about-story-extra-inner{
-      padding-top:0;
-    }
-    .see-more-btn{ order:3; }
-    .about-expanded{ order:4; }
-
-    .about-photo-wrap{
-      max-width:480px;
-      margin:0 0 0 auto;
-      transform:none;
-    }
-
-    /* Bigger on desktop (the photo itself is ~2x larger here than
-       on mobile, so the note needs to scale to still read as
-       intentional), and repositioned to sit at the blob's own
-       bottom-right corner instead of mobile's "cut across into the
-       dark background" placement — nudged slightly up and left
-       from that corner. */
-    .about-photo-note{
-      font-size:26px;
-      right:-17%;
-      bottom:calc(14% - 8px);
-    }
-
+    /* ===== Clothesline metrics (tablet + desktop) =====
+       Tablet uses the same rope-and-tags style as desktop instead of
+       mobile's card list, plus a rectangular trim around it. Desktop
+       removes the trim again in its own block below. */
     .about-metrics{
       display:none;
     }
 
     .metrics-clothesline{
       display:block;
-      margin-top:56px;
+      margin-top:48px;
+      border:1px solid var(--card-border);
+      border-radius:18px;
+      padding:30px 22px 24px;
     }
-
-    .cards-grid{
-      grid-template-columns:repeat(4, 1fr);
-    }
-
-    /* ===== Clothesline metrics ===== */
 
     .clothesline-rope{
       height:6px;
@@ -866,6 +764,150 @@
       line-height:1.3;
       max-width:100px;
     }
+  }
+
+  /* ============================================================
+     DESKTOP (≥1024px)
+     Mobile layout above is untouched by anything in this block.
+     ============================================================ */
+  @media (min-width:1024px){
+
+    .about-container{
+      display:grid;
+      grid-template-columns:1.15fr 0.85fr;
+      column-gap:72px;
+      align-items:start;
+      max-width:1440px;
+      padding:0 64px;
+    }
+
+    .about-col-left,
+    .about-col-right{
+      display:flex;
+      flex-direction:column;
+    }
+    .about-col-left{ grid-column:1; min-width:0; }
+    .about-col-right{ grid-column:2; }
+
+    /* On mobile, the photo is taken out of flow (position:absolute)
+       when expanded, so nothing is left holding a gap in that
+       single shared column. On desktop the photo and the metrics
+       are in their OWN column, independent of the story's height,
+       so that trick isn't needed — undo it here.
+
+       Updated: the photo and blob should now stay fully visible
+       and unchanged on desktop regardless of toggle state (per
+       explicit request), not fade at all — so this also cancels
+       the opacity fade, not just the position trick. */
+    .about-container.is-expanded .about-photo-wrap{
+      position:relative;
+      inset:auto;
+      opacity:1 !important;
+      pointer-events:auto !important;
+      filter:none !important;
+    }
+    /* No shade override needed here anymore — the mobile-only hide
+       rule above is now scoped so it never reaches desktop in the
+       first place, so there's nothing to undo. */
+
+    /* let each column stack its own children in plain DOM order —
+       the mobile `order` values still apply but are harmless here
+       since within each column they're already in ascending order */
+
+    .about-body{
+      display:block;
+      -webkit-line-clamp:unset;
+      overflow:visible;
+      font-size:19px;
+      font-weight:600;
+      /* the first sentence of .about-story-extra continues this
+         same paragraph visually on desktop (per spec, no blank
+         line between them) — remove the trailing gap so the two
+         separate elements read as one flowing paragraph */
+      margin-bottom:0;
+    }
+
+    .about-story-p2 .tight-follow{
+      margin-top:0;
+    }
+
+    /* Bumped up for desktop readability — larger and heavier than
+       the mobile values (16px/500), matching .about-body's own
+       desktop increase above. */
+    .about-expanded p,
+    .about-story-p2 p,
+    .about-story-extra p{
+      font-size:18px;
+      font-weight:600;
+    }
+
+    /* CV button scaled up proportionally alongside the text bump
+       above — mobile stays at its original size. */
+    .about-cta-btn{
+      padding:22px 42px;
+      gap:14px;
+      font-size:18.5px;
+    }
+    .about-cta-icon{
+      width:23px;
+      height:23px;
+    }
+
+    /* On desktop the story is shown in full by default — only
+       the mini-cards + "Where I'm headed" (.about-expanded) stay
+       gated behind "See more". Re-order so the story sits between
+       the intro and the button (mobile has it AFTER the button,
+       revealed together with the cards on toggle), and force it
+       open regardless of the JS-driven inline max-height/is-open
+       state — the !important here is deliberate: it overrides the
+       toggle so this part is simply never collapsible on desktop. */
+    .about-story-p2,
+    .about-story-extra{
+      max-height:none !important;
+      opacity:1 !important;
+      overflow:visible !important;
+      margin:0 0 8px !important;
+    }
+    .about-story-p2{ order:2; }
+    .about-story-extra{ order:3; }
+    .about-story-p2-inner,
+    .about-story-extra-inner{
+      padding-top:0;
+    }
+    .about-story-p2{ margin-bottom:0 !important; }
+    .see-more-btn{ order:4; }
+    .about-expanded{ order:5; }
+
+    .about-photo-wrap{
+      max-width:480px;
+      margin:0 0 0 auto;
+      transform:none;
+    }
+
+    /* Bigger on desktop (the photo itself is ~2x larger here than
+       on mobile, so the note needs to scale to still read as
+       intentional), and repositioned to sit at the blob's own
+       bottom-right corner instead of mobile's "cut across into the
+       dark background" placement — nudged slightly up and left
+       from that corner. */
+    .about-photo-note{
+      font-size:26px;
+      right:-17%;
+      bottom:calc(14% - 8px);
+    }
+
+    /* clothesline is shared from the tablet tier; desktop drops the
+       rectangular trim and uses its larger top gap */
+    .metrics-clothesline{
+      margin-top:56px;
+      border:none;
+      border-radius:0;
+      padding:0;
+    }
+
+    .cards-grid{
+      grid-template-columns:repeat(4, 1fr);
+    }
 
     /* Desktop-only expanded background disabled per request — the
        faint image-behind-text effect stays mobile-only. Plain
@@ -912,4 +954,3 @@
       align-self:start;
     }
   }
-
