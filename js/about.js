@@ -1,9 +1,9 @@
-
-  (function(){
+(function(){
     var btn = document.getElementById('seeMoreBtn');
     var panel = document.getElementById('aboutExpanded');
     var storyExtra = document.getElementById('aboutStoryExtra');
-    var panels = [panel, storyExtra];
+    var storyP2 = document.getElementById('aboutStoryP2');
+    var panels = [panel, storyExtra, storyP2];
     var container = document.getElementById('aboutContainer');
     var label = btn.querySelector('.btn-label');
 
@@ -96,5 +96,5 @@
     preload.onload = function(){
       wrap.classList.add('photo-ready');
     };
-    preload.src = 'src/about-portrait.png';
+    preload.src = 'uche-japheth.png';
   })();
