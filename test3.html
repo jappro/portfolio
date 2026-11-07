@@ -208,9 +208,10 @@
     z-index:1;
     width:100%;
     aspect-ratio:1007/1217;
-    display:block;
-    object-fit:contain;
-    object-position:center bottom;
+    background-image:url('uche-japheth.png');
+    background-size:contain;
+    background-position:center bottom;
+    background-repeat:no-repeat;
   }
 
   .about-photo-fallback{
@@ -277,11 +278,9 @@
        covers: this box is 38% of the full photo's height, so the
        mask image is scaled to 100/38 ≈ 263% of the box's own
        height and bottom-anchored, matching .about-photo's own
-       "center bottom" positioning. The image path itself lives in
-       the HTML (the --portrait-mask variable on #aboutPhotoWrap),
-       so the file name is only ever set in one place. */
-    -webkit-mask-image:var(--portrait-mask);
-    mask-image:var(--portrait-mask);
+       "center bottom" positioning. */
+    -webkit-mask-image:url('uche-japheth.png');
+    mask-image:url('uche-japheth.png');
     -webkit-mask-mode:alpha;
     mask-mode:alpha;
     -webkit-mask-size:100% 263.16%;
@@ -1080,16 +1079,14 @@
     </div>
 
     <div class="about-col-right">
-    <div class="about-photo-wrap" id="aboutPhotoWrap" style="--portrait-mask:url('uche-japheth.png');">
+    <div class="about-photo-wrap" id="aboutPhotoWrap">
       <div class="about-photo-blob"></div>
-      <img
+      <div
         class="about-photo"
         id="aboutPhotoImg"
-        src="uche-japheth.png"
-        alt="Portrait photo"
-        width="1007"
-        height="1217"
-      >
+        role="img"
+        aria-label="Portrait photo"
+      ></div>
       <div class="about-photo-fallback">Add photo at<br>uche-japheth.png</div>
       <div class="about-photo-shade" aria-hidden="true"></div>
       <p class="about-photo-note">People first.<br>Better systems, better results.</p>
@@ -1263,7 +1260,7 @@
     preload.onload = function(){
       wrap.classList.add('photo-ready');
     };
-    preload.src = document.getElementById('aboutPhotoImg').getAttribute('src');
+    preload.src = 'uche-japheth.png';
   })();
 </script>
 
